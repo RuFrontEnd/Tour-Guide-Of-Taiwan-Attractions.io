@@ -1,9 +1,16 @@
-### 首次啟動
-* yarn start
-* yarn install
+# JauntMap
 
-### 非首次啟動
-* yarn start
+JauntMap
 
-### 生成部署包
-* yarn build
+# 首次啟動
+
+- yarn install
+- yarn start
+
+# 非首次啟動
+
+- yarn start
+
+# 請使用以下套件
+
+- vscode prettier(預設規則即可)

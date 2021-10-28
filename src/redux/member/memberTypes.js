@@ -1,0 +1,4 @@
+export const LOGIN = 'LOGIN'
+export const LOGOUT = 'LOGOUT'
+export const SETCURRENTUSER = 'SETCURRENTUSER'
+export const SETCURRENTUSERDATA = 'SETCURRENTUSERDATA'

@@ -1,0 +1,1 @@
+export const SHOWNAVBAR = 'SHOWNAVBAR'
