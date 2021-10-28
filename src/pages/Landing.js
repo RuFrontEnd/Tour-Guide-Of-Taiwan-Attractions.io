@@ -2,19 +2,19 @@ import React, { useState } from "react";
 import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
 import { placeholderColor } from "variable/variable";
-import logo from "assets/logo.svg";
+import { ReactComponent as Logo } from "assets/logo.svg";
 import GoolgeLogo from "assets/google-logo.svg";
 import Background from "layouts/Background";
 import JauntButton from "components/JauntButton";
 import { GoogleLogin } from "react-google-login";
 
-const SignIn = (props) => {
+const Landing = (props) => {
   const { history } = props;
 
   return (
     <Background>
       <Container>
-        <Logo src={logo}></Logo>
+        {/* <Logo /> */}
         <GoogleLogin
           clientId="402772561326-licr3gegb3qbs0ftadu2g0kaf5f0im88.apps.googleusercontent.com"
           render={(renderProps) => (
@@ -58,11 +58,11 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const Logo = styled.img`
-  width: 205px;
-  height: 135px;
-  margin-bottom: 130px;
-`;
+// const Logo = styled.img`
+//   width: 205px;
+//   height: 135px;
+//   margin-bottom: 130px;
+// `;
 
 const googleSignInButtonStyle = {
   width: "385px",
@@ -84,4 +84,4 @@ const responseGoogle = (response) => {
   console.log("response", response);
 };
 
-export default withRouter(SignIn);
+export default withRouter(Landing);

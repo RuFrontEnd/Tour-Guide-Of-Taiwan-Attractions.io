@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { navBarColor, lightReceivingColor } from "variable/variable";
-import navBarLogo from "assets/navBar-logo.svg";
+import { ReactComponent as Logo } from "assets/logo.svg";
 import { ReactComponent as Portrait } from "assets/portrait.svg";
 import { ReactComponent as Filter } from "assets/filter.svg";
 import { ReactComponent as Search } from "assets/search.svg";
@@ -19,33 +19,8 @@ const NavBar = (props) => {
     <Space style={NavBarStyle} className={className}>
       <Container>
         <Wrap>
-          <Logo src={navBarLogo} />
-          <Tools>
-            <MemberButton>
-              <Portrait />
-            </MemberButton>
-            <SearchBar />
-            <FilterButton isSelected={true}>
-              <Filter />
-            </FilterButton>
-          </Tools>
-          <Options>
-            <SearchButton isSelected={true}>
-              <Search isSelected={true} />
-            </SearchButton>
-            <FavButton>
-              <Favorites />
-            </FavButton>
-            <CalenderButton>
-              <Calendar />
-            </CalenderButton>
-            <CameraButton>
-              <Camera />
-            </CameraButton>
-            <SettingButton>
-              <Setting />
-            </SettingButton>
-          </Options>
+          <Logo />
+          <Options>台灣景點 美食住宿 景點交通</Options>
         </Wrap>
       </Container>
     </Space>
@@ -58,30 +33,14 @@ const Container = styled.section`
 
 const Wrap = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-`;
-
-const Logo = styled.img``;
-
-const MemberButton = styled(JauntCircleButton)`
-  margin-right: 12px;
-`;
-
-const FilterButton = styled(JauntCircleButton)`
-  margin-left: 12px;
-  padding: 14px;
-`;
-
-const Tools = styled.div`
-  display: flex;
-  align-items: center;
-  margin: auto;
+  grid-template-areas: "a b";
+  grid-template-columns: 1fr 1fr;
 `;
 
 const Options = styled.div`
-  margin-left: auto;
-  display: flex;
-  align-items: center;
+  grid-area: 'b';
+  align-self: center;
+  justify-self: end;
 `;
 
 const JauntCircleButtonStyleComponent = styled(JauntCircleButton)`

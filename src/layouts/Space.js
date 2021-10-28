@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components/macro";
 
 const ContainerStyledComponent = styled.section`
-  padding: 0px 40px;
+  padding: 0px 108px;
 `;
 
 const Container = Radium(ContainerStyledComponent);
