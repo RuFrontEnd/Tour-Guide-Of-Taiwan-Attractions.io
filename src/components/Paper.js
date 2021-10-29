@@ -3,14 +3,23 @@ import styled from "styled-components/macro";
 import { __0D0B0C__ } from "variable/variable";
 
 const Paper = (props) => {
-  const { style, className, children, widthOfShadowLength, rotateOfShadow } =
-    props;
+  const {
+    style,
+    className,
+    children,
+    widthOfShadowLength,
+    rotateOfShadow,
+    leftShadowOffsetWidth,
+    rightShadowOffsetWidth,
+  } = props;
   return (
     <Shadow
       style={style}
       className={className}
       widthOfShadowLength={widthOfShadowLength}
       rotateOfShadow={rotateOfShadow}
+      leftShadowOffsetWidth={leftShadowOffsetWidth}
+      rightShadowOffsetWidth={rightShadowOffsetWidth}
     >
       <Self>{children}</Self>
     </Shadow>
@@ -27,7 +36,8 @@ const Shadow = styled.section`
     z-index: 1;
     content: "";
     bottom: 15px;
-    left: 10px;
+    left: ${(props) =>
+      props.leftShadowOffsetWidth ? props.leftShadowOffsetWidth : "10px"};
     top: 80%;
     width: ${(props) =>
       props.widthOfShadowLength ? props.widthOfShadowLength : "30%"};
@@ -45,7 +55,8 @@ const Shadow = styled.section`
       props.rotateOfShadow
         ? `rotate(${props.rotateOfShadow}deg)`
         : "rotate(3deg)"};
-    right: 10px;
+    right: ${(props) =>
+      props.rightShadowOffsetWidth ? props.rightShadowOffsetWidth : "10px"};
     left: auto;
   }
 `;

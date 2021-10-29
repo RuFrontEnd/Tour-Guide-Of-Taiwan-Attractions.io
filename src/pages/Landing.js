@@ -13,13 +13,13 @@ const Landing = (props) => {
 
   return (
     <Background>
-      <Box>
-        <Paper
-          style={{ width: "1000px", height: "200px" }}
-          widthOfShadowLength={"800px"}
-          rotateOfShadow={2}
-        />
-      </Box>
+      <Paper
+        style={{ width: "100%", height: "200px" }}
+        widthOfShadowLength={"1000px"}
+        rotateOfShadow={2}
+        leftShadowOffsetWidth={'0px'}
+        rightShadowOffsetWidth={'0px'}
+      />
     </Background>
   );
 };
