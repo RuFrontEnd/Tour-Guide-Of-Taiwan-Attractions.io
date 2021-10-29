@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
 import { placeholderColor } from "variable/variable";
-import { ReactComponent as Logo } from "assets/logo.svg";
+import Paper from "components/Paper";
 import GoolgeLogo from "assets/google-logo.svg";
 import Background from "layouts/Background";
 import JauntButton from "components/JauntButton";
@@ -13,44 +13,18 @@ const Landing = (props) => {
 
   return (
     <Background>
-      <Container>
-        {/* <Logo /> */}
-        <GoogleLogin
-          clientId="402772561326-licr3gegb3qbs0ftadu2g0kaf5f0im88.apps.googleusercontent.com"
-          render={(renderProps) => (
-            <>
-              <JauntButton
-                onClick={renderProps.onClick}
-                disabled={renderProps.disabled}
-                icon={GoolgeLogo}
-                text={"Google 登入"}
-                style={googleSignInButtonStyle}
-                sharpRadius={false}
-              />
-            </>
-          )}
-          buttonText="Login"
-          onSuccess={() => {
-            history.push("/gpsPostion");
-          }}
-          onFailure={responseGoogle}
-          cookiePolicy={"single_host_origin"}
+      <Box>
+        <Paper
+          style={{ width: "1000px", height: "200px" }}
+          widthOfShadowLength={"800px"}
+          rotateOfShadow={2}
         />
-        <JauntButton
-          text={"訪客登入"}
-          style={visitorSignInButtonStyle}
-          sharpRadius={false}
-          textStyle={visitorSignInButtonTextStyle}
-          onClick={() => {
-            history.push("/gpsPostion");
-          }}
-        />
-      </Container>
+      </Box>
     </Background>
   );
 };
 
-const Container = styled.div`
+const Box = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
