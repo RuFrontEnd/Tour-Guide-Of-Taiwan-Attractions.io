@@ -13,3 +13,5 @@ export const seperateBarColor = "#F1F2F2";
 export const optionButtonColor = "#646466";
 export const blueGreen = "#38D0B7";
 export const notoSans = '"Noto Sans", sans-serif';
+
+export const __0D0B0C__ = "#0D0B0C";
