@@ -3,9 +3,9 @@ import styled from "styled-components/macro";
 
 const Template = (props) => {
   const { className } = props;
-  return <Container className={className}></Container>;
+  return <Box className={className}></Box>;
 };
 
-const Container = styled.section``;
+const Box = styled.section``;
 
 export default Template;
