@@ -8,6 +8,8 @@ import Paper from "components/Paper";
 import Board from "components/Board";
 import Background from "layouts/Background";
 import Input from "components/Input";
+import SquareButton from "components/SquareButton";
+import { ReactComponent as Search } from "assets/search.svg";
 import { GoogleLogin } from "react-google-login";
 
 const Landing = (props) => {
@@ -27,9 +29,14 @@ const Landing = (props) => {
             <Remark>台北、台中、台南、屏東、宜蘭……遊遍台灣</Remark>
           </Title>
           <Input placeholder="搜尋關鍵字" />
+          <SquareButton>
+            <Search width={"16px"} />
+          </SquareButton>
         </Box>
       </Paper>
-      <Board style={{ width: "202px", height: "245px", padding: "23px 27px" }} />
+      <Board
+        style={{ width: "202px", height: "245px", padding: "23px 27px" }}
+      />
     </Background>
   );
 };
