@@ -1,17 +1,11 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { navBarColor, lightReceivingColor } from "variable/variable";
+import { navBarColor } from "variable/variable";
 import { ReactComponent as Logo } from "assets/logo.svg";
-import { ReactComponent as Filter } from "assets/filter.svg";
-import { ReactComponent as Search } from "assets/search.svg";
 import { ReactComponent as Attraction } from "assets/attraction.svg";
 import { ReactComponent as Food } from "assets/food.svg";
 import { ReactComponent as Traffic } from "assets/traffic.svg";
-import { ReactComponent as Camera } from "assets/camera.svg";
-import { ReactComponent as Setting } from "assets/setting.svg";
 import Space from "layouts/Space";
-import JauntCircleButton from "components/JauntCircleButton";
-import SearchBar from "components/SearchBar";
 
 const NavBar = (props) => {
   const { className } = props;

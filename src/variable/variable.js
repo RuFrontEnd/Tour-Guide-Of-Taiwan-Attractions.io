@@ -16,3 +16,5 @@ export const notoSans = '"Noto Sans", sans-serif';
 
 export const __0D0B0C__ = (opacity) =>
   `${opacity ? `rgba(13, 11, 12, ${opacity})` : "#0D0B0C"}`;
+export const __D2D2D2__ = (opacity) =>
+  `${opacity ? `rgba(210, 210, 210, ${opacity})` : "#D2D2D2"}`;

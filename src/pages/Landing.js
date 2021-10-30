@@ -7,7 +7,7 @@ import landing from "assets/landing.png";
 import Paper from "components/Paper";
 import Board from "components/Board";
 import Background from "layouts/Background";
-import JauntButton from "components/JauntButton";
+import Input from "components/Input";
 import { GoogleLogin } from "react-google-login";
 
 const Landing = (props) => {
@@ -20,7 +20,14 @@ const Landing = (props) => {
         widthOfShadowLength={"80%"}
         rotateOfShadow={2}
       >
-        <LandingImg src={landing} />
+        <Box>
+          <Title>
+            <MainTitle>Welcome To</MainTitle>
+            <ViceTitle>Taiwan</ViceTitle>
+            <Remark>台北、台中、台南、屏東、宜蘭……遊遍台灣</Remark>
+          </Title>
+          <Input placeholder="搜尋關鍵字" />
+        </Box>
       </Paper>
       <Board style={{ width: "202px", height: "245px", padding: "23px 27px" }} />
     </Background>
@@ -28,11 +35,11 @@ const Landing = (props) => {
 };
 
 const Box = styled.div`
+  width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  background-image: url(${landing});
+  background-size: cover;
+  background-position: center center;
 `;
 
 // const Logo = styled.img`
@@ -41,10 +48,12 @@ const Box = styled.div`
 //   margin-bottom: 130px;
 // `;
 
-const LandingImg = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
+const Title = styled.div``;
+
+const MainTitle = styled.h1``;
+
+const ViceTitle = styled.h1``;
+
+const Remark = styled.p``;
 
 export default withRouter(Landing);
