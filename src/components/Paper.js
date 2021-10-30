@@ -21,19 +21,22 @@ const Paper = (props) => {
       leftShadowOffsetWidth={leftShadowOffsetWidth}
       rightShadowOffsetWidth={rightShadowOffsetWidth}
     >
-      <Self>{children}</Self>
+      {children}
     </Shadow>
   );
 };
 
 const Shadow = styled.section`
+  background-color: white;
   position: relative;
-  z-index: 2;
+  box-sizing: border-box;
+  width: 100%;
+  height: 200px;
 
   &:before,
   &:after {
     position: absolute;
-    z-index: 1;
+    z-index: -1;
     content: "";
     bottom: 15px;
     left: ${(props) =>
@@ -41,8 +44,8 @@ const Shadow = styled.section`
     top: 80%;
     width: ${(props) =>
       props.widthOfShadowLength ? props.widthOfShadowLength : "30%"};
-    background: ${__0D0B0C__};
-    box-shadow: 0 15px 10px ${__0D0B0C__};
+    background: ${__0D0B0C__()};
+    box-shadow: 0 15px 10px ${__0D0B0C__()};
     opacity: 0.3;
     transform: ${(props) =>
       props.rotateOfShadow
@@ -59,14 +62,6 @@ const Shadow = styled.section`
       props.rightShadowOffsetWidth ? props.rightShadowOffsetWidth : "10px"};
     left: auto;
   }
-`;
-
-const Self = styled.div`
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  height: 100%;
-  background-color: white;
 `;
 
 export default Paper;

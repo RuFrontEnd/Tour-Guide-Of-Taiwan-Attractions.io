@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
 import { placeholderColor } from "variable/variable";
-import Paper from "components/Paper";
 import GoolgeLogo from "assets/google-logo.svg";
+import landing from "assets/landing.png";
+import Paper from "components/Paper";
+import Board from "components/Board";
 import Background from "layouts/Background";
 import JauntButton from "components/JauntButton";
 import { GoogleLogin } from "react-google-login";
@@ -14,12 +16,13 @@ const Landing = (props) => {
   return (
     <Background>
       <Paper
-        style={{ width: "100%", height: "200px" }}
-        widthOfShadowLength={"1000px"}
+        style={{ width: "100%", height: "536px", padding: "23px 27px" }}
+        widthOfShadowLength={"80%"}
         rotateOfShadow={2}
-        leftShadowOffsetWidth={'0px'}
-        rightShadowOffsetWidth={'0px'}
-      />
+      >
+        <LandingImg src={landing} />
+      </Paper>
+      <Board style={{ width: "202px", height: "245px", padding: "23px 27px" }} />
     </Background>
   );
 };
@@ -38,24 +41,10 @@ const Box = styled.div`
 //   margin-bottom: 130px;
 // `;
 
-const googleSignInButtonStyle = {
-  width: "385px",
-  height: "60px",
-  marginBottom: "24px",
-};
-
-const visitorSignInButtonStyle = {
-  width: "385px",
-  height: "60px",
-  marginBottom: "24px",
-};
-
-const visitorSignInButtonTextStyle = {
-  color: placeholderColor,
-};
-
-const responseGoogle = (response) => {
-  console.log("response", response);
-};
+const LandingImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
 
 export default withRouter(Landing);
