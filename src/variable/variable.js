@@ -14,4 +14,5 @@ export const optionButtonColor = "#646466";
 export const blueGreen = "#38D0B7";
 export const notoSans = '"Noto Sans", sans-serif';
 
-export const __0D0B0C__ = "#0D0B0C";
+export const __0D0B0C__ = (opacity) =>
+  `${opacity ? `rgba(13, 11, 12, ${opacity})` : "#0D0B0C"}`;
