@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { __FF1D6C__ } from "variable/variable";
-
+import { __FFF__,__FF1D6C__ } from "variable/variable";
 
 const RectButton = (props) => {
   const { className, style, children } = props;
@@ -13,11 +12,18 @@ const RectButton = (props) => {
 };
 
 const Box = styled.button`
+  cursor: pointer;
   width: 120px;
   height: 40px;
   border-radius: 6px;
-  border: 1px solid ${__FF1D6C__()};
+  border: 1px solid ${__FF1D6C__()}; 
   color: ${__FF1D6C__()};
+  transition: 0.2s;
+
+  &:hover{
+    background-color: ${__FF1D6C__()};
+    color: ${__FFF__()};
+  }
 `;
 
 export default RectButton;

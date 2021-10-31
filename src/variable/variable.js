@@ -15,6 +15,8 @@ export const blueGreen = "#38D0B7";
 export const notoSans = "'Noto Sans TC', sans-serif";
 export const roboto = "'Roboto', sans-serif";
 
+export const __FFF__ = (opacity) =>
+  `${opacity ? `rgba(255, 255, 255, ${opacity})` : "#FFF"}`;
 export const __0D0B0C__ = (opacity) =>
   `${opacity ? `rgba(13, 11, 12, ${opacity})` : "#0D0B0C"}`;
 export const __D2D2D2__ = (opacity) =>
