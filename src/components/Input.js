@@ -5,18 +5,15 @@ import { __0D0B0C__, __D2D2D2__ } from "variable/variable";
 const Input = (props) => {
   const { className, style, placeholder } = props;
   return (
-    <TypingBar
+    <Box
       style={style}
       className={className}
       placeholder={placeholder}
-      onClick={() => {
-        console.log("a");
-      }}
     />
   );
 };
 
-const TypingBar = styled.input`
+const Box = styled.input`
   padding: 8.5px 0px 8.5px 24px;
   border: none;
   border-radius: 6px;

@@ -13,7 +13,7 @@ const Paper = (props) => {
     rightShadowOffsetWidth,
   } = props;
   return (
-    <Shadow
+    <Box
       style={style}
       className={className}
       widthOfShadowLength={widthOfShadowLength}
@@ -22,11 +22,11 @@ const Paper = (props) => {
       rightShadowOffsetWidth={rightShadowOffsetWidth}
     >
       {children}
-    </Shadow>
+    </Box>
   );
 };
 
-const Shadow = styled.section`
+const Box = styled.section`
   background-color: white;
   position: relative;
   box-sizing: border-box;
