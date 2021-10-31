@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components/macro";
 import Paper from "components/Paper";
-import { __ACACAC__ } from "variable/variable";
-import { ReactComponent as Location } from "assets/location.svg";
+import { __ACACAC__, __FF1D6C__ } from "variable/variable";
+import { ReactComponent as LocationRef } from "assets/location.svg";
 import RectButton from "components/RectButton";
 
 const Card = (props) => {
@@ -74,6 +74,12 @@ const More = styled.div`
 const Area = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const Location = styled(LocationRef)`
+  & > path {
+    fill: ${__FF1D6C__()};
+  }
 `;
 
 const District = styled.p`
