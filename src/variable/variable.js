@@ -23,6 +23,7 @@ export const __D2D2D2__ = (opacity) =>
   `${opacity ? `rgba(210, 210, 210, ${opacity})` : "#D2D2D2"}`;
 export const __FF1D6C__ = (opacity) =>
   `${opacity ? `rgba(255, 29, 108, ${opacity})` : "#FF1D6C"}`;
-  export const __ACACAC__ = (opacity) =>
+export const __ACACAC__ = (opacity) =>
   `${opacity ? `rgba(172, 172, 172, ${opacity})` : "#ACACAC"}`;
-  
+export const __007350__ = (opacity) =>
+  `${opacity ? `rgba(0, 115, 80, ${opacity})` : "#007350"}`;

@@ -7,6 +7,7 @@ import { ReactComponent as Search } from "assets/search.svg";
 import { ReactComponent as Triangle } from "assets/triangle.svg";
 import landing from "assets/landing.png";
 import cardImg_tmp from "assets/cardImg_tmp.png";
+import cardSmImg_tmp from "assets/cardSmImg_tmp.png";
 import Paper from "components/Paper";
 import Board from "components/Board";
 import Background from "layouts/Background";
@@ -15,6 +16,7 @@ import SquareButton from "components/SquareButton";
 import Dropdown from "components/Dropdown";
 import Category from "components/Category";
 import Card from "components/Card";
+import CardSm from "components/CardSm";
 
 const Landing = (props) => {
   const { history } = props;
@@ -22,7 +24,12 @@ const Landing = (props) => {
   const hotAttractions = {
     src: cardImg_tmp,
     title: "合歡山國際暗空公園-星空清境跨年活動",
-    area:'臺北市 北投區'
+    area: "臺北市 北投區",
+  };
+  const hotFoods = {
+    src: cardSmImg_tmp,
+    title: "正濱漁港懷舊碼頭",
+    area: "基隆市中正區",
   };
 
   return (
@@ -45,8 +52,12 @@ const Landing = (props) => {
           <Dropdown options={attractions} />
         </Box>
       </Paper>
+      <CardSm
+        style={{ width: "206px", height: "auto", margin: "50px 50px" }}
+        info={hotFoods}
+      />
       <Card
-        style={{ width: "513px", height: "auto", margin: "50px 0px" }}
+        style={{ width: "513px", height: "auto", margin: "50px px" }}
         info={hotAttractions}
       >
         南投縣與各單位多年於合歡山舉辦清境高山跨年晚會活動，今年將活動主軸由傳統跨年晚會轉化成為台灣高山星空遊程之體驗活動，以剛通過美國IDA認證的華語區第一座國際暗空公園作為宣傳主題，在擁有東南的的...
