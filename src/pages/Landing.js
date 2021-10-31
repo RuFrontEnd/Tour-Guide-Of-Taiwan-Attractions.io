@@ -4,13 +4,16 @@ import { withRouter } from "react-router-dom";
 import { placeholderColor } from "variable/variable";
 import GoolgeLogo from "assets/google-logo.svg";
 import { ReactComponent as Search } from "assets/search.svg";
+import { ReactComponent as Triangle } from "assets/triangle.svg";
 import landing from "assets/landing.png";
 import Paper from "components/Paper";
 import Board from "components/Board";
 import Background from "layouts/Background";
 import Input from "components/Input";
 import SquareButton from "components/SquareButton";
+import RectButton from "components/RectButton";
 import Dropdown from "components/Dropdown";
+import Category from "components/Category";
 import { GoogleLogin } from "react-google-login";
 
 const Landing = (props) => {
@@ -40,6 +43,10 @@ const Landing = (props) => {
       <Board
         style={{ width: "202px", height: "245px", padding: "23px 27px" }}
       />
+      <RectButton>活動詳情</RectButton>
+      <Category title={"熱門城市"}>
+        <Triangle />
+      </Category>
     </Background>
   );
 };
