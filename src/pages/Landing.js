@@ -3,17 +3,19 @@ import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
 import { placeholderColor } from "variable/variable";
 import GoolgeLogo from "assets/google-logo.svg";
+import { ReactComponent as Search } from "assets/search.svg";
 import landing from "assets/landing.png";
 import Paper from "components/Paper";
 import Board from "components/Board";
 import Background from "layouts/Background";
 import Input from "components/Input";
 import SquareButton from "components/SquareButton";
-import { ReactComponent as Search } from "assets/search.svg";
+import Dropdown from "components/Dropdown";
 import { GoogleLogin } from "react-google-login";
 
 const Landing = (props) => {
   const { history } = props;
+  const attractions = ["類別"];
 
   return (
     <Background>
@@ -32,6 +34,7 @@ const Landing = (props) => {
           <SquareButton>
             <Search width={"16px"} />
           </SquareButton>
+          <Dropdown options={attractions} />
         </Box>
       </Paper>
       <Board
