@@ -12,6 +12,7 @@ const SquareButton = (props) => {
 };
 
 const Box = styled.button`
+  cursor: pointer;
   width: 40px;
   height: 40px;
   border-radius: 6px;
