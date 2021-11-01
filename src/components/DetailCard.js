@@ -13,9 +13,7 @@ import { ReactComponent as LocationRef } from "assets/location.svg";
 import { ReactComponent as ClockRef } from "assets/clock.svg";
 import { ReactComponent as StampRef } from "assets/stamp.svg";
 import { ReactComponent as TelephoneRef } from "assets/telephone.svg";
-
 import SquareButton from "components/SquareButton";
-import RectButton from "components/RectButton";
 
 const DetailCard = (props) => {
   const {
