@@ -44,7 +44,7 @@ const Landing = (props) => {
 
   return (
     <Background>
-      <Paper
+      {/* <Paper
         style={{ width: "100%", height: "536px", padding: "23px 27px" }}
         widthOfShadowLength={"80%"}
         rotateOfShadow={2}
@@ -80,7 +80,7 @@ const Landing = (props) => {
       />
       <Category title={"熱門城市"}>
         <Triangle />
-      </Category>
+      </Category> */}
     </Background>
   );
 };

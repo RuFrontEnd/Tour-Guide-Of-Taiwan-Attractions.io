@@ -14,7 +14,7 @@ const Paper = (props) => {
   } = props;
   return (
     <Box
-      style={style}
+      style={children ? style : { width: "200px", height: "100px" }}
       className={className}
       widthOfShadowLength={widthOfShadowLength}
       rotateOfShadow={rotateOfShadow}
