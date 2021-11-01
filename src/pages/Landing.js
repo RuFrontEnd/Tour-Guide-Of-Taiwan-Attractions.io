@@ -8,6 +8,7 @@ import { ReactComponent as Triangle } from "assets/triangle.svg";
 import landing from "assets/landing.png";
 import cardImg_tmp from "assets/cardImg_tmp.png";
 import cardSmImg_tmp from "assets/cardSmImg_tmp.png";
+import detailCard_tmp from "assets/detailCard_tmp.png";
 import Paper from "components/Paper";
 import Board from "components/Board";
 import Background from "layouts/Background";
@@ -17,6 +18,7 @@ import Dropdown from "components/Dropdown";
 import Category from "components/Category";
 import Card from "components/Card";
 import CardSm from "components/CardSm";
+import DetailCard from "components/DetailCard";
 
 const Landing = (props) => {
   const { history } = props;
@@ -30,6 +32,14 @@ const Landing = (props) => {
     src: cardSmImg_tmp,
     title: "正濱漁港懷舊碼頭",
     area: "基隆市中正區",
+  };
+  const detail = {
+    src: detailCard_tmp,
+    title: "合歡山國際暗空公園-星空清境跨年活動",
+    time: "開放式空間，無時間限制",
+    fee: "免費",
+    area: "基隆市中山區湖海路一、二段(協和街)",
+    tel: "886-2-24287664",
   };
 
   return (
@@ -52,6 +62,9 @@ const Landing = (props) => {
           <Dropdown options={attractions} />
         </Box>
       </Paper>
+      <DetailCard style={{ margin: "50px" }} info={detail}>
+        南投縣與各單位多年於合歡山舉辦清境高山跨年晚會活動，今年將活動主軸由傳統跨年晚會轉化成為台灣高山星空遊程之體驗活動，在擁有東南亞區最佳的星空觀測環境。奇特造型，值得深入觀賞體會。
+      </DetailCard>
       <CardSm
         style={{ width: "206px", height: "auto", margin: "50px 50px" }}
         info={hotFoods}

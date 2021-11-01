@@ -27,11 +27,10 @@ const Paper = (props) => {
 };
 
 const Box = styled.section`
+  display: inline-block;
   background-color: white;
   position: relative;
   box-sizing: border-box;
-  width: 100%;
-  height: 200px;
 
   &:before,
   &:after {
