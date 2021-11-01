@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components/macro";
 import { __0D0B0C__ } from "variable/variable";
 
+const defaultStyle = { width: "200px", height: "100px" };
+
 const Paper = (props) => {
   const {
     style,
@@ -14,7 +16,7 @@ const Paper = (props) => {
   } = props;
   return (
     <Box
-      style={children ? style : { width: "200px", height: "100px" }}
+      style={children ? style : defaultStyle}
       className={className}
       widthOfShadowLength={widthOfShadowLength}
       rotateOfShadow={rotateOfShadow}
