@@ -9,8 +9,8 @@ const Card = (props) => {
   const {
     className,
     style,
-    children = "內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文",
-    info = { src: "", alt: "圖片", title: "標題", area: "某某市 某某區" },
+    children = "內文",
+    info = { src: "", alt: "", title: "標題", area: "某某市 某某區" },
   } = props;
   return (
     <Paper

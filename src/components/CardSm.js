@@ -9,8 +9,7 @@ const CardSm = (props) => {
   const {
     className,
     style,
-    children,
-    info = { src: "", alt: "圖片", title: "標題" },
+    info = { src: "", alt: "", title: "標題", area: "某某市 某某區" },
   } = props;
   return (
     <Paper
@@ -23,7 +22,6 @@ const CardSm = (props) => {
         <Image src={info.src} alt={info.alt} />
         <Info>
           <Title>{info.title}</Title>
-          <Intro>{children}</Intro>
           <More>
             <Area>
               <Location width="11px" height="13px" />
@@ -37,7 +35,6 @@ const CardSm = (props) => {
 };
 
 const Box = styled.section`
-  /* display: flex; */
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -51,18 +48,13 @@ const Image = styled.img`
   margin-bottom: 10px;
 `;
 
-const Info = styled.div``;
+const Info = styled.div`
+  max-width: 182px;
+`;
 
 const Title = styled.h2`
   font-size: 14px;
   height: 42px;
-  line-height: 21px;
-  margin-bottom: 14px;
-`;
-
-const Intro = styled.p`
-  color: ${__ACACAC__()};
-  font-size: 14px;
   line-height: 21px;
   margin-bottom: 14px;
 `;
