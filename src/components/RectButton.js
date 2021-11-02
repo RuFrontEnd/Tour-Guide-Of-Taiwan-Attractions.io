@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { __FFF__,__FF1D6C__ } from "variable/variable";
+import { __FFF__, __FF1D6C__ } from "variable/variable";
 
 const RectButton = (props) => {
-  const { className, style, children } = props;
+  const { className, style, children = "方形按鈕" } = props;
   return (
     <Box style={style} className={className}>
       {children}
@@ -16,11 +16,11 @@ const Box = styled.button`
   width: 120px;
   height: 40px;
   border-radius: 6px;
-  border: 1px solid ${__FF1D6C__()}; 
+  border: 1px solid ${__FF1D6C__()};
   color: ${__FF1D6C__()};
   transition: 0.2s;
 
-  &:hover{
+  &:hover {
     background-color: ${__FF1D6C__()};
     color: ${__FFF__()};
   }

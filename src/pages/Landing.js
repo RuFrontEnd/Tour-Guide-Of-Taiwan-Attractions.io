@@ -19,6 +19,7 @@ import Category from "components/Category";
 import Card from "components/Card";
 import CardSm from "components/CardSm";
 import DetailCard from "components/DetailCard";
+import RectButton from "components/RectButton";
 
 const Landing = (props) => {
   const { history } = props;
@@ -52,6 +53,8 @@ const Landing = (props) => {
       <Paper />
       <Dropdown />
       <Input />
+      <RectButton />
+      <SquareButton />
       {/* <Paper
         style={{ width: "100%", height: "536px", padding: "23px 27px" }}
         widthOfShadowLength={"80%"}
