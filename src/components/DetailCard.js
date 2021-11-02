@@ -20,7 +20,15 @@ const DetailCard = (props) => {
     className,
     style,
     children,
-    info = { src: "", alt: "圖片", title: "標題" },
+    info = {
+      src: "",
+      alt: "",
+      title: "標題",
+      time: "時段",
+      fee: "費用",
+      area: "某某市某某區某某路某段(某街)",
+      tel: "886-x-xxxxxxxx",
+    },
   } = props;
   return (
     <Paper
