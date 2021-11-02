@@ -9,8 +9,8 @@ const Card = (props) => {
   const {
     className,
     style,
-    children,
-    info = { src: "", alt: "圖片", title: "標題" },
+    children = "內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文",
+    info = { src: "", alt: "圖片", title: "標題", area: "某某市 某某區" },
   } = props;
   return (
     <Paper
@@ -22,8 +22,10 @@ const Card = (props) => {
       <Box>
         <Image src={info.src} alt={info.alt} />
         <Info>
-          <Title>{info.title}</Title>
-          <Intro>{children}</Intro>
+          <Content>
+            <Title>{info.title}</Title>
+            <Intro>{children}</Intro>
+          </Content>
           <More>
             <Area>
               <Location />
@@ -52,11 +54,18 @@ const Image = styled.img`
   margin-right: 16px;
 `;
 
-const Info = styled.div``;
+const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const Content = styled.div``;
 
 const Title = styled.h2`
   font-size: 16px;
   margin-bottom: 14px;
+  flex-basis: 10px;
 `;
 
 const Intro = styled.p`
@@ -64,6 +73,12 @@ const Intro = styled.p`
   font-size: 14px;
   line-height: 21px;
   margin-bottom: 14px;
+  max-width: 278px;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow : ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
 `;
 
 const More = styled.div`
@@ -74,6 +89,9 @@ const More = styled.div`
 const Area = styled.div`
   display: flex;
   align-items: center;
+  margin-right: 27px;
+  font-size: 14px;
+  line-height: 21px;
 `;
 
 const Location = styled(LocationRef)`
@@ -88,6 +106,7 @@ const District = styled.p`
 
 const DeatiledButton = styled(RectButton)`
   margin-right: 10px;
+  margin-bottom: 3px;
 `;
 
 export default Card;

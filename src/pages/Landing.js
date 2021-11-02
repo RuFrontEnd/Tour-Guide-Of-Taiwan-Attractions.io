@@ -44,6 +44,7 @@ const Landing = (props) => {
 
   return (
     <Background>
+      <Card />
       {/* <Paper
         style={{ width: "100%", height: "536px", padding: "23px 27px" }}
         widthOfShadowLength={"80%"}

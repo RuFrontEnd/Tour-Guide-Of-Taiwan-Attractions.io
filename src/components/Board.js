@@ -15,7 +15,7 @@ const Box = styled.section`
   background-color: white;
   position: relative;
   box-sizing: border-box;
-  width: 100%;
+  width: 150px;
   height: 200px;
   box-shadow:  0px 4px 3px ${__0D0B0C__(0.2)};
 `;
