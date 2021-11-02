@@ -45,13 +45,13 @@ const Landing = (props) => {
 
   return (
     <Background>
-      <Board />
+      {/* <Board />
       <Card />
       <CardSm />
-      {/* <Category /> */}
+      <Category />
       <DetailCard />
       <Paper />
-      {/* <Dropdown />
+      <Dropdown />
       <Input />
       <RectButton />
       <SquareButton /> */}
