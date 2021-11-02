@@ -13,13 +13,13 @@ const Card = (props) => {
     info = { src: "", alt: "", title: "標題", area: "某某市 某某區" },
   } = props;
   return (
-    <Paper
+    <Container
       style={style}
       className={className}
       widthOfShadowLength={"50%"}
       rotateOfShadow={8}
     >
-      <Box>
+      <Wrap>
         <Image src={info.src} alt={info.alt} />
         <Info>
           <Content>
@@ -34,17 +34,20 @@ const Card = (props) => {
             <DeatiledButton>活動詳情</DeatiledButton>
           </More>
         </Info>
-      </Box>
-    </Paper>
+      </Wrap>
+    </Container>
   );
 };
 
-const Box = styled.section`
-  display: flex;
-  width: 100%;
-  height: 100%;
+const Container = styled(Paper)`
+  width: auto;
+  height: auto;
   box-sizing: border-box;
   padding: 16px;
+`;
+
+const Wrap = styled.div`
+  display: flex;
 `;
 
 const Image = styled.img`
@@ -76,7 +79,7 @@ const Intro = styled.p`
   max-width: 278px;
   display: -webkit-box;
   overflow: hidden;
-  text-overflow : ellipsis;
+  text-overflow: ellipsis;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
 `;

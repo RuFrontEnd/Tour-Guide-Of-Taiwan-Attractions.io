@@ -45,9 +45,9 @@ const Landing = (props) => {
 
   return (
     <Background>
-      {/* <Board />
-      <Card /> */}
-      <CardSm />
+      <Board />
+      <Card />
+      {/* <CardSm /> */}
       {/* <Category />
       <DetailCard />
       <Paper /> */}
