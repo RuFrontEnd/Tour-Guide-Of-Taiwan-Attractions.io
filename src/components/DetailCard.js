@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import PaperRef from "components/Paper";
+import Paper from "components/Paper";
 import {
   __ACACAC__,
   __FF1D6C__,
@@ -31,13 +31,13 @@ const DetailCard = (props) => {
     },
   } = props;
   return (
-    <Paper
+    <Container
       style={style}
       className={className}
       widthOfShadowLength={"50%"}
       rotateOfShadow={8}
     >
-      <Box>
+      <Wrap>
         <Image src={info.src} alt={info.alt} />
         <Buttons>
           <LeftSwitchButton>
@@ -69,18 +69,20 @@ const DetailCard = (props) => {
             </Trait>
           </More>
         </Info>
-      </Box>
-    </Paper>
+      </Wrap>
+    </Container>
   );
 };
 
-const Paper = styled(PaperRef)`
+const Container = styled(Paper)`
+  width: auto;
+  height: auto;
   padding: 32px;
+  box-sizing: border-box;
 `;
 
-const Box = styled.section`
+const Wrap = styled.div`
   display: grid;
-  box-sizing: border-box;
 `;
 
 const Image = styled.img`

@@ -47,10 +47,10 @@ const Landing = (props) => {
     <Background>
       <Board />
       <Card />
-      {/* <CardSm /> */}
-      {/* <Category />
+      <CardSm />
+      {/* <Category /> */}
       <DetailCard />
-      <Paper /> */}
+      <Paper />
       {/* <Dropdown />
       <Input />
       <RectButton />
