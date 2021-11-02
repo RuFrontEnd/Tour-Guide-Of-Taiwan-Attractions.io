@@ -12,31 +12,29 @@ const CardSm = (props) => {
     info = { src: "", alt: "", title: "標題", area: "某某市 某某區" },
   } = props;
   return (
-    <Paper
+    <Box
       style={style}
       className={className}
       widthOfShadowLength={"50%"}
       rotateOfShadow={8}
     >
-      <Box>
-        <Image src={info.src} alt={info.alt} />
-        <Info>
-          <Title>{info.title}</Title>
-          <More>
-            <Area>
-              <Location width="11px" height="13px" />
-              <District>{info.area}</District>
-            </Area>
-          </More>
-        </Info>
-      </Box>
-    </Paper>
+      <Image src={info.src} alt={info.alt} />
+      <Info>
+        <Title>{info.title}</Title>
+        <More>
+          <Area>
+            <Location width="11px" height="13px" />
+            <District>{info.area}</District>
+          </Area>
+        </More>
+      </Info>
+    </Box>
   );
 };
 
-const Box = styled.section`
-  width: 100%;
-  height: 100%;
+const Box = styled(Paper)`
+  width: auto;
+  height: auto;
   box-sizing: border-box;
   padding: 12px 12px 15.5px 12px;
 `;
