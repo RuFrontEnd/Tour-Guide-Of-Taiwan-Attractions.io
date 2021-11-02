@@ -13,7 +13,6 @@ const Board = (props) => {
 
 const Box = styled.section`
   background-color: white;
-  position: relative;
   box-sizing: border-box;
   width: 150px;
   height: 200px;

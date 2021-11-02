@@ -44,9 +44,11 @@ const Landing = (props) => {
 
   return (
     <Background>
-      <Paper />
+      <Board />
       <Card />
-      <CardSm info={hotAttractions} />
+      <CardSm />
+      <Category />
+      <Paper />
       {/* <Paper
         style={{ width: "100%", height: "536px", padding: "23px 27px" }}
         widthOfShadowLength={"80%"}
