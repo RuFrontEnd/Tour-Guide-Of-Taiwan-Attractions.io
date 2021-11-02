@@ -50,6 +50,7 @@ const Landing = (props) => {
       <Category />
       <DetailCard />
       <Paper />
+      <Dropdown />
       {/* <Paper
         style={{ width: "100%", height: "536px", padding: "23px 27px" }}
         widthOfShadowLength={"80%"}
