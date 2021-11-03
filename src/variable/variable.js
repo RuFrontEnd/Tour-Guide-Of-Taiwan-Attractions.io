@@ -1,3 +1,5 @@
+import { getCreateColorMethod } from "utils/color";
+
 export const mainColor = "#F3F4F6";
 export const shallowMainColor = "#F4F5F7";
 export const lightReceivingColor = "#ffffff";
@@ -27,3 +29,4 @@ export const __ACACAC__ = (opacity) =>
   `${opacity ? `rgba(172, 172, 172, ${opacity})` : "#ACACAC"}`;
 export const __007350__ = (opacity) =>
   `${opacity ? `rgba(0, 115, 80, ${opacity})` : "#007350"}`;
+export const __FFB72C__ = getCreateColorMethod([255, 183, 44], "#FFB72C");
