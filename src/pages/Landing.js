@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
-import { placeholderColor } from "variable/variable";
-import GoolgeLogo from "assets/google-logo.svg";
+import { __FFF__, __FF1D6C__, __FFB72C__ } from "variable/variable";
+import { ReactComponent as WelcomeToTaiwan } from "assets/welcomeToTaiwan.svg";
 import { ReactComponent as Search } from "assets/search.svg";
+import { ReactComponent as Gps } from "assets/gps.svg";
 import { ReactComponent as Triangle } from "assets/triangle.svg";
 import landing from "assets/landing.png";
 import cardImg_tmp from "assets/cardImg_tmp.png";
@@ -62,15 +63,22 @@ const Landing = (props) => {
       >
         <Box>
           <Title>
-            <MainTitle>Welcome To</MainTitle>
-            <ViceTitle>Taiwan</ViceTitle>
+            <WelcomeToTaiwan />
             <Remark>台北、台中、台南、屏東、宜蘭……遊遍台灣</Remark>
           </Title>
-          <Input placeholder="搜尋關鍵字" />
-          <SquareButton>
-            <Search width={"16px"} />
-          </SquareButton>
-          <Dropdown options={attractions} />
+          <SearchBox>
+            <SearchBar placeholder="搜尋關鍵字" />
+            <SearchButton>
+              <SearchIcon width={"16px"} />
+            </SearchButton>
+          </SearchBox>
+          <DropdownBox>
+            <CatgoreyDropdown options={attractions} />
+            <CityDropdown />
+            <GpshButton>
+              <GpsIcon height={"24px"} />
+            </GpshButton>
+          </DropdownBox>
         </Box>
       </Paper>
       {/* <DetailCard style={{ margin: "50px" }} info={detail}>
@@ -103,19 +111,61 @@ const Box = styled.div`
   background-size: cover;
   background-position: center center;
 `;
-
-// const Logo = styled.img`
-//   width: 205px;
-//   height: 135px;
-//   margin-bottom: 130px;
-// `;
-
 const Title = styled.div``;
 
-const MainTitle = styled.h1``;
+const Remark = styled.p`
+  color: ${__FFF__()};
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+`;
 
-const ViceTitle = styled.h1``;
+const SearchBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+`;
 
-const Remark = styled.p``;
+const SearchBar = styled(Input)`
+  width: 445px;
+  margin-right: 6px;
+`;
+
+const SearchButton = styled(SquareButton)`
+  background-color: ${__FF1D6C__()};
+`;
+
+const SearchIcon = styled(Search)`
+  & > path {
+    fill: ${__FFF__()};
+    stroke: ${__FFF__()};
+  }
+`;
+
+const DropdownBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const CatgoreyDropdown = styled(Dropdown)`
+  width: 219px;
+  margin-right: 7px;
+`;
+
+const CityDropdown = styled(Dropdown)`
+  width: 219px;
+  margin-right: 6px;
+`;
+
+const GpshButton = styled(SquareButton)`
+  background-color: ${__FFB72C__()};
+`;
+
+const GpsIcon = styled(Gps)`
+  & > path {
+    fill: ${__FFF__()};
+    stroke: ${__FFF__()};
+  }
+`;
 
 export default withRouter(Landing);
