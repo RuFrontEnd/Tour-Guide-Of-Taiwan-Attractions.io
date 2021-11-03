@@ -1,4 +1,4 @@
-import { SHOWNAVBAR } from 'redux/navBar/navBarTypes';
+import { SHOWNAVBAR, SETNAVBARHEIGHT } from "redux/navBar/navBarTypes";
 
 const initialState = {
   showNavBar: true,
@@ -11,6 +11,12 @@ const navBarReducers = (state = initialState, action) => {
       return {
         ...state,
         showNavBar: action.showNavBar,
+      };
+
+    case SETNAVBARHEIGHT:
+      return {
+        ...state,
+        height: action.height,
       };
 
     default:

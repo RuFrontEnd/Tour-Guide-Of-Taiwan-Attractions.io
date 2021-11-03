@@ -55,7 +55,7 @@ const Landing = (props) => {
       <Input />
       <RectButton />
       <SquareButton /> */}
-      {/* <Paper
+      <Paper
         style={{ width: "100%", height: "536px", padding: "23px 27px" }}
         widthOfShadowLength={"80%"}
         rotateOfShadow={2}
@@ -72,7 +72,7 @@ const Landing = (props) => {
           </SquareButton>
           <Dropdown options={attractions} />
         </Box>
-      </Paper> */}
+      </Paper>
       {/* <DetailCard style={{ margin: "50px" }} info={detail}>
         南投縣與各單位多年於合歡山舉辦清境高山跨年晚會活動，今年將活動主軸由傳統跨年晚會轉化成為台灣高山星空遊程之體驗活動，在擁有東南亞區最佳的星空觀測環境。奇特造型，值得深入觀賞體會。
       </DetailCard>

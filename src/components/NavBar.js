@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setNavBarHeight } from "redux/navBar/navBarActions";
 import styled from "styled-components/macro";
 import { navBarColor } from "variable/variable";
 import { ReactComponent as Logo } from "assets/logo.svg";
@@ -9,9 +11,16 @@ import Space from "layouts/Space";
 
 const NavBar = (props) => {
   const { className } = props;
+  const dispatch = useDispatch();
+  const $NavbarContainer = useRef();
+
+  useEffect(() => {
+    dispatch(setNavBarHeight($NavbarContainer.current.clientHeight));
+  }, []);
+
   return (
     <Space style={NavBarStyle} className={className}>
-      <Box>
+      <Box ref={$NavbarContainer}>
         <Logo />
         <Options>
           <Attraction />
