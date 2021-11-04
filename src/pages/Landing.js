@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import { __FFF__, __FF1D6C__, __FFB72C__ } from "variable/variable";
 import { ReactComponent as WelcomeToTaiwan } from "assets/welcomeToTaiwan.svg";
 import { ReactComponent as Search } from "assets/search.svg";
 import { ReactComponent as Gps } from "assets/gps.svg";
 import { ReactComponent as Triangle } from "assets/triangle.svg";
+import { ReactComponent as TriangleTitle } from "assets/triangle_title.svg";
 import landing from "assets/landing.png";
 import cardImg_tmp from "assets/cardImg_tmp.png";
 import cardSmImg_tmp from "assets/cardSmImg_tmp.png";
@@ -17,6 +20,7 @@ import Input from "components/Input";
 import SquareButton from "components/SquareButton";
 import Dropdown from "components/Dropdown";
 import Category from "components/Category";
+import Space from "layouts/Space";
 import Card from "components/Card";
 import CardSm from "components/CardSm";
 import DetailCard from "components/DetailCard";
@@ -43,6 +47,25 @@ const Landing = (props) => {
     area: "基隆市中山區湖海路一、二段(協和街)",
     tel: "886-2-24287664",
   };
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 6,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
 
   return (
     <Background>
@@ -56,12 +79,8 @@ const Landing = (props) => {
       <Input />
       <RectButton />
       <SquareButton /> */}
-      <Paper
-        style={{ width: "100%", height: "536px", padding: "23px 27px" }}
-        widthOfShadowLength={"80%"}
-        rotateOfShadow={2}
-      >
-        <Box>
+      <LandingImgBox widthOfShadowLength={"80%"} rotateOfShadow={2}>
+        <LandingImg>
           <Title>
             <WelcomeToTaiwan />
             <Remark>台北、台中、台南、屏東、宜蘭……遊遍台灣</Remark>
@@ -79,8 +98,58 @@ const Landing = (props) => {
               <GpsIcon height={"24px"} />
             </GpshButton>
           </DropdownBox>
-        </Box>
-      </Paper>
+        </LandingImg>
+      </LandingImgBox>
+      <HotCitiesBox>
+        <HotCitiesTitle title="熱門城市">
+          <TriangleTitle />
+        </HotCitiesTitle>
+        <HotCitiesCarousel responsive={responsive}>
+          <HotCitiy>
+            <HotCityBoard />
+          </HotCitiy>
+
+          <HotCitiy>
+            <HotCityBoards>
+              <HalfHotCityBoard />
+              <HalfHotCityBoard />
+            </HotCityBoards>
+          </HotCitiy>
+
+          <HotCitiy>
+            <HotCityBoard />
+          </HotCitiy>
+
+          <HotCitiy>
+            <HotCityBoards>
+              <HalfHotCityBoard />
+              <HalfHotCityBoard />
+            </HotCityBoards>
+          </HotCitiy>
+
+          <HotCitiy>
+            <HotCityBoard />
+          </HotCitiy>
+
+          <HotCitiy>
+            <HotCityBoards>
+              <HalfHotCityBoard />
+              <HalfHotCityBoard />
+            </HotCityBoards>
+          </HotCitiy>
+
+          <HotCitiy>
+            <HotCityBoard />
+          </HotCitiy>
+
+          <HotCitiy>
+            <HotCityBoards>
+              <HalfHotCityBoard />
+              <HalfHotCityBoard />
+            </HotCityBoards>
+          </HotCitiy>
+        </HotCitiesCarousel>
+      </HotCitiesBox>
       {/* <DetailCard style={{ margin: "50px" }} info={detail}>
         南投縣與各單位多年於合歡山舉辦清境高山跨年晚會活動，今年將活動主軸由傳統跨年晚會轉化成為台灣高山星空遊程之體驗活動，在擁有東南亞區最佳的星空觀測環境。奇特造型，值得深入觀賞體會。
       </DetailCard>
@@ -100,18 +169,10 @@ const Landing = (props) => {
       <Category title={"熱門城市"}>
         <Triangle />
       </Category> */}
+      <div>123</div>
     </Background>
   );
 };
-
-const Box = styled.div`
-  width: 100%;
-  height: 100%;
-  background-image: url(${landing});
-  background-size: cover;
-  background-position: center center;
-`;
-const Title = styled.div``;
 
 const Remark = styled.p`
   color: ${__FFF__()};
@@ -166,6 +227,63 @@ const GpsIcon = styled(Gps)`
     fill: ${__FFF__()};
     stroke: ${__FFF__()};
   }
+`;
+
+const HotCitiesBox = styled.div`
+  padding: 0px 108px;
+  margin-bottom: 200px;
+`;
+
+const HotCitiy = styled.div`
+  height: 245px;
+  background-color: pink;
+  padding: 0px 6.5px;
+`;
+
+const HotCityBoard = styled(Board)`
+  width: 100%;
+  height: 100%;
+`;
+
+const HalfHotCityBoard = styled(Board)`
+  width: 100%;
+  height: 50%;
+`;
+
+const HotCityBoards = styled(Board)`
+  width: 100%;
+  height: 100%;
+`;
+
+const HotCitiesCarousel = styled(Carousel)`
+  height: 245px;
+`;
+
+const HotCitiesTitle = styled(Category)`
+  margin-bottom: 12px;
+`;
+
+const Title = styled.div`
+  margin-bottom: 16px;
+`;
+
+const LandingImg = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url(${landing});
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LandingImgBox = styled(Paper)`
+  width: 100%;
+  height: 536px;
+  padding: 23px 27px;
+  margin-bottom: 90px;
 `;
 
 export default withRouter(Landing);

@@ -15,8 +15,7 @@ const Box = styled.section`
   left: 0;
   background-color: ${mainColor};
   width: 100%;
-  height: ${(props) =>
-    props.navBarHeight ? `calc(100% - ${props.navBarHeight}px)` : "100%"};
+  height: auto;
   z-index: 0;
 `;
 
