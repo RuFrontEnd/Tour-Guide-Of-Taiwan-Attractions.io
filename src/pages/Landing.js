@@ -174,77 +174,6 @@ const Landing = (props) => {
   );
 };
 
-const Remark = styled.p`
-  color: ${__FFF__()};
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 21px;
-`;
-
-const SearchBox = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-`;
-
-const SearchBar = styled(Input)`
-  width: 445px;
-  margin-right: 6px;
-`;
-
-const SearchButton = styled(SquareButton)`
-  background-color: ${__FF1D6C__()};
-`;
-
-const SearchIcon = styled(Search)`
-  & > path {
-    fill: ${__FFF__()};
-    stroke: ${__FFF__()};
-  }
-`;
-
-const DropdownBox = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const CatgoreyDropdown = styled(Dropdown)`
-  width: 219px;
-  margin-right: 7px;
-`;
-
-const CityDropdown = styled(Dropdown)`
-  width: 219px;
-  margin-right: 6px;
-`;
-
-const GpshButton = styled(SquareButton)`
-  background-color: ${__FFB72C__()};
-`;
-
-const GpsIcon = styled(Gps)`
-  & > path {
-    fill: ${__FFF__()};
-    stroke: ${__FFF__()};
-  }
-`;
-
-const HotCitiesBox = styled.div`
-  padding: 0px 108px;
-  margin-bottom: 200px;
-`;
-
-const HotCitiy = styled.div`
-  height: 245px;
-  background-color: pink;
-  padding: 0px 6.5px;
-`;
-
-const HotCityBoard = styled(Board)`
-  width: 100%;
-  height: 100%;
-`;
-
 const HalfHotCityBoard = styled(Board)`
   width: 100%;
   height: 50%;
@@ -255,12 +184,83 @@ const HotCityBoards = styled(Board)`
   height: 100%;
 `;
 
+const HotCityBoard = styled(Board)`
+  width: 100%;
+  height: 100%;
+`;
+
+const HotCitiy = styled.div`
+  height: 245px;
+  background-color: pink;
+  padding: 0px 6.5px;
+`;
+
 const HotCitiesCarousel = styled(Carousel)`
   height: 245px;
 `;
 
 const HotCitiesTitle = styled(Category)`
   margin-bottom: 12px;
+`;
+
+const HotCitiesBox = styled.div`
+  padding: 0px 108px;
+  margin-bottom: 200px;
+`;
+
+const GpsIcon = styled(Gps)`
+  & > path {
+    fill: ${__FFF__()};
+    stroke: ${__FFF__()};
+  }
+`;
+
+const GpshButton = styled(SquareButton)`
+  background-color: ${__FFB72C__()};
+`;
+
+const CityDropdown = styled(Dropdown)`
+  width: 219px;
+  margin-right: 6px;
+`;
+
+const CatgoreyDropdown = styled(Dropdown)`
+  width: 219px;
+  margin-right: 7px;
+`;
+
+const DropdownBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const SearchIcon = styled(Search)`
+  & > path {
+    fill: ${__FFF__()};
+    stroke: ${__FFF__()};
+  }
+`;
+
+const SearchButton = styled(SquareButton)`
+  background-color: ${__FF1D6C__()};
+`;
+
+const SearchBar = styled(Input)`
+  width: 445px;
+  margin-right: 6px;
+`;
+
+const SearchBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const Remark = styled.p`
+  color: ${__FFF__()};
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
 `;
 
 const Title = styled.div`
