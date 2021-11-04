@@ -1,4 +1,4 @@
-const getCreateColorMethod = (slip, color) => {
+export const getCreateColorMethod = (slip, color) => {
   return (opacity) =>
     `${
       opacity
