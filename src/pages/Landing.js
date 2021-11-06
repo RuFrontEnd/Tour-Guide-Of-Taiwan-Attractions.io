@@ -49,6 +49,20 @@ const Landing = (props) => {
     area: "基隆市中山區湖海路一、二段(協和街)",
     tel: "886-2-24287664",
   };
+
+  const hotCities = [
+    { name: "台北市", src: landing },
+    { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
+    { name: "台北市", src: landing },
+    { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
+    { name: "台北市", src: landing },
+    { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
+    { name: "台北市", src: landing },
+    { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
+    { name: "台北市", src: landing },
+    { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
+  ];
+
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -108,70 +122,41 @@ const Landing = (props) => {
         </Kind>
 
         <HotCitiesCarousel responsive={responsive}>
-          <HotCitiy>
-            <HotCityBoard>
-              <HotCityImg src={landing} />
-              <HotCityInfo>
-                <HotCityIcon />
-                <HotCityName>台北市</HotCityName>
-              </HotCityInfo>
-              <HotCityMask />
-            </HotCityBoard>
-          </HotCitiy>
-
-          <HotCitiy>
-            <HotCityBoards>
-              <HalfHotCityBoard>
-                <HotCityImg src={landing} />
-                <HalfHotCityInfo>
-                  <HotCityIcon />
-                  <HotCityName>台北市</HotCityName>
-                </HalfHotCityInfo>
-                <HalfHotCityMask />
-              </HalfHotCityBoard>
-              <HalfHotCityBoard>
-                <HotCityImg src={landing} />
-                <HalfHotCityInfo>
-                  <HotCityIcon />
-                  <HotCityName>台北市</HotCityName>
-                </HalfHotCityInfo>
-                <HalfHotCityMask />
-              </HalfHotCityBoard>
-            </HotCityBoards>
-          </HotCitiy>
-
-          <HotCitiy>
-            <HotCityBoard />
-          </HotCitiy>
-
-          <HotCitiy>
-            <HotCityBoards>
-              <HalfHotCityBoard />
-              <HalfHotCityBoard />
-            </HotCityBoards>
-          </HotCitiy>
-
-          <HotCitiy>
-            <HotCityBoard />
-          </HotCitiy>
-
-          <HotCitiy>
-            <HotCityBoards>
-              <HalfHotCityBoard />
-              <HalfHotCityBoard />
-            </HotCityBoards>
-          </HotCitiy>
-
-          <HotCitiy>
-            <HotCityBoard />
-          </HotCitiy>
-
-          <HotCitiy>
-            <HotCityBoards>
-              <HalfHotCityBoard />
-              <HalfHotCityBoard />
-            </HotCityBoards>
-          </HotCitiy>
+          {hotCities.map((hotCity, index) =>
+            index % 2 === 0 ? (
+              <HotCitiy>
+                <HotCityBoard>
+                  <HotCityImg src={hotCity.src} />
+                  <HotCityInfo>
+                    <HotCityIcon />
+                    <HotCityName>{hotCity.name}</HotCityName>
+                  </HotCityInfo>
+                  <HotCityMask />
+                </HotCityBoard>
+              </HotCitiy>
+            ) : (
+              <HotCitiy>
+                <HotCityBoards>
+                  <HalfHotCityBoard>
+                    <HotCityImg src={hotCity.src[0]} />
+                    <HalfHotCityInfo>
+                      <HotCityIcon />
+                      <HotCityName>{hotCity.name[0]}</HotCityName>
+                    </HalfHotCityInfo>
+                    <HalfHotCityMask />
+                  </HalfHotCityBoard>
+                  <HalfHotCityBoard>
+                    <HotCityImg src={hotCity.src[1]} />
+                    <HalfHotCityInfo>
+                      <HotCityIcon />
+                      <HotCityName>{hotCity.name[1]}</HotCityName>
+                    </HalfHotCityInfo>
+                    <HalfHotCityMask />
+                  </HalfHotCityBoard>
+                </HotCityBoards>
+              </HotCitiy>
+            )
+          )}
         </HotCitiesCarousel>
       </Space>
       {/* <DetailCard style={{ margin: "50px" }} info={detail}>
