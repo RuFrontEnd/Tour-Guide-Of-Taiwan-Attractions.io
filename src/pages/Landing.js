@@ -7,12 +7,13 @@ import { __FFF__, __FF1D6C__, __FFB72C__ } from "variable/variable";
 import { ReactComponent as WelcomeToTaiwan } from "assets/welcomeToTaiwan.svg";
 import { ReactComponent as Search } from "assets/search.svg";
 import { ReactComponent as Gps } from "assets/gps.svg";
-import { ReactComponent as Triangle } from "assets/triangle.svg";
+import { ReactComponent as Location } from "assets/location.svg";
 import { ReactComponent as TriangleTitle } from "assets/triangle_title.svg";
 import landing from "assets/landing.png";
 import cardImg_tmp from "assets/cardImg_tmp.png";
 import cardSmImg_tmp from "assets/cardSmImg_tmp.png";
 import detailCard_tmp from "assets/detailCard_tmp.png";
+import boardImg_tmp from "assets/boardImg_tmp.png";
 import Paper from "components/Paper";
 import Board from "components/Board";
 import Background from "layouts/Background";
@@ -54,8 +55,8 @@ const Landing = (props) => {
       items: 5,
     },
     desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 6,
+      breakpoint: { max: 3000, min: 1440 },
+      items: 8,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -104,15 +105,27 @@ const Landing = (props) => {
         <HotCitiesTitle title="熱門城市">
           <TriangleTitle />
         </HotCitiesTitle>
+
         <HotCitiesCarousel responsive={responsive}>
           <HotCitiy>
-            <HotCityBoard />
+            <HotCityBoard>
+              <HotCityImg src={landing} />
+              <HotCityInfo>
+                <HotCityIcon />
+                <HotCityName>台北市</HotCityName>
+              </HotCityInfo>
+              <HotCityMask />
+            </HotCityBoard>
           </HotCitiy>
 
           <HotCitiy>
             <HotCityBoards>
-              <HalfHotCityBoard />
-              <HalfHotCityBoard />
+              <HalfHotCityBoard>
+                <HotCityImg src={landing} />
+              </HalfHotCityBoard>
+              <HalfHotCityBoard>
+                <HotCityImg src={landing} />
+              </HalfHotCityBoard>
             </HotCityBoards>
           </HotCitiy>
 
@@ -169,14 +182,82 @@ const Landing = (props) => {
       <Category title={"熱門城市"}>
         <Triangle />
       </Category> */}
-      <div>123</div>
+      <HotCityImg src={landing} />
+      <div
+        style={{
+          width: "100px",
+          backgroundColor: "red",
+          padding: "0px 10px",
+          boxSizing: "border-box",
+          position: "relative",
+        }}
+      >
+        <div
+          style={{
+            width: "100%",
+            backgroundColor: "blue",
+            position: "absolute",
+          }}
+        >
+          123
+        </div>
+      </div>
+      <div style={{ width: "100px", margin: "10px", display: "inline-block" }}>
+        345
+      </div>
+      <div style={{ width: "100px", margin: "10px", display: "inline-block" }}>
+        567
+      </div>
     </Background>
   );
 };
 
+const HotCityMask = styled.div`
+  background-color: black;
+  box-sizing: border-box;
+  position: absolute;
+  width: calc(100% - 24px);
+  height: calc(100% - 28px);
+  opacity: 0.3;
+  z-index: 0;
+`;
+
+const HotCityName = styled.p`
+  color: ${__FFF__()};
+`;
+
+const HotCityInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+const HotCityIcon = styled(Location)`
+  width: 16px;
+  height: 19px;
+  margin-bottom: 7.2px;
+
+  & > path {
+    fill: ${__FFF__()};
+  }
+`;
+
+const HotCityImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 const HalfHotCityBoard = styled(Board)`
   width: 100%;
-  height: 50%;
+  height: 120px;
+  padding: 7px 8px;
+  margin-bottom: 5px;
 `;
 
 const HotCityBoards = styled(Board)`
@@ -185,13 +266,17 @@ const HotCityBoards = styled(Board)`
 `;
 
 const HotCityBoard = styled(Board)`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit: cover;
   width: 100%;
-  height: 100%;
+  height: 245px;
+  padding: 14px 12px;
 `;
 
 const HotCitiy = styled.div`
-  height: 245px;
-  background-color: pink;
   padding: 0px 6.5px;
 `;
 

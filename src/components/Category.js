@@ -30,6 +30,7 @@ const Icon = styled.div`
 
 const Title = styled.section`
   padding-left: 14px;
+  line-height: 28px;
 `;
 
 export default Category;
