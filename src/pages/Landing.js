@@ -9,6 +9,7 @@ import { ReactComponent as Search } from "assets/search.svg";
 import { ReactComponent as Gps } from "assets/gps.svg";
 import { ReactComponent as Location } from "assets/location.svg";
 import { ReactComponent as TriangleTitle } from "assets/triangle_title.svg";
+import { ReactComponent as RectangleTitle } from "assets/rectangle_title.svg";
 import landing from "assets/landing.png";
 import cardImg_tmp from "assets/cardImg_tmp.png";
 import cardSmImg_tmp from "assets/cardSmImg_tmp.png";
@@ -21,7 +22,6 @@ import Input from "components/Input";
 import SquareButton from "components/SquareButton";
 import Dropdown from "components/Dropdown";
 import Category from "components/Category";
-import Space from "layouts/Space";
 import Card from "components/Card";
 import CardSm from "components/CardSm";
 import DetailCard from "components/DetailCard";
@@ -102,9 +102,9 @@ const Landing = (props) => {
         </LandingImg>
       </LandingImgBox>
       <HotCitiesBox>
-        <HotCitiesTitle title="熱門城市">
+        <Kind title="熱門城市">
           <TriangleTitle />
-        </HotCitiesTitle>
+        </Kind>
 
         <HotCitiesCarousel responsive={responsive}>
           <HotCitiy>
@@ -182,35 +182,121 @@ const Landing = (props) => {
       <Category title={"熱門城市"}>
         <Triangle />
       </Category> */}
-      <HotCityImg src={landing} />
+
+      <Space>
+        <Kind title="熱門活動">
+          <TriangleTitle />
+        </Kind>
+        <HotActivitiesCards>
+          <HotActivitiesCardItems>
+            <ActivityCard />
+          </HotActivitiesCardItems>
+          <HotActivitiesCardItems>
+            <ActivityCard />
+          </HotActivitiesCardItems>
+          <HotActivitiesCardItems>
+            <ActivityCard />
+          </HotActivitiesCardItems>
+          <HotActivitiesCardItems>
+            <ActivityCard />
+          </HotActivitiesCardItems>
+          <HotActivitiesCardItems>
+            <ActivityCard />
+          </HotActivitiesCardItems>
+        </HotActivitiesCards>
+      </Space>
+
+      <Space>
+        <Kind title="熱門餐飲">
+          <RectangleTitle />
+        </Kind>
+        <HotFoodCards>
+          <HotFoodCardItems>
+            <FoodCard />
+          </HotFoodCardItems>
+          <HotFoodCardItems>
+            <FoodCard />
+          </HotFoodCardItems>
+          <HotFoodCardItems>
+            <FoodCard />
+          </HotFoodCardItems>
+          <HotFoodCardItems>
+            <FoodCard />
+          </HotFoodCardItems>
+          <HotFoodCardItems>
+            <FoodCard />
+          </HotFoodCardItems>
+          <HotFoodCardItems>
+            <FoodCard />
+          </HotFoodCardItems>
+          <HotFoodCardItems>
+            <FoodCard />
+          </HotFoodCardItems>
+          <HotFoodCardItems>
+            <FoodCard />
+          </HotFoodCardItems>
+          <HotFoodCardItems>
+            <FoodCard />
+          </HotFoodCardItems>
+        </HotFoodCards>
+      </Space>
+
       <div
         style={{
-          width: "100px",
+          width: "200px",
+          height: "100px",
           backgroundColor: "red",
-          padding: "0px 10px",
+          // padding: "0px 10px",
           boxSizing: "border-box",
-          position: "relative",
+          // position: "relative",
         }}
       >
         <div
           style={{
-            width: "100%",
+            display: "inline-block",
+            margin: "auto",
+            width: "50px",
+            height: "100px",
             backgroundColor: "blue",
-            position: "absolute",
+            // position: "absolute",
           }}
         >
           123
         </div>
       </div>
-      <div style={{ width: "100px", margin: "10px", display: "inline-block" }}>
-        345
-      </div>
-      <div style={{ width: "100px", margin: "10px", display: "inline-block" }}>
-        567
-      </div>
     </Background>
   );
 };
+
+const FoodCard = styled(CardSm)``;
+
+const HotFoodCardItems = styled.li`
+  margin: 0px 4.5px 35px 4.5px;
+  display: flex;
+  justify-content: center;
+`;
+
+const HotFoodCards = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+`;
+
+const ActivityCard = styled(Card)``;
+
+const HotActivitiesCardItems = styled.li`
+  margin: 0px 10.5px 48px 10.5px;
+  display: flex;
+  justify-content: center;
+`;
+
+const HotActivitiesCards = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+`;
+
+const Space = styled.div`
+  padding: 0px 108px;
+`;
 
 const HotCityMask = styled.div`
   background-color: black;
@@ -284,13 +370,13 @@ const HotCitiesCarousel = styled(Carousel)`
   height: 245px;
 `;
 
-const HotCitiesTitle = styled(Category)`
+const Kind = styled(Category)`
   margin-bottom: 12px;
 `;
 
 const HotCitiesBox = styled.div`
   padding: 0px 108px;
-  margin-bottom: 200px;
+  margin-bottom: 60px;
 `;
 
 const GpsIcon = styled(Gps)`
