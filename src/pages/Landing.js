@@ -24,6 +24,7 @@ import Dropdown from "components/Dropdown";
 import Category from "components/Category";
 import Card from "components/Card";
 import CardSm from "components/CardSm";
+import Space from "layouts/Space";
 import DetailCard from "components/DetailCard";
 import RectButton from "components/RectButton";
 
@@ -55,8 +56,8 @@ const Landing = (props) => {
       items: 5,
     },
     desktop: {
-      breakpoint: { max: 3000, min: 1440 },
-      items: 8,
+      breakpoint: { max: 3000, min: 1024 },
+      items: 5,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -101,7 +102,7 @@ const Landing = (props) => {
           </DropdownBox>
         </LandingImg>
       </LandingImgBox>
-      <HotCitiesBox>
+      <Space>
         <Kind title="熱門城市">
           <TriangleTitle />
         </Kind>
@@ -162,7 +163,7 @@ const Landing = (props) => {
             </HotCityBoards>
           </HotCitiy>
         </HotCitiesCarousel>
-      </HotCitiesBox>
+      </Space>
       {/* <DetailCard style={{ margin: "50px" }} info={detail}>
         南投縣與各單位多年於合歡山舉辦清境高山跨年晚會活動，今年將活動主軸由傳統跨年晚會轉化成為台灣高山星空遊程之體驗活動，在擁有東南亞區最佳的星空觀測環境。奇特造型，值得深入觀賞體會。
       </DetailCard>
@@ -188,9 +189,6 @@ const Landing = (props) => {
           <TriangleTitle />
         </Kind>
         <HotActivitiesCards>
-          <HotActivitiesCardItems>
-            <ActivityCard />
-          </HotActivitiesCardItems>
           <HotActivitiesCardItems>
             <ActivityCard />
           </HotActivitiesCardItems>
@@ -240,30 +238,6 @@ const Landing = (props) => {
           </HotFoodCardItems>
         </HotFoodCards>
       </Space>
-
-      <div
-        style={{
-          width: "200px",
-          height: "100px",
-          backgroundColor: "red",
-          // padding: "0px 10px",
-          boxSizing: "border-box",
-          // position: "relative",
-        }}
-      >
-        <div
-          style={{
-            display: "inline-block",
-            margin: "auto",
-            width: "50px",
-            height: "100px",
-            backgroundColor: "blue",
-            // position: "absolute",
-          }}
-        >
-          123
-        </div>
-      </div>
     </Background>
   );
 };
@@ -274,28 +248,44 @@ const HotFoodCardItems = styled.li`
   margin: 0px 4.5px 35px 4.5px;
   display: flex;
   justify-content: center;
+
+  &:nth-child(5n + 1) {
+    margin: 0px 4.5px 35px 0px;
+  }
+
+  &:nth-child(5n) {
+    margin: 0px 0px 35px 4.5px;
+  }
 `;
 
 const HotFoodCards = styled.div`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(5, 1fr);
+  padding-bottom: 50px;
 `;
 
-const ActivityCard = styled(Card)``;
+const ActivityCard = styled(Card)`
+  width: 100%;
+`;
 
 const HotActivitiesCardItems = styled.li`
-  margin: 0px 10.5px 48px 10.5px;
+  margin: 0px 10.5px 48px 0px;
   display: flex;
   justify-content: center;
+
+  &:nth-child(odd) {
+    margin: 0px 10.5px 48px 0px;
+  }
+
+  &:nth-child(even) {
+    margin: 0px 0px 48px 10.5px;
+  }
 `;
 
 const HotActivitiesCards = styled.ul`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-`;
-
-const Space = styled.div`
-  padding: 0px 108px;
+  grid-template-columns: repeat(2, 1fr);
+  padding-bottom: 35px;
 `;
 
 const HotCityMask = styled.div`
@@ -368,6 +358,7 @@ const HotCitiy = styled.div`
 
 const HotCitiesCarousel = styled(Carousel)`
   height: 245px;
+  padding-bottom: 60px;
 `;
 
 const Kind = styled(Category)`

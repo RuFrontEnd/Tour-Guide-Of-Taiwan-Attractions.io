@@ -12,6 +12,9 @@ const Space = (props) => {
 
 const Box = styled.section`
   padding: ${(props) => (props.full ? "0px" : "0px 108px")};
+  box-sizing: border-box;
+  max-width: 1280px;
+  margin: auto;
 `;
 
 export default Space;
