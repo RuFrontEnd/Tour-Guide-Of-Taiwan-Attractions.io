@@ -9,6 +9,7 @@ const Card = (props) => {
   const {
     className,
     style,
+    onClick,
     children = "內文",
     info = { src: "", alt: "", title: "標題", area: "某某市 某某區" },
   } = props;
@@ -16,6 +17,7 @@ const Card = (props) => {
     <Container
       style={style}
       className={className}
+      onClick={onClick}
       widthOfShadowLength={"50%"}
       rotateOfShadow={8}
     >
