@@ -123,9 +123,19 @@ const Landing = (props) => {
             <HotCityBoards>
               <HalfHotCityBoard>
                 <HotCityImg src={landing} />
+                <HalfHotCityInfo>
+                  <HotCityIcon />
+                  <HotCityName>台北市</HotCityName>
+                </HalfHotCityInfo>
+                <HalfHotCityMask />
               </HalfHotCityBoard>
               <HalfHotCityBoard>
                 <HotCityImg src={landing} />
+                <HalfHotCityInfo>
+                  <HotCityIcon />
+                  <HotCityName>台北市</HotCityName>
+                </HalfHotCityInfo>
+                <HalfHotCityMask />
               </HalfHotCityBoard>
             </HotCityBoards>
           </HotCitiy>
@@ -242,6 +252,20 @@ const Landing = (props) => {
   );
 };
 
+const HalfHotCityMask = styled.div`
+  background-color: black;
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 8px;
+  left: 7px;
+  width: calc(100% - 16px);
+  height: calc(100% - 14px);
+  opacity: 0.3;
+  z-index: 1;
+`;
+
 const FoodCard = styled(CardSm)``;
 
 const HotFoodCardItems = styled.li`
@@ -282,6 +306,17 @@ const HotActivitiesCardItems = styled.li`
   }
 `;
 
+const HalfHotCityInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 const HotActivitiesCards = styled.ul`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -292,10 +327,12 @@ const HotCityMask = styled.div`
   background-color: black;
   box-sizing: border-box;
   position: absolute;
+  top: 14px;
+  left: 12px;
   width: calc(100% - 24px);
   height: calc(100% - 28px);
   opacity: 0.3;
-  z-index: 0;
+  z-index: 1;
 `;
 
 const HotCityName = styled.p`
@@ -307,7 +344,7 @@ const HotCityInfo = styled.div`
   flex-direction: column;
   align-items: center;
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -324,12 +361,15 @@ const HotCityIcon = styled(Location)`
 `;
 
 const HotCityImg = styled.img`
+  position: relative;
+  z-index: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 `;
 
 const HalfHotCityBoard = styled(Board)`
+  position: relative;
   width: 100%;
   height: 120px;
   padding: 7px 8px;
