@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components/macro";
 
 const Space = (props) => {
-  const { children, style, full } = props;
+  const { children, className,style, full } = props;
   return (
-    <Box full={full} style={style}>
+    <Box full={full} style={style} className={className}>
       {children}
     </Box>
   );
