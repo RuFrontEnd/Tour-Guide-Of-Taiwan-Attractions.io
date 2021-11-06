@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { __FFF__, __FF1D6C__, __FFB72C__ } from "variable/variable";
+import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
 import { ReactComponent as WelcomeToTaiwan } from "assets/welcomeToTaiwan.svg";
 import { ReactComponent as Search } from "assets/search.svg";
 import { ReactComponent as Gps } from "assets/gps.svg";
@@ -30,6 +31,8 @@ import RectButton from "components/RectButton";
 
 const Landing = (props) => {
   const { history } = props;
+  const navBarHeight = useSelector((state) => state.navBar.height);
+  const [isShowDetail, setIsShowDetail] = useState(false);
   const attractions = ["類別"];
   const hotAttractions = {
     src: cardImg_tmp,
@@ -63,6 +66,13 @@ const Landing = (props) => {
     { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
   ];
 
+  const hotActivitiesInfo = [
+    { src: "", alt: "", title: "", area: "", content: "" },
+    { src: "", alt: "", title: "", area: "", content: "" },
+    { src: "", alt: "", title: "", area: "", content: "" },
+    { src: "", alt: "", title: "", area: "", content: "" },
+  ];
+
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -81,6 +91,20 @@ const Landing = (props) => {
       breakpoint: { max: 464, min: 0 },
       items: 1,
     },
+  };
+
+  const handleClickActivityCard = () => {
+    setIsShowDetail(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const handleClickDetailModal = (e) => {
+    setIsShowDetail(false);
+    document.body.style.overflow = "";
+  };
+
+  const handleClickDetailCard = (e) => {
+    e.stopPropagation();
   };
 
   return (
@@ -120,7 +144,6 @@ const Landing = (props) => {
         <Kind title="熱門城市">
           <TriangleTitle />
         </Kind>
-
         <HotCitiesCarousel responsive={responsive}>
           {hotCities.map((hotCity, index) =>
             index % 2 === 0 ? (
@@ -184,18 +207,11 @@ const Landing = (props) => {
           <TriangleTitle />
         </Kind>
         <HotActivitiesCards>
-          <HotActivitiesCardItems>
-            <ActivityCard />
-          </HotActivitiesCardItems>
-          <HotActivitiesCardItems>
-            <ActivityCard />
-          </HotActivitiesCardItems>
-          <HotActivitiesCardItems>
-            <ActivityCard />
-          </HotActivitiesCardItems>
-          <HotActivitiesCardItems>
-            <ActivityCard />
-          </HotActivitiesCardItems>
+          {hotActivitiesInfo.map((hotActivityInfo) => (
+            <HotActivitiesCardItems key={hotActivityInfo.title}>
+              <ActivityCard onClick={handleClickActivityCard} />
+            </HotActivitiesCardItems>
+          ))}
         </HotActivitiesCards>
       </Space>
 
@@ -233,9 +249,38 @@ const Landing = (props) => {
           </HotFoodCardItems>
         </HotFoodCards>
       </Space>
+
+      {isShowDetail && (
+        <DetailModal
+          onClick={handleClickDetailModal}
+          navBarHeight={navBarHeight}
+        >
+          <DetailCard
+            onClick={(e) => {
+              handleClickDetailCard(e);
+            }}
+          />
+        </DetailModal>
+      )}
     </Background>
   );
 };
+
+const Detail = styled(DetailCard)``;
+
+const DetailModal = styled.div`
+  position: fixed;
+  z-index: 1001;
+  top: ${(props) => `${props.navBarHeight}px`};
+  left: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  background-color: ${__D2D2D2__(0.5)};
+  width: 100%;
+  height: ${(props) => `calc(100% - ${props.navBarHeight}px)`};
+`;
 
 const HalfHotCityMask = styled.div`
   background-color: black;
