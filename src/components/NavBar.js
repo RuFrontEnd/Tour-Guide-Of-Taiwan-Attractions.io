@@ -7,6 +7,7 @@ import { ReactComponent as Logo } from "assets/logo.svg";
 import { ReactComponent as Attraction } from "assets/attraction.svg";
 import { ReactComponent as Food } from "assets/food.svg";
 import { ReactComponent as Traffic } from "assets/traffic.svg";
+import { __FFF__ } from "variable/variable";
 import Space from "layouts/Space";
 
 const NavBar = (props) => {
@@ -19,8 +20,8 @@ const NavBar = (props) => {
   }, []);
 
   return (
-    <Space style={NavBarStyle} className={className} full>
-      <Box ref={$NavbarContainer}>
+    <Container className={className} full>
+      <Wrap ref={$NavbarContainer}>
         <Logo />
         <Options>
           <Attraction />
@@ -30,17 +31,10 @@ const NavBar = (props) => {
           <Traffic />
           景點交通
         </Options>
-      </Box>
-    </Space>
+      </Wrap>
+    </Container>
   );
 };
-
-const Box = styled.div`
-  padding: 18px 0px;
-  display: grid;
-  grid-template-areas: "a b";
-  grid-template-columns: 1fr 1fr;
-`;
 
 const Options = styled.div`
   grid-area: "b";
@@ -48,9 +42,21 @@ const Options = styled.div`
   justify-self: end;
 `;
 
-const NavBarStyle = {
-  backgroundColor: navBarColor,
-  opacity: 0.8,
-};
+const Wrap = styled.div`
+  background-color: ${__FFF__()};
+  padding: 18px 0px;
+  display: grid;
+  grid-template-areas: "a b";
+  grid-template-columns: 1fr 1fr;
+`;
+
+const Container = styled(Space)`
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: ${__FFF__()};
+`;
 
 export default NavBar;
