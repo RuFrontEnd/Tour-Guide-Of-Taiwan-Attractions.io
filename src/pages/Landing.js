@@ -365,11 +365,6 @@ const Kind = styled(Category)`
   margin-bottom: 12px;
 `;
 
-const HotCitiesBox = styled.div`
-  padding: 0px 108px;
-  margin-bottom: 60px;
-`;
-
 const GpsIcon = styled(Gps)`
   & > path {
     fill: ${__FFF__()};

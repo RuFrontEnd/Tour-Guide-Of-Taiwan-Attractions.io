@@ -11,9 +11,9 @@ const Space = (props) => {
 };
 
 const Box = styled.section`
-  padding: ${(props) => (props.full ? "0px" : "0px 108px")};
+  padding: 0px 108px;
   box-sizing: border-box;
-  max-width: 1280px;
+  max-width: ${(props) => (props.full ? "auto" : "1280px")};
   margin: auto;
 `;
 

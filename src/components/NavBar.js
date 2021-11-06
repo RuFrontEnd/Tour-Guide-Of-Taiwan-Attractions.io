@@ -19,7 +19,7 @@ const NavBar = (props) => {
   }, []);
 
   return (
-    <Space style={NavBarStyle} className={className}>
+    <Space style={NavBarStyle} className={className} full>
       <Box ref={$NavbarContainer}>
         <Logo />
         <Options>
