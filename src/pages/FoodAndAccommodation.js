@@ -14,7 +14,6 @@ import { ReactComponent as RectangleTitle } from "assets/rectangle_title.svg";
 import landing from "assets/landing.png";
 import cardImg_tmp from "assets/cardImg_tmp.png";
 import cardSmImg_tmp from "assets/cardSmImg_tmp.png";
-import detailCard_tmp from "assets/detailCard_tmp.png";
 import boardImg_tmp from "assets/boardImg_tmp.png";
 import Paper from "components/Paper";
 import Board from "components/Board";
@@ -33,6 +32,7 @@ const FoodAndAccommodation = (props) => {
   const { history } = props;
   const navBarHeight = useSelector((state) => state.navBar.height);
   const [isShowDetail, setIsShowDetail] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
   const attractions = ["類別"];
 
   const Infos = [
@@ -46,7 +46,7 @@ const FoodAndAccommodation = (props) => {
     { src: "", alt: "", title: "", area: "" },
   ];
 
-  const handleClickActivityCard = () => {
+  const handleClickActivitySmallCard = () => {
     setIsShowDetail(true);
     document.body.style.overflow = "hidden";
   };
@@ -56,7 +56,7 @@ const FoodAndAccommodation = (props) => {
     document.body.style.overflow = "";
   };
 
-  const handleClickDetailCard = (e) => {
+  const handleClickDetailSmallCard = (e) => {
     e.stopPropagation();
   };
 
@@ -84,31 +84,35 @@ const FoodAndAccommodation = (props) => {
         </LandingImg>
       </LandingImgBox>
 
-      <Space>
-        <Kind title="熱門美食">
-          <RectangleTitle />
-        </Kind>
-        <Cards>
-          {Infos.map((Info) => (
-            <CardItems>
-              <FoodCard />
-            </CardItems>
-          ))}
-        </Cards>
-      </Space>
+      {!isFiltered && (
+        <>
+          <Space>
+            <Kind title="熱門美食">
+              <RectangleTitle />
+            </Kind>
+            <SmallCards>
+              {Infos.map((Info) => (
+                <SmallCardItems>
+                  <FoodSmallCard />
+                </SmallCardItems>
+              ))}
+            </SmallCards>
+          </Space>
 
-      <Space>
-        <Kind title="推薦住宿">
-          <RectangleTitle />
-        </Kind>
-        <Cards>
-          {Infos.map((Info) => (
-            <CardItems>
-              <FoodCard />
-            </CardItems>
-          ))}
-        </Cards>
-      </Space>
+          <Space>
+            <Kind title="推薦住宿">
+              <RectangleTitle />
+            </Kind>
+            <SmallCards>
+              {Infos.map((Info) => (
+                <SmallCardItems>
+                  <FoodSmallCard />
+                </SmallCardItems>
+              ))}
+            </SmallCards>
+          </Space>
+        </>
+      )}
 
       {isShowDetail && (
         <DetailModal
@@ -117,10 +121,25 @@ const FoodAndAccommodation = (props) => {
         >
           <DetailCard
             onClick={(e) => {
-              handleClickDetailCard(e);
+              handleClickDetailSmallCard(e);
             }}
           />
         </DetailModal>
+      )}
+
+      {isFiltered && (
+        <Space>
+          <Kind title="美食">
+            <RectangleTitle />
+          </Kind>
+          <SmallCards>
+            {Infos.map((Info) => (
+              <SmallCardItems>
+                <FoodSmallCard />
+              </SmallCardItems>
+            ))}
+          </SmallCards>
+        </Space>
       )}
     </Background>
   );
@@ -140,9 +159,9 @@ const DetailModal = styled.div`
   height: ${(props) => `calc(100% - ${props.navBarHeight}px)`};
 `;
 
-const FoodCard = styled(CardSm)``;
+const FoodSmallCard = styled(CardSm)``;
 
-const CardItems = styled.li`
+const SmallCardItems = styled.li`
   margin: 0px 4.5px 35px 4.5px;
   display: flex;
   justify-content: center;
@@ -156,7 +175,7 @@ const CardItems = styled.li`
   }
 `;
 
-const Cards = styled.div`
+const SmallCards = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   padding-bottom: 50px;

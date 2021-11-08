@@ -33,13 +33,14 @@ const Landing = (props) => {
   const { history } = props;
   const navBarHeight = useSelector((state) => state.navBar.height);
   const [isShowDetail, setIsShowDetail] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
   const attractions = ["類別"];
   const hotAttractions = {
     src: cardImg_tmp,
     title: "合歡山國際暗空公園-星空清境跨年活動",
     area: "臺北市 北投區",
   };
-  const ScenicSpots = {
+  const Smalls = {
     src: cardSmImg_tmp,
     title: "正濱漁港懷舊碼頭",
     area: "基隆市中正區",
@@ -73,7 +74,7 @@ const Landing = (props) => {
     { src: "", alt: "", title: "", area: "", content: "" },
   ];
 
-  const ScenicSpotInfos = [
+  const scenicSpotInfos = [
     { src: "", alt: "", title: "", area: "" },
     { src: "", alt: "", title: "", area: "" },
     { src: "", alt: "", title: "", area: "" },
@@ -141,74 +142,78 @@ const Landing = (props) => {
           </DropdownBox>
         </LandingImg>
       </LandingImgBox>
-      <Space>
-        <Kind title="熱門城市">
-          <TriangleTitle />
-        </Kind>
-        <HotCitiesCarousel responsive={responsive}>
-          {hotCities.map((hotCity, index) =>
-            index % 2 === 0 ? (
-              <HotCitiy>
-                <HotCityBoard>
-                  <HotCityImg src={hotCity.src} />
-                  <HotCityInfo>
-                    <HotCityIcon />
-                    <HotCityName>{hotCity.name}</HotCityName>
-                  </HotCityInfo>
-                  <HotCityMask />
-                </HotCityBoard>
-              </HotCitiy>
-            ) : (
-              <HotCitiy>
-                <HotCityBoards>
-                  <HalfHotCityBoard>
-                    <HotCityImg src={hotCity.src[0]} />
-                    <HalfHotCityInfo>
-                      <HotCityIcon />
-                      <HotCityName>{hotCity.name[0]}</HotCityName>
-                    </HalfHotCityInfo>
-                    <HalfHotCityMask />
-                  </HalfHotCityBoard>
-                  <HalfHotCityBoard>
-                    <HotCityImg src={hotCity.src[1]} />
-                    <HalfHotCityInfo>
-                      <HotCityIcon />
-                      <HotCityName>{hotCity.name[1]}</HotCityName>
-                    </HalfHotCityInfo>
-                    <HalfHotCityMask />
-                  </HalfHotCityBoard>
-                </HotCityBoards>
-              </HotCitiy>
-            )
-          )}
-        </HotCitiesCarousel>
-      </Space>
+      {!isFiltered && (
+        <>
+          <Space>
+            <Kind title="熱門城市">
+              <TriangleTitle />
+            </Kind>
+            <HotCitiesCarousel responsive={responsive}>
+              {hotCities.map((hotCity, index) =>
+                index % 2 === 0 ? (
+                  <HotCitiy>
+                    <HotCityBoard>
+                      <HotCityImg src={hotCity.src} />
+                      <HotCityInfo>
+                        <HotCityIcon />
+                        <HotCityName>{hotCity.name}</HotCityName>
+                      </HotCityInfo>
+                      <HotCityMask />
+                    </HotCityBoard>
+                  </HotCitiy>
+                ) : (
+                  <HotCitiy>
+                    <HotCityBoards>
+                      <HalfHotCityBoard>
+                        <HotCityImg src={hotCity.src[0]} />
+                        <HalfHotCityInfo>
+                          <HotCityIcon />
+                          <HotCityName>{hotCity.name[0]}</HotCityName>
+                        </HalfHotCityInfo>
+                        <HalfHotCityMask />
+                      </HalfHotCityBoard>
+                      <HalfHotCityBoard>
+                        <HotCityImg src={hotCity.src[1]} />
+                        <HalfHotCityInfo>
+                          <HotCityIcon />
+                          <HotCityName>{hotCity.name[1]}</HotCityName>
+                        </HalfHotCityInfo>
+                        <HalfHotCityMask />
+                      </HalfHotCityBoard>
+                    </HotCityBoards>
+                  </HotCitiy>
+                )
+              )}
+            </HotCitiesCarousel>
+          </Space>
 
-      <Space>
-        <Kind title="熱門活動">
-          <TriangleTitle />
-        </Kind>
-        <HotActivitiesCards>
-          {hotActivitiesInfo.map((hotActivityInfo) => (
-            <HotActivitiesCardItems key={hotActivityInfo.title}>
-              <ActivityCard onClick={handleClickActivityCard} />
-            </HotActivitiesCardItems>
-          ))}
-        </HotActivitiesCards>
-      </Space>
+          <Space>
+            <Kind title="熱門活動">
+              <TriangleTitle />
+            </Kind>
+            <HotActivitiesCards>
+              {hotActivitiesInfo.map((hotActivityInfo) => (
+                <HotActivitiesCardItems key={hotActivityInfo.title}>
+                  <ActivityCard onClick={handleClickActivityCard} />
+                </HotActivitiesCardItems>
+              ))}
+            </HotActivitiesCards>
+          </Space>
 
-      <Space>
-        <Kind title="熱門景點">
-          <TriangleTitle />
-        </Kind>
-        <ScenicSpotCards>
-          {ScenicSpotInfos.map((ScenicSpotInfo) => (
-            <ScenicSpotCardItems>
-              <FoodCard />
-            </ScenicSpotCardItems>
-          ))}
-        </ScenicSpotCards>
-      </Space>
+          <Space>
+            <Kind title="熱門景點">
+              <TriangleTitle />
+            </Kind>
+            <SmallCards>
+              {scenicSpotInfos.map((scenicSpotInfo) => (
+                <SmallCardItems>
+                  <FoodCard />
+                </SmallCardItems>
+              ))}
+            </SmallCards>
+          </Space>
+        </>
+      )}
 
       {isShowDetail && (
         <DetailModal
@@ -221,6 +226,21 @@ const Landing = (props) => {
             }}
           />
         </DetailModal>
+      )}
+
+      {isFiltered && (
+        <Space>
+          <Kind title="台北市">
+            <TriangleTitle />
+          </Kind>
+          <SmallCards>
+            {scenicSpotInfos.map((scenicSpotInfo) => (
+              <SmallCardItems>
+                <FoodCard />
+              </SmallCardItems>
+            ))}
+          </SmallCards>
+        </Space>
       )}
     </Background>
   );
@@ -256,7 +276,7 @@ const HalfHotCityMask = styled.div`
 
 const FoodCard = styled(CardSm)``;
 
-const ScenicSpotCardItems = styled.li`
+const SmallCardItems = styled.li`
   margin: 0px 4.5px 35px 4.5px;
   display: flex;
   justify-content: center;
@@ -270,7 +290,7 @@ const ScenicSpotCardItems = styled.li`
   }
 `;
 
-const ScenicSpotCards = styled.div`
+const SmallCards = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   padding-bottom: 50px;
