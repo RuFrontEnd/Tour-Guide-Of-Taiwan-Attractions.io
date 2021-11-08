@@ -73,6 +73,17 @@ const Landing = (props) => {
     { src: "", alt: "", title: "", area: "", content: "" },
   ];
 
+  const ScenicSpotInfos = [
+    { src: "", alt: "", title: "", area: "" },
+    { src: "", alt: "", title: "", area: "" },
+    { src: "", alt: "", title: "", area: "" },
+    { src: "", alt: "", title: "", area: "" },
+    { src: "", alt: "", title: "", area: "" },
+    { src: "", alt: "", title: "", area: "" },
+    { src: "", alt: "", title: "", area: "" },
+    { src: "", alt: "", title: "", area: "" },
+  ];
+
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -109,16 +120,6 @@ const Landing = (props) => {
 
   return (
     <Background>
-      {/* <Board />
-      <Card />
-      <CardSm />
-      <Category />
-      <DetailCard />
-      <Paper />
-      <Dropdown />
-      <Input />
-      <RectButton />
-      <SquareButton /> */}
       <LandingImgBox widthOfShadowLength={"80%"} rotateOfShadow={2}>
         <LandingImg>
           <Title>
@@ -182,25 +183,6 @@ const Landing = (props) => {
           )}
         </HotCitiesCarousel>
       </Space>
-      {/* <DetailCard style={{ margin: "50px" }} info={detail}>
-        南投縣與各單位多年於合歡山舉辦清境高山跨年晚會活動，今年將活動主軸由傳統跨年晚會轉化成為台灣高山星空遊程之體驗活動，在擁有東南亞區最佳的星空觀測環境。奇特造型，值得深入觀賞體會。
-      </DetailCard>
-      <CardSm
-        style={{ width: "206px", height: "auto", margin: "50px 50px" }}
-        info={ScenicSpots}
-      />
-      <Card
-        style={{ width: "513px", height: "auto", margin: "50px px" }}
-        info={hotAttractions}
-      >
-        南投縣與各單位多年於合歡山舉辦清境高山跨年晚會活動，今年將活動主軸由傳統跨年晚會轉化成為台灣高山星空遊程之體驗活動，以剛通過美國IDA認證的華語區第一座國際暗空公園作為宣傳主題，在擁有東南的的...
-      </Card>
-      <Board
-        style={{ width: "202px", height: "245px", padding: "23px 27px" }}
-      />
-      <Category title={"熱門城市"}>
-        <Triangle />
-      </Category> */}
 
       <Space>
         <Kind title="熱門活動">
@@ -220,33 +202,11 @@ const Landing = (props) => {
           <TriangleTitle />
         </Kind>
         <ScenicSpotCards>
-          <ScenicSpotCardItems>
-            <FoodCard />
-          </ScenicSpotCardItems>
-          <ScenicSpotCardItems>
-            <FoodCard />
-          </ScenicSpotCardItems>
-          <ScenicSpotCardItems>
-            <FoodCard />
-          </ScenicSpotCardItems>
-          <ScenicSpotCardItems>
-            <FoodCard />
-          </ScenicSpotCardItems>
-          <ScenicSpotCardItems>
-            <FoodCard />
-          </ScenicSpotCardItems>
-          <ScenicSpotCardItems>
-            <FoodCard />
-          </ScenicSpotCardItems>
-          <ScenicSpotCardItems>
-            <FoodCard />
-          </ScenicSpotCardItems>
-          <ScenicSpotCardItems>
-            <FoodCard />
-          </ScenicSpotCardItems>
-          <ScenicSpotCardItems>
-            <FoodCard />
-          </ScenicSpotCardItems>
+          {ScenicSpotInfos.map((ScenicSpotInfo) => (
+            <ScenicSpotCardItems>
+              <FoodCard />
+            </ScenicSpotCardItems>
+          ))}
         </ScenicSpotCards>
       </Space>
 
@@ -265,8 +225,6 @@ const Landing = (props) => {
     </Background>
   );
 };
-
-const Detail = styled(DetailCard)``;
 
 const DetailModal = styled.div`
   position: fixed;
