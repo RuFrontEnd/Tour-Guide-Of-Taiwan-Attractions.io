@@ -21,8 +21,7 @@ export const __FFF__ = (opacity) =>
   `${opacity ? `rgba(255, 255, 255, ${opacity})` : "#FFF"}`;
 export const __0D0B0C__ = (opacity) =>
   `${opacity ? `rgba(13, 11, 12, ${opacity})` : "#0D0B0C"}`;
-export const __FF1D6C__ = (opacity) =>
-  `${opacity ? `rgba(255, 29, 108, ${opacity})` : "#FF1D6C"}`;
+export const __FF1D6C__ = getCreateColorMethod([255, 29, 108], "#FF1D6C");
 export const __ACACAC__ = (opacity) =>
   `${opacity ? `rgba(172, 172, 172, ${opacity})` : "#ACACAC"}`;
 export const __007350__ = (opacity) =>

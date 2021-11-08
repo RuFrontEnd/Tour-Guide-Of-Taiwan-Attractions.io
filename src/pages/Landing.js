@@ -39,7 +39,7 @@ const Landing = (props) => {
     title: "合歡山國際暗空公園-星空清境跨年活動",
     area: "臺北市 北投區",
   };
-  const hotFoods = {
+  const ScenicSpots = {
     src: cardSmImg_tmp,
     title: "正濱漁港懷舊碼頭",
     area: "基隆市中正區",
@@ -187,7 +187,7 @@ const Landing = (props) => {
       </DetailCard>
       <CardSm
         style={{ width: "206px", height: "auto", margin: "50px 50px" }}
-        info={hotFoods}
+        info={ScenicSpots}
       />
       <Card
         style={{ width: "513px", height: "auto", margin: "50px px" }}
@@ -216,38 +216,38 @@ const Landing = (props) => {
       </Space>
 
       <Space>
-        <Kind title="熱門餐飲">
-          <RectangleTitle />
+        <Kind title="熱門景點">
+          <TriangleTitle />
         </Kind>
-        <HotFoodCards>
-          <HotFoodCardItems>
+        <ScenicSpotCards>
+          <ScenicSpotCardItems>
             <FoodCard />
-          </HotFoodCardItems>
-          <HotFoodCardItems>
+          </ScenicSpotCardItems>
+          <ScenicSpotCardItems>
             <FoodCard />
-          </HotFoodCardItems>
-          <HotFoodCardItems>
+          </ScenicSpotCardItems>
+          <ScenicSpotCardItems>
             <FoodCard />
-          </HotFoodCardItems>
-          <HotFoodCardItems>
+          </ScenicSpotCardItems>
+          <ScenicSpotCardItems>
             <FoodCard />
-          </HotFoodCardItems>
-          <HotFoodCardItems>
+          </ScenicSpotCardItems>
+          <ScenicSpotCardItems>
             <FoodCard />
-          </HotFoodCardItems>
-          <HotFoodCardItems>
+          </ScenicSpotCardItems>
+          <ScenicSpotCardItems>
             <FoodCard />
-          </HotFoodCardItems>
-          <HotFoodCardItems>
+          </ScenicSpotCardItems>
+          <ScenicSpotCardItems>
             <FoodCard />
-          </HotFoodCardItems>
-          <HotFoodCardItems>
+          </ScenicSpotCardItems>
+          <ScenicSpotCardItems>
             <FoodCard />
-          </HotFoodCardItems>
-          <HotFoodCardItems>
+          </ScenicSpotCardItems>
+          <ScenicSpotCardItems>
             <FoodCard />
-          </HotFoodCardItems>
-        </HotFoodCards>
+          </ScenicSpotCardItems>
+        </ScenicSpotCards>
       </Space>
 
       {isShowDetail && (
@@ -298,7 +298,7 @@ const HalfHotCityMask = styled.div`
 
 const FoodCard = styled(CardSm)``;
 
-const HotFoodCardItems = styled.li`
+const ScenicSpotCardItems = styled.li`
   margin: 0px 4.5px 35px 4.5px;
   display: flex;
   justify-content: center;
@@ -312,7 +312,7 @@ const HotFoodCardItems = styled.li`
   }
 `;
 
-const HotFoodCards = styled.div`
+const ScenicSpotCards = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   padding-bottom: 50px;
