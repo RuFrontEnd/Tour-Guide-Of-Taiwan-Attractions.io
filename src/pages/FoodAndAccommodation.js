@@ -114,19 +114,6 @@ const FoodAndAccommodation = (props) => {
         </>
       )}
 
-      {isShowDetail && (
-        <DetailModal
-          onClick={handleClickDetailModal}
-          navBarHeight={navBarHeight}
-        >
-          <DetailCard
-            onClick={(e) => {
-              handleClickDetailSmallCard(e);
-            }}
-          />
-        </DetailModal>
-      )}
-
       {isFiltered && (
         <Space>
           <Kind title="美食">
@@ -140,6 +127,19 @@ const FoodAndAccommodation = (props) => {
             ))}
           </SmallCards>
         </Space>
+      )}
+
+      {isShowDetail && (
+        <DetailModal
+          onClick={handleClickDetailModal}
+          navBarHeight={navBarHeight}
+        >
+          <DetailCard
+            onClick={(e) => {
+              handleClickDetailSmallCard(e);
+            }}
+          />
+        </DetailModal>
       )}
     </Background>
   );

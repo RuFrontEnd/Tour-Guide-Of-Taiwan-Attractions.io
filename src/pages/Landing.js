@@ -215,19 +215,6 @@ const Landing = (props) => {
         </>
       )}
 
-      {isShowDetail && (
-        <DetailModal
-          onClick={handleClickDetailModal}
-          navBarHeight={navBarHeight}
-        >
-          <DetailCard
-            onClick={(e) => {
-              handleClickDetailCard(e);
-            }}
-          />
-        </DetailModal>
-      )}
-
       {isFiltered && (
         <Space>
           <Kind title="台北市">
@@ -241,6 +228,19 @@ const Landing = (props) => {
             ))}
           </SmallCards>
         </Space>
+      )}
+
+      {isShowDetail && (
+        <DetailModal
+          onClick={handleClickDetailModal}
+          navBarHeight={navBarHeight}
+        >
+          <DetailCard
+            onClick={(e) => {
+              handleClickDetailCard(e);
+            }}
+          />
+        </DetailModal>
       )}
     </Background>
   );
