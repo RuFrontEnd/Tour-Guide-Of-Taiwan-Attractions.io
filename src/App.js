@@ -11,6 +11,7 @@ import { setAxiosDefaultURL } from "utils/data";
 import Navbar from "components/NavBar";
 import Footer from "components/Footer";
 import Landing from "pages/Landing";
+import FoodAndAccommodation from "pages/FoodAndAccommodation";
 
 setAxiosDefaultURL("https://swin-opendata.herokuapp.com/api/v1/data/");
 
@@ -18,6 +19,10 @@ const routes = [
   {
     component: <Landing />,
     path: "/",
+  },
+  {
+    component: <FoodAndAccommodation />,
+    path: "/foodAndAccommodation",
   },
 ];
 

@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { setNavBarHeight } from "redux/navBar/navBarActions";
 import styled from "styled-components/macro";
 import { navBarColor } from "variable/variable";
@@ -11,9 +12,13 @@ import { __FFF__, __FF1D6C__, __FFB72C__, __007350__ } from "variable/variable";
 import Space from "layouts/Space";
 
 const NavBar = (props) => {
-  const { className } = props;
+  const { className, history } = props;
   const dispatch = useDispatch();
   const $NavbarContainer = useRef();
+
+  const transferAddress = (address) => {
+    history.push(address);
+  };
 
   useEffect(() => {
     dispatch(setNavBarHeight($NavbarContainer.current.clientHeight));
@@ -24,15 +29,27 @@ const NavBar = (props) => {
       <Wrap ref={$NavbarContainer}>
         <Logo />
         <Options>
-          <AttractLink>
+          <AttractLink
+            onClick={() => {
+              transferAddress("/");
+            }}
+          >
             <AttractionIcon />
             台灣景點
           </AttractLink>
-          <FoodtLink>
+          <FoodtLink
+            onClick={() => {
+              transferAddress("/foodAndAccommodation");
+            }}
+          >
             <FoodIcon />
             美食住宿
           </FoodtLink>
-          <TrafficLink>
+          <TrafficLink
+            onClick={() => {
+              transferAddress("/foodAndAccommodation");
+            }}
+          >
             <TrafficIcon />
             景點交通
           </TrafficLink>
@@ -55,6 +72,7 @@ const AttractionIcon = styled(Attraction)`
 `;
 
 const TrafficLink = styled.div`
+  cursor: pointer;
   display: flex;
   align-items: center;
   color: ${__007350__()};
@@ -63,6 +81,7 @@ const TrafficLink = styled.div`
 `;
 
 const FoodtLink = styled.div`
+  cursor: pointer;
   display: flex;
   align-items: center;
   color: ${__FFB72C__()};
@@ -71,6 +90,7 @@ const FoodtLink = styled.div`
 `;
 
 const AttractLink = styled.div`
+  cursor: pointer;
   display: flex;
   align-items: center;
   color: ${__FF1D6C__()};
@@ -99,4 +119,4 @@ const Container = styled(Space)`
   background-color: ${__FFF__()};
 `;
 
-export default NavBar;
+export default withRouter(NavBar);
