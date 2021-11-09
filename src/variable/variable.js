@@ -1,5 +1,7 @@
 import { getCreateColorMethod } from "utils/color";
 
+export const baseURL = "https://ptx.transportdata.tw/MOTC";
+
 export const mainColor = "#F3F4F6";
 export const shallowMainColor = "#F4F5F7";
 export const lightReceivingColor = "#ffffff";
