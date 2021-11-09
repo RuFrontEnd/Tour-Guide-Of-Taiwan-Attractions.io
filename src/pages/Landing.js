@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Carousel from "react-multi-carousel";
+import jsSHA from "jssha";
 import "react-multi-carousel/lib/styles.css";
 import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
 import { ReactComponent as WelcomeToTaiwan } from "assets/welcomeToTaiwan.svg";
@@ -29,13 +30,17 @@ import Space from "layouts/Space";
 import DetailCard from "components/DetailCard";
 import RectButton from "components/RectButton";
 import Tool from "components/Tool";
+import { counties } from "variable/city";
+import { baseURL } from "variable/variable";
 
 const Landing = (props) => {
   const { history } = props;
   const navBarHeight = useSelector((state) => state.navBar.height);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
-  const attractions = ["類別"];
+  const [scenicSpots, setScenicSpots] = useState([]);
+  const [activities, setActivities] = useState([]);
+  const categories = ["類別", "景點", "活動"];
   const hotAttractions = {
     src: cardImg_tmp,
     title: "合歡山國際暗空公園-星空清境跨年活動",
@@ -120,11 +125,63 @@ const Landing = (props) => {
     e.stopPropagation();
   };
 
+  const getAuthorizationHeader = () => {
+    let AppID = "d8a00188d8fc4814922181ed65fc12dd";
+    let AppKey = "GsShW2xteF4icnz9hwAWrMNRQFQ";
+    let GMTString = new Date().toGMTString();
+    let ShaObj = new jsSHA("SHA-1", "TEXT");
+    ShaObj.setHMACKey(AppKey, "TEXT");
+    ShaObj.update("x-date: " + GMTString);
+    let HMAC = ShaObj.getHMAC("B64");
+    let Authorization =
+      'hmac username="' +
+      AppID +
+      '", algorithm="hmac-sha1", headers="x-date", signature="' +
+      HMAC +
+      '"';
+    return { Authorization: Authorization, "X-Date": GMTString };
+  };
+
+  // fetch("https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot", {
+  //   headers: getAuthorizationHeader(),
+  //   method: "GET",
+  // })
+  //   .then((res) => res.json())
+  //   .then((data) => {
+  //     console.log("data", data);
+  //   });
+
+  useEffect(() => {
+    fetch(`${baseURL}/v2/Tourism/ScenicSpot`, {
+      headers: getAuthorizationHeader(),
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setScenicSpots(data);
+      });
+
+    fetch(`${baseURL}/v2/Tourism/Activity`, {
+      headers: getAuthorizationHeader(),
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setActivities(data);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (scenicSpots.length !== 0 && activities.length !== 0) {
+      console.log("hu");
+    }
+  }, [scenicSpots, activities]);
+
   return (
     <Background>
       <LandingImgBox widthOfShadowLength={"80%"} rotateOfShadow={2}>
         <LandingImg>
-          <Tool />
+          <Tool categories={categories} counties={counties} />
         </LandingImg>
       </LandingImgBox>
       {!isFiltered && (
