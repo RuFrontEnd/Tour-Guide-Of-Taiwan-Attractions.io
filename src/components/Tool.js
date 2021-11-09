@@ -12,8 +12,7 @@ import SquareButton from "components/SquareButton";
 import Dropdown from "components/Dropdown";
 
 const Tool = (props) => {
-  const { history, style, className } = props;
-  const attractions = ["類別"];
+  const { history, style, className, categories, counties } = props;
 
   return (
     <Box style={style} className={className}>
@@ -28,8 +27,8 @@ const Tool = (props) => {
         </SearchButton>
       </SearchBox>
       <DropdownBox>
-        <CatgoreyDropdown options={attractions} />
-        <CityDropdown />
+        <CatgoreyDropdown options={categories} />
+        <CountiesDropdown options={counties} />
         <GpshButton>
           <GpsIcon height={"24px"} />
         </GpshButton>
@@ -51,7 +50,7 @@ const GpshButton = styled(SquareButton)`
   background-color: ${__FFB72C__()};
 `;
 
-const CityDropdown = styled(Dropdown)`
+const CountiesDropdown = styled(Dropdown)`
   width: 219px;
   margin-right: 6px;
 `;
