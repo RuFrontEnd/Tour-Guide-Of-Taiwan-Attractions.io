@@ -28,6 +28,7 @@ import CardSm from "components/CardSm";
 import Space from "layouts/Space";
 import DetailCard from "components/DetailCard";
 import RectButton from "components/RectButton";
+import Tool from "components/Tool";
 
 const Landing = (props) => {
   const { history } = props;
@@ -123,23 +124,7 @@ const Landing = (props) => {
     <Background>
       <LandingImgBox widthOfShadowLength={"80%"} rotateOfShadow={2}>
         <LandingImg>
-          <Title>
-            <WelcomeToTaiwan />
-            <Remark>台北、台中、台南、屏東、宜蘭……遊遍台灣</Remark>
-          </Title>
-          <SearchBox>
-            <SearchBar placeholder="搜尋關鍵字" />
-            <SearchButton>
-              <SearchIcon width={"16px"} />
-            </SearchButton>
-          </SearchBox>
-          <DropdownBox>
-            <CatgoreyDropdown options={attractions} />
-            <CityDropdown />
-            <GpshButton>
-              <GpsIcon height={"24px"} />
-            </GpshButton>
-          </DropdownBox>
+          <Tool />
         </LandingImg>
       </LandingImgBox>
       {!isFiltered && (
