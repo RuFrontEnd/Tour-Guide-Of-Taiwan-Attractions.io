@@ -7,8 +7,8 @@ const Dropdown = (props) => {
   const { className, style, options = ["類別", "選項二", "選項三"] } = props;
   return (
     <Box style={style} className={className}>
-      {options &&
-        options.map((option) => <Option key={option}>{option}</Option>)}
+      {Array.isArray(options) &&
+        options.map((option) => <Option key={option} >{option}</Option>)}
     </Box>
   );
 };
