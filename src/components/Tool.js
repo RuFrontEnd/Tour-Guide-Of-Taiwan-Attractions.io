@@ -22,16 +22,16 @@ const Tool = (props) => {
       </Title>
       <SearchBox>
         <SearchBar placeholder="搜尋關鍵字" />
-        <SearchButton>
-          <SearchIcon width={"16px"} />
-        </SearchButton>
+        {/* <GpshButton>
+          <GpsIcon height={"24px"} />
+        </GpshButton> */}
       </SearchBox>
       <DropdownBox>
         <CatgoreyDropdown options={categories} />
         <CountiesDropdown options={counties} />
-        <GpshButton>
-          <GpsIcon height={"24px"} />
-        </GpshButton>
+        <SearchButton>
+          <SearchIcon width={"16px"} />
+        </SearchButton>
       </DropdownBox>
     </Box>
   );
@@ -77,7 +77,7 @@ const SearchButton = styled(SquareButton)`
 `;
 
 const SearchBar = styled(Input)`
-  width: 445px;
+  width: 100%;
   margin-right: 6px;
 `;
 

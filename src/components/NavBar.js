@@ -35,7 +35,7 @@ const NavBar = (props) => {
             }}
           >
             <AttractionIcon />
-            台灣景點
+            活動景點
           </AttractLink>
           <FoodtLink
             onClick={() => {

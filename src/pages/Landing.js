@@ -176,7 +176,9 @@ const Landing = (props) => {
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
   const [scenicSpots, setScenicSpots] = useState([]);
+  const [hotScenicSpots, setHotScenicSpots] = useState([]);
   const [activities, setActivities] = useState([]);
+  const [hotActivities, setHotActivities] = useState([]);
   // const [hotCities, setHotCities] = useState([]);
 
   useEffect(() => {
@@ -185,8 +187,20 @@ const Landing = (props) => {
       method: "GET",
     })
       .then((res) => res.json())
-      .then((data) => {
-        setScenicSpots(data);
+      .then((datas) => {
+        const _scenicSpots = datas.filter(
+          (data) =>
+            JSON.stringify(data.Picture) !== "{}" &&
+            JSON.stringify(data.Picture).includes("PictureUrl1") &&
+            data.Address?.slice(3, 6).match(/.{2}[鄉鎮市區]/)
+        );
+        setScenicSpots(_scenicSpots);
+
+        const _hotScenicSpots = _scenicSpots.filter(
+          (data, index) => index > 10 && index < 21
+        );
+        console.log("_hotScenicSpots", _hotScenicSpots);
+        setHotScenicSpots(_hotScenicSpots);
       });
 
     fetch(`${baseURL}/v2/Tourism/Activity`, {
@@ -194,24 +208,25 @@ const Landing = (props) => {
       method: "GET",
     })
       .then((res) => res.json())
-      .then((data) => {
-        setActivities(data);
+      .then((datas) => {
+        const _activities = datas.filter(
+          (data) => JSON.stringify(data.Picture) !== "{}"
+        );
+        setActivities(_activities);
+
+        const _hotActivities = _activities.filter((data, index) => index < 10);
+        setHotActivities(_hotActivities);
       });
   }, []);
 
   useEffect(() => {
     if (scenicSpots.length !== 0) {
-      // console.log("scenicSpots", scenicSpots);
       const cities = pipe(getAddresses, sortValue, filterCities)(scenicSpots);
-
-      // console.log("cities", cities);
 
       const initNumOfCities = pipe(
         removeRepeatedValue,
         initNumOfOccurrence
       )(cities);
-
-      // console.log("initNumOfCities", initNumOfCities);
 
       const numOfCities = pipe(
         getNumOfCities,
@@ -220,38 +235,25 @@ const Landing = (props) => {
       )(cities, initNumOfCities);
 
       const _hotCities = numOfCities.map((numOfCity) => numOfCity);
-      // console.log("numOfCities", numOfCities);
-      // setHotCities(_hotCities);
     }
   }, [scenicSpots]);
 
   useEffect(() => {
-    // if (activities.length !== 0) {
-    //   console.log("scenicSpots", scenicSpots);
-    //   const cities = pipe(getAddresses, sortValue, filterCities)(scenicSpots);
-
-    //   console.log("cities", cities);
-
-    //   const initNumOfCities = pipe(
-    //     removeRepeatedValue,
-    //     initNumOfOccurrence
-    //   )(cities);
-
-    //   console.log("initNumOfCities", initNumOfCities);
-
-    //   const numOfCities = pipe(
-    //     getNumOfCities,
-    //     descSortNumOfCites,
-    //     getTopTenCities
-    //   )(cities, initNumOfCities);
-
-    //   const _hotCities = numOfCities.map((numOfCity) => numOfCity);
-    //   console.log("numOfCities", numOfCities);
-    //   // setHotCities(_hotCities);
-    // }
+    if (activities.length !== 0) {
+      //   const cities = pipe(getAddresses, sortValue, filterCities)(scenicSpots);
+      //   const initNumOfCities = pipe(
+      //     removeRepeatedValue,
+      //     initNumOfOccurrence
+      //   )(cities);
+      //   const numOfCities = pipe(
+      //     getNumOfCities,
+      //     descSortNumOfCites,
+      //     getTopTenCities
+      //   )(cities, initNumOfCities);
+      //   const _hotCities = numOfCities.map((numOfCity) => numOfCity);
+      //   // setHotCities(_hotCities);
+    }
   }, [activities]);
-
-  console.log("hotCities", hotCities);
 
   return (
     <Background>
@@ -262,8 +264,8 @@ const Landing = (props) => {
       </LandingImgBox>
       {!isFiltered && (
         <>
-          <Space>
-            <Kind title="熱門城市">
+          {/* <Space>
+            <Kind title="城市">
               <TriangleTitle />
             </Kind>
             <HotCitiesCarousel responsive={responsive}>
@@ -303,9 +305,9 @@ const Landing = (props) => {
                 )
               )}
             </HotCitiesCarousel>
-          </Space>
+          </Space> */}
 
-          <Space>
+          {/* <Space>
             <Kind title="熱門活動">
               <TriangleTitle />
             </Kind>
@@ -321,6 +323,44 @@ const Landing = (props) => {
                 </HotActivitiesCardItems>
               ))}
             </HotActivitiesCards>
+          </Space> */}
+
+          {/* <Space>
+            <Kind title="熱門景點">
+              <TriangleTitle />
+            </Kind>
+            <HotActivitiesCards>
+              {hotActivitiesInfo.map((hotActivityInfo) => (
+                <HotActivitiesCardItems key={hotActivityInfo.title}>
+                  <ActivityCard
+                    onClick={() => {
+                      setIsShowDetail(true);
+                      handleClickActivityCard();
+                    }}
+                  />
+                </HotActivitiesCardItems>
+              ))}
+            </HotActivitiesCards>
+          </Space> */}
+
+          <Space>
+            <Kind title="熱門活動">
+              <TriangleTitle />
+            </Kind>
+            <SmallCards>
+              {hotActivities.map((hotActivity) => (
+                <SmallCardItems>
+                  <FoodCard
+                    info={{
+                      src: hotActivity.Picture.PictureUrl1,
+                      alt: "圖片",
+                      title: hotActivity.Name,
+                      area: hotActivity.Location,
+                    }}
+                  />
+                </SmallCardItems>
+              ))}
+            </SmallCards>
           </Space>
 
           <Space>
@@ -328,9 +368,19 @@ const Landing = (props) => {
               <TriangleTitle />
             </Kind>
             <SmallCards>
-              {scenicSpotInfos.map((scenicSpotInfo) => (
+              {hotScenicSpots.map((hotScenicSpot) => (
                 <SmallCardItems>
-                  <FoodCard />
+                  <FoodCard
+                    info={{
+                      src: hotScenicSpot.Picture.PictureUrl1,
+                      alt: "圖片",
+                      title: hotScenicSpot.Name,
+                      area: `${hotScenicSpot.Address.slice(
+                        0,
+                        3
+                      )} ${hotScenicSpot.Address.slice(3, 6)}`,
+                    }}
+                  />
                 </SmallCardItems>
               ))}
             </SmallCards>
