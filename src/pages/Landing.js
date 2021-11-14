@@ -195,10 +195,16 @@ const Landing = (props) => {
             data.Address?.slice(3, 6).match(/.{2}[鄉鎮市區]/)
         );
         setScenicSpots(_scenicSpots);
+        console.log("_scenicSpots", _scenicSpots);
 
-        const _hotScenicSpots = _scenicSpots.filter(
-          (data, index) => index > 10 && index < 21
-        );
+        let _hotScenicSpots = [];
+        for (let i = 0; i < 10; i++) {
+          // min = Math.ceil(min);
+          // max = Math.floor(max);
+          // return 
+          const A =Math.floor(Math.random() * (100 - 0) + 0);
+          _hotScenicSpots.push(_scenicSpots[A]);
+        }
         console.log("_hotScenicSpots", _hotScenicSpots);
         setHotScenicSpots(_hotScenicSpots);
       });
