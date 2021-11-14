@@ -32,6 +32,143 @@ import RectButton from "components/RectButton";
 import Tool from "components/Tool";
 import { counties } from "variable/city";
 import { baseURL } from "variable/variable";
+import { pipe } from "utils/pipe";
+import { removeRepeatedValue, raisingSortValue } from "utils/array";
+import { sortValue } from "utils/sort";
+
+const categories = ["類別", "景點", "活動"];
+const hotAttractions = {
+  src: cardImg_tmp,
+  title: "合歡山國際暗空公園-星空清境跨年活動",
+  area: "臺北市 北投區",
+};
+const Smalls = {
+  src: cardSmImg_tmp,
+  title: "正濱漁港懷舊碼頭",
+  area: "基隆市中正區",
+};
+const detail = {
+  src: detailCard_tmp,
+  title: "合歡山國際暗空公園-星空清境跨年活動",
+  time: "開放式空間，無時間限制",
+  fee: "免費",
+  area: "基隆市中山區湖海路一、二段(協和街)",
+  tel: "886-2-24287664",
+};
+
+const hotCities = [
+  { name: "台北市", src: landing },
+  { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
+  { name: "台北市", src: landing },
+  { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
+  { name: "台北市", src: landing },
+  { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
+  { name: "台北市", src: landing },
+  { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
+  { name: "台北市", src: landing },
+  { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
+];
+
+const hotActivitiesInfo = [
+  { src: "", alt: "", title: "", area: "", content: "" },
+  { src: "", alt: "", title: "", area: "", content: "" },
+  { src: "", alt: "", title: "", area: "", content: "" },
+  { src: "", alt: "", title: "", area: "", content: "" },
+];
+
+const scenicSpotInfos = [
+  { src: "", alt: "", title: "", area: "" },
+  { src: "", alt: "", title: "", area: "" },
+  { src: "", alt: "", title: "", area: "" },
+  { src: "", alt: "", title: "", area: "" },
+  { src: "", alt: "", title: "", area: "" },
+  { src: "", alt: "", title: "", area: "" },
+  { src: "", alt: "", title: "", area: "" },
+  { src: "", alt: "", title: "", area: "" },
+];
+
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 5,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+  },
+};
+
+const handleClickActivityCard = () => {
+  document.body.style.overflow = "hidden";
+};
+
+const handleClickDetailModal = () => {
+  document.body.style.overflow = "";
+};
+
+const handleClickDetailCard = (e) => {
+  e.stopPropagation();
+};
+
+const getAuthorizationHeader = () => {
+  let AppID = "d8a00188d8fc4814922181ed65fc12dd";
+  let AppKey = "GsShW2xteF4icnz9hwAWrMNRQFQ";
+  let GMTString = new Date().toGMTString();
+  let ShaObj = new jsSHA("SHA-1", "TEXT");
+  ShaObj.setHMACKey(AppKey, "TEXT");
+  ShaObj.update("x-date: " + GMTString);
+  let HMAC = ShaObj.getHMAC("B64");
+  let Authorization =
+    'hmac username="' +
+    AppID +
+    '", algorithm="hmac-sha1", headers="x-date", signature="' +
+    HMAC +
+    '"';
+  return { Authorization: Authorization, "X-Date": GMTString };
+};
+
+const getAddresses = (scenicSpots) =>
+  scenicSpots.map((scenicSpot) =>
+    scenicSpot.Address ? scenicSpot.Address.slice(0, 3) : ""
+  );
+
+const filterCities = (addresses) =>
+  addresses.filter((address) => address.match(/.{2}市/));
+
+const initNumOfOccurrence = (cities) =>
+  cities.map((city) => {
+    return {
+      name: city,
+      value: 0,
+    };
+  });
+
+const getNumOfCities = (cities, initNumOfCities) => {
+  let numOfCities = [...initNumOfCities];
+  numOfCities.forEach((numOfCity, index) =>
+    cities.forEach((city) => {
+      if (numOfCity.name === city) {
+        numOfCities[index].value += 1;
+      }
+    })
+  );
+  return numOfCities;
+};
+
+const descSortNumOfCites = (numOfCities) =>
+  numOfCities.sort((prev, next) => next.value - prev.value);
+
+const getTopTenCities = (SortedNumOfCites) =>
+  SortedNumOfCites.filter((SortedNumOfCity, index) => index < 10);
 
 const Landing = (props) => {
   const { history } = props;
@@ -40,116 +177,7 @@ const Landing = (props) => {
   const [isFiltered, setIsFiltered] = useState(false);
   const [scenicSpots, setScenicSpots] = useState([]);
   const [activities, setActivities] = useState([]);
-  const categories = ["類別", "景點", "活動"];
-  const hotAttractions = {
-    src: cardImg_tmp,
-    title: "合歡山國際暗空公園-星空清境跨年活動",
-    area: "臺北市 北投區",
-  };
-  const Smalls = {
-    src: cardSmImg_tmp,
-    title: "正濱漁港懷舊碼頭",
-    area: "基隆市中正區",
-  };
-  const detail = {
-    src: detailCard_tmp,
-    title: "合歡山國際暗空公園-星空清境跨年活動",
-    time: "開放式空間，無時間限制",
-    fee: "免費",
-    area: "基隆市中山區湖海路一、二段(協和街)",
-    tel: "886-2-24287664",
-  };
-
-  const hotCities = [
-    { name: "台北市", src: landing },
-    { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
-    { name: "台北市", src: landing },
-    { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
-    { name: "台北市", src: landing },
-    { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
-    { name: "台北市", src: landing },
-    { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
-    { name: "台北市", src: landing },
-    { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
-  ];
-
-  const hotActivitiesInfo = [
-    { src: "", alt: "", title: "", area: "", content: "" },
-    { src: "", alt: "", title: "", area: "", content: "" },
-    { src: "", alt: "", title: "", area: "", content: "" },
-    { src: "", alt: "", title: "", area: "", content: "" },
-  ];
-
-  const scenicSpotInfos = [
-    { src: "", alt: "", title: "", area: "" },
-    { src: "", alt: "", title: "", area: "" },
-    { src: "", alt: "", title: "", area: "" },
-    { src: "", alt: "", title: "", area: "" },
-    { src: "", alt: "", title: "", area: "" },
-    { src: "", alt: "", title: "", area: "" },
-    { src: "", alt: "", title: "", area: "" },
-    { src: "", alt: "", title: "", area: "" },
-  ];
-
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 5,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
-  };
-
-  const handleClickActivityCard = () => {
-    setIsShowDetail(true);
-    document.body.style.overflow = "hidden";
-  };
-
-  const handleClickDetailModal = (e) => {
-    setIsShowDetail(false);
-    document.body.style.overflow = "";
-  };
-
-  const handleClickDetailCard = (e) => {
-    e.stopPropagation();
-  };
-
-  const getAuthorizationHeader = () => {
-    let AppID = "d8a00188d8fc4814922181ed65fc12dd";
-    let AppKey = "GsShW2xteF4icnz9hwAWrMNRQFQ";
-    let GMTString = new Date().toGMTString();
-    let ShaObj = new jsSHA("SHA-1", "TEXT");
-    ShaObj.setHMACKey(AppKey, "TEXT");
-    ShaObj.update("x-date: " + GMTString);
-    let HMAC = ShaObj.getHMAC("B64");
-    let Authorization =
-      'hmac username="' +
-      AppID +
-      '", algorithm="hmac-sha1", headers="x-date", signature="' +
-      HMAC +
-      '"';
-    return { Authorization: Authorization, "X-Date": GMTString };
-  };
-
-  // fetch("https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot", {
-  //   headers: getAuthorizationHeader(),
-  //   method: "GET",
-  // })
-  //   .then((res) => res.json())
-  //   .then((data) => {
-  //     console.log("data", data);
-  //   });
+  // const [hotCities, setHotCities] = useState([]);
 
   useEffect(() => {
     fetch(`${baseURL}/v2/Tourism/ScenicSpot`, {
@@ -172,10 +200,58 @@ const Landing = (props) => {
   }, []);
 
   useEffect(() => {
-    if (scenicSpots.length !== 0 && activities.length !== 0) {
-      console.log("hu");
+    if (scenicSpots.length !== 0) {
+      // console.log("scenicSpots", scenicSpots);
+      const cities = pipe(getAddresses, sortValue, filterCities)(scenicSpots);
+
+      // console.log("cities", cities);
+
+      const initNumOfCities = pipe(
+        removeRepeatedValue,
+        initNumOfOccurrence
+      )(cities);
+
+      // console.log("initNumOfCities", initNumOfCities);
+
+      const numOfCities = pipe(
+        getNumOfCities,
+        descSortNumOfCites,
+        getTopTenCities
+      )(cities, initNumOfCities);
+
+      const _hotCities = numOfCities.map((numOfCity) => numOfCity);
+      // console.log("numOfCities", numOfCities);
+      // setHotCities(_hotCities);
     }
-  }, [scenicSpots, activities]);
+  }, [scenicSpots]);
+
+  useEffect(() => {
+    // if (activities.length !== 0) {
+    //   console.log("scenicSpots", scenicSpots);
+    //   const cities = pipe(getAddresses, sortValue, filterCities)(scenicSpots);
+
+    //   console.log("cities", cities);
+
+    //   const initNumOfCities = pipe(
+    //     removeRepeatedValue,
+    //     initNumOfOccurrence
+    //   )(cities);
+
+    //   console.log("initNumOfCities", initNumOfCities);
+
+    //   const numOfCities = pipe(
+    //     getNumOfCities,
+    //     descSortNumOfCites,
+    //     getTopTenCities
+    //   )(cities, initNumOfCities);
+
+    //   const _hotCities = numOfCities.map((numOfCity) => numOfCity);
+    //   console.log("numOfCities", numOfCities);
+    //   // setHotCities(_hotCities);
+    // }
+  }, [activities]);
+
+  console.log("hotCities", hotCities);
 
   return (
     <Background>
@@ -236,7 +312,12 @@ const Landing = (props) => {
             <HotActivitiesCards>
               {hotActivitiesInfo.map((hotActivityInfo) => (
                 <HotActivitiesCardItems key={hotActivityInfo.title}>
-                  <ActivityCard onClick={handleClickActivityCard} />
+                  <ActivityCard
+                    onClick={() => {
+                      setIsShowDetail(true);
+                      handleClickActivityCard();
+                    }}
+                  />
                 </HotActivitiesCardItems>
               ))}
             </HotActivitiesCards>
@@ -274,7 +355,10 @@ const Landing = (props) => {
 
       {isShowDetail && (
         <DetailModal
-          onClick={handleClickDetailModal}
+          onClick={() => {
+            setIsShowDetail(false);
+            handleClickDetailModal();
+          }}
           navBarHeight={navBarHeight}
         >
           <DetailCard
