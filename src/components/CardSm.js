@@ -18,7 +18,8 @@ const CardSm = (props) => {
       widthOfShadowLength={"50%"}
       rotateOfShadow={8}
     >
-      <Image src={info.src} alt={info.alt} />
+      {console.log("info.src", info.src)}
+      <Image src={info.src} alt={info.alt} onerror={console.log("hi")} />
       <Info>
         <Title>{info.title}</Title>
         <More>

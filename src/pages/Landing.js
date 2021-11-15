@@ -35,6 +35,22 @@ import { baseURL } from "variable/variable";
 import { pipe } from "utils/pipe";
 import { removeRepeatedValue, raisingSortValue } from "utils/array";
 import { sortValue } from "utils/sort";
+import taipei from "assets/taipei.png";
+import taoyuan from "assets/taoyuan.png";
+import hsinchu from "assets/hsinchu.png";
+import taichung from "assets/taichung.png";
+import nantou from "assets/nantou.png";
+import chiayi from "assets/chiayi.png";
+import tainan from "assets/tainan.png";
+import kaohsiung from "assets/kaohsiung.png";
+import pingtung from "assets/pingtung.png";
+import yilan from "assets/yilan.png";
+import hualien from "assets/hualien.png";
+import daito from "assets/daito.png";
+import offshore from "assets/offshore.png";
+import miaoli from "assets/miaoli.png";
+import yunlin from "assets/yunlin.jpg";
+import changhua from "assets/changhua.jpg";
 
 const categories = ["類別", "景點", "活動"];
 const hotAttractions = {
@@ -57,16 +73,17 @@ const detail = {
 };
 
 const hotCities = [
-  { name: "台北市", src: landing },
-  { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
-  { name: "台北市", src: landing },
-  { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
-  { name: "台北市", src: landing },
-  { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
-  { name: "台北市", src: landing },
-  { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
-  { name: "台北市", src: landing },
-  { name: ["新北市", "台中市"], src: [cardImg_tmp, detailCard_tmp] },
+  { name: "台　北", src: taipei },
+  { name: ["桃　園", "新　竹"], src: [taoyuan, hsinchu] },
+  { name: "台　中", src: taichung },
+  { name: ["嘉　義", "南　投"], src: [chiayi, nantou] },
+  { name: "台　南", src: tainan },
+  { name: ["高　雄", "屏　東"], src: [kaohsiung, pingtung] },
+  { name: "宜　蘭", src: yilan },
+  { name: ["花　蓮", "台　東"], src: [hualien, daito] },
+  { name: "彰　化", src: changhua },
+  { name: ["苗　栗", "雲　林"], src: [miaoli, yunlin] },
+  { name: "澎湖金門馬祖", src: offshore },
 ];
 
 const hotActivitiesInfo = [
@@ -201,8 +218,8 @@ const Landing = (props) => {
         for (let i = 0; i < 10; i++) {
           // min = Math.ceil(min);
           // max = Math.floor(max);
-          // return 
-          const A =Math.floor(Math.random() * (100 - 0) + 0);
+          // return
+          const A = Math.floor(Math.random() * (100 - 0) + 0);
           _hotScenicSpots.push(_scenicSpots[A]);
         }
         console.log("_hotScenicSpots", _hotScenicSpots);
@@ -220,7 +237,7 @@ const Landing = (props) => {
         );
         setActivities(_activities);
 
-        const _hotActivities = _activities.filter((data, index) => index < 10);
+        const _hotActivities = _activities.filter((data, index) => index < 4);
         setHotActivities(_hotActivities);
       });
   }, []);
@@ -241,6 +258,7 @@ const Landing = (props) => {
       )(cities, initNumOfCities);
 
       const _hotCities = numOfCities.map((numOfCity) => numOfCity);
+      console.log("_hotCities", _hotCities);
     }
   }, [scenicSpots]);
 
@@ -270,8 +288,8 @@ const Landing = (props) => {
       </LandingImgBox>
       {!isFiltered && (
         <>
-          {/* <Space>
-            <Kind title="城市">
+          <Space>
+            <Kind title="熱門城市">
               <TriangleTitle />
             </Kind>
             <HotCitiesCarousel responsive={responsive}>
@@ -311,16 +329,22 @@ const Landing = (props) => {
                 )
               )}
             </HotCitiesCarousel>
-          </Space> */}
+          </Space>
 
-          {/* <Space>
+          <Space>
             <Kind title="熱門活動">
               <TriangleTitle />
             </Kind>
             <HotActivitiesCards>
-              {hotActivitiesInfo.map((hotActivityInfo) => (
-                <HotActivitiesCardItems key={hotActivityInfo.title}>
+              {hotActivities.map((hotActivity) => (
+                <HotActivitiesCardItems key={hotActivity.title}>
                   <ActivityCard
+                    info={{
+                      src: hotActivity.Picture.PictureUrl1,
+                      alt: "圖片",
+                      title: hotActivity.Name,
+                      area: hotActivity.Location,
+                    }}
                     onClick={() => {
                       setIsShowDetail(true);
                       handleClickActivityCard();
@@ -329,7 +353,7 @@ const Landing = (props) => {
                 </HotActivitiesCardItems>
               ))}
             </HotActivitiesCards>
-          </Space> */}
+          </Space>
 
           {/* <Space>
             <Kind title="熱門景點">
@@ -349,7 +373,7 @@ const Landing = (props) => {
             </HotActivitiesCards>
           </Space> */}
 
-          <Space>
+          {/* <Space>
             <Kind title="熱門活動">
               <TriangleTitle />
             </Kind>
@@ -367,7 +391,7 @@ const Landing = (props) => {
                 </SmallCardItems>
               ))}
             </SmallCards>
-          </Space>
+          </Space> */}
 
           <Space>
             <Kind title="熱門景點">
@@ -527,6 +551,9 @@ const HotCityMask = styled.div`
 
 const HotCityName = styled.p`
   color: ${__FFF__()};
+  font-size: 20px;
+  font-weight: 300;
+  word-break:keep-all
 `;
 
 const HotCityInfo = styled.div`
