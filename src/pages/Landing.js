@@ -187,11 +187,19 @@ const descSortNumOfCites = (numOfCities) =>
 const getTopTenCities = (SortedNumOfCites) =>
   SortedNumOfCites.filter((SortedNumOfCity, index) => index < 10);
 
+const getCityName = (hotCity) => {
+  console.log("hotCity", hotCity);
+  if (hotCity === "台　北") {
+    return "台北市 & 新北市";
+  }
+};
+
 const Landing = (props) => {
   const { history } = props;
   const navBarHeight = useSelector((state) => state.navBar.height);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
+  const [selectedCity, setSelectedCity] = useState("");
   const [scenicSpots, setScenicSpots] = useState([]);
   const [hotScenicSpots, setHotScenicSpots] = useState([]);
   const [activities, setActivities] = useState([]);
@@ -286,7 +294,7 @@ const Landing = (props) => {
           <Tool categories={categories} counties={counties} />
         </LandingImg>
       </LandingImgBox>
-      {!isFiltered && (
+      {!isFiltered && !selectedCity && (
         <>
           <Space>
             <Kind title="熱門城市">
@@ -295,7 +303,11 @@ const Landing = (props) => {
             <HotCitiesCarousel responsive={responsive}>
               {hotCities.map((hotCity, index) =>
                 index % 2 === 0 ? (
-                  <HotCitiy>
+                  <HotCitiy
+                    onClick={(e) => {
+                      setSelectedCity(getCityName(hotCity.name));
+                    }}
+                  >
                     <HotCityBoard>
                       <HotCityImg src={hotCity.src} />
                       <HotCityInfo>
@@ -418,9 +430,9 @@ const Landing = (props) => {
         </>
       )}
 
-      {isFiltered && (
+      {selectedCity && (
         <Space>
-          <Kind title="台北市">
+          <Kind title={selectedCity}>
             <TriangleTitle />
           </Kind>
           <SmallCards>
@@ -553,7 +565,7 @@ const HotCityName = styled.p`
   color: ${__FFF__()};
   font-size: 20px;
   font-weight: 300;
-  word-break:keep-all
+  word-break: keep-all;
 `;
 
 const HotCityInfo = styled.div`
