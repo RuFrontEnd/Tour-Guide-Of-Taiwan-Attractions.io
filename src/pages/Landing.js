@@ -88,7 +88,7 @@ const hotCities = [
   { name: ["苗　栗", "雲　林"], src: [miaoli, yunlin] },
   { name: "彰　化", src: changhua },
   { name: ["澎 湖", "金 門"], src: [penghu, kinmen] },
-  { name: "馬祖", src: mazu },
+  { name: "馬 祖", src: mazu },
 ];
 
 const hotActivitiesInfo = [
@@ -192,11 +192,28 @@ const descSortNumOfCites = (numOfCities) =>
 const getTopTenCities = (SortedNumOfCites) =>
   SortedNumOfCites.filter((SortedNumOfCity, index) => index < 10);
 
-const getCityName = (hotCity) => {
-  console.log("hotCity", hotCity);
-  if (hotCity === "台　北") {
-    return "台北市 & 新北市";
+const getCityName = (cityName) => {
+  console.log("cityName", cityName);
+  if (cityName === "新　竹") {
+    return "新竹市 & 新竹縣";
   }
+  return cityName;
+};
+
+const getCityEngName = (cityName) => {
+  let engName = "";
+  if (cityName.match(/桃 園/)) {
+    engName = "Taoyuan";
+  }
+  return engName;
+};
+
+const getCityScenicSpot = (cityName) => {
+  console.log("cityName", cityName);
+  return fetch(`${baseURL}/v2/Tourism/ScenicSpot/${cityName}`, {
+    headers: getAuthorizationHeader(),
+    method: "GET",
+  });
 };
 
 const Landing = (props) => {
@@ -209,6 +226,7 @@ const Landing = (props) => {
   const [hotScenicSpots, setHotScenicSpots] = useState([]);
   const [activities, setActivities] = useState([]);
   const [hotActivities, setHotActivities] = useState([]);
+  const [cityScenicSpots, setCityScenicSpots] = useState([]);
   // const [hotCities, setHotCities] = useState([]);
 
   useEffect(() => {
@@ -225,7 +243,6 @@ const Landing = (props) => {
             data.Address?.slice(3, 6).match(/.{2}[鄉鎮市區]/)
         );
         setScenicSpots(_scenicSpots);
-        console.log("_scenicSpots", _scenicSpots);
 
         let _hotScenicSpots = [];
         for (let i = 0; i < 10; i++) {
@@ -235,7 +252,6 @@ const Landing = (props) => {
           const A = Math.floor(Math.random() * (100 - 0) + 0);
           _hotScenicSpots.push(_scenicSpots[A]);
         }
-        console.log("_hotScenicSpots", _hotScenicSpots);
         setHotScenicSpots(_hotScenicSpots);
       });
 
@@ -254,14 +270,14 @@ const Landing = (props) => {
         setHotActivities(_hotActivities);
       });
 
-    fetch(`${baseURL}/v2/Tourism/ScenicSpot/新北市`, {
-      headers: getAuthorizationHeader(),
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
+    // fetch(`${baseURL}/v2/Tourism/ScenicSpot/新北市`, {
+    //   headers: getAuthorizationHeader(),
+    //   method: "GET",
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //   });
   }, []);
 
   useEffect(() => {
@@ -280,7 +296,6 @@ const Landing = (props) => {
       )(cities, initNumOfCities);
 
       const _hotCities = numOfCities.map((numOfCity) => numOfCity);
-      console.log("_hotCities", _hotCities);
     }
   }, [scenicSpots]);
 
@@ -311,18 +326,18 @@ const Landing = (props) => {
       {!isFiltered && !selectedCity && (
         <>
           <Space>
-            <Kind title="熱門城市">
+            <Kind title="造訪城市">
               <TriangleTitle />
             </Kind>
             <HotCitiesCarousel responsive={responsive}>
               {hotCities.map((hotCity, index) =>
                 index % 2 === 0 ? (
-                  <HotCitiy
-                    onClick={(e) => {
-                      setSelectedCity(getCityName(hotCity.name));
-                    }}
-                  >
-                    <HotCityBoard>
+                  <HotCitiy>
+                    <HotCityBoard
+                      onClick={(e) => {
+                        setSelectedCity(getCityName(hotCity.name));
+                      }}
+                    >
                       <HotCityImg src={hotCity.src} />
                       <HotCityInfo>
                         <HotCityIcon />
@@ -334,7 +349,17 @@ const Landing = (props) => {
                 ) : (
                   <HotCitiy>
                     <HotCityBoards>
-                      <HalfHotCityBoard>
+                      <HalfHotCityBoard
+                        onClick={(e) => {
+                          setSelectedCity(getCityName(hotCity.name[0]));
+                          getCityScenicSpot(getCityEngName(hotCity.name[0]))
+                            .then((res) => res.json())
+                            .then((data) => {
+                              console.log("data", data);
+                              setCityScenicSpots(data);
+                            });
+                        }}
+                      >
                         <HotCityImg src={hotCity.src[0]} />
                         <HalfHotCityInfo>
                           <HotCityIcon />
@@ -342,7 +367,11 @@ const Landing = (props) => {
                         </HalfHotCityInfo>
                         <HalfHotCityMask />
                       </HalfHotCityBoard>
-                      <HalfHotCityBoard>
+                      <HalfHotCityBoard
+                        onClick={(e) => {
+                          setSelectedCity(getCityName(hotCity.name[1]));
+                        }}
+                      >
                         <HotCityImg src={hotCity.src[1]} />
                         <HalfHotCityInfo>
                           <HotCityIcon />
@@ -450,7 +479,7 @@ const Landing = (props) => {
             <TriangleTitle />
           </Kind>
           <SmallCards>
-            {scenicSpotInfos.map((scenicSpotInfo) => (
+            {cityScenicSpots.map((cityScenicSpot) => (
               <SmallCardItems>
                 <FoodCard />
               </SmallCardItems>

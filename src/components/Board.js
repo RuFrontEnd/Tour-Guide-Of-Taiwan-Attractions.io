@@ -3,9 +3,9 @@ import styled from "styled-components/macro";
 import { __0D0B0C__ } from "variable/variable";
 
 const Board = (props) => {
-  const { style, className, children } = props;
+  const { style, className, children, onClick } = props;
   return (
-    <Box style={style} className={className}>
+    <Box style={style} className={className} onClick={onClick}>
       {children}
     </Box>
   );
@@ -17,7 +17,7 @@ const Box = styled.section`
   cursor: pointer;
   width: 150px;
   height: 200px;
-  box-shadow:  0px 4px 3px ${__0D0B0C__(0.2)};
+  box-shadow: 0px 4px 3px ${__0D0B0C__(0.2)};
 `;
 
 export default Board;
