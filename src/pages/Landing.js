@@ -213,7 +213,7 @@ const getCityScenicSpot = (cityName) => {
   return fetch(`${baseURL}/v2/Tourism/ScenicSpot/${cityName}`, {
     headers: getAuthorizationHeader(),
     method: "GET",
-  });
+  }).then((res) => res.json());
 };
 
 const Landing = (props) => {
@@ -352,12 +352,11 @@ const Landing = (props) => {
                       <HalfHotCityBoard
                         onClick={(e) => {
                           setSelectedCity(getCityName(hotCity.name[0]));
-                          getCityScenicSpot(getCityEngName(hotCity.name[0]))
-                            .then((res) => res.json())
-                            .then((data) => {
-                              console.log("data", data);
-                              setCityScenicSpots(data);
-                            });
+                          getCityScenicSpot(
+                            getCityEngName(hotCity.name[0])
+                          ).then((data) => {
+                            setCityScenicSpots(data);
+                          });
                         }}
                       >
                         <HotCityImg src={hotCity.src[0]} />
