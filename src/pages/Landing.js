@@ -36,6 +36,7 @@ import { pipe } from "utils/pipe";
 import { removeRepeatedValue, raisingSortValue } from "utils/array";
 import { sortValue } from "utils/sort";
 import taipei from "assets/taipei.png";
+import newTaipei from "assets/new_taipei.png";
 import taoyuan from "assets/taoyuan.png";
 import hsinchu from "assets/hsinchu.png";
 import taichung from "assets/taichung.png";
@@ -47,10 +48,12 @@ import pingtung from "assets/pingtung.png";
 import yilan from "assets/yilan.png";
 import hualien from "assets/hualien.png";
 import daito from "assets/daito.png";
-import offshore from "assets/offshore.png";
+import mazu from "assets/mazu.png";
 import miaoli from "assets/miaoli.png";
 import yunlin from "assets/yunlin.jpg";
 import changhua from "assets/changhua.jpg";
+import penghu from "assets/penghu.jpg";
+import kinmen from "assets/kinmen.jpg";
 
 const categories = ["類別", "景點", "活動"];
 const hotAttractions = {
@@ -73,17 +76,19 @@ const detail = {
 };
 
 const hotCities = [
-  { name: "台　北", src: taipei },
+  { name: "台　北", src: newTaipei },
   { name: ["桃　園", "新　竹"], src: [taoyuan, hsinchu] },
-  { name: "台　中", src: taichung },
+  { name: "新　北", src: taipei },
   { name: ["嘉　義", "南　投"], src: [chiayi, nantou] },
-  { name: "台　南", src: tainan },
+  { name: "台　中", src: taichung },
   { name: ["高　雄", "屏　東"], src: [kaohsiung, pingtung] },
-  { name: "宜　蘭", src: yilan },
+  { name: "台　南", src: tainan },
   { name: ["花　蓮", "台　東"], src: [hualien, daito] },
-  { name: "彰　化", src: changhua },
+  { name: "宜　蘭", src: yilan },
   { name: ["苗　栗", "雲　林"], src: [miaoli, yunlin] },
-  { name: "澎湖金門馬祖", src: offshore },
+  { name: "彰　化", src: changhua },
+  { name: ["澎 湖", "金 門"], src: [penghu, kinmen] },
+  { name: "馬祖", src: mazu },
 ];
 
 const hotActivitiesInfo = [
@@ -247,6 +252,15 @@ const Landing = (props) => {
 
         const _hotActivities = _activities.filter((data, index) => index < 4);
         setHotActivities(_hotActivities);
+      });
+
+    fetch(`${baseURL}/v2/Tourism/ScenicSpot/新北市`, {
+      headers: getAuthorizationHeader(),
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
       });
   }, []);
 
