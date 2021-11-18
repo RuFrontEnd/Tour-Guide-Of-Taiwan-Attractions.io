@@ -30,8 +30,7 @@ import Space from "layouts/Space";
 import DetailCard from "components/DetailCard";
 import RectButton from "components/RectButton";
 import Tool from "components/Tool";
-import { counties } from "variable/city";
-import { baseURL } from "variable/variable";
+import { baseURL, counties } from "variable/variable";
 import { pipe } from "utils/pipe";
 import { removeRepeatedValue, raisingSortValue } from "utils/array";
 import { sortValue } from "utils/sort";
@@ -145,6 +144,8 @@ const getAuthorizationHeader = () => {
   let AppID = "d8a00188d8fc4814922181ed65fc12dd";
   let AppKey = "GsShW2xteF4icnz9hwAWrMNRQFQ";
   let GMTString = new Date().toGMTString();
+  let UTCString = new Date().toUTCString();
+  console.log(";t", GMTString, UTCString);
   let ShaObj = new jsSHA("SHA-1", "TEXT");
   ShaObj.setHMACKey(AppKey, "TEXT");
   ShaObj.update("x-date: " + GMTString);
@@ -202,8 +203,14 @@ const getCityName = (cityName) => {
 
 const getCityEngName = (cityName) => {
   let engName = "";
+  if (cityName.match(/台 北/)) {
+    engName = "Taipei";
+  }
   if (cityName.match(/桃 園/)) {
     engName = "Taoyuan";
+  }
+  if (cityName.match(/新 竹/)) {
+    engName = "Hsinchu";
   }
   return engName;
 };
@@ -320,7 +327,11 @@ const Landing = (props) => {
     <Background>
       <LandingImgBox widthOfShadowLength={"80%"} rotateOfShadow={2}>
         <LandingImg>
-          <Tool categories={categories} counties={counties} />
+          {/* <Tool categories={categories} counties={counties} /> */}
+          <Title>
+            <WelcomeToTaiwan />
+            <Remark>台北、台中、台南、屏東、宜蘭……遊遍台灣</Remark>
+          </Title>
         </LandingImg>
       </LandingImgBox>
       {!isFiltered && !selectedCity && (
@@ -407,45 +418,10 @@ const Landing = (props) => {
                 </HotActivitiesCardItems>
               ))}
             </HotActivitiesCards>
+            <MoreButtonBox>
+              <MoreButton>更多活動</MoreButton>
+            </MoreButtonBox>
           </Space>
-
-          {/* <Space>
-            <Kind title="熱門景點">
-              <TriangleTitle />
-            </Kind>
-            <HotActivitiesCards>
-              {hotActivitiesInfo.map((hotActivityInfo) => (
-                <HotActivitiesCardItems key={hotActivityInfo.title}>
-                  <ActivityCard
-                    onClick={() => {
-                      setIsShowDetail(true);
-                      handleClickActivityCard();
-                    }}
-                  />
-                </HotActivitiesCardItems>
-              ))}
-            </HotActivitiesCards>
-          </Space> */}
-
-          {/* <Space>
-            <Kind title="熱門活動">
-              <TriangleTitle />
-            </Kind>
-            <SmallCards>
-              {hotActivities.map((hotActivity) => (
-                <SmallCardItems>
-                  <FoodCard
-                    info={{
-                      src: hotActivity.Picture.PictureUrl1,
-                      alt: "圖片",
-                      title: hotActivity.Name,
-                      area: hotActivity.Location,
-                    }}
-                  />
-                </SmallCardItems>
-              ))}
-            </SmallCards>
-          </Space> */}
 
           <Space>
             <Kind title="熱門景點">
@@ -468,6 +444,9 @@ const Landing = (props) => {
                 </SmallCardItems>
               ))}
             </SmallCards>
+            <MoreButtonBox paddingBottom={50}>
+              <MoreButton>更多景點</MoreButton>
+            </MoreButtonBox>
           </Space>
         </>
       )}
@@ -505,6 +484,16 @@ const Landing = (props) => {
     </Background>
   );
 };
+
+const MoreButtonBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: ${(props) =>
+    props.paddingBottom && `${props.paddingBottom}px`};
+`;
+
+const MoreButton = styled(RectButton)``;
 
 const DetailModal = styled.div`
   position: fixed;
@@ -553,7 +542,6 @@ const SmallCardItems = styled.li`
 const SmallCards = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  padding-bottom: 50px;
 `;
 
 const ActivityCard = styled(Card)`
@@ -588,7 +576,6 @@ const HalfHotCityInfo = styled.div`
 const HotActivitiesCards = styled.ul`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  padding-bottom: 35px;
 `;
 
 const HotCityMask = styled.div`
@@ -732,7 +719,10 @@ const Remark = styled.p`
 `;
 
 const Title = styled.div`
-  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const LandingImg = styled.div`

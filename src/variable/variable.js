@@ -30,3 +30,29 @@ export const __007350__ = (opacity) =>
   `${opacity ? `rgba(0, 115, 80, ${opacity})` : "#007350"}`;
 export const __FFB72C__ = getCreateColorMethod([255, 183, 44], "#FFB72C");
 export const __D2D2D2__ = getCreateColorMethod([210, 210, 210], "#D2D2D2");
+
+export const counties = [
+  "不分縣市",
+  "台北市",
+  "基隆市",
+  "新北市",
+  "宜蘭縣",
+  "桃園市",
+  "新竹市",
+  "新竹縣",
+  "苗栗縣",
+  "台中市",
+  "彰化縣",
+  "南投縣",
+  "嘉義市",
+  "嘉義縣",
+  "雲林縣",
+  "台南市",
+  "高雄市",
+  "澎湖縣",
+  "金門縣",
+  "屏東縣",
+  "台東縣",
+  "花蓮縣",
+  "連江縣",
+];
