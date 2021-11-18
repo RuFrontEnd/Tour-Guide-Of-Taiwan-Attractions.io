@@ -11,7 +11,7 @@ import { ReactComponent as Search } from "assets/search.svg";
 import { ReactComponent as Gps } from "assets/gps.svg";
 import { ReactComponent as Location } from "assets/location.svg";
 import { ReactComponent as TriangleTitle } from "assets/triangle_title.svg";
-import { ReactComponent as RectangleTitle } from "assets/rectangle_title.svg";
+import { ReactComponent as direction } from "assets/direction.svg";
 import landing from "assets/landing.png";
 import cardImg_tmp from "assets/cardImg_tmp.png";
 import cardSmImg_tmp from "assets/cardSmImg_tmp.png";
@@ -128,24 +128,22 @@ const responsive = {
   },
 };
 
-const handleClickActivityCard = () => {
+export const handleClickActivityCard = () => {
   document.body.style.overflow = "hidden";
 };
 
-const handleClickDetailModal = () => {
+export const handleClickDetailModal = () => {
   document.body.style.overflow = "";
 };
 
-const handleClickDetailCard = (e) => {
+export const handleClickDetailCard = (e) => {
   e.stopPropagation();
 };
 
-const getAuthorizationHeader = () => {
+export const getAuthorizationHeader = () => {
   let AppID = "d8a00188d8fc4814922181ed65fc12dd";
   let AppKey = "GsShW2xteF4icnz9hwAWrMNRQFQ";
   let GMTString = new Date().toGMTString();
-  let UTCString = new Date().toUTCString();
-  console.log(";t", GMTString, UTCString);
   let ShaObj = new jsSHA("SHA-1", "TEXT");
   ShaObj.setHMACKey(AppKey, "TEXT");
   ShaObj.update("x-date: " + GMTString);
@@ -159,15 +157,15 @@ const getAuthorizationHeader = () => {
   return { Authorization: Authorization, "X-Date": GMTString };
 };
 
-const getAddresses = (scenicSpots) =>
+export const getAddresses = (scenicSpots) =>
   scenicSpots.map((scenicSpot) =>
     scenicSpot.Address ? scenicSpot.Address.slice(0, 3) : ""
   );
 
-const filterCities = (addresses) =>
+export const filterCities = (addresses) =>
   addresses.filter((address) => address.match(/.{2}市/));
 
-const initNumOfOccurrence = (cities) =>
+export const initNumOfOccurrence = (cities) =>
   cities.map((city) => {
     return {
       name: city,
@@ -175,7 +173,7 @@ const initNumOfOccurrence = (cities) =>
     };
   });
 
-const getNumOfCities = (cities, initNumOfCities) => {
+export const getNumOfCities = (cities, initNumOfCities) => {
   let numOfCities = [...initNumOfCities];
   numOfCities.forEach((numOfCity, index) =>
     cities.forEach((city) => {
@@ -187,40 +185,79 @@ const getNumOfCities = (cities, initNumOfCities) => {
   return numOfCities;
 };
 
-const descSortNumOfCites = (numOfCities) =>
+export const descSortNumOfCites = (numOfCities) =>
   numOfCities.sort((prev, next) => next.value - prev.value);
 
-const getTopTenCities = (SortedNumOfCites) =>
+export const getTopTenCities = (SortedNumOfCites) =>
   SortedNumOfCites.filter((SortedNumOfCity, index) => index < 10);
 
-const getCityName = (cityName) => {
-  console.log("cityName", cityName);
+export const getCityName = (cityName) => {
   if (cityName === "新　竹") {
     return "新竹市 & 新竹縣";
   }
   return cityName;
 };
 
-const getCityEngName = (cityName) => {
-  let engName = "";
-  if (cityName.match(/台 北/)) {
-    engName = "Taipei";
+export const getCountyName = (cityName) => {
+  let county = "";
+  if (cityName.match(/台　北/)) {
+    county = "台北市";
   }
-  if (cityName.match(/桃 園/)) {
-    engName = "Taoyuan";
+  if (cityName.match(/桃　園/)) {
+    county = "Taoyuan";
   }
-  if (cityName.match(/新 竹/)) {
-    engName = "Hsinchu";
+  if (cityName.match(/新　竹/)) {
+    county = "Hsinchu";
   }
-  return engName;
-};
-
-const getCityScenicSpot = (cityName) => {
-  console.log("cityName", cityName);
-  return fetch(`${baseURL}/v2/Tourism/ScenicSpot/${cityName}`, {
-    headers: getAuthorizationHeader(),
-    method: "GET",
-  }).then((res) => res.json());
+  if (cityName.match(/新 北/)) {
+    county = "NewTaipei";
+  }
+  if (cityName.match(/嘉 義/)) {
+    county = "Chiayi";
+  }
+  if (cityName.match(/南 投/)) {
+    county = "Nantou";
+  }
+  if (cityName.match(/台 中/)) {
+    county = "";
+  }
+  if (cityName.match(/高 雄/)) {
+    county = "";
+  }
+  if (cityName.match(/屏 東/)) {
+    county = "";
+  }
+  if (cityName.match(/台 南/)) {
+    county = "";
+  }
+  if (cityName.match(/花 蓮/)) {
+    county = "";
+  }
+  if (cityName.match(/台 東/)) {
+    county = "";
+  }
+  if (cityName.match(/宜 蘭/)) {
+    county = "";
+  }
+  if (cityName.match(/苗 栗/)) {
+    county = "";
+  }
+  if (cityName.match(/雲 林/)) {
+    county = "";
+  }
+  if (cityName.match(/彰 化/)) {
+    county = "";
+  }
+  if (cityName.match(/澎 湖/)) {
+    county = "";
+  }
+  if (cityName.match(/金 門/)) {
+    county = "";
+  }
+  if (cityName.match(/馬 祖/)) {
+    county = "";
+  }
+  return county;
 };
 
 const Landing = (props) => {
@@ -230,11 +267,21 @@ const Landing = (props) => {
   const [isFiltered, setIsFiltered] = useState(false);
   const [selectedCity, setSelectedCity] = useState("");
   const [scenicSpots, setScenicSpots] = useState([]);
+  const [cityScenicSpots, setCityScenicSpots] = useState([]);
   const [hotScenicSpots, setHotScenicSpots] = useState([]);
   const [activities, setActivities] = useState([]);
   const [hotActivities, setHotActivities] = useState([]);
-  const [cityScenicSpots, setCityScenicSpots] = useState([]);
-  // const [hotCities, setHotCities] = useState([]);
+
+  const filterCityScenicSpots = (hotCityName, scenicSpots) => {
+    setSelectedCity(getCityName(hotCityName));
+    console.log("scenicSpots", scenicSpots);
+    console.log("getCountyName(hotCityName)", getCountyName(hotCityName));
+    let _cityScenicSpots = scenicSpots.filter((scenicSpot) => {
+      console.log("123", scenicSpot.Address?.slice(0, 3));
+      return scenicSpot.Address?.slice(0, 3) === getCountyName(hotCityName);
+    });
+    setCityScenicSpots(_cityScenicSpots);
+  };
 
   useEffect(() => {
     fetch(`${baseURL}/v2/Tourism/ScenicSpot`, {
@@ -242,13 +289,7 @@ const Landing = (props) => {
       method: "GET",
     })
       .then((res) => res.json())
-      .then((datas) => {
-        const _scenicSpots = datas.filter(
-          (data) =>
-            JSON.stringify(data.Picture) !== "{}" &&
-            JSON.stringify(data.Picture).includes("PictureUrl1") &&
-            data.Address?.slice(3, 6).match(/.{2}[鄉鎮市區]/)
-        );
+      .then((_scenicSpots) => {
         setScenicSpots(_scenicSpots);
 
         let _hotScenicSpots = [];
@@ -276,15 +317,6 @@ const Landing = (props) => {
         const _hotActivities = _activities.filter((data, index) => index < 4);
         setHotActivities(_hotActivities);
       });
-
-    // fetch(`${baseURL}/v2/Tourism/ScenicSpot/新北市`, {
-    //   headers: getAuthorizationHeader(),
-    //   method: "GET",
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //   });
   }, []);
 
   useEffect(() => {
@@ -307,31 +339,15 @@ const Landing = (props) => {
   }, [scenicSpots]);
 
   useEffect(() => {
-    if (activities.length !== 0) {
-      //   const cities = pipe(getAddresses, sortValue, filterCities)(scenicSpots);
-      //   const initNumOfCities = pipe(
-      //     removeRepeatedValue,
-      //     initNumOfOccurrence
-      //   )(cities);
-      //   const numOfCities = pipe(
-      //     getNumOfCities,
-      //     descSortNumOfCites,
-      //     getTopTenCities
-      //   )(cities, initNumOfCities);
-      //   const _hotCities = numOfCities.map((numOfCity) => numOfCity);
-      //   // setHotCities(_hotCities);
-    }
-  }, [activities]);
+    console.log("cityScenicSpots", cityScenicSpots);
+  }, [cityScenicSpots]);
 
   return (
     <Background>
+      <NavBarHeight height={navBarHeight} />
       <LandingImgBox widthOfShadowLength={"80%"} rotateOfShadow={2}>
         <LandingImg>
-          {/* <Tool categories={categories} counties={counties} /> */}
-          <Title>
-            <WelcomeToTaiwan />
-            <Remark>台北、台中、台南、屏東、宜蘭……遊遍台灣</Remark>
-          </Title>
+          <Tool categories={categories} counties={counties} />
         </LandingImg>
       </LandingImgBox>
       {!isFiltered && !selectedCity && (
@@ -346,7 +362,8 @@ const Landing = (props) => {
                   <HotCitiy>
                     <HotCityBoard
                       onClick={(e) => {
-                        setSelectedCity(getCityName(hotCity.name));
+                        console.log("hotCity", hotCity);
+                        filterCityScenicSpots(hotCity.name, scenicSpots);
                       }}
                     >
                       <HotCityImg src={hotCity.src} />
@@ -362,12 +379,7 @@ const Landing = (props) => {
                     <HotCityBoards>
                       <HalfHotCityBoard
                         onClick={(e) => {
-                          setSelectedCity(getCityName(hotCity.name[0]));
-                          getCityScenicSpot(
-                            getCityEngName(hotCity.name[0])
-                          ).then((data) => {
-                            setCityScenicSpots(data);
-                          });
+                          filterCityScenicSpots(hotCity.name[0], scenicSpots);
                         }}
                       >
                         <HotCityImg src={hotCity.src[0]} />
@@ -379,7 +391,7 @@ const Landing = (props) => {
                       </HalfHotCityBoard>
                       <HalfHotCityBoard
                         onClick={(e) => {
-                          setSelectedCity(getCityName(hotCity.name[1]));
+                          filterCityScenicSpots(hotCity.name[1], scenicSpots);
                         }}
                       >
                         <HotCityImg src={hotCity.src[1]} />
@@ -418,9 +430,9 @@ const Landing = (props) => {
                 </HotActivitiesCardItems>
               ))}
             </HotActivitiesCards>
-            <MoreButtonBox>
+            {/* <MoreButtonBox>
               <MoreButton>更多活動</MoreButton>
-            </MoreButtonBox>
+            </MoreButtonBox> */}
           </Space>
 
           <Space>
@@ -430,36 +442,56 @@ const Landing = (props) => {
             <SmallCards>
               {hotScenicSpots.map((hotScenicSpot) => (
                 <SmallCardItems>
-                  <FoodCard
+                  <SmallCard
                     info={{
-                      src: hotScenicSpot.Picture.PictureUrl1,
+                      src: hotScenicSpot.Picture?.PictureUrl1,
                       alt: "圖片",
                       title: hotScenicSpot.Name,
-                      area: `${hotScenicSpot.Address.slice(
-                        0,
-                        3
-                      )} ${hotScenicSpot.Address.slice(3, 6)}`,
+                      area: `${hotScenicSpot.Address?.slice(0, 3)} ${
+                        hotScenicSpot.Address?.slice(3, 6).match(
+                          /.{2}[鄉鎮市區]{1}/
+                        )
+                          ? hotScenicSpot.Address?.slice(3, 6)
+                          : ""
+                      }`,
                     }}
                   />
                 </SmallCardItems>
               ))}
             </SmallCards>
-            <MoreButtonBox paddingBottom={50}>
+            {/* <MoreButtonBox paddingBottom={50}>
               <MoreButton>更多景點</MoreButton>
-            </MoreButtonBox>
+            </MoreButtonBox> */}
           </Space>
         </>
       )}
 
-      {selectedCity && (
+      {selectedCity && cityScenicSpots && (
         <Space>
           <Kind title={selectedCity}>
-            <TriangleTitle />
+            <LastPageBox
+              onClick={() => {
+                setSelectedCity(false);
+                setCityScenicSpots([]);
+              }}
+            >
+              <LastPage />
+            </LastPageBox>
           </Kind>
           <SmallCards>
             {cityScenicSpots.map((cityScenicSpot) => (
               <SmallCardItems>
-                <FoodCard />
+                <SmallCard
+                  info={{
+                    src: cityScenicSpot.Picture.PictureUrl1,
+                    alt: "圖片",
+                    title: cityScenicSpot.Name,
+                    area: `${cityScenicSpot.Address?.slice(
+                      0,
+                      3
+                    )} ${cityScenicSpot.Address?.slice(3, 6)}`,
+                  }}
+                />
               </SmallCardItems>
             ))}
           </SmallCards>
@@ -484,6 +516,26 @@ const Landing = (props) => {
     </Background>
   );
 };
+const LastPageBox = styled.div`
+  background-color: ${__FF1D6C__()};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 9999px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+`;
+
+const LastPage = styled(direction)`
+  transform: rotate(-180deg);
+  stroke: ${__FFF__()};
+  padding: 2px;
+`;
+
+const NavBarHeight = styled.div`
+  height: ${(props) => props.height}px;
+`;
 
 const MoreButtonBox = styled.div`
   width: 100%;
@@ -523,7 +575,7 @@ const HalfHotCityMask = styled.div`
   z-index: 1;
 `;
 
-const FoodCard = styled(CardSm)``;
+const SmallCard = styled(CardSm)``;
 
 const SmallCardItems = styled.li`
   margin: 0px 4.5px 35px 4.5px;

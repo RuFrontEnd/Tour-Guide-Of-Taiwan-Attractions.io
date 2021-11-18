@@ -24,8 +24,6 @@ const Box = styled.section`
 `;
 
 const Icon = styled.div`
-  width: 20px;
-  height: 20px;
 `;
 
 const Title = styled.section`

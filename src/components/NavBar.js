@@ -27,7 +27,11 @@ const NavBar = (props) => {
   return (
     <Container className={className} full>
       <Wrap ref={$NavbarContainer}>
-        <Logo />
+        <TaiwanLogo
+          onClick={() => {
+            history.push("/");
+          }}
+        />
         <Options>
           <AttractLink
             onClick={() => {
@@ -58,6 +62,10 @@ const NavBar = (props) => {
     </Container>
   );
 };
+
+const TaiwanLogo = styled(Logo)`
+  cursor: pointer;
+`;
 
 const TrafficIcon = styled(Traffic)`
   margin-right: 8px;
