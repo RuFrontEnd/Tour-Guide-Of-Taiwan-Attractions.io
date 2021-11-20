@@ -327,18 +327,19 @@ const ScenicSpots = (props) => {
 
   useEffect(() => {
     console.log("selectedCity", selectedCity);
-  }, []);
+  }, [selectedCity]);
 
   return (
     <Background>
       <NavBarHeight height={navBarHeight} />
-      <LandingImgBox widthOfShadowLength={"80%"} rotateOfShadow={2}>
-        <LandingImg>
-          <Tool categories={categories} counties={counties} />
-        </LandingImg>
-      </LandingImgBox>
+      <Tool
+        categories={categories}
+        counties={counties}
+        selectedCity={selectedCity}
+        setSelectedCity={setSelectedCity}
+      />
 
-      <Space style={{ display: selectedCity === null ? "block" : "none" }}>
+      <Space style={{ display: qurey.get("city_zh") ? "none" : "block" }}>
         <Kind title="造訪城市">
           <Triangle />
         </Kind>
@@ -349,8 +350,12 @@ const ScenicSpots = (props) => {
                 <HotCityBoard
                   onClick={(e) => {
                     history.push(getFilterCityQureyString(hotCity.name));
-                    setSelectedCity(hotCity.name);
-                    filterCityScenicSpots(hotCity.name, scenicSpots);
+                    setSelectedCity(getCountyName(hotCity.name).zh);
+                    console.log(
+                      "(getCountyName(hotCity.name).zh",
+                      getCountyName(hotCity.name).zh
+                    );
+                    // filterCityScenicSpots(hotCity.name, scenicSpots);
                   }}
                 >
                   <HotCityImg src={hotCity.src} />
@@ -371,7 +376,6 @@ const ScenicSpots = (props) => {
                           hotCity.name
                         )}`
                       );
-                      // filterCityScenicSpots(hotCity.name[0], scenicSpots);
                     }}
                   >
                     <HotCityImg src={hotCity.src[0]} />
