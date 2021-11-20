@@ -326,6 +326,12 @@ const ScenicSpots = (props) => {
   }, [scenicSpots]);
 
   useEffect(() => {
+    history.listen(() => {
+      !qurey.get("city_zh") && setSelectedCity("");
+    });
+  }, []);
+
+  useEffect(() => {
     console.log("selectedCity", selectedCity);
   }, [selectedCity]);
 
@@ -351,10 +357,6 @@ const ScenicSpots = (props) => {
                   onClick={(e) => {
                     history.push(getFilterCityQureyString(hotCity.name));
                     setSelectedCity(getCountyName(hotCity.name).zh);
-                    console.log(
-                      "(getCountyName(hotCity.name).zh",
-                      getCountyName(hotCity.name).zh
-                    );
                     // filterCityScenicSpots(hotCity.name, scenicSpots);
                   }}
                 >
