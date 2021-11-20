@@ -4,11 +4,25 @@ import { __0D0B0C__ } from "variable/variable";
 import selectionArrow from "assets/selectionArrow.svg";
 
 const Dropdown = (props) => {
-  const { className, style, options = ["類別", "選項二", "選項三"] } = props;
+  const {
+    className,
+    style,
+    options = ["類別", "選項二", "選項三"],
+    selected,
+    setSelected,
+  } = props;
+
   return (
-    <Box style={style} className={className}>
+    <Box
+      style={style}
+      className={className}
+      value={selected}
+      onChange={(e) => {
+        setSelected(e.target.value);
+      }}
+    >
       {Array.isArray(options) &&
-        options.map((option) => <Option key={option} >{option}</Option>)}
+        options.map((option) => <Option key={option}>{option}</Option>)}
     </Box>
   );
 };

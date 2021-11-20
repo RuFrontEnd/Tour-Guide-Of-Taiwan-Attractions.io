@@ -1,6 +1,11 @@
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import {
   login,
   logout,
@@ -11,6 +16,7 @@ import { setAxiosDefaultURL } from "utils/data";
 import Navbar from "components/NavBar";
 import Footer from "components/Footer";
 import Landing from "pages/Landing";
+import Filter from "pages/Filter";
 import FoodAndAccommodation from "pages/FoodAndAccommodation";
 
 setAxiosDefaultURL("https://swin-opendata.herokuapp.com/api/v1/data/");
@@ -18,7 +24,11 @@ setAxiosDefaultURL("https://swin-opendata.herokuapp.com/api/v1/data/");
 const routes = [
   {
     component: <Landing />,
-    path: "/",
+    path: "/landing",
+  },
+  {
+    component: <Filter />,
+    path: "/landing/filter",
   },
   {
     component: <FoodAndAccommodation />,
@@ -65,6 +75,7 @@ function App() {
                 {route.component}
               </Route>
             ))}
+            <Redirect to="/landing" />
           </Switch>
         </Suspense>
         <Footer />

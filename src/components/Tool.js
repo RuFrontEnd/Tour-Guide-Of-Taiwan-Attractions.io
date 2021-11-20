@@ -12,7 +12,15 @@ import SquareButton from "components/SquareButton";
 import Dropdown from "components/Dropdown";
 
 const Tool = (props) => {
-  const { history, style, className, categories, counties } = props;
+  const {
+    history,
+    style,
+    className,
+    categories,
+    counties,
+    selectedCity,
+    setSelectedCity,
+  } = props;
 
   return (
     <Box style={style} className={className}>
@@ -28,7 +36,11 @@ const Tool = (props) => {
       </SearchBox>
       <DropdownBox>
         <CatgoreyDropdown options={categories} />
-        <CountiesDropdown options={counties} />
+        <CountiesDropdown
+          options={counties}
+          selected={selectedCity}
+          setSelected={setSelectedCity}
+        />
         <SearchButton>
           <SearchIcon width={"16px"} />
         </SearchButton>

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/macro";
 import { withRouter, Link } from "react-router-dom";
-
+import { getAuthorizationHeader } from "variable/auth";
 import { useSelector } from "react-redux";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
-import { getAuthorizationHeader } from "variable/auth";
 import { ReactComponent as WelcomeToTaiwan } from "assets/welcomeToTaiwan.svg";
 import { ReactComponent as Search } from "assets/search.svg";
 import { ReactComponent as Gps } from "assets/gps.svg";
@@ -18,7 +17,6 @@ import cardImg_tmp from "assets/cardImg_tmp.png";
 import cardSmImg_tmp from "assets/cardSmImg_tmp.png";
 import detailCard_tmp from "assets/detailCard_tmp.png";
 import boardImg_tmp from "assets/boardImg_tmp.png";
-import SmallCards from "layouts/SmallCards";
 import Paper from "components/Paper";
 import Board from "components/Board";
 import Background from "layouts/Background";
@@ -56,6 +54,8 @@ import changhua from "assets/changhua.jpg";
 import penghu from "assets/penghu.jpg";
 import kinmen from "assets/kinmen.jpg";
 import noImg from "assets/no-img.jpg";
+import SmallCards from "layouts/SmallCards";
+import { login } from "redux/member/memberActions";
 
 const categories = ["類別", "景點", "活動"];
 const hotAttractions = {
@@ -185,318 +185,106 @@ export const getCityName = (cityName) => {
 };
 
 export const getCountyName = (cityName) => {
-  let county = {};
+  let county = "";
   if (cityName.match(/台　北/)) {
-    county = { en: "Taipei", zh: "台北市" };
+    county = "台北市";
   }
   if (cityName.match(/桃　園/)) {
-    county = { en: "Taipei", zh: "桃園市" };
+    county = "Taoyuan";
   }
   if (cityName.match(/新　竹/)) {
-    county = { en: "Hsinchu", zh: "新竹市" };
+    county = "Hsinchu";
   }
-  if (cityName.match(/新　北/)) {
-    county = { en: "NewTaipei", zh: "新北市" };
+  if (cityName.match(/新 北/)) {
+    county = "NewTaipei";
   }
-  if (cityName.match(/嘉　義/)) {
-    county = { en: "Chiayi", zh: "嘉義市" };
+  if (cityName.match(/嘉 義/)) {
+    county = "Chiayi";
   }
-  if (cityName.match(/南　投/)) {
-    county = { en: "Nantou", zh: "南投市" };
+  if (cityName.match(/南 投/)) {
+    county = "Nantou";
   }
-  if (cityName.match(/台　中/)) {
-    county = { en: "Taichung", zh: "台中市" };
-  }
-  if (cityName.match(/高　雄/)) {
+  if (cityName.match(/台 中/)) {
     county = "";
   }
-  if (cityName.match(/屏　東/)) {
+  if (cityName.match(/高 雄/)) {
     county = "";
   }
-  if (cityName.match(/台　南/)) {
+  if (cityName.match(/屏 東/)) {
     county = "";
   }
-  if (cityName.match(/花　蓮/)) {
+  if (cityName.match(/台 南/)) {
     county = "";
   }
-  if (cityName.match(/台　東/)) {
+  if (cityName.match(/花 蓮/)) {
     county = "";
   }
-  if (cityName.match(/宜　蘭/)) {
+  if (cityName.match(/台 東/)) {
     county = "";
   }
-  if (cityName.match(/苗　栗/)) {
+  if (cityName.match(/宜 蘭/)) {
     county = "";
   }
-  if (cityName.match(/雲　林/)) {
+  if (cityName.match(/苗 栗/)) {
     county = "";
   }
-  if (cityName.match(/彰　化/)) {
+  if (cityName.match(/雲 林/)) {
     county = "";
   }
-  if (cityName.match(/澎　湖/)) {
+  if (cityName.match(/彰 化/)) {
     county = "";
   }
-  if (cityName.match(/金　門/)) {
+  if (cityName.match(/澎 湖/)) {
     county = "";
   }
-  if (cityName.match(/馬　祖/)) {
+  if (cityName.match(/金 門/)) {
+    county = "";
+  }
+  if (cityName.match(/馬 祖/)) {
     county = "";
   }
   return county;
 };
 
-export const getFilterCityQureyString = (hotCityName) => {
-  return `/landing/filter?city_en=${getCountyName(hotCityName).en}&city_zh=${
-    getCountyName(hotCityName).zh
-  }`;
-};
-
-const Landing = (props) => {
-  const { history } = props;
+const City = (props) => {
+  const { history, location } = props;
+  const initSelectedCity = decodeURI(
+    location.search.substr(location.search.indexOf("zh") + 3)
+  );
   const navBarHeight = useSelector((state) => state.navBar.height);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
-  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedCity, setSelectedCity] = useState(initSelectedCity);
   const [scenicSpots, setScenicSpots] = useState([]);
   const [cityScenicSpots, setCityScenicSpots] = useState([]);
   const [hotScenicSpots, setHotScenicSpots] = useState([]);
   const [activities, setActivities] = useState([]);
   const [hotActivities, setHotActivities] = useState([]);
 
-  const filterCityScenicSpots = (hotCityName, scenicSpots) => {
-    setSelectedCity(getCityName(hotCityName));
-    console.log("scenicSpots", scenicSpots);
-    console.log("getCountyName(hotCityName)", getCountyName(hotCityName));
-    let _cityScenicSpots = scenicSpots.filter((scenicSpot) => {
-      console.log("123", scenicSpot.Address?.slice(0, 3));
-      return scenicSpot.Address?.slice(0, 3) === getCountyName(hotCityName);
-    });
-    setCityScenicSpots(_cityScenicSpots);
-  };
+  useEffect(() => {}, []);
 
   useEffect(() => {
-    fetch(`${baseURL}/v2/Tourism/ScenicSpot`, {
-      headers: getAuthorizationHeader(),
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((_scenicSpots) => {
-        setScenicSpots(_scenicSpots);
-
-        let _hotScenicSpots = [];
-        for (let i = 0; i < 10; i++) {
-          // min = Math.ceil(min);
-          // max = Math.floor(max);
-          // return
-          const A = Math.floor(Math.random() * (100 - 0) + 0);
-          _hotScenicSpots.push(_scenicSpots[A]);
-        }
-        setHotScenicSpots(_hotScenicSpots);
-      });
-
-    fetch(`${baseURL}/v2/Tourism/Activity`, {
-      headers: getAuthorizationHeader(),
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((datas) => {
-        const _activities = datas.filter(
-          (data) => JSON.stringify(data.Picture) !== "{}"
-        );
-        setActivities(_activities);
-
-        const _hotActivities = _activities.filter((data, index) => index < 4);
-        setHotActivities(_hotActivities);
-      });
-  }, []);
-
-  useEffect(() => {
-    if (scenicSpots.length !== 0) {
-      const cities = pipe(getAddresses, sortValue, filterCities)(scenicSpots);
-
-      const initNumOfCities = pipe(
-        removeRepeatedValue,
-        initNumOfOccurrence
-      )(cities);
-
-      const numOfCities = pipe(
-        getNumOfCities,
-        descSortNumOfCites,
-        getTopTenCities
-      )(cities, initNumOfCities);
-
-      const _hotCities = numOfCities.map((numOfCity) => numOfCity);
-    }
-  }, [scenicSpots]);
-
-  useEffect(() => {
-    console.log("cityScenicSpots", cityScenicSpots);
-  }, [cityScenicSpots]);
-
-  useEffect(() => {
-    console.log("A");
-  }, []);
+    console.log("location", location);
+    console.log("selectedCity", selectedCity);
+  }, [selectedCity]);
 
   return (
     <Background>
       <NavBarHeight height={navBarHeight} />
       <LandingImgBox widthOfShadowLength={"80%"} rotateOfShadow={2}>
         <LandingImg>
-          <Tool categories={categories} counties={counties} />
+          <Tool
+            categories={categories}
+            counties={counties}
+            selectedCity={selectedCity}
+            setSelectedCity={setSelectedCity}
+          />
         </LandingImg>
       </LandingImgBox>
-      {!isFiltered && !selectedCity && (
-        <>
-          <Space>
-            <Kind title="造訪城市">
-              <Triangle />
-            </Kind>
-            <HotCitiesCarousel responsive={responsive}>
-              {hotCities.map((hotCity, index) =>
-                index % 2 === 0 ? (
-                  <HotCitiy>
-                    <HotCityBoard
-                      onClick={(e) => {
-                        history.push(getFilterCityQureyString(hotCity.name));
-                        // console.log("hotCity", hotCity);
-                        filterCityScenicSpots(hotCity.name, scenicSpots);
-                      }}
-                    >
-                      <HotCityImg src={hotCity.src} />
-                      <HotCityInfo>
-                        <HotCityIcon />
-                        <HotCityName>{hotCity.name}</HotCityName>
-                      </HotCityInfo>
-                      <HotCityMask />
-                    </HotCityBoard>
-                  </HotCitiy>
-                ) : (
-                  <HotCitiy>
-                    <HotCityBoards>
-                      <HalfHotCityBoard
-                        onClick={(e) => {
-                          history.push(
-                            `/landing/filter?city=${getFilterCityQureyString(
-                              hotCity.name
-                            )}`
-                          );
-                          // filterCityScenicSpots(hotCity.name[0], scenicSpots);
-                        }}
-                      >
-                        <HotCityImg src={hotCity.src[0]} />
-                        <HalfHotCityInfo>
-                          <HotCityIcon />
-                          <HotCityName>{hotCity.name[0]}</HotCityName>
-                        </HalfHotCityInfo>
-                        <HalfHotCityMask />
-                      </HalfHotCityBoard>
-                      <HalfHotCityBoard
-                        onClick={(e) => {
-                          history.push(
-                            `/landing/filter?city=${getFilterCityQureyString(
-                              hotCity.name
-                            )}`
-                          );
-                          // filterCityScenicSpots(hotCity.name[1], scenicSpots);
-                        }}
-                      >
-                        <HotCityImg src={hotCity.src[1]} />
-                        <HalfHotCityInfo>
-                          <HotCityIcon />
-                          <HotCityName>{hotCity.name[1]}</HotCityName>
-                        </HalfHotCityInfo>
-                        <HalfHotCityMask />
-                      </HalfHotCityBoard>
-                    </HotCityBoards>
-                  </HotCitiy>
-                )
-              )}
-            </HotCitiesCarousel>
-          </Space>
 
-          <Space>
-            <Kind title="熱門活動">
-              <Triangle />
-            </Kind>
-            <HotActivitiesCards>
-              {hotActivities.map((hotActivity) => (
-                <HotActivitiesCardItems key={hotActivity.title}>
-                  <ActivityCard
-                    info={{
-                      src: hotActivity.Picture.PictureUrl1,
-                      alt: "圖片",
-                      title: hotActivity.Name,
-                      area: hotActivity.Location,
-                    }}
-                    onClick={() => {
-                      setIsShowDetail(true);
-                      handleClickActivityCard();
-                    }}
-                  />
-                </HotActivitiesCardItems>
-              ))}
-            </HotActivitiesCards>
-            {/* <MoreButtonBox>
-              <MoreButton>更多活動</MoreButton>
-            </MoreButtonBox> */}
-          </Space>
+      <SmallCards title={"活動"} icon={<Triangle />} spots={hotScenicSpots} />
 
-          <SmallCards
-            title={"熱門景點"}
-            icon={<Triangle />}
-            spots={hotScenicSpots}
-          />
-        </>
-      )}
-
-      {selectedCity && cityScenicSpots && (
-        <Space>
-          <Kind title={selectedCity}>
-            <LastPageBox
-              onClick={() => {
-                setSelectedCity(false);
-                setCityScenicSpots([]);
-              }}
-            >
-              <LastPage />
-            </LastPageBox>
-          </Kind>
-          <SmallCardsBox>
-            {cityScenicSpots.map((cityScenicSpot) => (
-              <SmallCardItems>
-                <SmallCard
-                  info={{
-                    src: cityScenicSpot.Picture.PictureUrl1,
-                    alt: "圖片",
-                    title: cityScenicSpot.Name,
-                    area: `${cityScenicSpot.Address?.slice(
-                      0,
-                      3
-                    )} ${cityScenicSpot.Address?.slice(3, 6)}`,
-                  }}
-                />
-              </SmallCardItems>
-            ))}
-          </SmallCardsBox>
-        </Space>
-      )}
-
-      {isShowDetail && (
-        <DetailModal
-          onClick={() => {
-            setIsShowDetail(false);
-            handleClickDetailModal();
-          }}
-          navBarHeight={navBarHeight}
-        >
-          <DetailCard
-            onClick={(e) => {
-              handleClickDetailCard(e);
-            }}
-          />
-        </DetailModal>
-      )}
+      <SmallCards title={"景點"} icon={<Triangle />} spots={hotScenicSpots} />
     </Background>
   );
 };
@@ -575,10 +363,10 @@ const SmallCardItems = styled.li`
   }
 `;
 
-const SmallCardsBox = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-`;
+// const SmallCards = styled.div`
+//   display: grid;
+//   grid-template-columns: repeat(5, 1fr);
+// `;
 
 const ActivityCard = styled(Card)`
   width: 100%;
@@ -780,4 +568,4 @@ const LandingImgBox = styled(Paper)`
   margin-bottom: 90px;
 `;
 
-export default withRouter(Landing);
+export default withRouter(City);
