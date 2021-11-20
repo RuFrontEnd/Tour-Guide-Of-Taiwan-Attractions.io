@@ -1,8 +1,9 @@
 # 台灣旅遊景點導覽
 
-## 簡介
+## Introduction
 
-Tour guide of Taiwan attractions
+Tour guide of Taiwan attractions  
+
 使用 React 串接 [TDX 運輸資料流通服務](https://tdx.transportdata.tw/) API，實作台灣旅遊景點導覽功能。
 
 <!-- ## Features
