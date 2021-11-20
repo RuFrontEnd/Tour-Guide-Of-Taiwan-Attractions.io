@@ -6,10 +6,11 @@ import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
 import { ReactComponent as WelcomeToTaiwan } from "assets/welcomeToTaiwan.svg";
 import { ReactComponent as Search } from "assets/search.svg";
 import { ReactComponent as Gps } from "assets/gps.svg";
-
+import Paper from "components/Paper";
 import Input from "components/Input";
 import SquareButton from "components/SquareButton";
 import Dropdown from "components/Dropdown";
+import landing from "assets/landing.png";
 
 const Tool = (props) => {
   const {
@@ -24,30 +25,53 @@ const Tool = (props) => {
 
   return (
     <Box style={style} className={className}>
-      <Title>
-        <WelcomeToTaiwan />
-        <Remark>台北、台中、台南、屏東、宜蘭……遊遍台灣</Remark>
-      </Title>
-      <SearchBox>
-        <SearchBar placeholder="搜尋關鍵字" />
-        <GpshButton>
-          <GpsIcon height={"24px"} />
-        </GpshButton>
-      </SearchBox>
-      <DropdownBox>
-        <CatgoreyDropdown options={categories} />
-        <CountiesDropdown
-          options={counties}
-          selected={selectedCity}
-          setSelected={setSelectedCity}
-        />
-        <SearchButton>
-          <SearchIcon width={"16px"} />
-        </SearchButton>
-      </DropdownBox>
+      <LandingImgBox widthOfShadowLength={"80%"} rotateOfShadow={2}>
+        <LandingImg>
+          <Title>
+            <WelcomeToTaiwan />
+            <Remark>台北、台中、台南、屏東、宜蘭……遊遍台灣</Remark>
+          </Title>
+          <SearchBox>
+            <SearchBar placeholder="搜尋關鍵字" />
+            <GpshButton>
+              <GpsIcon height={"24px"} />
+            </GpshButton>
+          </SearchBox>
+          <DropdownBox>
+            <CatgoreyDropdown options={categories} />
+            <CountiesDropdown
+              options={counties}
+              selected={selectedCity}
+              setSelected={setSelectedCity}
+            />
+            <SearchButton>
+              <SearchIcon width={"16px"} />
+            </SearchButton>
+          </DropdownBox>
+        </LandingImg>
+      </LandingImgBox>
     </Box>
   );
 };
+
+const LandingImg = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url(${landing});
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LandingImgBox = styled(Paper)`
+  width: 100%;
+  height: 536px;
+  padding: 23px 27px;
+  margin-bottom: 90px;
+`;
 
 const Box = styled.section``;
 
