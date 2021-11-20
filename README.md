@@ -1,6 +1,5 @@
-# JauntMap
-
-JauntMap
+# 台灣旅遊景點導覽
+tour_guide_of_taiwan
 
 # 首次啟動
 
