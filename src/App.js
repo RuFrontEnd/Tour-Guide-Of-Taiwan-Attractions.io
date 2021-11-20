@@ -13,23 +13,24 @@ import {
   setCurrentUserData,
 } from "redux/member/memberActions"; // 判斷是否 login 的狀態
 import { setAxiosDefaultURL } from "utils/data";
+import { path } from "variable/path";
 import Navbar from "components/NavBar";
 import Footer from "components/Footer";
-import Landing from "pages/Landing";
-import Filter from "pages/Filter";
+import ScenicSpots from "pages/ScenicSpots";
+import ScenicSpotsFilter from "pages/ScenicSpotsFilter";
 import FoodAndAccommodation from "pages/FoodAndAccommodation";
 
 setAxiosDefaultURL("https://swin-opendata.herokuapp.com/api/v1/data/");
 
 const routes = [
   {
-    component: <Landing />,
-    path: "/landing",
+    component: <ScenicSpots />,
+    path: path[0],
   },
-  {
-    component: <Filter />,
-    path: "/landing/filter",
-  },
+  // {
+  //   component: <ScenicSpotsFilter />,
+  //   path: "/scenicSpots/filter",
+  // },
   {
     component: <FoodAndAccommodation />,
     path: "/foodAndAccommodation",
@@ -75,7 +76,7 @@ function App() {
                 {route.component}
               </Route>
             ))}
-            <Redirect to="/landing" />
+            <Redirect to={routes[0].path} />
           </Switch>
         </Suspense>
         <Footer />

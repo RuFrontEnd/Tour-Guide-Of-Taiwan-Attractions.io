@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/macro";
 import { withRouter, Link } from "react-router-dom";
-
+import { path } from "variable/path";
 import { useSelector } from "react-redux";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
 import { getAuthorizationHeader } from "variable/auth";
+import { useQuery } from "hooks/useQuery";
 import { ReactComponent as WelcomeToTaiwan } from "assets/welcomeToTaiwan.svg";
 import { ReactComponent as Search } from "assets/search.svg";
 import { ReactComponent as Gps } from "assets/gps.svg";
@@ -31,7 +32,7 @@ import CardSm from "components/CardSm";
 import Space from "layouts/Space";
 import DetailCard from "components/DetailCard";
 import RectButton from "components/RectButton";
-import Tool from "components/Tool";
+import Tool from "layouts/Tool";
 import { baseURL, counties } from "variable/variable";
 import { getScenicSpots } from "api/scenicSpots";
 import { pipe } from "utils/pipe";
@@ -248,17 +249,18 @@ export const getCountyName = (cityName) => {
 };
 
 export const getFilterCityQureyString = (hotCityName) => {
-  return `/landing/filter?city_en=${getCountyName(hotCityName).en}&city_zh=${
+  return `${path[0]}?city_en=${getCountyName(hotCityName).en}&&city_zh=${
     getCountyName(hotCityName).zh
   }`;
 };
 
-const Landing = (props) => {
-  const { history } = props;
+const ScenicSpots = (props) => {
+  const { history, location } = props;
+  const qurey = useQuery();
   const navBarHeight = useSelector((state) => state.navBar.height);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
-  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedCity, setSelectedCity] = useState(qurey.get("city_zh")); // 下拉選單選擇的城市
   const [scenicSpots, setScenicSpots] = useState([]);
   const [cityScenicSpots, setCityScenicSpots] = useState([]);
   const [hotScenicSpots, setHotScenicSpots] = useState([]);
@@ -323,6 +325,10 @@ const Landing = (props) => {
     }
   }, [scenicSpots]);
 
+  useEffect(() => {
+    console.log("selectedCity", selectedCity);
+  }, []);
+
   return (
     <Background>
       <NavBarHeight height={navBarHeight} />
@@ -331,141 +337,136 @@ const Landing = (props) => {
           <Tool categories={categories} counties={counties} />
         </LandingImg>
       </LandingImgBox>
-      {!isFiltered && !selectedCity && (
-        <>
-          <Space>
-            <Kind title="造訪城市">
-              <Triangle />
-            </Kind>
-            <HotCitiesCarousel responsive={responsive}>
-              {hotCities.map((hotCity, index) =>
-                index % 2 === 0 ? (
-                  <HotCitiy>
-                    <HotCityBoard
-                      onClick={(e) => {
-                        history.push(getFilterCityQureyString(hotCity.name));
-                      
-                        filterCityScenicSpots(hotCity.name, scenicSpots);
-                      }}
-                    >
-                      <HotCityImg src={hotCity.src} />
-                      <HotCityInfo>
-                        <HotCityIcon />
-                        <HotCityName>{hotCity.name}</HotCityName>
-                      </HotCityInfo>
-                      <HotCityMask />
-                    </HotCityBoard>
-                  </HotCitiy>
-                ) : (
-                  <HotCitiy>
-                    <HotCityBoards>
-                      <HalfHotCityBoard
-                        onClick={(e) => {
-                          history.push(
-                            `/landing/filter?city=${getFilterCityQureyString(
-                              hotCity.name
-                            )}`
-                          );
-                          // filterCityScenicSpots(hotCity.name[0], scenicSpots);
-                        }}
-                      >
-                        <HotCityImg src={hotCity.src[0]} />
-                        <HalfHotCityInfo>
-                          <HotCityIcon />
-                          <HotCityName>{hotCity.name[0]}</HotCityName>
-                        </HalfHotCityInfo>
-                        <HalfHotCityMask />
-                      </HalfHotCityBoard>
-                      <HalfHotCityBoard
-                        onClick={(e) => {
-                          history.push(
-                            `/landing/filter?city=${getFilterCityQureyString(
-                              hotCity.name
-                            )}`
-                          );
-                          // filterCityScenicSpots(hotCity.name[1], scenicSpots);
-                        }}
-                      >
-                        <HotCityImg src={hotCity.src[1]} />
-                        <HalfHotCityInfo>
-                          <HotCityIcon />
-                          <HotCityName>{hotCity.name[1]}</HotCityName>
-                        </HalfHotCityInfo>
-                        <HalfHotCityMask />
-                      </HalfHotCityBoard>
-                    </HotCityBoards>
-                  </HotCitiy>
-                )
-              )}
-            </HotCitiesCarousel>
-          </Space>
 
-          <Space>
-            <Kind title="熱門活動">
-              <Triangle />
-            </Kind>
-            <HotActivitiesCards>
-              {hotActivities.map((hotActivity) => (
-                <HotActivitiesCardItems key={hotActivity.title}>
-                  <ActivityCard
-                    info={{
-                      src: hotActivity.Picture.PictureUrl1,
-                      alt: "圖片",
-                      title: hotActivity.Name,
-                      area: hotActivity.Location,
+      <Space style={{ display: selectedCity === null ? "block" : "none" }}>
+        <Kind title="造訪城市">
+          <Triangle />
+        </Kind>
+        <HotCitiesCarousel responsive={responsive}>
+          {hotCities.map((hotCity, index) =>
+            index % 2 === 0 ? (
+              <HotCitiy>
+                <HotCityBoard
+                  onClick={(e) => {
+                    history.push(getFilterCityQureyString(hotCity.name));
+                    setSelectedCity(hotCity.name);
+                    filterCityScenicSpots(hotCity.name, scenicSpots);
+                  }}
+                >
+                  <HotCityImg src={hotCity.src} />
+                  <HotCityInfo>
+                    <HotCityIcon />
+                    <HotCityName>{hotCity.name}</HotCityName>
+                  </HotCityInfo>
+                  <HotCityMask />
+                </HotCityBoard>
+              </HotCitiy>
+            ) : (
+              <HotCitiy>
+                <HotCityBoards>
+                  <HalfHotCityBoard
+                    onClick={(e) => {
+                      history.push(
+                        `/landing/filter?city=${getFilterCityQureyString(
+                          hotCity.name
+                        )}`
+                      );
+                      // filterCityScenicSpots(hotCity.name[0], scenicSpots);
                     }}
-                    onClick={() => {
-                      setIsShowDetail(true);
-                      handleClickActivityCard();
+                  >
+                    <HotCityImg src={hotCity.src[0]} />
+                    <HalfHotCityInfo>
+                      <HotCityIcon />
+                      <HotCityName>{hotCity.name[0]}</HotCityName>
+                    </HalfHotCityInfo>
+                    <HalfHotCityMask />
+                  </HalfHotCityBoard>
+                  <HalfHotCityBoard
+                    onClick={(e) => {
+                      history.push(
+                        `/landing/filter?city=${getFilterCityQureyString(
+                          hotCity.name
+                        )}`
+                      );
+                      // filterCityScenicSpots(hotCity.name[1], scenicSpots);
                     }}
-                  />
-                </HotActivitiesCardItems>
-              ))}
-            </HotActivitiesCards>
-            {/* <MoreButtonBox>
+                  >
+                    <HotCityImg src={hotCity.src[1]} />
+                    <HalfHotCityInfo>
+                      <HotCityIcon />
+                      <HotCityName>{hotCity.name[1]}</HotCityName>
+                    </HalfHotCityInfo>
+                    <HalfHotCityMask />
+                  </HalfHotCityBoard>
+                </HotCityBoards>
+              </HotCitiy>
+            )
+          )}
+        </HotCitiesCarousel>
+      </Space>
+
+      <Space>
+        <Kind title="熱門活動">
+          <Triangle />
+        </Kind>
+        <HotActivitiesCards>
+          {hotActivities.map((hotActivity) => (
+            <HotActivitiesCardItems key={hotActivity.title}>
+              <ActivityCard
+                info={{
+                  src: hotActivity.Picture.PictureUrl1,
+                  alt: "圖片",
+                  title: hotActivity.Name,
+                  area: hotActivity.Location,
+                }}
+                onClick={() => {
+                  setIsShowDetail(true);
+                  handleClickActivityCard();
+                }}
+              />
+            </HotActivitiesCardItems>
+          ))}
+        </HotActivitiesCards>
+        {/* <MoreButtonBox>
               <MoreButton>更多活動</MoreButton>
             </MoreButtonBox> */}
-          </Space>
+      </Space>
 
-          <SmallCards
-            title={"熱門景點"}
-            icon={<Triangle />}
-            spots={hotScenicSpots}
-          />
-        </>
-      )}
+      <SmallCards
+        title={"熱門景點"}
+        icon={<Triangle />}
+        spots={hotScenicSpots}
+      />
 
-      {selectedCity && cityScenicSpots && (
-        <Space>
-          <Kind title={selectedCity}>
-            <LastPageBox
-              onClick={() => {
-                setSelectedCity(false);
-                setCityScenicSpots([]);
-              }}
-            >
-              <LastPage />
-            </LastPageBox>
-          </Kind>
-          <SmallCardsBox>
-            {cityScenicSpots.map((cityScenicSpot) => (
-              <SmallCardItems>
-                <SmallCard
-                  info={{
-                    src: cityScenicSpot.Picture.PictureUrl1,
-                    alt: "圖片",
-                    title: cityScenicSpot.Name,
-                    area: `${cityScenicSpot.Address?.slice(
-                      0,
-                      3
-                    )} ${cityScenicSpot.Address?.slice(3, 6)}`,
-                  }}
-                />
-              </SmallCardItems>
-            ))}
-          </SmallCardsBox>
-        </Space>
-      )}
+      <Space>
+        <Kind title={selectedCity}>
+          <LastPageBox
+            onClick={() => {
+              setSelectedCity(false);
+              setCityScenicSpots([]);
+            }}
+          >
+            <LastPage />
+          </LastPageBox>
+        </Kind>
+        <SmallCardsBox>
+          {cityScenicSpots.map((cityScenicSpot) => (
+            <SmallCardItems>
+              <SmallCard
+                info={{
+                  src: cityScenicSpot.Picture.PictureUrl1,
+                  alt: "圖片",
+                  title: cityScenicSpot.Name,
+                  area: `${cityScenicSpot.Address?.slice(
+                    0,
+                    3
+                  )} ${cityScenicSpot.Address?.slice(3, 6)}`,
+                }}
+              />
+            </SmallCardItems>
+          ))}
+        </SmallCardsBox>
+      </Space>
 
       {isShowDetail && (
         <DetailModal
@@ -765,4 +766,4 @@ const LandingImgBox = styled(Paper)`
   margin-bottom: 90px;
 `;
 
-export default withRouter(Landing);
+export default withRouter(ScenicSpots);

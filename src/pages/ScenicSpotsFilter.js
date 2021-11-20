@@ -31,7 +31,7 @@ import CardSm from "components/CardSm";
 import Space from "layouts/Space";
 import DetailCard from "components/DetailCard";
 import RectButton from "components/RectButton";
-import Tool from "components/Tool";
+import Tool from "layouts/Tool";
 import { baseURL, counties } from "variable/variable";
 import { pipe } from "utils/pipe";
 import { removeRepeatedValue, raisingSortValue } from "utils/array";
@@ -248,9 +248,8 @@ export const getCountyName = (cityName) => {
   return county;
 };
 
-const City = (props) => {
+const Filter = (props) => {
   const { history, location } = props;
-  const initSelectedCity = "";
   const qurey = useQuery();
   const navBarHeight = useSelector((state) => state.navBar.height);
   const [isShowDetail, setIsShowDetail] = useState(false);
@@ -261,11 +260,12 @@ const City = (props) => {
   const [hotScenicSpots, setHotScenicSpots] = useState([]);
   const [activities, setActivities] = useState([]);
   const [hotActivities, setHotActivities] = useState([]);
+  // document.location.reload(true);
 
   useEffect(() => {
-    getCityScenicSpots(30).then((_scenicSpots) => {
-      setScenicSpots(_scenicSpots);
-    });
+    // getCityScenicSpots(qurey.get("city_en"), 20).then((_scenicSpots) => {
+    //   setScenicSpots(_scenicSpots);
+    // });
   }, []);
 
   return (
@@ -282,9 +282,10 @@ const City = (props) => {
         </LandingImg>
       </LandingImgBox>
 
-      <SmallCards title={"活動"} icon={<Triangle />} spots={scenicSpots} />
-
+      <SmallCards title={"活動"} icon={<Triangle />} spots={[]} />
       <SmallCards title={"景點"} icon={<Triangle />} spots={[]} />
+
+      {/* <SmallCards title={"景點"} icon={<Triangle />} spots={scenicSpots} /> */}
     </Background>
   );
 };
@@ -568,4 +569,4 @@ const LandingImgBox = styled(Paper)`
   margin-bottom: 90px;
 `;
 
-export default withRouter(City);
+export default withRouter(Filter);

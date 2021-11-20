@@ -29,7 +29,7 @@ const NavBar = (props) => {
       <Wrap ref={$NavbarContainer}>
         <TaiwanLogo
           onClick={() => {
-            history.push("/");
+            history.push("/landing");
           }}
         />
         <Options>

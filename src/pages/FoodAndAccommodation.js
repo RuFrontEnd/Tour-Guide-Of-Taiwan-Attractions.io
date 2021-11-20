@@ -27,7 +27,7 @@ import CardSm from "components/CardSm";
 import Space from "layouts/Space";
 import DetailCard from "components/DetailCard";
 import RectButton from "components/RectButton";
-import Tool from "components/Tool";
+import Tool from "layouts/Tool";
 
 const FoodAndAccommodation = (props) => {
   const { history } = props;
