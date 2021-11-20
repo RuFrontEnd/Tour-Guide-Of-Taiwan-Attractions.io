@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styled from "styled-components/macro";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter, Link, useLocation } from "react-router-dom";
 import { getAuthorizationHeader } from "variable/auth";
 import { useSelector } from "react-redux";
+import { useQuery } from "hooks/useQuery";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
+import { getCityScenicSpots } from "api/scenicSpots";
 import { ReactComponent as WelcomeToTaiwan } from "assets/welcomeToTaiwan.svg";
 import { ReactComponent as Search } from "assets/search.svg";
 import { ReactComponent as Gps } from "assets/gps.svg";
@@ -248,25 +250,23 @@ export const getCountyName = (cityName) => {
 
 const City = (props) => {
   const { history, location } = props;
-  const initSelectedCity = decodeURI(
-    location.search.substr(location.search.indexOf("zh") + 3)
-  );
+  const initSelectedCity = "";
+  const qurey = useQuery();
   const navBarHeight = useSelector((state) => state.navBar.height);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
-  const [selectedCity, setSelectedCity] = useState(initSelectedCity);
+  const [selectedCity, setSelectedCity] = useState(qurey.get("city_zh"));
   const [scenicSpots, setScenicSpots] = useState([]);
   const [cityScenicSpots, setCityScenicSpots] = useState([]);
   const [hotScenicSpots, setHotScenicSpots] = useState([]);
   const [activities, setActivities] = useState([]);
   const [hotActivities, setHotActivities] = useState([]);
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
-    console.log("location", location);
-    console.log("selectedCity", selectedCity);
-  }, [selectedCity]);
+    getCityScenicSpots(30).then((_scenicSpots) => {
+      setScenicSpots(_scenicSpots);
+    });
+  }, []);
 
   return (
     <Background>
@@ -282,9 +282,9 @@ const City = (props) => {
         </LandingImg>
       </LandingImgBox>
 
-      <SmallCards title={"活動"} icon={<Triangle />} spots={hotScenicSpots} />
+      <SmallCards title={"活動"} icon={<Triangle />} spots={scenicSpots} />
 
-      <SmallCards title={"景點"} icon={<Triangle />} spots={hotScenicSpots} />
+      <SmallCards title={"景點"} icon={<Triangle />} spots={[]} />
     </Background>
   );
 };

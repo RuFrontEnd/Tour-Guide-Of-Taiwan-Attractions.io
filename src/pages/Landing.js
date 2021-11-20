@@ -33,6 +33,7 @@ import DetailCard from "components/DetailCard";
 import RectButton from "components/RectButton";
 import Tool from "components/Tool";
 import { baseURL, counties } from "variable/variable";
+import { getScenicSpots } from "api/scenicSpots";
 import { pipe } from "utils/pipe";
 import { removeRepeatedValue, raisingSortValue } from "utils/array";
 import { sortValue } from "utils/sort";
@@ -266,34 +267,26 @@ const Landing = (props) => {
 
   const filterCityScenicSpots = (hotCityName, scenicSpots) => {
     setSelectedCity(getCityName(hotCityName));
-    console.log("scenicSpots", scenicSpots);
-    console.log("getCountyName(hotCityName)", getCountyName(hotCityName));
+
     let _cityScenicSpots = scenicSpots.filter((scenicSpot) => {
-      console.log("123", scenicSpot.Address?.slice(0, 3));
       return scenicSpot.Address?.slice(0, 3) === getCountyName(hotCityName);
     });
     setCityScenicSpots(_cityScenicSpots);
   };
 
   useEffect(() => {
-    fetch(`${baseURL}/v2/Tourism/ScenicSpot`, {
-      headers: getAuthorizationHeader(),
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((_scenicSpots) => {
-        setScenicSpots(_scenicSpots);
-
-        let _hotScenicSpots = [];
-        for (let i = 0; i < 10; i++) {
-          // min = Math.ceil(min);
-          // max = Math.floor(max);
-          // return
-          const A = Math.floor(Math.random() * (100 - 0) + 0);
-          _hotScenicSpots.push(_scenicSpots[A]);
-        }
-        setHotScenicSpots(_hotScenicSpots);
-      });
+    getScenicSpots().then((_scenicSpots) => {
+      setScenicSpots(_scenicSpots);
+      let _hotScenicSpots = [];
+      for (let i = 0; i < 10; i++) {
+        // min = Math.ceil(min);
+        // max = Math.floor(max);
+        // return
+        const A = Math.floor(Math.random() * (100 - 0) + 0);
+        _hotScenicSpots.push(_scenicSpots[A]);
+      }
+      setHotScenicSpots(_hotScenicSpots);
+    });
 
     fetch(`${baseURL}/v2/Tourism/Activity`, {
       headers: getAuthorizationHeader(),
@@ -330,14 +323,6 @@ const Landing = (props) => {
     }
   }, [scenicSpots]);
 
-  useEffect(() => {
-    console.log("cityScenicSpots", cityScenicSpots);
-  }, [cityScenicSpots]);
-
-  useEffect(() => {
-    console.log("A");
-  }, []);
-
   return (
     <Background>
       <NavBarHeight height={navBarHeight} />
@@ -359,7 +344,7 @@ const Landing = (props) => {
                     <HotCityBoard
                       onClick={(e) => {
                         history.push(getFilterCityQureyString(hotCity.name));
-                        // console.log("hotCity", hotCity);
+                      
                         filterCityScenicSpots(hotCity.name, scenicSpots);
                       }}
                     >
