@@ -205,15 +205,19 @@ const ScenicSpots = (props) => {
       });
       let _hotActivities = [];
       let usedNumbers = [];
+      console.log("usedNumbers", usedNumbers);
       for (let i = 0; i < 4; i++) {
         let randomNum = getRandomInt(
           0,
-          pictureOwnedActivities.length,
+          pictureOwnedActivities.length - 1,
           usedNumbers
         );
+        console.log("randomNum", randomNum);
         _hotActivities.push(pictureOwnedActivities[randomNum]);
         usedNumbers.push(randomNum);
       }
+      console.log("usedNumbers", usedNumbers);
+      console.log("pictureOwnedActivities[167]", pictureOwnedActivities[167]);
       console.log("_hotActivities", _hotActivities);
       setHotActivities(_hotActivities);
     });
