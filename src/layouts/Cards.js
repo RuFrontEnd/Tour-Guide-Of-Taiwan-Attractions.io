@@ -13,7 +13,7 @@ const Cards = (props) => {
     style,
     title,
     activities,
-    clickButton = () => {},
+    onClickButton = () => {},
     buttonText,
   } = props;
 
@@ -33,10 +33,10 @@ const Cards = (props) => {
                 description: activity.Description,
                 area: activity.City,
               }}
-              onClick={() => {
-                clickButton();
-              }}
               buttonText={buttonText}
+              onClickButton={() => {
+                onClickButton();
+              }}
             />
           </CardBox>
         ))}

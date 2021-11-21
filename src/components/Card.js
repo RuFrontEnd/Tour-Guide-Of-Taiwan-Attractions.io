@@ -11,9 +11,9 @@ const Card = (props) => {
     className,
     style,
     onClick,
-    children = "內文",
     info = { src: "", alt: "", title: "標題", area: "某某市 某某區" },
     buttonText = "",
+    onClickButton = () => {},
   } = props;
 
   const $image = useRef();
@@ -47,7 +47,7 @@ const Card = (props) => {
               <Location />
               <District>{info.area}</District>
             </Area>
-            <DeatiledButton>{buttonText}</DeatiledButton>
+            <DeatiledButton onClick={onClickButton}>{buttonText}</DeatiledButton>
           </More>
         </Info>
       </Wrap>

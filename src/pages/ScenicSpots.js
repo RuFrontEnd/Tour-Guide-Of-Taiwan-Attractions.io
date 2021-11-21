@@ -248,6 +248,10 @@ const ScenicSpots = (props) => {
     });
   }, []);
 
+  useEffect(() => {
+    console.log("isShowDetail", isShowDetail);
+  }, [isShowDetail]);
+
   return (
     <Background>
       <NavBarHeight height={navBarHeight} />
@@ -274,6 +278,9 @@ const ScenicSpots = (props) => {
         title="熱門活動"
         activities={hotActivities}
         buttonText={"活動詳情"}
+        onClickButton={() => {
+          setIsShowDetail(true);
+        }}
       />
 
       <HotScenicSpotSmCards
@@ -303,7 +310,10 @@ const ScenicSpots = (props) => {
         spots={activities}
       /> */}
 
-      <DetailModal />
+      <DetailModal
+        isShowDetail={isShowDetail}
+        setIsShowDetail={setIsShowDetail}
+      />
     </Background>
   );
 };

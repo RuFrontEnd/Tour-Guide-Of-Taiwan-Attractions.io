@@ -3,9 +3,9 @@ import styled from "styled-components/macro";
 import { __FFF__, __FF1D6C__ } from "variable/variable";
 
 const RectButton = (props) => {
-  const { className, style, children = "方形按鈕" } = props;
+  const { className, style, children = "方形按鈕", onClick = () => {} } = props;
   return (
-    <Box style={style} className={className}>
+    <Box style={style} className={className} onClick={onClick}>
       {children}
     </Box>
   );

@@ -22,6 +22,7 @@ const DetailModal = (props) => {
       style={{ display: isShowDetail ? "flex" : "none" }}
       navBarHeight={navBarHeight}
       onClick={() => {
+        console.log('a')
         disableScroll.off();
         setIsShowDetail(false);
       }}
