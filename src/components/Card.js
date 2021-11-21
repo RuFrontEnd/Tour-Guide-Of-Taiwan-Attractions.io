@@ -82,6 +82,11 @@ const Title = styled.h2`
   font-size: 16px;
   margin-bottom: 14px;
   flex-basis: 10px;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 `;
 
 const Intro = styled.p`

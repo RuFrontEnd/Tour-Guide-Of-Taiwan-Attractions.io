@@ -199,6 +199,7 @@ const ScenicSpots = (props) => {
 
   useEffect(() => {
     getActivities().then((_activities) => {
+      console.log("_activities", _activities);
       setActivities(_activities);
 
       let _hotActivities = [];
@@ -207,19 +208,6 @@ const ScenicSpots = (props) => {
         _hotActivities.push(_activities[randomNum]);
       }
       setHotActivities(_hotActivities);
-    });
-
-    getScenicSpots().then((_scenicSpots) => {
-      setScenicSpots(_scenicSpots);
-      let _hotScenicSpots = [];
-      for (let i = 0; i < 10; i++) {
-        // min = Math.ceil(min);
-        // max = Math.floor(max);
-        // return
-        const A = Math.floor(Math.random() * (100 - 0) + 0);
-        _hotScenicSpots.push(_scenicSpots[A]);
-      }
-      setHotScenicSpots(_hotScenicSpots);
     });
   }, []);
 
@@ -310,14 +298,14 @@ const ScenicSpots = (props) => {
         spots={hotScenicSpots}
       />
 
-      <ScenicSpotSmCards
+      {/* <ScenicSpotSmCards
         style={{
           display: selectedCategories === "活動" ? "none" : "block",
         }}
         title={`${selectedCity === "不分縣市" ? "" : selectedCity} 景點`}
         icon={<Triangle />}
         spots={activities}
-      />
+      /> */}
 
       <DetailModal />
     </Background>
