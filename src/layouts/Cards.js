@@ -8,16 +8,11 @@ import Card from "components/Card";
 import Space from "layouts/Space";
 
 const Cards = (props) => {
-  const {
-    className,
-    title,
-    activities,
-    clickButton,
-    buttonText,
-  } = props;
+  const { className, style, title, activities, clickButton, buttonText } =
+    props;
 
   return (
-    <Space className={className}>
+    <Space className={className} style={style}>
       <Title title={title}>
         <Triangle />
       </Title>

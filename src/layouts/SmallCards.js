@@ -8,10 +8,10 @@ import Space from "layouts/Space";
 import noImg from "assets/no-img.jpg";
 
 const SmallCards = (props) => {
-  const { history, title, icon, spots } = props;
+  const { className, style, history, title, icon, spots } = props;
 
   return (
-    <Space>
+    <Space className={className} style={style}>
       <Title title={title}>{icon}</Title>
       <Cards>
         {Array.isArray(spots) &&

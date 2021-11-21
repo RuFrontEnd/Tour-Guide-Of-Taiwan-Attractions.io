@@ -19,6 +19,8 @@ const Tool = (props) => {
     className,
     categories,
     counties,
+    selectedCategories,
+    setSelectedCategories,
     selectedCity,
     setSelectedCity,
   } = props;
@@ -38,7 +40,11 @@ const Tool = (props) => {
             </GpshButton>
           </SearchBox>
           <DropdownBox>
-            <CatgoreyDropdown options={categories} />
+            <CatgoreyDropdown
+              selected={selectedCategories}
+              setSelected={setSelectedCategories}
+              options={categories}
+            />
             <CountiesDropdown
               options={counties}
               selected={selectedCity}

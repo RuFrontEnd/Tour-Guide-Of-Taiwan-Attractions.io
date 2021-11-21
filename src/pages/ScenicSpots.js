@@ -64,78 +64,6 @@ import kinmen from "assets/kinmen.jpg";
 import noImg from "assets/no-img.jpg";
 
 const categories = ["類別", "景點", "活動"];
-const hotAttractions = {
-  src: cardImg_tmp,
-  title: "合歡山國際暗空公園-星空清境跨年活動",
-  area: "臺北市 北投區",
-};
-const Smalls = {
-  src: cardSmImg_tmp,
-  title: "正濱漁港懷舊碼頭",
-  area: "基隆市中正區",
-};
-const detail = {
-  src: detailCard_tmp,
-  title: "合歡山國際暗空公園-星空清境跨年活動",
-  time: "開放式空間，無時間限制",
-  fee: "免費",
-  area: "基隆市中山區湖海路一、二段(協和街)",
-  tel: "886-2-24287664",
-};
-
-const hotCities = [
-  { name: "台　北", src: newTaipei },
-  { name: ["桃　園", "新　竹"], src: [taoyuan, hsinchu] },
-  { name: "新　北", src: taipei },
-  { name: ["嘉　義", "南　投"], src: [chiayi, nantou] },
-  { name: "台　中", src: taichung },
-  { name: ["高　雄", "屏　東"], src: [kaohsiung, pingtung] },
-  { name: "台　南", src: tainan },
-  { name: ["花　蓮", "台　東"], src: [hualien, daito] },
-  { name: "宜　蘭", src: yilan },
-  { name: ["苗　栗", "雲　林"], src: [miaoli, yunlin] },
-  { name: "彰　化", src: changhua },
-  { name: ["澎 湖", "金 門"], src: [penghu, kinmen] },
-  { name: "馬 祖", src: mazu },
-];
-
-const hotActivitiesInfo = [
-  { src: "", alt: "", title: "", area: "", content: "" },
-  { src: "", alt: "", title: "", area: "", content: "" },
-  { src: "", alt: "", title: "", area: "", content: "" },
-  { src: "", alt: "", title: "", area: "", content: "" },
-];
-
-const scenicSpotInfos = [
-  { src: "", alt: "", title: "", area: "" },
-  { src: "", alt: "", title: "", area: "" },
-  { src: "", alt: "", title: "", area: "" },
-  { src: "", alt: "", title: "", area: "" },
-  { src: "", alt: "", title: "", area: "" },
-  { src: "", alt: "", title: "", area: "" },
-  { src: "", alt: "", title: "", area: "" },
-  { src: "", alt: "", title: "", area: "" },
-];
-
-const responsive = {
-  superLargeDesktop: {
-    // the naming can be any, depends on you.
-    breakpoint: { max: 4000, min: 3000 },
-    items: 5,
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 5,
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-  },
-};
 
 export const handleClickActivityCard = () => {
   document.body.style.overflow = "hidden";
@@ -270,6 +198,7 @@ const ScenicSpots = (props) => {
   const navBarHeight = useSelector((state) => state.navBar.height);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState("類別");
   const [selectedCity, setSelectedCity] = useState(qurey.get("city_zh")); // 下拉選單選擇的城市
   const [scenicSpots, setScenicSpots] = useState([]);
   const [cityScenicSpots, setCityScenicSpots] = useState([]);
@@ -345,12 +274,18 @@ const ScenicSpots = (props) => {
     console.log("selectedCity", selectedCity);
   }, [selectedCity]);
 
+  useEffect(() => {
+    console.log("selectedCategories", selectedCategories);
+  }, [selectedCategories]);
+
   return (
     <Background>
       <NavBarHeight height={navBarHeight} />
       <Tool
         categories={categories}
         counties={counties}
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
       />
@@ -363,19 +298,37 @@ const ScenicSpots = (props) => {
       />
 
       <HotActivitiesCards
+        style={{
+          display: qurey.get("city_zh") && selectedCity ? "none" : "block",
+        }}
         title="熱門活動"
         activities={hotActivities}
         buttonText={"活動詳情"}
       />
 
       <HotScenicSpotSmCards
+        style={{
+          display: qurey.get("city_zh") && selectedCity ? "none" : "block",
+        }}
         title={"熱門景點"}
         icon={<Triangle />}
         spots={hotScenicSpots}
       />
 
       <ScenicSpotSmCards
-        title={selectedCity}
+        style={{
+          display: selectedCategories === "景點" ? "none" : "block",
+        }}
+        title={`${selectedCity === "不分縣市" ? "" : selectedCity} 活動`}
+        icon={<Triangle />}
+        spots={hotScenicSpots}
+      />
+
+      <ScenicSpotSmCards
+        style={{
+          display: selectedCategories === "活動" ? "none" : "block",
+        }}
+        title={`${selectedCity === "不分縣市" ? "" : selectedCity} 景點`}
         icon={<Triangle />}
         spots={hotScenicSpots}
       />
@@ -393,121 +346,6 @@ const HotActivitiesCards = styled(Cards)``;
 
 const NavBarHeight = styled.div`
   height: ${(props) => props.height}px;
-`;
-
-const HalfHotCityMask = styled.div`
-  background-color: black;
-  box-sizing: border-box;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 8px;
-  left: 7px;
-  width: calc(100% - 16px);
-  height: calc(100% - 14px);
-  opacity: 0.3;
-  z-index: 1;
-`;
-
-const HalfHotCityInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-// const HotActivitiesCards = styled.ul`
-//   display: grid;
-//   grid-template-columns: repeat(2, 1fr);
-// `;
-
-const HotCityMask = styled.div`
-  background-color: black;
-  box-sizing: border-box;
-  position: absolute;
-  top: 14px;
-  left: 12px;
-  width: calc(100% - 24px);
-  height: calc(100% - 28px);
-  opacity: 0.3;
-  z-index: 1;
-`;
-
-const HotCityName = styled.p`
-  color: ${__FFF__()};
-  font-size: 20px;
-  font-weight: 300;
-  word-break: keep-all;
-`;
-
-const HotCityInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const HotCityIcon = styled(Location)`
-  width: 16px;
-  height: 19px;
-  margin-bottom: 7.2px;
-
-  & > path {
-    fill: ${__FFF__()};
-  }
-`;
-
-const HotCityImg = styled.img`
-  position: relative;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-const HalfHotCityBoard = styled(Board)`
-  position: relative;
-  width: 100%;
-  height: 120px;
-  padding: 7px 8px;
-  margin-bottom: 5px;
-`;
-
-const HotCityBoards = styled(Board)`
-  width: 100%;
-  height: 100%;
-`;
-
-const HotCityBoard = styled(Board)`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  object-fit: cover;
-  width: 100%;
-  height: 245px;
-  padding: 14px 12px;
-`;
-
-const HotCitiy = styled.div`
-  padding: 0px 6.5px;
-`;
-
-const HotCitiesCarousel = styled(Carousel)`
-  height: 245px;
-  padding-bottom: 60px;
-`;
-
-const Kind = styled(Category)`
-  margin-bottom: 12px;
 `;
 
 export default withRouter(ScenicSpots);
