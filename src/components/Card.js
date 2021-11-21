@@ -54,14 +54,13 @@ const Container = styled(Paper)`
 `;
 
 const Wrap = styled.div`
-  display: grid;
-  grid-template-columns: 203px 1fr;
+  display: flex;
 `;
 
 const Image = styled.img`
   background-color: grey;
-  width: 100%;
-  height: 100%;
+  width: 187px;
+  height: 196px;
   object-fit: cover;
 `;
 

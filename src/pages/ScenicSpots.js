@@ -102,7 +102,6 @@ export const getCityName = (cityName) => {
 
 export const getCountyName = (cityName) => {
   let county = {};
-  console.log("cityName", cityName);
   if (cityName.match(/台　北/)) {
     county = { en: "Taipei", zh: "台北市" };
   }
@@ -199,14 +198,23 @@ const ScenicSpots = (props) => {
 
   useEffect(() => {
     getActivities().then((_activities) => {
-      console.log("_activities", _activities);
       setActivities(_activities);
 
+      let pictureOwnedActivities = _activities.filter((_activitiy) => {
+        return JSON.stringify(_activitiy.Picture) !== "{}";
+      });
       let _hotActivities = [];
+      let usedNumbers = [];
       for (let i = 0; i < 4; i++) {
-        let randomNum = getRandomInt(0, _activities.length);
-        _hotActivities.push(_activities[randomNum]);
+        let randomNum = getRandomInt(
+          0,
+          pictureOwnedActivities.length,
+          usedNumbers
+        );
+        _hotActivities.push(pictureOwnedActivities[randomNum]);
+        usedNumbers.push(randomNum);
       }
+      console.log("_hotActivities", _hotActivities);
       setHotActivities(_hotActivities);
     });
   }, []);
@@ -235,22 +243,6 @@ const ScenicSpots = (props) => {
       !qurey.get("city_zh") && setSelectedCity("");
     });
   }, []);
-
-  useEffect(() => {
-    console.log("selectedCity", selectedCity);
-  }, [selectedCity]);
-
-  useEffect(() => {
-    console.log("selectedCategories", selectedCategories);
-  }, [selectedCategories]);
-
-  useEffect(() => {
-    console.log("activities", activities);
-  }, [activities]);
-
-  useEffect(() => {
-    console.log("hotActivities", hotActivities);
-  }, [hotActivities]);
 
   return (
     <Background>
