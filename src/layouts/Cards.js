@@ -8,8 +8,14 @@ import Card from "components/Card";
 import Space from "layouts/Space";
 
 const Cards = (props) => {
-  const { className, style, title, activities, clickButton, buttonText } =
-    props;
+  const {
+    className,
+    style,
+    title,
+    activities,
+    clickButton = () => {},
+    buttonText,
+  } = props;
 
   return (
     <Space className={className} style={style}>
@@ -24,7 +30,8 @@ const Cards = (props) => {
                 src: activity.Picture.PictureUrl1,
                 alt: "圖片",
                 title: activity.Name,
-                area: activity.Location,
+                description: activity.Description,
+                area: activity.City,
               }}
               onClick={() => {
                 clickButton();

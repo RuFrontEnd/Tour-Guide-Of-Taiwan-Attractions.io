@@ -7,6 +7,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
 import { getAuthorizationHeader } from "variable/auth";
+import { getRandomInt } from "utils/random";
 import { useQuery } from "hooks/useQuery";
 import { ReactComponent as WelcomeToTaiwan } from "assets/welcomeToTaiwan.svg";
 import { ReactComponent as Search } from "assets/search.svg";
@@ -39,29 +40,10 @@ import RectButton from "components/RectButton";
 
 import { baseURL, counties } from "variable/variable";
 import { getScenicSpots } from "api/scenicSpots";
+import { getActivities } from "api/activities";
 import { pipe } from "utils/pipe";
 import { removeRepeatedValue, raisingSortValue } from "utils/array";
 import { sortValue } from "utils/sort";
-import taipei from "assets/taipei.png";
-import newTaipei from "assets/new_taipei.png";
-import taoyuan from "assets/taoyuan.png";
-import hsinchu from "assets/hsinchu.png";
-import taichung from "assets/taichung.png";
-import nantou from "assets/nantou.png";
-import chiayi from "assets/chiayi.png";
-import tainan from "assets/tainan.png";
-import kaohsiung from "assets/kaohsiung.png";
-import pingtung from "assets/pingtung.png";
-import yilan from "assets/yilan.png";
-import hualien from "assets/hualien.png";
-import daito from "assets/daito.png";
-import mazu from "assets/mazu.png";
-import miaoli from "assets/miaoli.png";
-import yunlin from "assets/yunlin.jpg";
-import changhua from "assets/changhua.jpg";
-import penghu from "assets/penghu.jpg";
-import kinmen from "assets/kinmen.jpg";
-import noImg from "assets/no-img.jpg";
 
 const categories = ["類別", "景點", "活動"];
 
@@ -216,6 +198,17 @@ const ScenicSpots = (props) => {
   };
 
   useEffect(() => {
+    getActivities().then((_activities) => {
+      setActivities(_activities);
+
+      let _hotActivities = [];
+      for (let i = 0; i < 4; i++) {
+        let randomNum = getRandomInt(0, _activities.length);
+        _hotActivities.push(_activities[randomNum]);
+      }
+      setHotActivities(_hotActivities);
+    });
+
     getScenicSpots().then((_scenicSpots) => {
       setScenicSpots(_scenicSpots);
       let _hotScenicSpots = [];
@@ -228,21 +221,6 @@ const ScenicSpots = (props) => {
       }
       setHotScenicSpots(_hotScenicSpots);
     });
-
-    fetch(`${baseURL}/v2/Tourism/Activity`, {
-      headers: getAuthorizationHeader(),
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((datas) => {
-        const _activities = datas.filter(
-          (data) => JSON.stringify(data.Picture) !== "{}"
-        );
-        setActivities(_activities);
-
-        const _hotActivities = _activities.filter((data, index) => index < 4);
-        setHotActivities(_hotActivities);
-      });
   }, []);
 
   useEffect(() => {
@@ -277,6 +255,14 @@ const ScenicSpots = (props) => {
   useEffect(() => {
     console.log("selectedCategories", selectedCategories);
   }, [selectedCategories]);
+
+  useEffect(() => {
+    console.log("activities", activities);
+  }, [activities]);
+
+  useEffect(() => {
+    console.log("hotActivities", hotActivities);
+  }, [hotActivities]);
 
   return (
     <Background>
@@ -315,7 +301,7 @@ const ScenicSpots = (props) => {
         spots={hotScenicSpots}
       />
 
-      <ScenicSpotSmCards
+      <ActivitySmCards
         style={{
           display: selectedCategories === "景點" ? "none" : "block",
         }}
@@ -330,7 +316,7 @@ const ScenicSpots = (props) => {
         }}
         title={`${selectedCity === "不分縣市" ? "" : selectedCity} 景點`}
         icon={<Triangle />}
-        spots={hotScenicSpots}
+        spots={activities}
       />
 
       <DetailModal />
@@ -339,6 +325,8 @@ const ScenicSpots = (props) => {
 };
 
 const ScenicSpotSmCards = styled(SmallCards)``;
+
+const ActivitySmCards = styled(SmallCards)``;
 
 const HotScenicSpotSmCards = styled(SmallCards)``;
 

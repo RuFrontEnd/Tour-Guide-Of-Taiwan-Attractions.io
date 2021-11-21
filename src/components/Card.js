@@ -4,6 +4,7 @@ import Paper from "components/Paper";
 import { __ACACAC__, __FF1D6C__ } from "variable/variable";
 import { ReactComponent as LocationRef } from "assets/location.svg";
 import RectButton from "components/RectButton";
+import noImg from "assets/no-img.jpg";
 
 const Card = (props) => {
   const {
@@ -23,16 +24,18 @@ const Card = (props) => {
       rotateOfShadow={8}
     >
       <Wrap>
-        <Image src={info.src} alt={info.alt} />
+        <ImageBox>
+          <Image src={info.src ? info.src : noImg} alt={info.alt} />
+        </ImageBox>
         <Info>
           <Content>
             <Title>{info.title}</Title>
-            <Intro>{children}</Intro>
+            <Intro>{info.description}</Intro>
           </Content>
           <More>
             <Area>
               <Location />
-              <District>{info.area} </District>
+              <District>{info.area}</District>
             </Area>
             <DeatiledButton>{buttonText}</DeatiledButton>
           </More>
@@ -47,17 +50,24 @@ const Container = styled(Paper)`
   height: auto;
   box-sizing: border-box;
   padding: 16px;
+  padding-right: 25px;
 `;
 
 const Wrap = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 203px 1fr;
 `;
 
 const Image = styled.img`
   background-color: grey;
-  width: 187px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const ImageBox = styled.div`
+  padding-right: 16px;
   height: 196px;
-  margin-right: 16px;
 `;
 
 const Info = styled.div`
@@ -79,7 +89,6 @@ const Intro = styled.p`
   font-size: 14px;
   line-height: 21px;
   margin-bottom: 14px;
-  max-width: 278px;
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -111,7 +120,6 @@ const District = styled.p`
 `;
 
 const DeatiledButton = styled(RectButton)`
-  margin-right: 10px;
   margin-bottom: 3px;
 `;
 
