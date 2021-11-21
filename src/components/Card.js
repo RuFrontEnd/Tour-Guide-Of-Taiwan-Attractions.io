@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components/macro";
 import Paper from "components/Paper";
 import { __ACACAC__, __FF1D6C__ } from "variable/variable";
@@ -15,6 +15,9 @@ const Card = (props) => {
     info = { src: "", alt: "", title: "標題", area: "某某市 某某區" },
     buttonText = "",
   } = props;
+
+  const $image = useRef();
+
   return (
     <Container
       style={style}
@@ -25,7 +28,14 @@ const Card = (props) => {
     >
       <Wrap>
         <ImageBox>
-          <Image src={info.src ? info.src : noImg} alt={info.alt} />
+          <Image
+            src={info.src ? info.src : noImg}
+            alt={info.alt}
+            ref={$image}
+            onError={() => {
+              $image.current.src = noImg;
+            }}
+          />
         </ImageBox>
         <Info>
           <Content>
