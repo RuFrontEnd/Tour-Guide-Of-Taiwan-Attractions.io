@@ -47,7 +47,9 @@ const Card = (props) => {
               <Location />
               <District>{info.area}</District>
             </Area>
-            <DeatiledButton onClick={onClickButton}>{buttonText}</DeatiledButton>
+            <DeatiledButton onClick={onClickButton}>
+              {buttonText}
+            </DeatiledButton>
           </More>
         </Info>
       </Wrap>
@@ -83,6 +85,7 @@ const Info = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  word-break: break-all;
 `;
 
 const Content = styled.div``;
