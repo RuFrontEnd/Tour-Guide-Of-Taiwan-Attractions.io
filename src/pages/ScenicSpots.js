@@ -20,6 +20,7 @@ import cardSmImg_tmp from "assets/cardSmImg_tmp.png";
 import detailCard_tmp from "assets/detailCard_tmp.png";
 import boardImg_tmp from "assets/boardImg_tmp.png";
 import SmallCards from "layouts/SmallCards";
+import DetailModal from "layouts/DetailModal";
 import Paper from "components/Paper";
 import Board from "components/Board";
 import Background from "layouts/Background";
@@ -188,11 +189,12 @@ export const getCityName = (cityName) => {
 
 export const getCountyName = (cityName) => {
   let county = {};
+  console.log("cityName", cityName);
   if (cityName.match(/台　北/)) {
     county = { en: "Taipei", zh: "台北市" };
   }
   if (cityName.match(/桃　園/)) {
-    county = { en: "Taipei", zh: "桃園市" };
+    county = { en: "Taoyuan", zh: "桃園市" };
   }
   if (cityName.match(/新　竹/)) {
     county = { en: "Hsinchu", zh: "新竹市" };
@@ -201,49 +203,49 @@ export const getCountyName = (cityName) => {
     county = { en: "NewTaipei", zh: "新北市" };
   }
   if (cityName.match(/嘉　義/)) {
-    county = { en: "Chiayi", zh: "嘉義市" };
+    county = { en: "Chiayi", zh: "嘉義縣" };
   }
   if (cityName.match(/南　投/)) {
-    county = { en: "Nantou", zh: "南投市" };
+    county = { en: "Nantou", zh: "南投縣" };
   }
   if (cityName.match(/台　中/)) {
     county = { en: "Taichung", zh: "台中市" };
   }
   if (cityName.match(/高　雄/)) {
-    county = "";
+    county = { en: "Kaohsiung", zh: "高雄市" };
   }
   if (cityName.match(/屏　東/)) {
-    county = "";
+    county = { en: "Pingtung", zh: "屏東縣" };
   }
   if (cityName.match(/台　南/)) {
-    county = "";
+    county = { en: "Tainan", zh: "台南市" };
   }
   if (cityName.match(/花　蓮/)) {
-    county = "";
+    county = { en: "Hualien", zh: "花蓮縣" };
   }
   if (cityName.match(/台　東/)) {
-    county = "";
+    county = { en: "Taoyuan", zh: "台東縣" };
   }
   if (cityName.match(/宜　蘭/)) {
-    county = "";
+    county = { en: "Yilan", zh: "宜蘭縣" };
   }
   if (cityName.match(/苗　栗/)) {
-    county = "";
+    county = { en: "Miaoli", zh: "苗栗縣" };
   }
   if (cityName.match(/雲　林/)) {
-    county = "";
+    county = { en: "Yunlin", zh: "雲林縣" };
   }
   if (cityName.match(/彰　化/)) {
-    county = "";
+    county = { en: "Changhua", zh: "彰化縣" };
   }
   if (cityName.match(/澎　湖/)) {
-    county = "";
+    county = { en: "Penghu", zh: "澎湖縣" };
   }
   if (cityName.match(/金　門/)) {
-    county = "";
+    county = { en: "Kinmen", zh: "金門縣" };
   }
   if (cityName.match(/馬　祖/)) {
-    county = "";
+    county = { en: "Mazu", zh: "連江縣" };
   }
   return county;
 };
@@ -252,6 +254,11 @@ export const getFilterCityQureyString = (hotCityName) => {
   return `${path[0]}?city_en=${getCountyName(hotCityName).en}&&city_zh=${
     getCountyName(hotCityName).zh
   }`;
+};
+
+export const switchToSelectedCity = (history, setSelectedCity, cityName) => {
+  history.push(getFilterCityQureyString(cityName));
+  setSelectedCity(getCountyName(cityName).zh);
 };
 
 const ScenicSpots = (props) => {
@@ -345,7 +352,11 @@ const ScenicSpots = (props) => {
         setSelectedCity={setSelectedCity}
       />
 
-      <Space style={{ display: qurey.get("city_zh") ? "none" : "block" }}>
+      <Space
+        style={{
+          display: qurey.get("city_zh") && selectedCity ? "none" : "block",
+        }}
+      >
         <Kind title="造訪城市">
           <Triangle />
         </Kind>
@@ -355,8 +366,11 @@ const ScenicSpots = (props) => {
               <HotCitiy>
                 <HotCityBoard
                   onClick={(e) => {
-                    history.push(getFilterCityQureyString(hotCity.name));
-                    setSelectedCity(getCountyName(hotCity.name).zh);
+                    switchToSelectedCity(
+                      history,
+                      setSelectedCity,
+                      hotCity.name
+                    );
                     // filterCityScenicSpots(hotCity.name, scenicSpots);
                   }}
                 >
@@ -373,10 +387,10 @@ const ScenicSpots = (props) => {
                 <HotCityBoards>
                   <HalfHotCityBoard
                     onClick={(e) => {
-                      history.push(
-                        `/landing/filter?city=${getFilterCityQureyString(
-                          hotCity.name
-                        )}`
+                      switchToSelectedCity(
+                        history,
+                        setSelectedCity,
+                        hotCity.name[0]
                       );
                     }}
                   >
@@ -389,10 +403,10 @@ const ScenicSpots = (props) => {
                   </HalfHotCityBoard>
                   <HalfHotCityBoard
                     onClick={(e) => {
-                      history.push(
-                        `/landing/filter?city=${getFilterCityQureyString(
-                          hotCity.name
-                        )}`
+                      switchToSelectedCity(
+                        history,
+                        setSelectedCity,
+                        hotCity.name[1]
                       );
                       // filterCityScenicSpots(hotCity.name[1], scenicSpots);
                     }}
@@ -444,51 +458,13 @@ const ScenicSpots = (props) => {
         spots={hotScenicSpots}
       />
 
-      <Space>
-        <Kind title={selectedCity}>
-          <LastPageBox
-            onClick={() => {
-              setSelectedCity(false);
-              setCityScenicSpots([]);
-            }}
-          >
-            <LastPage />
-          </LastPageBox>
-        </Kind>
-        <SmallCardsBox>
-          {cityScenicSpots.map((cityScenicSpot) => (
-            <SmallCardItems>
-              <SmallCard
-                info={{
-                  src: cityScenicSpot.Picture.PictureUrl1,
-                  alt: "圖片",
-                  title: cityScenicSpot.Name,
-                  area: `${cityScenicSpot.Address?.slice(
-                    0,
-                    3
-                  )} ${cityScenicSpot.Address?.slice(3, 6)}`,
-                }}
-              />
-            </SmallCardItems>
-          ))}
-        </SmallCardsBox>
-      </Space>
-
-      {isShowDetail && (
-        <DetailModal
-          onClick={() => {
-            setIsShowDetail(false);
-            handleClickDetailModal();
-          }}
-          navBarHeight={navBarHeight}
-        >
-          <DetailCard
-            onClick={(e) => {
-              handleClickDetailCard(e);
-            }}
-          />
-        </DetailModal>
-      )}
+      <SmallCards
+        title={selectedCity}
+        icon={<Triangle />}
+        spots={hotScenicSpots}
+      />
+      <div>123</div>
+      <DetailModal />
     </Background>
   );
 };
@@ -522,20 +498,6 @@ const MoreButtonBox = styled.div`
 `;
 
 const MoreButton = styled(RectButton)``;
-
-const DetailModal = styled.div`
-  position: fixed;
-  z-index: 1001;
-  top: ${(props) => `${props.navBarHeight}px`};
-  left: 0%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(10px);
-  background-color: ${__D2D2D2__(0.5)};
-  width: 100%;
-  height: ${(props) => `calc(100% - ${props.navBarHeight}px)`};
-`;
 
 const HalfHotCityMask = styled.div`
   background-color: black;
