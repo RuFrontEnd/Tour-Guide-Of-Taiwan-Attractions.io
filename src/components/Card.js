@@ -12,6 +12,7 @@ const Card = (props) => {
     onClick,
     children = "內文",
     info = { src: "", alt: "", title: "標題", area: "某某市 某某區" },
+    buttonText = "",
   } = props;
   return (
     <Container
@@ -33,7 +34,7 @@ const Card = (props) => {
               <Location />
               <District>{info.area} </District>
             </Area>
-            <DeatiledButton>活動詳情</DeatiledButton>
+            <DeatiledButton>{buttonText}</DeatiledButton>
           </More>
         </Info>
       </Wrap>

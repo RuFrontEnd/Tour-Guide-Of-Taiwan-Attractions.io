@@ -21,6 +21,9 @@ import detailCard_tmp from "assets/detailCard_tmp.png";
 import boardImg_tmp from "assets/boardImg_tmp.png";
 import SmallCards from "layouts/SmallCards";
 import DetailModal from "layouts/DetailModal";
+import Cards from "layouts/Cards";
+import Tool from "layouts/Tool";
+import CityCarousel from "layouts/CityCarousel";
 import Paper from "components/Paper";
 import Board from "components/Board";
 import Background from "layouts/Background";
@@ -33,7 +36,7 @@ import CardSm from "components/CardSm";
 import Space from "layouts/Space";
 import DetailCard from "components/DetailCard";
 import RectButton from "components/RectButton";
-import Tool from "layouts/Tool";
+
 import { baseURL, counties } from "variable/variable";
 import { getScenicSpots } from "api/scenicSpots";
 import { pipe } from "utils/pipe";
@@ -352,152 +355,45 @@ const ScenicSpots = (props) => {
         setSelectedCity={setSelectedCity}
       />
 
-      <Space
+      <CityCarousel
         style={{
           display: qurey.get("city_zh") && selectedCity ? "none" : "block",
         }}
-      >
-        <Kind title="造訪城市">
-          <Triangle />
-        </Kind>
-        <HotCitiesCarousel responsive={responsive}>
-          {hotCities.map((hotCity, index) =>
-            index % 2 === 0 ? (
-              <HotCitiy>
-                <HotCityBoard
-                  onClick={(e) => {
-                    switchToSelectedCity(
-                      history,
-                      setSelectedCity,
-                      hotCity.name
-                    );
-                    // filterCityScenicSpots(hotCity.name, scenicSpots);
-                  }}
-                >
-                  <HotCityImg src={hotCity.src} />
-                  <HotCityInfo>
-                    <HotCityIcon />
-                    <HotCityName>{hotCity.name}</HotCityName>
-                  </HotCityInfo>
-                  <HotCityMask />
-                </HotCityBoard>
-              </HotCitiy>
-            ) : (
-              <HotCitiy>
-                <HotCityBoards>
-                  <HalfHotCityBoard
-                    onClick={(e) => {
-                      switchToSelectedCity(
-                        history,
-                        setSelectedCity,
-                        hotCity.name[0]
-                      );
-                    }}
-                  >
-                    <HotCityImg src={hotCity.src[0]} />
-                    <HalfHotCityInfo>
-                      <HotCityIcon />
-                      <HotCityName>{hotCity.name[0]}</HotCityName>
-                    </HalfHotCityInfo>
-                    <HalfHotCityMask />
-                  </HalfHotCityBoard>
-                  <HalfHotCityBoard
-                    onClick={(e) => {
-                      switchToSelectedCity(
-                        history,
-                        setSelectedCity,
-                        hotCity.name[1]
-                      );
-                      // filterCityScenicSpots(hotCity.name[1], scenicSpots);
-                    }}
-                  >
-                    <HotCityImg src={hotCity.src[1]} />
-                    <HalfHotCityInfo>
-                      <HotCityIcon />
-                      <HotCityName>{hotCity.name[1]}</HotCityName>
-                    </HalfHotCityInfo>
-                    <HalfHotCityMask />
-                  </HalfHotCityBoard>
-                </HotCityBoards>
-              </HotCitiy>
-            )
-          )}
-        </HotCitiesCarousel>
-      </Space>
+        setSelected={setSelectedCity}
+      />
 
-      <Space>
-        <Kind title="熱門活動">
-          <Triangle />
-        </Kind>
-        <HotActivitiesCards>
-          {hotActivities.map((hotActivity) => (
-            <HotActivitiesCardItems key={hotActivity.title}>
-              <ActivityCard
-                info={{
-                  src: hotActivity.Picture.PictureUrl1,
-                  alt: "圖片",
-                  title: hotActivity.Name,
-                  area: hotActivity.Location,
-                }}
-                onClick={() => {
-                  setIsShowDetail(true);
-                  handleClickActivityCard();
-                }}
-              />
-            </HotActivitiesCardItems>
-          ))}
-        </HotActivitiesCards>
-        {/* <MoreButtonBox>
-              <MoreButton>更多活動</MoreButton>
-            </MoreButtonBox> */}
-      </Space>
+      <HotActivitiesCards
+        title="熱門活動"
+        activities={hotActivities}
+        buttonText={"活動詳情"}
+      />
 
-      <SmallCards
+      <HotScenicSpotSmCards
         title={"熱門景點"}
         icon={<Triangle />}
         spots={hotScenicSpots}
       />
 
-      <SmallCards
+      <ScenicSpotSmCards
         title={selectedCity}
         icon={<Triangle />}
         spots={hotScenicSpots}
       />
-      <div>123</div>
+
       <DetailModal />
     </Background>
   );
 };
-const LastPageBox = styled.div`
-  background-color: ${__FF1D6C__()};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 9999px;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-`;
 
-const LastPage = styled(direction)`
-  transform: rotate(-180deg);
-  stroke: ${__FFF__()};
-  padding: 2px;
-`;
+const ScenicSpotSmCards = styled(SmallCards)``;
+
+const HotScenicSpotSmCards = styled(SmallCards)``;
+
+const HotActivitiesCards = styled(Cards)``;
 
 const NavBarHeight = styled.div`
   height: ${(props) => props.height}px;
 `;
-
-const MoreButtonBox = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  padding-bottom: ${(props) =>
-    props.paddingBottom && `${props.paddingBottom}px`};
-`;
-
-const MoreButton = styled(RectButton)``;
 
 const HalfHotCityMask = styled.div`
   background-color: black;
@@ -513,45 +409,6 @@ const HalfHotCityMask = styled.div`
   z-index: 1;
 `;
 
-const SmallCard = styled(CardSm)``;
-
-const SmallCardItems = styled.li`
-  margin: 0px 4.5px 35px 4.5px;
-  display: flex;
-  justify-content: center;
-
-  &:nth-child(5n + 1) {
-    margin: 0px 4.5px 35px 0px;
-  }
-
-  &:nth-child(5n) {
-    margin: 0px 0px 35px 4.5px;
-  }
-`;
-
-const SmallCardsBox = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-`;
-
-const ActivityCard = styled(Card)`
-  width: 100%;
-`;
-
-const HotActivitiesCardItems = styled.li`
-  margin: 0px 10.5px 48px 0px;
-  display: flex;
-  justify-content: center;
-
-  &:nth-child(odd) {
-    margin: 0px 10.5px 48px 0px;
-  }
-
-  &:nth-child(even) {
-    margin: 0px 0px 48px 10.5px;
-  }
-`;
-
 const HalfHotCityInfo = styled.div`
   display: flex;
   flex-direction: column;
@@ -563,10 +420,10 @@ const HalfHotCityInfo = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const HotActivitiesCards = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-`;
+// const HotActivitiesCards = styled.ul`
+//   display: grid;
+//   grid-template-columns: repeat(2, 1fr);
+// `;
 
 const HotCityMask = styled.div`
   background-color: black;
@@ -651,87 +508,6 @@ const HotCitiesCarousel = styled(Carousel)`
 
 const Kind = styled(Category)`
   margin-bottom: 12px;
-`;
-
-const GpsIcon = styled(Gps)`
-  & > path {
-    fill: ${__FFF__()};
-    stroke: ${__FFF__()};
-  }
-`;
-
-const GpshButton = styled(SquareButton)`
-  background-color: ${__FFB72C__()};
-`;
-
-const CityDropdown = styled(Dropdown)`
-  width: 219px;
-  margin-right: 6px;
-`;
-
-const CatgoreyDropdown = styled(Dropdown)`
-  width: 219px;
-  margin-right: 7px;
-`;
-
-const DropdownBox = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const SearchIcon = styled(Search)`
-  & > path {
-    fill: ${__FFF__()};
-    stroke: ${__FFF__()};
-  }
-`;
-
-const SearchButton = styled(SquareButton)`
-  background-color: ${__FF1D6C__()};
-`;
-
-const SearchBar = styled(Input)`
-  width: 445px;
-  margin-right: 6px;
-`;
-
-const SearchBox = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-`;
-
-const Remark = styled.p`
-  color: ${__FFF__()};
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 21px;
-`;
-
-const Title = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const LandingImg = styled.div`
-  width: 100%;
-  height: 100%;
-  background-image: url(${landing});
-  background-size: cover;
-  background-position: center center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const LandingImgBox = styled(Paper)`
-  width: 100%;
-  height: 536px;
-  padding: 23px 27px;
-  margin-bottom: 90px;
 `;
 
 export default withRouter(ScenicSpots);
