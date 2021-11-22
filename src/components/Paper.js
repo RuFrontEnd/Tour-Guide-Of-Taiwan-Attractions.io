@@ -11,7 +11,7 @@ const Paper = (props) => {
     rotateOfShadow,
     leftShadowOffsetWidth,
     rightShadowOffsetWidth,
-    onClick
+    onClick,
   } = props;
   return (
     <Box
@@ -36,6 +36,7 @@ const Box = styled.section`
   background-color: white;
   position: relative;
   box-sizing: border-box;
+  /* opacity: 0.5; */
 
   &:before,
   &:after {
@@ -51,17 +52,19 @@ const Box = styled.section`
     background: ${__0D0B0C__()};
     box-shadow: 0 15px 10px ${__0D0B0C__()};
     opacity: 0.3;
-    transform: ${(props) =>
+    transform: skewY(-2.5deg);
+    /* transform: ${(props) =>
       props.rotateOfShadow
         ? `rotate(-${props.rotateOfShadow}deg)`
-        : "rotate(-3deg)"};
+        : "rotate(-3deg)"}; */
   }
 
   &:after {
-    transform: ${(props) =>
+    transform: skewY(2.5deg);
+    /* transform: ${(props) =>
       props.rotateOfShadow
         ? `rotate(${props.rotateOfShadow}deg)`
-        : "rotate(3deg)"};
+        : "rotate(3deg)"}; */
     right: ${(props) =>
       props.rightShadowOffsetWidth ? props.rightShadowOffsetWidth : "10px"};
     left: auto;
