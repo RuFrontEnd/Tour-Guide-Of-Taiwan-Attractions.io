@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components/macro";
 import Paper from "components/Paper";
 import { __ACACAC__, __FF1D6C__, __007350__ } from "variable/variable";
 import { ReactComponent as LocationRef } from "assets/location.svg";
-import RectButton from "components/RectButton";
+import noImg from "assets/no-img.jpg";
 
 const CardSm = (props) => {
   const {
@@ -11,6 +11,8 @@ const CardSm = (props) => {
     style,
     info = { src: "", alt: "", title: "標題", area: "某某市 某某區" },
   } = props;
+
+  const $image = useRef();
   return (
     <Box
       style={style}
@@ -18,8 +20,15 @@ const CardSm = (props) => {
       widthOfShadowLength={"50%"}
       rotateOfShadow={8}
     >
-
-      <Image src={info.src} alt={info.alt} />
+      <Image
+        src={info.src}
+        alt={info.alt}
+        ref={$image}
+        onError={() => {
+          console.log('a')
+          $image.current.src = noImg;
+        }}
+      />
       <Info>
         <Title>{info.title}</Title>
         <More>

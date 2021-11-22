@@ -203,43 +203,36 @@ const ScenicSpots = (props) => {
       let pictureOwnedActivities = _activities.filter((_activitiy) => {
         return JSON.stringify(_activitiy.Picture) !== "{}";
       });
-      let _hotActivities = [];
-      let usedNumbers = [];
-      for (let i = 0; i < 4; i++) {
-        let randomNum = getRandomInt(
-          0,
-          pictureOwnedActivities.length - 1,
-          usedNumbers
-        );
-        _hotActivities.push(pictureOwnedActivities[randomNum]);
-        usedNumbers.push(randomNum);
-      }
+
+      let _hotActivities = [
+        pictureOwnedActivities[0],
+        pictureOwnedActivities[55],
+        pictureOwnedActivities[97],
+        pictureOwnedActivities[103],
+      ];
+
       setHotActivities(_hotActivities);
     });
 
     getScenicSpots().then((_scenicSpots) => {
-      let pictureOwnedActivities = _scenicSpots.filter((_scenicSpot) => {
+      setScenicSpots(_scenicSpots);
+
+      let pictureOwnedScenicSpots = _scenicSpots.filter((_scenicSpot) => {
         return JSON.stringify(_scenicSpot.Picture) !== "{}";
       });
 
-      console.log("pictureOwnedActivities", pictureOwnedActivities);
-
       let _hotScenicSpots = [
-        pictureOwnedActivities[105],
-
-        pictureOwnedActivities[637],
-        pictureOwnedActivities[842],
-
-
-        pictureOwnedActivities[848],
-        pictureOwnedActivities[909],
-        pictureOwnedActivities[1849],
-        pictureOwnedActivities[1868],
-        pictureOwnedActivities[2183],
-        pictureOwnedActivities[2368],
-        pictureOwnedActivities[2500],
+        pictureOwnedScenicSpots[105],
+        pictureOwnedScenicSpots[637],
+        pictureOwnedScenicSpots[842],
+        pictureOwnedScenicSpots[848],
+        pictureOwnedScenicSpots[909],
+        pictureOwnedScenicSpots[1849],
+        pictureOwnedScenicSpots[1868],
+        pictureOwnedScenicSpots[2183],
+        pictureOwnedScenicSpots[2368],
+        pictureOwnedScenicSpots[2500],
       ];
-      console.log("_hotScenicSpots", _hotScenicSpots);
 
       setHotScenicSpots(_hotScenicSpots);
     });
