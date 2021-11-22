@@ -205,21 +205,43 @@ const ScenicSpots = (props) => {
       });
       let _hotActivities = [];
       let usedNumbers = [];
-      console.log("usedNumbers", usedNumbers);
       for (let i = 0; i < 4; i++) {
         let randomNum = getRandomInt(
           0,
           pictureOwnedActivities.length - 1,
           usedNumbers
         );
-        console.log("randomNum", randomNum);
         _hotActivities.push(pictureOwnedActivities[randomNum]);
         usedNumbers.push(randomNum);
       }
-      console.log("usedNumbers", usedNumbers);
-      console.log("pictureOwnedActivities[167]", pictureOwnedActivities[167]);
-      console.log("_hotActivities", _hotActivities);
       setHotActivities(_hotActivities);
+    });
+
+    getScenicSpots().then((_scenicSpots) => {
+      let pictureOwnedActivities = _scenicSpots.filter((_scenicSpot) => {
+        return JSON.stringify(_scenicSpot.Picture) !== "{}";
+      });
+
+      console.log("pictureOwnedActivities", pictureOwnedActivities);
+
+      let _hotScenicSpots = [
+        pictureOwnedActivities[105],
+
+        pictureOwnedActivities[637],
+        pictureOwnedActivities[842],
+
+
+        pictureOwnedActivities[848],
+        pictureOwnedActivities[909],
+        pictureOwnedActivities[1849],
+        pictureOwnedActivities[1868],
+        pictureOwnedActivities[2183],
+        pictureOwnedActivities[2368],
+        pictureOwnedActivities[2500],
+      ];
+      console.log("_hotScenicSpots", _hotScenicSpots);
+
+      setHotScenicSpots(_hotScenicSpots);
     });
   }, []);
 

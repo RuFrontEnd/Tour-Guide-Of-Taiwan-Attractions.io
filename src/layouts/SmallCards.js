@@ -24,11 +24,7 @@ const SmallCards = (props) => {
                     : noImg,
                   alt: "圖片",
                   title: spot.Name,
-                  area: `${spot.Address?.slice(0, 3)} ${
-                    spot.Address?.slice(3, 6).match(/.{2}[鄉鎮市區]{1}/)
-                      ? spot.Address?.slice(3, 6)
-                      : ""
-                  }`,
+                  area: spot.City,
                 }}
               />
             </CardBox>
