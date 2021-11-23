@@ -14,7 +14,9 @@ import Space from "layouts/Space";
 import taipei from "assets/taipei.png";
 import newTaipei from "assets/new_taipei.png";
 import taoyuan from "assets/taoyuan.png";
+import keelung from "assets/keelung.png";
 import hsinchu from "assets/hsinchu.png";
+import hsinchuCounty from "assets/hsinchuCounty.jpg";
 import taichung from "assets/taichung.png";
 import nantou from "assets/nantou.png";
 import chiayi from "assets/chiayi.png";
@@ -32,19 +34,18 @@ import penghu from "assets/penghu.jpg";
 import kinmen from "assets/kinmen.jpg";
 
 const cities = [
-  { name: "台　北", src: newTaipei },
-  { name: ["桃　園", "新　竹"], src: [taoyuan, hsinchu] },
-  { name: "新　北", src: taipei },
-  { name: ["嘉　義", "南　投"], src: [chiayi, nantou] },
-  { name: "台　中", src: taichung },
-  { name: ["高　雄", "屏　東"], src: [kaohsiung, pingtung] },
+  { name: "台　北", src: taipei },
+  { name: ["新　北", "桃　園"], src: [newTaipei, taoyuan] },
+  { name: "基　隆", src: keelung },
+  { name: ["新　竹", "台　中"], src: [hsinchu, taichung] },
   { name: "台　南", src: tainan },
-  { name: ["花　蓮", "台　東"], src: [hualien, daito] },
+  { name: ["嘉　義", "南　投"], src: [chiayi, nantou] },
   { name: "宜　蘭", src: yilan },
-  { name: ["苗　栗", "雲　林"], src: [miaoli, yunlin] },
+  { name: ["高　雄", "屏　東"], src: [kaohsiung, pingtung] },
   { name: "彰　化", src: changhua },
-  { name: ["澎 湖", "金 門"], src: [penghu, kinmen] },
-  { name: "馬 祖", src: mazu },
+  { name: ["苗　栗", "雲　林"], src: [miaoli, yunlin] },
+  { name: "外　島", src: penghu },
+  { name: ["花　蓮", "台　東"], src: [hualien, daito] },
 ];
 
 const responsive = {
@@ -68,18 +69,23 @@ const responsive = {
 
 export const getCountyName = (cityName) => {
   let county = {};
-  console.log("cityName", cityName);
   if (cityName.match(/台　北/)) {
     county = { en: "Taipei", zh: "台北市" };
+  }
+  if (cityName.match(/新　北/)) {
+    county = { en: "NewTaipei", zh: "新北市" };
   }
   if (cityName.match(/桃　園/)) {
     county = { en: "Taoyuan", zh: "桃園市" };
   }
-  if (cityName.match(/新　竹/)) {
+  if (cityName.match(/基　隆/)) {
+    county = { en: "Keelung", zh: "基隆市" };
+  }
+  if (cityName.match(/新竹市/)) {
     county = { en: "Hsinchu", zh: "新竹市" };
   }
-  if (cityName.match(/新　北/)) {
-    county = { en: "NewTaipei", zh: "新北市" };
+  if (cityName.match(/新竹縣/)) {
+    county = { en: "HsinchuCounty", zh: "新竹縣" };
   }
   if (cityName.match(/嘉　義/)) {
     county = { en: "Chiayi", zh: "嘉義縣" };
@@ -109,13 +115,13 @@ export const getCountyName = (cityName) => {
     county = { en: "Yilan", zh: "宜蘭縣" };
   }
   if (cityName.match(/苗　栗/)) {
-    county = { en: "Miaoli", zh: "苗栗縣" };
+    county = { en: "MiaoliCounty", zh: "苗栗縣" };
   }
   if (cityName.match(/雲　林/)) {
     county = { en: "Yunlin", zh: "雲林縣" };
   }
   if (cityName.match(/彰　化/)) {
-    county = { en: "Changhua", zh: "彰化縣" };
+    county = { en: "ChanghuaCounty", zh: "彰化縣" };
   }
   if (cityName.match(/澎　湖/)) {
     county = { en: "Penghu", zh: "澎湖縣" };
@@ -179,11 +185,7 @@ const CityCarousel = (props) => {
               <CityBoards>
                 <HalfCityBoard
                   onClick={(e) => {
-                    switchToSelectedCity(
-                      history,
-                      setSelected,
-                      city.name[0]
-                    );
+                    switchToSelectedCity(history, setSelected, city.name[0]);
                     onClickHalfTopBoard();
                   }}
                 >
@@ -196,11 +198,7 @@ const CityCarousel = (props) => {
                 </HalfCityBoard>
                 <HalfCityBoard
                   onClick={(e) => {
-                    switchToSelectedCity(
-                      history,
-                      setSelected,
-                      city.name[1]
-                    );
+                    switchToSelectedCity(history, setSelected, city.name[1]);
                     onClickHalfBottonBoard();
                   }}
                 >

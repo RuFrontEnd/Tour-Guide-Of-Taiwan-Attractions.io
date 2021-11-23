@@ -23,6 +23,8 @@ const Tool = (props) => {
     setSelectedCategories,
     selectedCity,
     setSelectedCity,
+    onCatgoreyChange = () => {},
+    onCountiesChange = () => {},
   } = props;
 
   return (
@@ -44,11 +46,17 @@ const Tool = (props) => {
               selected={selectedCategories}
               setSelected={setSelectedCategories}
               options={categories}
+              onChange={(e) => {
+                onCatgoreyChange(e);
+              }}
             />
             <CountiesDropdown
               options={counties}
               selected={selectedCity}
               setSelected={setSelectedCity}
+              onChange={(e) => {
+                onCountiesChange(e);
+              }}
             />
             <SearchButton>
               <SearchIcon width={"16px"} />

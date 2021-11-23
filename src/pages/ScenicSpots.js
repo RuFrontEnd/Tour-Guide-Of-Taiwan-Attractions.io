@@ -47,6 +47,14 @@ import { sortValue } from "utils/sort";
 
 const categories = ["類別", "景點", "活動"];
 
+window.addEventListener("hashchange", function (e) {
+  console.log("a");
+});
+
+window.addEventListener("locationchange", function () {
+  console.log("location changed!");
+});
+
 export const handleClickActivityCard = () => {
   document.body.style.overflow = "hidden";
 };
@@ -162,15 +170,76 @@ export const getCountyName = (cityName) => {
   return county;
 };
 
-export const getFilterCityQureyString = (hotCityName) => {
-  return `${path[0]}?city_en=${getCountyName(hotCityName).en}&&city_zh=${
-    getCountyName(hotCityName).zh
-  }`;
+export const getEngCountyName = (cityName) => {
+  console.log("cityName", cityName);
+  let engCountyName = "";
+  if (cityName.match(/台北市/)) {
+    engCountyName = "Taipei";
+  }
+  if (cityName.match(/桃園市/)) {
+    engCountyName = "Taoyuan";
+  }
+  if (cityName.match(/新竹市/)) {
+    engCountyName = "Hsinchu";
+  }
+  if (cityName.match(/新北市/)) {
+    engCountyName = "NewTaipei";
+  }
+  if (cityName.match(/嘉義縣/)) {
+    engCountyName = "Chiayi";
+  }
+  if (cityName.match(/南投縣/)) {
+    engCountyName = "Nantou";
+  }
+  if (cityName.match(/台中市/)) {
+    engCountyName = "Taichung";
+  }
+  if (cityName.match(/高雄市/)) {
+    engCountyName = "Kaohsiung";
+  }
+  if (cityName.match(/屏東縣/)) {
+    engCountyName = "Pingtung";
+  }
+  if (cityName.match(/台南市/)) {
+    engCountyName = "Tainan";
+  }
+  if (cityName.match(/花蓮縣/)) {
+    engCountyName = "Hualien";
+  }
+  if (cityName.match(/台東縣/)) {
+    engCountyName = "Taoyuan";
+  }
+  if (cityName.match(/宜蘭縣/)) {
+    engCountyName = "Yilan";
+  }
+  if (cityName.match(/苗栗縣/)) {
+    engCountyName = "Miaoli";
+  }
+  if (cityName.match(/雲林縣/)) {
+    engCountyName = "Yunlin";
+  }
+  if (cityName.match(/彰化縣/)) {
+    engCountyName = "Changhua";
+  }
+  if (cityName.match(/澎湖縣/)) {
+    engCountyName = "Penghu";
+  }
+  if (cityName.match(/金門縣/)) {
+    engCountyName = "Kinmen";
+  }
+  if (cityName.match(/連江縣/)) {
+    engCountyName = "Mazu";
+  }
+  console.log("engCountyName", engCountyName);
+  return engCountyName;
 };
 
-export const switchToSelectedCity = (history, setSelectedCity, cityName) => {
-  history.push(getFilterCityQureyString(cityName));
-  setSelectedCity(getCountyName(cityName).zh);
+export const pushToSelectedCity = (history, setSelectedCity, cityName) => {
+  history.push(
+    `${path[0]}?city_en=${getEngCountyName(cityName)}&&city_zh=${cityName}`
+  );
+
+  setSelectedCity(cityName);
 };
 
 const ScenicSpots = (props) => {
@@ -186,15 +255,6 @@ const ScenicSpots = (props) => {
   const [hotScenicSpots, setHotScenicSpots] = useState([]);
   const [activities, setActivities] = useState([]);
   const [hotActivities, setHotActivities] = useState([]);
-
-  const filterCityScenicSpots = (hotCityName, scenicSpots) => {
-    setSelectedCity(getCityName(hotCityName));
-
-    let _cityScenicSpots = scenicSpots.filter((scenicSpot) => {
-      return scenicSpot.Address?.slice(0, 3) === getCountyName(hotCityName);
-    });
-    setCityScenicSpots(_cityScenicSpots);
-  };
 
   useEffect(() => {
     getActivities().then((_activities) => {
@@ -257,15 +317,19 @@ const ScenicSpots = (props) => {
     }
   }, [scenicSpots]);
 
-  useEffect(() => {
-    history.listen(() => {
-      !qurey.get("city_zh") && setSelectedCity("");
-    });
-  }, []);
+  // useEffect(() => {
+  //   history.listen(() => {
+  //     console.log('qurey.get("city_zh")', qurey.get("city_zh"));
+  //     !qurey.get("city_zh") && setSelectedCity("");
+  //     qurey.get("city_zh") && setSelectedCity(qurey.get("city_zh"));
+  //   });
+  // }, []);
+
+  qurey.get("city_zh");
 
   useEffect(() => {
-    console.log("isShowDetail", isShowDetail);
-  }, [isShowDetail]);
+    console.log("qurey.get('city_zh')", qurey.get("city_zh"));
+  }, []);
 
   return (
     <Background>
@@ -277,6 +341,16 @@ const ScenicSpots = (props) => {
         setSelectedCategories={setSelectedCategories}
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
+        onCatgoreyChange={(e) => {
+          history.push(
+            `${path[0]}?city_en=${getEngCountyName(e.target.value)}&&city_zh=${
+              e.target.value
+            }`
+          );
+        }}
+        onCountiesChange={(e) => {
+          pushToSelectedCity(history, setSelectedCity, e.target.value);
+        }}
       />
 
       <CityCarousel
@@ -309,21 +383,23 @@ const ScenicSpots = (props) => {
 
       <ActivitySmCards
         style={{
-          display: selectedCategories === "景點" ? "none" : "block",
+          display:
+            selectedCity && selectedCategories !== "景點" ? "block" : "none",
         }}
         title={`${selectedCity === "不分縣市" ? "" : selectedCity} 活動`}
         icon={<Triangle />}
         spots={hotScenicSpots}
       />
 
-      {/* <ScenicSpotSmCards
+      <ScenicSpotSmCards
         style={{
-          display: selectedCategories === "活動" ? "none" : "block",
+          display:
+            selectedCity && !selectedCategories !== "活動" ? "block" : "none",
         }}
         title={`${selectedCity === "不分縣市" ? "" : selectedCity} 景點`}
         icon={<Triangle />}
         spots={activities}
-      /> */}
+      />
 
       <DetailModal
         isShowDetail={isShowDetail}

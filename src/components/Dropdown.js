@@ -10,6 +10,7 @@ const Dropdown = (props) => {
     options = ["類別", "選項二", "選項三"],
     selected,
     setSelected,
+    onChange = () => {},
   } = props;
 
   return (
@@ -19,6 +20,7 @@ const Dropdown = (props) => {
       value={selected}
       onChange={(e) => {
         setSelected(e.target.value);
+        onChange(e);
       }}
     >
       {Array.isArray(options) &&
