@@ -235,12 +235,53 @@ export const getEngCountyName = (cityName) => {
 };
 
 export const pushToSelectedCity = (history, setSelectedCity, cityName) => {
-  history.push(
-    `${path[0]}?city_en=${getEngCountyName(cityName)}&&city_zh=${cityName}`
-  );
+  console.log("location", window.location);
+  const urlRegex = /city_en=[A-Za-z]+&&city_zh=[\w\W]+/;
+
+  const hasUrlParams = urlRegex.test(window.location.search);
+  console.log("hasUrlParams", hasUrlParams);
+  let pushToUrl = "";
+  if (hasUrlParams) {
+    console.log("true");
+    pushToUrl = window.location.href.replace(
+      urlRegex,
+      `city_en=${getEngCountyName(cityName)}&&city_zh=${cityName}`
+    );
+  }
+  console.log("pushToUrl", pushToUrl);
+  // history.push(
+  //   `${window.location.pathname}?city_en=${getEngCountyName(
+  //     cityName
+  //   )}&&city_zh=${cityName}`
+  // );
 
   setSelectedCity(cityName);
 };
+
+// export const pushToSelectedCity = (history, setSelectedCity, cityName) => {
+//   console.log("window.location.search", window.location.search);
+//   const urlRegex = /city_en=[A-Za-z]+&&city_zh=[\w\W]+/;
+//   const hasUrlParams = /city_en=[A-Za-z]+&&city_zh=[\w\W]+/.test(window.location.search);
+//   const test = /city_en=[A-Za-z]+&&city_zh=[\w\W]+/.test(window.location.search);
+//   console.log('hasUrlParams',hasUrlParams)
+//   console.log('test',test)
+//   let pushToUrl = "";
+//   if (hasUrlParams) {
+
+//     pushToUrl = window.location.href.replace(
+//       urlRegex,
+//       `city_en=${getEngCountyName(cityName)}&&city_zh=${cityName}`
+//     );
+//     console.log('pushToUrl',pushToUrl)
+//   }
+// //  if(!hasUrlParams){
+// //   pushToUrl=
+// //  }
+
+//   setSelectedCity(cityName);
+// };
+
+console.log("location", window.location);
 
 const ScenicSpots = (props) => {
   const { history, location } = props;
