@@ -230,58 +230,32 @@ export const getEngCountyName = (cityName) => {
   if (cityName.match(/連江縣/)) {
     engCountyName = "Mazu";
   }
-  console.log("engCountyName", engCountyName);
   return engCountyName;
 };
 
-export const pushToSelectedCity = (history, setSelectedCity, cityName) => {
-  console.log("location", window.location);
-  const urlRegex = /city_en=[A-Za-z]+&&city_zh=[\w\W]+/;
+export const replacedSearchParam = (regex, searchParam) => {
+  return window.location.search.replace(regex, searchParam);
+};
 
+export const pushToSelectedCity = (history, setSelectedCity, cityName) => {
+  const urlRegex = /city_en=[A-Za-z]+&&city_zh=[\w\W]+/;
   const hasUrlParams = urlRegex.test(window.location.search);
-  console.log("hasUrlParams", hasUrlParams);
-  let pushToUrl = "";
+  const targetSearchParam = `city_en=${getEngCountyName(
+    cityName
+  )}&&city_zh=${cityName}`;
+  let searchParams = "";
+
   if (hasUrlParams) {
-    console.log("true");
-    pushToUrl = window.location.href.replace(
-      urlRegex,
-      `city_en=${getEngCountyName(cityName)}&&city_zh=${cityName}`
-    );
+    searchParams = replacedSearchParam(urlRegex, targetSearchParam);
   }
-  console.log("pushToUrl", pushToUrl);
-  // history.push(
-  //   `${window.location.pathname}?city_en=${getEngCountyName(
-  //     cityName
-  //   )}&&city_zh=${cityName}`
-  // );
+  if (!hasUrlParams) {
+    searchParams = `?${targetSearchParam}`;
+  }
+
+  history.push(`/scenicSpots${searchParams}`);
 
   setSelectedCity(cityName);
 };
-
-// export const pushToSelectedCity = (history, setSelectedCity, cityName) => {
-//   console.log("window.location.search", window.location.search);
-//   const urlRegex = /city_en=[A-Za-z]+&&city_zh=[\w\W]+/;
-//   const hasUrlParams = /city_en=[A-Za-z]+&&city_zh=[\w\W]+/.test(window.location.search);
-//   const test = /city_en=[A-Za-z]+&&city_zh=[\w\W]+/.test(window.location.search);
-//   console.log('hasUrlParams',hasUrlParams)
-//   console.log('test',test)
-//   let pushToUrl = "";
-//   if (hasUrlParams) {
-
-//     pushToUrl = window.location.href.replace(
-//       urlRegex,
-//       `city_en=${getEngCountyName(cityName)}&&city_zh=${cityName}`
-//     );
-//     console.log('pushToUrl',pushToUrl)
-//   }
-// //  if(!hasUrlParams){
-// //   pushToUrl=
-// //  }
-
-//   setSelectedCity(cityName);
-// };
-
-console.log("location", window.location);
 
 const ScenicSpots = (props) => {
   const { history, location } = props;
@@ -359,14 +333,17 @@ const ScenicSpots = (props) => {
   }, [scenicSpots]);
 
   // useEffect(() => {
-  //   history.listen(() => {
+  // history.listen(() => {
+  //   const notSelectedRegex = /city_en=&&city_zh=不分縣市/;
+  //   const isNotSelected = notSelectedRegex.test(window.location.search);
+  //   if (isNotSelected) {
+  //     console.log("hi");
+  //   }
   //     console.log('qurey.get("city_zh")', qurey.get("city_zh"));
   //     !qurey.get("city_zh") && setSelectedCity("");
   //     qurey.get("city_zh") && setSelectedCity(qurey.get("city_zh"));
-  //   });
+  // });
   // }, []);
-
-  qurey.get("city_zh");
 
   useEffect(() => {
     console.log("qurey.get('city_zh')", qurey.get("city_zh"));
@@ -383,11 +360,11 @@ const ScenicSpots = (props) => {
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
         onCatgoreyChange={(e) => {
-          history.push(
-            `${path[0]}?city_en=${getEngCountyName(e.target.value)}&&city_zh=${
-              e.target.value
-            }`
-          );
+          // history.push(
+          //   `${path[0]}?city_en=${getEngCountyName(e.target.value)}&&city_zh=${
+          //     e.target.value
+          //   }`
+          // );
         }}
         onCountiesChange={(e) => {
           pushToSelectedCity(history, setSelectedCity, e.target.value);
