@@ -47,14 +47,6 @@ import { sortValue } from "utils/sort";
 
 const categories = ["類別", "景點", "活動"];
 
-window.addEventListener("hashchange", function (e) {
-  console.log("a");
-});
-
-window.addEventListener("locationchange", function () {
-  console.log("location changed!");
-});
-
 export const handleClickActivityCard = () => {
   document.body.style.overflow = "hidden";
 };
@@ -171,7 +163,6 @@ export const getCountyName = (cityName) => {
 };
 
 export const getEngCountyName = (cityName) => {
-  console.log("cityName", cityName);
   let engCountyName = "";
   if (cityName.match(/台北市/)) {
     engCountyName = "Taipei";
@@ -346,8 +337,14 @@ const ScenicSpots = (props) => {
   // }, []);
 
   useEffect(() => {
-    console.log("qurey.get('city_zh')", qurey.get("city_zh"));
+    history.listen(() => {
+      console.log('HHH')
+    })
   }, []);
+
+  // useEffect(() => {
+  //   console.log("qurey.get('city_zh')", qurey.get("city_zh"));
+  // }, []);
 
   return (
     <Background>

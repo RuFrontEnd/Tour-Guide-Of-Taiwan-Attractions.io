@@ -25,7 +25,6 @@ const CardSm = (props) => {
         alt={info.alt}
         ref={$image}
         onError={() => {
-          console.log('a')
           $image.current.src = noImg;
         }}
       />
