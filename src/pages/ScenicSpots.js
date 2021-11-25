@@ -45,7 +45,18 @@ import { pipe } from "utils/pipe";
 import { removeRepeatedValue, raisingSortValue } from "utils/array";
 import { sortValue } from "utils/sort";
 
-const categories = ["類別", "景點", "活動"];
+const categories = [
+  { value: "none", content: "不分類別" },
+  { value: "scenicSpot", content: "景點" },
+  { value: "activity", content: "活動" },
+];
+
+const countiesOptions = counties.map((county) => {
+  return {
+    value: county.en,
+    content: county.zh,
+  };
+});
 
 export const handleClickActivityCard = () => {
   document.body.style.overflow = "hidden";
@@ -229,11 +240,9 @@ export const replacedSearchParam = (regex, searchParam) => {
 };
 
 export const pushToSelectedCity = (history, setSelectedCity, cityName) => {
-  const urlRegex = /city_en=[A-Za-z]+&&city_zh=[\w\W]+/;
+  const urlRegex = /city=[A-Za-z]+/;
   const hasUrlParams = urlRegex.test(window.location.search);
-  const targetSearchParam = `city_en=${getEngCountyName(
-    cityName
-  )}&&city_zh=${cityName}`;
+  const targetSearchParam = `city=${getEngCountyName(cityName)}`;
   let searchParams = "";
 
   if (hasUrlParams) {
@@ -338,8 +347,8 @@ const ScenicSpots = (props) => {
 
   useEffect(() => {
     history.listen(() => {
-      console.log('HHH')
-    })
+      console.log("HHH");
+    });
   }, []);
 
   // useEffect(() => {
@@ -351,18 +360,12 @@ const ScenicSpots = (props) => {
       <NavBarHeight height={navBarHeight} />
       <Tool
         categories={categories}
-        counties={counties}
+        counties={countiesOptions}
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
-        onCatgoreyChange={(e) => {
-          // history.push(
-          //   `${path[0]}?city_en=${getEngCountyName(e.target.value)}&&city_zh=${
-          //     e.target.value
-          //   }`
-          // );
-        }}
+        onCatgoreyChange={(e) => {}}
         onCountiesChange={(e) => {
           pushToSelectedCity(history, setSelectedCity, e.target.value);
         }}

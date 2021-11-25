@@ -24,7 +24,11 @@ const Dropdown = (props) => {
       }}
     >
       {Array.isArray(options) &&
-        options.map((option) => <Option key={option}>{option}</Option>)}
+        options.map((option) => (
+          <Option key={option.value} value={option.value}>
+            {option.content}
+          </Option>
+        ))}
     </Box>
   );
 };
