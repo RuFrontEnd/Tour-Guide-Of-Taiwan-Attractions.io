@@ -142,7 +142,9 @@ export const getFilterCityQureyString = (hotCityName) => {
 };
 
 export const switchToSelectedCity = (history, setSelectedCity, cityName) => {
-  history.push(getFilterCityQureyString(cityName));
+  let params = new URLSearchParams(window.location.search.slice(1));
+  params.append("city", cityName);
+  history.push(`?${params}`);
   setSelectedCity(getCountyName(cityName).zh);
 };
 
@@ -169,7 +171,7 @@ const CityCarousel = (props) => {
               <CityBoard
                 onClick={(e) => {
                   switchToSelectedCity(history, setSelected, city.name);
-                  onClickBoard();
+                  onClickBoard(e);
                 }}
               >
                 <Img src={city.src} />
@@ -186,7 +188,7 @@ const CityCarousel = (props) => {
                 <HalfCityBoard
                   onClick={(e) => {
                     switchToSelectedCity(history, setSelected, city.name[0]);
-                    onClickHalfTopBoard();
+                    onClickBoard(e);
                   }}
                 >
                   <Img src={city.src[0]} />
@@ -199,7 +201,7 @@ const CityCarousel = (props) => {
                 <HalfCityBoard
                   onClick={(e) => {
                     switchToSelectedCity(history, setSelected, city.name[1]);
-                    onClickHalfBottonBoard();
+                    onClickBoard(e);
                   }}
                 >
                   <Img src={city.src[1]} />

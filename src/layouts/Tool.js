@@ -25,6 +25,7 @@ const Tool = (props) => {
     setSelectedCity,
     onCatgoreyChange = () => {},
     onCountiesChange = () => {},
+    onClickSearchButton = () => {},
   } = props;
 
   return (
@@ -58,7 +59,7 @@ const Tool = (props) => {
                 onCountiesChange(e);
               }}
             />
-            <SearchButton>
+            <SearchButton onClick={onClickSearchButton}>
               <SearchIcon width={"16px"} />
             </SearchButton>
           </DropdownBox>

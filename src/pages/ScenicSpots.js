@@ -46,7 +46,7 @@ import { removeRepeatedValue, raisingSortValue } from "utils/array";
 import { sortValue } from "utils/sort";
 
 const categories = [
-  { value: "none", content: "不分類別" },
+  { value: "", content: "不分類別" },
   { value: "scenicSpot", content: "景點" },
   { value: "activity", content: "活動" },
 ];
@@ -59,8 +59,6 @@ const countiesOptions = counties.map((county) => {
 });
 
 const originSearchParam = window.location.search.replace("?", "");
-
-console.log("countiesOptions", countiesOptions);
 
 export const handleClickActivityCard = () => {
   document.body.style.overflow = "hidden";
@@ -249,52 +247,68 @@ export const replacedSearchParam = (regex, searchParam) => {
 
 // }
 
-export const pushToSelectedCategorey = (
-  history,
-  setSelectedCategory,
-  category
-) => {
-  const urlParams = new URLSearchParams(window.location.search);
-  urlParams.set('order', 'date');
-  window.location.search = urlParams;
-  // const urlRegex = /category=[A-Za-z]+/;
-  // const hasUrlParams = urlRegex.test(originSearchParam);
-  // const targetSearchParam = `category=${category}`;
-  // let searchParams = "";
+// export const pushToSelectedCategorey = (
+//   history,
+//   setSelectedCategory,
+//   category
+// ) => {
+//   const urlParams = new URLSearchParams(window.location.search);
+//   urlParams.set("order", "date");
+//   window.location.search = urlParams;
+// const urlRegex = /category=[A-Za-z]+/;
+// const hasUrlParams = urlRegex.test(originSearchParam);
+// const targetSearchParam = `category=${category}`;
+// let searchParams = "";
 
-  // if (hasUrlParams) {
-  //   searchParams = replacedSearchParam(urlRegex, targetSearchParam);
-  // }
-  // if (!hasUrlParams) {
-  //   searchParams = `${originSearchParam}${targetSearchParam}`;
-  // }
-  // if(window.location.href.includes('?')){
-  //   history.push(`/scenicSpots?${searchParams}`);
-  // }
+// if (hasUrlParams) {
+//   searchParams = replacedSearchParam(urlRegex, targetSearchParam);
+// }
+// if (!hasUrlParams) {
+//   searchParams = `${originSearchParam}${targetSearchParam}`;
+// }
+// if(window.location.href.includes('?')){
+//   history.push(`/scenicSpots?${searchParams}`);
+// }
 
-  // history.push(`/scenicSpots?${searchParams}`);
+// history.push(`/scenicSpots?${searchParams}`);
 
-  // setSelectedCategory(category);
-};
+// setSelectedCategory(category);
+// };
 
 // console.log("window.location", window.location);
 
-export const pushToSelectedCity = (history, setSelectedCity, cityName) => {
-  const urlParams = new URLSearchParams(window.location.search);
-  urlParams.set('test', 'B');
-  window.location.search = urlParams;
-  // const urlRegex = /city=[A-Za-z]+/;
-  // const hasUrlParams = urlRegex.test(window.location.search);
-  // const targetSearchParam = `city=${cityName}`;
-  // let searchParams = "";
-  // if (hasUrlParams) {
-  //   searchParams = replacedSearchParam(urlRegex, targetSearchParam);
-  // }
-  // if (!hasUrlParams) {
-  //   searchParams = `${originSearchParam}${targetSearchParam}`;
-  // }
-  // history.push(`/scenicSpots?${searchParams}`);
-  // setSelectedCity(cityName);
+// export const pushToSelectedCity = (history, setSelectedCity, cityName) => {
+//   const urlParams = new URLSearchParams(window.location.search);
+//   urlParams.set("test", "B");
+//   console.log("urlParams", urlParams);
+//   window.location.search = urlParams;
+// history.push(`/scenicSpots?test=B`);
+
+// const urlRegex = /city=[A-Za-z]+/;
+// const hasUrlParams = urlRegex.test(window.location.search);
+// const targetSearchParam = `city=${cityName}`;
+// let searchParams = "";
+// if (hasUrlParams) {
+//   searchParams = replacedSearchParam(urlRegex, targetSearchParam);
+// }
+// if (!hasUrlParams) {
+//   searchParams = `${originSearchParam}${targetSearchParam}`;
+// }
+// history.push(`/scenicSpots?${searchParams}`);
+// setSelectedCity(cityName);
+// };
+
+export const searchAndFilter = (
+  history,
+  selectedCategories,
+  selectedCity,
+  keyword
+) => {
+
+  let params = new URLSearchParams(window.location.search.slice(1));
+  params.append("foo", 4);
+  history.push(`?${params}`);
+  console.log("params", params);
 };
 
 const ScenicSpots = (props) => {
@@ -387,13 +401,13 @@ const ScenicSpots = (props) => {
 
   useEffect(() => {
     history.listen(() => {
-      // console.log("HHH");
+      setSelectedCity(qurey.get("city"));
     });
   }, []);
 
-  // useEffect(() => {
-  //   console.log("qurey.get('city_zh')", qurey.get("city_zh"));
-  // }, []);
+  useEffect(() => {
+    // searchAndFilter(history, selectedCategories, selectedCity);
+  }, [selectedCity]);
 
   return (
     <Background>
@@ -405,22 +419,32 @@ const ScenicSpots = (props) => {
         setSelectedCategories={setSelectedCategories}
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
-        onCatgoreyChange={(e) => {
-          pushToSelectedCategorey(
-            history,
-            setSelectedCategories,
-            e.target.value
-          );
+        onClickSearchButton={() => {
+          searchAndFilter(history, selectedCategories, selectedCity);
         }}
-        onCountiesChange={(e) => {
-          pushToSelectedCity(history, setSelectedCity, e.target.value);
-        }}
+        // onCatgoreyChange={(e) => {
+
+        //   pushToSelectedCategorey(
+        //     history,
+        //     setSelectedCategories,
+        //     e.target.value
+        //   );
+        // }}
+        // onCountiesChange={(e) => {
+        //   pushToSelectedCity(history, setSelectedCity, e.target.value);
+        // }}
       />
 
       <CityCarousel
         style={{
-          display: qurey.get("city_zh") && selectedCity ? "none" : "block",
+          display:
+            qurey.get("city") && qurey.get("city") !== "" && selectedCity
+              ? "none"
+              : "block",
         }}
+        // onClickBoard={(e) => {
+        //   searchAndFilter(history, selectedCategories, e.target.value);
+        // }}
         setSelected={setSelectedCity}
       />
 

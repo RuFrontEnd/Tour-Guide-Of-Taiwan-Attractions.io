@@ -32,7 +32,7 @@ export const __FFB72C__ = getCreateColorMethod([255, 183, 44], "#FFB72C");
 export const __D2D2D2__ = getCreateColorMethod([210, 210, 210], "#D2D2D2");
 
 export const counties = [
-  { en: "none", zh: "不分縣市" },
+  { en: "", zh: "不分縣市" },
   { en: "Taipei", zh: "台北市" },
   { en: "Keelung", zh: "基隆市" },
   { en: "NewTaipei", zh: "新北市" },

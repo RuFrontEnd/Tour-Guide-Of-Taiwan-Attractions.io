@@ -29,7 +29,7 @@ const routes = [
   },
   // {
   //   component: <ScenicSpotsFilter />,
-  //   path: "/scenicSpots/filter",
+  //   path: "/scenicSpots/#/:category/:city",
   // },
   {
     component: <FoodAndAccommodation />,

@@ -3,9 +3,9 @@ import styled from "styled-components/macro";
 import { __0D0B0C__ } from "variable/variable";
 
 const SquareButton = (props) => {
-  const { className, style, children } = props;
+  const { className, style, children, onClick } = props;
   return (
-    <Box style={style} className={className}>
+    <Box style={style} className={className} onClick={onClick}>
       {children}
     </Box>
   );
