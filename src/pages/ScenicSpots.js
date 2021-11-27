@@ -58,6 +58,10 @@ const countiesOptions = counties.map((county) => {
   };
 });
 
+const originSearchParam = window.location.search.replace("?", "");
+
+console.log("countiesOptions", countiesOptions);
+
 export const handleClickActivityCard = () => {
   document.body.style.overflow = "hidden";
 };
@@ -236,25 +240,61 @@ export const getEngCountyName = (cityName) => {
 };
 
 export const replacedSearchParam = (regex, searchParam) => {
-  return window.location.search.replace(regex, searchParam);
+  console.log("window.location.search", window.location.search);
+  console.log(window.location.search.replace(regex, searchParam));
+  return originSearchParam.replace(regex, searchParam);
 };
 
+// export const getSearchParam =()=>{
+
+// }
+
+export const pushToSelectedCategorey = (
+  history,
+  setSelectedCategory,
+  category
+) => {
+  const urlParams = new URLSearchParams(window.location.search);
+  urlParams.set('order', 'date');
+  window.location.search = urlParams;
+  // const urlRegex = /category=[A-Za-z]+/;
+  // const hasUrlParams = urlRegex.test(originSearchParam);
+  // const targetSearchParam = `category=${category}`;
+  // let searchParams = "";
+
+  // if (hasUrlParams) {
+  //   searchParams = replacedSearchParam(urlRegex, targetSearchParam);
+  // }
+  // if (!hasUrlParams) {
+  //   searchParams = `${originSearchParam}${targetSearchParam}`;
+  // }
+  // if(window.location.href.includes('?')){
+  //   history.push(`/scenicSpots?${searchParams}`);
+  // }
+
+  // history.push(`/scenicSpots?${searchParams}`);
+
+  // setSelectedCategory(category);
+};
+
+// console.log("window.location", window.location);
+
 export const pushToSelectedCity = (history, setSelectedCity, cityName) => {
-  const urlRegex = /city=[A-Za-z]+/;
-  const hasUrlParams = urlRegex.test(window.location.search);
-  const targetSearchParam = `city=${getEngCountyName(cityName)}`;
-  let searchParams = "";
-
-  if (hasUrlParams) {
-    searchParams = replacedSearchParam(urlRegex, targetSearchParam);
-  }
-  if (!hasUrlParams) {
-    searchParams = `?${targetSearchParam}`;
-  }
-
-  history.push(`/scenicSpots${searchParams}`);
-
-  setSelectedCity(cityName);
+  const urlParams = new URLSearchParams(window.location.search);
+  urlParams.set('test', 'B');
+  window.location.search = urlParams;
+  // const urlRegex = /city=[A-Za-z]+/;
+  // const hasUrlParams = urlRegex.test(window.location.search);
+  // const targetSearchParam = `city=${cityName}`;
+  // let searchParams = "";
+  // if (hasUrlParams) {
+  //   searchParams = replacedSearchParam(urlRegex, targetSearchParam);
+  // }
+  // if (!hasUrlParams) {
+  //   searchParams = `${originSearchParam}${targetSearchParam}`;
+  // }
+  // history.push(`/scenicSpots?${searchParams}`);
+  // setSelectedCity(cityName);
 };
 
 const ScenicSpots = (props) => {
@@ -347,7 +387,7 @@ const ScenicSpots = (props) => {
 
   useEffect(() => {
     history.listen(() => {
-      console.log("HHH");
+      // console.log("HHH");
     });
   }, []);
 
@@ -365,7 +405,13 @@ const ScenicSpots = (props) => {
         setSelectedCategories={setSelectedCategories}
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
-        onCatgoreyChange={(e) => {}}
+        onCatgoreyChange={(e) => {
+          pushToSelectedCategorey(
+            history,
+            setSelectedCategories,
+            e.target.value
+          );
+        }}
         onCountiesChange={(e) => {
           pushToSelectedCity(history, setSelectedCity, e.target.value);
         }}
