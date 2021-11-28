@@ -27,10 +27,10 @@ const routes = [
     component: <ScenicSpots />,
     path: path[0],
   },
-  // {
-  //   component: <ScenicSpotsFilter />,
-  //   path: "/scenicSpots/#/:category/:city",
-  // },
+  {
+    component: <ScenicSpotsFilter />,
+    path: "/scenicSpots/filter",
+  },
   {
     component: <FoodAndAccommodation />,
     path: "/foodAndAccommodation",

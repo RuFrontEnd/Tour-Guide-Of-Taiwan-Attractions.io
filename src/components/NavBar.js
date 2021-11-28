@@ -36,7 +36,7 @@ const NavBar = (props) => {
         <Options>
           <AttractLink
             onClick={() => {
-              transferAddress("/");
+              history.push('/scenicspots/filter');
             }}
           >
             <AttractionIcon />

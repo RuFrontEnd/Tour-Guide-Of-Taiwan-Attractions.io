@@ -123,8 +123,8 @@ const ScenicSpots = (props) => {
   const navBarHeight = useSelector((state) => state.navBar.height);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState("");
-  const [selectedCity, setSelectedCity] = useState(""); // 下拉選單選擇的城市
+  const [selectedCategories, setSelectedCategories] = useState("none");
+  const [selectedCity, setSelectedCity] = useState("none"); // 下拉選單選擇的城市
   const [scenicSpots, setScenicSpots] = useState([]);
   const [cityScenicSpots, setCityScenicSpots] = useState([]);
   const [hotScenicSpots, setHotScenicSpots] = useState([]);
@@ -174,32 +174,32 @@ const ScenicSpots = (props) => {
     });
   }, []);
 
-  useEffect(() => {
-    history.listen(() => {
-      const searchParams = new URLSearchParams(
-        window.location.search.slice("1")
-      );
-      const qureyCity = searchParams.get("city");
-      const qureyCategory = searchParams.get("categories");
-      setSelectedCity(qureyCity);
-      setSelectedCategories(qureyCategory);
-    });
-  }, []);
+  // useEffect(() => {
+  //   history.listen(() => {
+  //     const searchParams = new URLSearchParams(
+  //       window.location.search.slice("1")
+  //     );
+  //     const qureyCity = searchParams.get("city");
+  //     const qureyCategory = searchParams.get("categories");
+  //     setSelectedCity(qureyCity);
+  //     setSelectedCategories(qureyCategory);
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    console.log("qureyParams", qureyParams);
-    if (qureyParams.category !== "" || qureyParams.city !== "") {
-      let params = new URLSearchParams();
-      params.set("city", selectedCity);
-      params.set("categories", selectedCategories);
-      history.push(`?${params}`);
-    }
-  }, [qureyParams]);
+  // useEffect(() => {
+  //   console.log("selectedCity", selectedCity);
+  // }, [selectedCity]);
 
-  console.log(qurey.get("city"));
-  console.log("window.location.search", window.location.search);
-  let params = new URLSearchParams(window.location.search.slice(1));
-  console.log("params", params.get("city"));
+  // useEffect(() => {
+  //   if (qureyParams.category !== "" || qureyParams.city !== "") {
+  //     let params = new URLSearchParams();
+  //     params.set("city", selectedCity);
+  //     params.set("categories", selectedCategories);
+  //     history.push(`?${params}`);
+  //   }
+  // }, [qureyParams]);
+
+  // let params = new URLSearchParams(window.location.search.slice(1));
 
   return (
     <Background>
@@ -212,13 +212,19 @@ const ScenicSpots = (props) => {
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
         onClickSearchButton={() => {
-          searchAndFilter(
-            history,
-            selectedCategories,
-            selectedCity,
-            "",
-            setQureyParams
-          );
+          if (selectedCategories !== "none" || selectedCity !== "none") {
+            history.push({
+              pathname: "/scenicSpots/filter",
+              search: `?category=${selectedCategories}&city=${selectedCity}`,
+            });
+          }
+          // searchAndFilter(
+          //   history,
+          //   selectedCategories,
+          //   selectedCity,
+          //   "",
+          //   setQureyParams
+          // );
         }}
         // onCatgoreyChange={(e) => {
 
@@ -234,66 +240,19 @@ const ScenicSpots = (props) => {
       />
 
       <CityCarousel
-        style={{
-          display:
-            qurey.get("city") &&
-            qurey.get("city") !== "" &&
-            qureyParams.city !== "" &&
-            qureyParams.city !== "none"
-              ? "none"
-              : "block",
-        }}
         onClickBoard={(e) => {
-          searchAndFilter(
-            history,
-            selectedCategories,
-            e.target.value,
-            "",
-            setQureyParams
-          );
+          history.push("/scenicSpotsFilter");
         }}
         setSelected={setSelectedCity}
       />
 
       <HotActivitiesCards
-        style={{
-          display: qurey.get("city_zh") && selectedCity ? "none" : "block",
-        }}
         title="熱門活動"
         activities={hotActivities}
         buttonText={"活動詳情"}
         onClickButton={() => {
           setIsShowDetail(true);
         }}
-      />
-
-      <HotScenicSpotSmCards
-        style={{
-          display: qurey.get("city_zh") && selectedCity ? "none" : "block",
-        }}
-        title={"熱門景點"}
-        icon={<Triangle />}
-        spots={hotScenicSpots}
-      />
-
-      <ActivitySmCards
-        style={{
-          display:
-            selectedCity && selectedCategories !== "景點" ? "block" : "none",
-        }}
-        title={`${selectedCity === "不分縣市" ? "" : selectedCity} 活動`}
-        icon={<Triangle />}
-        spots={hotScenicSpots}
-      />
-
-      <ScenicSpotSmCards
-        style={{
-          display:
-            selectedCity && !selectedCategories !== "活動" ? "block" : "none",
-        }}
-        title={`${selectedCity === "不分縣市" ? "" : selectedCity} 景點`}
-        icon={<Triangle />}
-        spots={activities}
       />
 
       <DetailModal
