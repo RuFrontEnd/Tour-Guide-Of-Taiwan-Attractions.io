@@ -176,7 +176,9 @@ const ScenicSpots = (props) => {
 
   useEffect(() => {
     history.listen(() => {
-      const searchParams = new URLSearchParams(window.location.search.slice('1'));
+      const searchParams = new URLSearchParams(
+        window.location.search.slice("1")
+      );
       const qureyCity = searchParams.get("city");
       const qureyCategory = searchParams.get("categories");
       setSelectedCity(qureyCity);
@@ -193,6 +195,11 @@ const ScenicSpots = (props) => {
       history.push(`?${params}`);
     }
   }, [qureyParams]);
+
+  console.log(qurey.get("city"));
+  console.log("window.location.search", window.location.search);
+  let params = new URLSearchParams(window.location.search.slice(1));
+  console.log("params", params.get("city"));
 
   return (
     <Background>
@@ -228,10 +235,22 @@ const ScenicSpots = (props) => {
 
       <CityCarousel
         style={{
-          display: qurey.get("city") !== "" && selectedCity ? "none" : "block",
+          display:
+            qurey.get("city") &&
+            qurey.get("city") !== "" &&
+            qureyParams.city !== "" &&
+            qureyParams.city !== "none"
+              ? "none"
+              : "block",
         }}
         onClickBoard={(e) => {
-          searchAndFilter(history, selectedCategories, e.target.value);
+          searchAndFilter(
+            history,
+            selectedCategories,
+            e.target.value,
+            "",
+            setQureyParams
+          );
         }}
         setSelected={setSelectedCity}
       />
