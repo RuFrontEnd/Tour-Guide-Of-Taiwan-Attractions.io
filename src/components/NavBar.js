@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { setNavBarHeight } from "redux/navBar/navBarActions";
 import styled from "styled-components/macro";
 import { navBarColor } from "variable/variable";
+import { path } from "variable/path";
 import { ReactComponent as Logo } from "assets/logo.svg";
 import { ReactComponent as Attraction } from "assets/attraction.svg";
 import { ReactComponent as Food } from "assets/food.svg";
@@ -29,7 +30,7 @@ const NavBar = (props) => {
       <Wrap ref={$NavbarContainer}>
         <TaiwanLogo
           onClick={() => {
-            history.push("/landing");
+            history.push(path[0]);
           }}
         />
         <Options>

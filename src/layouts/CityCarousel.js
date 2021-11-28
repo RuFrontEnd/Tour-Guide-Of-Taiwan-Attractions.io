@@ -167,7 +167,7 @@ export const getFilterCityQureyString = (hotCityName) => {
 
 export const switchToSelectedCity = (history, setSelectedCity, cityValue) => {
   let params = new URLSearchParams(window.location.search.slice(1));
-  params.append("city", cityValue);
+  params.set("city", cityValue);
   history.push(`?${params}`);
   setSelectedCity(cityValue);
 };
@@ -211,7 +211,7 @@ const CityCarousel = (props) => {
               <CityBoards>
                 <HalfCityBoard
                   onClick={(e) => {
-                    switchToSelectedCity(history, setSelected, city.name[0]);
+                    switchToSelectedCity(history, setSelected, city.value[0]);
                     onClickBoard(e);
                   }}
                 >
@@ -224,7 +224,7 @@ const CityCarousel = (props) => {
                 </HalfCityBoard>
                 <HalfCityBoard
                   onClick={(e) => {
-                    switchToSelectedCity(history, setSelected, city.name[1]);
+                    switchToSelectedCity(history, setSelected, city.value[1]);
                     onClickBoard(e);
                   }}
                 >
