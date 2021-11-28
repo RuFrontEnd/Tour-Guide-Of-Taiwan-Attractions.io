@@ -34,18 +34,42 @@ import penghu from "assets/penghu.jpg";
 import kinmen from "assets/kinmen.jpg";
 
 const cities = [
-  { name: "台　北", src: taipei },
-  { name: ["新　北", "桃　園"], src: [newTaipei, taoyuan] },
-  { name: "基　隆", src: keelung },
-  { name: ["新　竹", "台　中"], src: [hsinchu, taichung] },
-  { name: "台　南", src: tainan },
-  { name: ["嘉　義", "南　投"], src: [chiayi, nantou] },
-  { name: "宜　蘭", src: yilan },
-  { name: ["高　雄", "屏　東"], src: [kaohsiung, pingtung] },
-  { name: "彰　化", src: changhua },
-  { name: ["苗　栗", "雲　林"], src: [miaoli, yunlin] },
-  { name: "外　島", src: penghu },
-  { name: ["花　蓮", "台　東"], src: [hualien, daito] },
+  { name: "台　北", value: "Taipei", src: taipei },
+  {
+    name: ["新　北", "桃　園"],
+    value: ["NewTaipei", "Taoyuan"],
+    src: [newTaipei, taoyuan],
+  },
+  { name: "基　隆", value: "Keeling", src: keelung },
+  {
+    name: ["新　竹", "台　中"],
+    value: ["Hsinchu", "Taichung"],
+    src: [hsinchu, taichung],
+  },
+  { name: "台　南", src: tainan, value: "Tainan" },
+  {
+    name: ["嘉　義", "南　投"],
+    value: ["Chiayi", "Nantou"],
+    src: [chiayi, nantou],
+  },
+  { name: "宜　蘭", src: yilan, value: "Yilan" },
+  {
+    name: ["高　雄", "屏　東"],
+    value: ["Kaohsiung", "Pingtung"],
+    src: [kaohsiung, pingtung],
+  },
+  { name: "彰　化", value: "Changhua", src: changhua },
+  {
+    name: ["苗　栗", "雲　林"],
+    value: ["Miaoli", "Yunlin"],
+    src: [miaoli, yunlin],
+  },
+  { name: "外　島", value: "OffshoreIslands", src: penghu },
+  {
+    name: ["花　蓮", "台　東"],
+    value: ["Hualien", "Daito"],
+    src: [hualien, daito],
+  },
 ];
 
 const responsive = {
@@ -141,11 +165,11 @@ export const getFilterCityQureyString = (hotCityName) => {
   }`;
 };
 
-export const switchToSelectedCity = (history, setSelectedCity, cityName) => {
+export const switchToSelectedCity = (history, setSelectedCity, cityValue) => {
   let params = new URLSearchParams(window.location.search.slice(1));
-  params.append("city", cityName);
+  params.append("city", cityValue);
   history.push(`?${params}`);
-  setSelectedCity(getCountyName(cityName).zh);
+  setSelectedCity(cityValue);
 };
 
 const CityCarousel = (props) => {
@@ -170,7 +194,7 @@ const CityCarousel = (props) => {
             <CarouselItem>
               <CityBoard
                 onClick={(e) => {
-                  switchToSelectedCity(history, setSelected, city.name);
+                  switchToSelectedCity(history, setSelected, city.value);
                   onClickBoard(e);
                 }}
               >

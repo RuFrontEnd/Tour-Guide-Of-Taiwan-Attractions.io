@@ -47,10 +47,11 @@ export const counties = [
   { en: "Yunlin", zh: "雲林縣" },
   { en: "Tainan", zh: "台南市" },
   { en: "Kaohsiung", zh: "高雄市" },
-  { en: "Penghu", zh: "澎湖縣" },
-  { en: "Kinmen", zh: "金門縣" },
+  // { en: "Penghu", zh: "澎湖縣" },
+  // { en: "Kinmen", zh: "金門縣" },
   { en: "Pingtung", zh: "屏東縣" },
-  { en: "Taoyuan", zh: "台東縣" },
+  { en: "Daito", zh: "台東縣" },
   { en: "Hualien", zh: "花蓮縣" },
-  { en: "Mazu", zh: "連江縣" },
+  // { en: "Mazu", zh: "連江縣" },
+  { en: "OffshoreIslands", zh: "外島" }
 ];
