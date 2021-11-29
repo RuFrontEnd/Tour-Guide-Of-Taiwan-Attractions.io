@@ -29,13 +29,16 @@ const DetailCard = (props) => {
       area: "某某市某某區某某路某段(某街)",
       tel: "886-x-xxxxxxxx",
     },
-    onClick,
+    onClick = () => {},
   } = props;
   return (
     <Container
       style={style}
       className={className}
-      onClick={onClick}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
       widthOfShadowLength={"50%"}
       rotateOfShadow={8}
     >
