@@ -10,6 +10,7 @@ const CardSm = (props) => {
     className,
     style,
     info = { src: "", alt: "", title: "標題", area: "某某市 某某區" },
+    onClick = () => {},
   } = props;
 
   const $image = useRef();
@@ -19,6 +20,7 @@ const CardSm = (props) => {
       className={className}
       widthOfShadowLength={"50%"}
       rotateOfShadow={8}
+      onClick={onClick}
     >
       <Image
         src={info.src}

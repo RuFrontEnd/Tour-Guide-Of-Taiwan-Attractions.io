@@ -11,7 +11,7 @@ const Paper = (props) => {
     rotateOfShadow,
     leftShadowOffsetWidth,
     rightShadowOffsetWidth,
-    onClick,
+    onClick = () => {},
   } = props;
   return (
     <Box

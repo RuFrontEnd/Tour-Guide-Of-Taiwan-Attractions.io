@@ -40,7 +40,7 @@ const cities = [
     value: ["NewTaipei", "Taoyuan"],
     src: [newTaipei, taoyuan],
   },
-  { name: "基　隆", value: "Keeling", src: keelung },
+  { name: "基　隆", value: "Keelung", src: keelung },
   {
     name: ["新　竹", "台　中"],
     value: ["Hsinchu", "Taichung"],
@@ -165,11 +165,11 @@ export const getFilterCityQureyString = (hotCityName) => {
   }`;
 };
 
-export const switchToSelectedCity = (history, setSelectedCity, cityValue) => {
-  let params = new URLSearchParams(window.location.search.slice(1));
-  params.set("city", cityValue);
-  history.push(`?${params}`);
-  setSelectedCity(cityValue);
+export const switchToSelectedCity = (history, cityValue) => {
+  history.push({
+    pathname: "/scenicSpots/filter",
+    search: `?category=&city=${cityValue}`,
+  });
 };
 
 const CityCarousel = (props) => {
@@ -194,7 +194,7 @@ const CityCarousel = (props) => {
             <CarouselItem>
               <CityBoard
                 onClick={(e) => {
-                  switchToSelectedCity(history, setSelected, city.value);
+                  switchToSelectedCity(history, city.value);
                   onClickBoard(e);
                 }}
               >
@@ -211,7 +211,7 @@ const CityCarousel = (props) => {
               <CityBoards>
                 <HalfCityBoard
                   onClick={(e) => {
-                    switchToSelectedCity(history, setSelected, city.value[0]);
+                    switchToSelectedCity(history, city.value[0]);
                     onClickBoard(e);
                   }}
                 >
@@ -224,7 +224,7 @@ const CityCarousel = (props) => {
                 </HalfCityBoard>
                 <HalfCityBoard
                   onClick={(e) => {
-                    switchToSelectedCity(history, setSelected, city.value[1]);
+                    switchToSelectedCity(history, city.value[1]);
                     onClickBoard(e);
                   }}
                 >

@@ -239,12 +239,7 @@ const ScenicSpots = (props) => {
         // }}
       />
 
-      <CityCarousel
-        onClickBoard={(e) => {
-          history.push("/scenicSpotsFilter");
-        }}
-        setSelected={setSelectedCity}
-      />
+      <CityCarousel onClickBoard={(e) => {}} setSelected={setSelectedCity} />
 
       <HotActivitiesCards
         title="熱門活動"
@@ -255,6 +250,15 @@ const ScenicSpots = (props) => {
         }}
       />
 
+      <HotScenicSpotSmCards
+        title="熱門景點"
+        spots={hotScenicSpots}
+        onClick={() => {
+          setIsShowDetail(true);
+          console.log('a')
+        }}
+      />
+
       <DetailModal
         isShowDetail={isShowDetail}
         setIsShowDetail={setIsShowDetail}
@@ -262,10 +266,6 @@ const ScenicSpots = (props) => {
     </Background>
   );
 };
-
-const ScenicSpotSmCards = styled(SmallCards)``;
-
-const ActivitySmCards = styled(SmallCards)``;
 
 const HotScenicSpotSmCards = styled(SmallCards)``;
 

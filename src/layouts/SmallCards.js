@@ -8,16 +8,25 @@ import Space from "layouts/Space";
 import noImg from "assets/no-img.jpg";
 
 const SmallCards = (props) => {
-  const { className, style, history, title, icon, spots } = props;
+  const {
+    className,
+    style,
+    history,
+    title,
+    icon,
+    spots,
+    onClick = () => {},
+  } = props;
 
   return (
-    <Space className={className} style={style}>
+    <Box className={className} style={style}>
       <Title title={title}>{icon}</Title>
       <Cards>
         {Array.isArray(spots) &&
           spots.map((spot) => (
             <CardBox>
               <SmallCard
+                onClick={onClick}
                 info={{
                   src: spot.Picture?.PictureUrl1
                     ? spot.Picture.PictureUrl1
@@ -30,7 +39,7 @@ const SmallCards = (props) => {
             </CardBox>
           ))}
       </Cards>
-    </Space>
+    </Box>
   );
 };
 
@@ -57,6 +66,10 @@ const Cards = styled.div`
 
 const Title = styled(Category)`
   margin-bottom: 12px;
+`;
+
+const Box = styled(Space)`
+  cursor: pointer;
 `;
 
 export default withRouter(SmallCards);
