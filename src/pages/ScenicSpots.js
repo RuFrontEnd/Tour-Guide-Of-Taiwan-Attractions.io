@@ -121,7 +121,7 @@ const ScenicSpots = (props) => {
   const { history, location } = props;
   const qurey = useQuery();
   const navBarHeight = useSelector((state) => state.navBar.height);
-  const [isShowDetail, setIsShowDetail] = useState(true);
+  const [isShowDetail, setIsShowDetail] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState("none");
   const [selectedCity, setSelectedCity] = useState("none"); // 下拉選單選擇的城市
