@@ -30,13 +30,13 @@ const NavBar = (props) => {
       <Wrap ref={$NavbarContainer}>
         <TaiwanLogo
           onClick={() => {
-            history.push(path[0]);
+            history.push('/scenicspots');
           }}
         />
         <Options>
           <AttractLink
             onClick={() => {
-              history.push('/scenicspots/filter');
+              history.push('/scenicspots');
             }}
           >
             <AttractionIcon />

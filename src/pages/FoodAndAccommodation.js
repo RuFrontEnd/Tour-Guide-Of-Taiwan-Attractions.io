@@ -63,11 +63,23 @@ const FoodAndAccommodation = (props) => {
 
   return (
     <Background>
-      <LandingImgBox widthOfShadowLength={"80%"} rotateOfShadow={2}>
-        <LandingImg>
-          <Tool />
-        </LandingImg>
-      </LandingImgBox>
+      <NavBarHeight height={navBarHeight} />
+      <Tool
+        // categories={categories}
+        // counties={countiesOptions}
+        // selectedCategories={selectedCategories}
+        // setSelectedCategories={setSelectedCategories}
+        // selectedCity={selectedCity}
+        // setSelectedCity={setSelectedCity}
+        // onClickSearchButton={() => {
+        //   if (selectedCategories !== "none" || selectedCity !== "none") {
+        //     history.push({
+        //       pathname: "/scenicSpots/filter",
+        //       search: `?category=${selectedCategories}&city=${selectedCity}`,
+        //     });
+        //   }
+        // }}
+      />
 
       {!isFiltered && (
         <>
@@ -168,6 +180,10 @@ const SmallCards = styled.div`
 
 const Kind = styled(Category)`
   margin-bottom: 12px;
+`;
+
+const NavBarHeight = styled.div`
+  height: ${(props) => props.height}px;
 `;
 
 const GpsIcon = styled(Gps)`

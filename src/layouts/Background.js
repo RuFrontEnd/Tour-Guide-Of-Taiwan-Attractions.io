@@ -5,8 +5,8 @@ import { mainColor } from "variable/variable";
 
 const Background = (props) => {
   const navBarHeight = useSelector((state) => state.navBar.height) || 0;
-  const { children } = props;
-  return <Box navBarHeight={navBarHeight}>{children}</Box>;
+  const { children, className } = props;
+  return <Box navBarHeight={navBarHeight} className={className}>{children}</Box>;
 };
 
 const Box = styled.section`

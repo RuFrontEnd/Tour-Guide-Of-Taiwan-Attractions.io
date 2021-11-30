@@ -202,7 +202,7 @@ const ScenicSpots = (props) => {
   // let params = new URLSearchParams(window.location.search.slice(1));
 
   return (
-    <Background>
+    <Background className="SCENICSPOTS">
       <NavBarHeight height={navBarHeight} />
       <Tool
         categories={categories}

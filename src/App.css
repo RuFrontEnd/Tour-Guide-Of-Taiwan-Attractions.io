@@ -1,0 +1,24 @@
+/* Dom生成時 */
+.transition-enter {
+  position: absolute !important;
+  opacity: 0;
+} 
+
+.transition-enter-active {
+  position: absolute !important;
+  opacity: 1;
+  transition: opacity 500ms;
+} 
+
+
+/* Dom消失時 */
+.transition-exit {
+  position: absolute !important;
+  opacity: 1;
+}
+
+.transition-exit-active {
+  position: absolute !important;
+  opacity: 0;
+  transition: opacity 500ms;
+}

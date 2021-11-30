@@ -1,4 +1,5 @@
 import React, { useState, useEffect, lazy, Suspense } from "react";
+import "App.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
   BrowserRouter as Router,
@@ -13,12 +14,14 @@ import {
   setCurrentUserData,
 } from "redux/member/memberActions"; // 判斷是否 login 的狀態
 import { setAxiosDefaultURL } from "utils/data";
+import { CSSTransition } from "react-transition-group";
 import { path } from "variable/path";
 import Navbar from "components/NavBar";
 import Footer from "components/Footer";
 import ScenicSpots from "pages/ScenicSpots";
 import ScenicSpotsFilter from "pages/ScenicSpotsFilter";
 import FoodAndAccommodation from "pages/FoodAndAccommodation";
+import ScrollToTop from "components/ScrollToTop";
 
 setAxiosDefaultURL("https://swin-opendata.herokuapp.com/api/v1/data/");
 
@@ -29,7 +32,7 @@ const routes = [
   },
   {
     component: <ScenicSpotsFilter />,
-    path: "/scenicSpots/filter",
+    path: "/scenicspots/filter",
   },
   {
     component: <FoodAndAccommodation />,
@@ -52,32 +55,29 @@ function App() {
   return (
     <Router>
       <>
-        {/* <Navbar
-          style={{ display: !showNavBar && "none" }}
-          cartNumber={cartNumber}
-          amount={amount}
-          setShowLoginModal={setShowLoginModal}
-          setShowSuccessBox={setShowSuccessBox}
-          showLoginModal={showLoginModal}
-        />
-        <LoginModal
-          showLoginModal={showLoginModal}
-          setShowLoginModal={setShowLoginModal}
-          showSuccessBox={showSuccessBox}
-          setShowSuccessBox={setShowSuccessBox}
-        /> */}
         <Suspense
         // fallback={<FallBack />}
         >
           <Navbar />
-          <Switch>
+          {/* <ScrollToTop /> */}
+
+          {/* <Switch> */}
             {routes.map((route) => (
               <Route exact path={route.path}>
-                {route.component}
+                {({ match }) => (
+                  <CSSTransition
+                    in={match != null}
+                    timeout={500}
+                    classNames="transition"
+                    unmountOnExit
+                  >
+                    {route.component}
+                  </CSSTransition>
+                )}
               </Route>
             ))}
             {/* <Redirect to={routes[0].path} /> */}
-          </Switch>
+          {/* </Switch> */}
         </Suspense>
         <Footer />
       </>
