@@ -27,52 +27,6 @@ const countiesOptions = counties.map((county) => {
   };
 });
 
-export const handleClickActivityCard = () => {
-  document.body.style.overflow = "hidden";
-};
-
-export const handleClickDetailModal = () => {
-  document.body.style.overflow = "";
-};
-
-export const handleClickDetailCard = (e) => {
-  e.stopPropagation();
-};
-
-export const getAddresses = (scenicSpots) =>
-  scenicSpots.map((scenicSpot) =>
-    scenicSpot.Address ? scenicSpot.Address.slice(0, 3) : ""
-  );
-
-export const filterCities = (addresses) =>
-  addresses.filter((address) => address.match(/.{2}市/));
-
-export const initNumOfOccurrence = (cities) =>
-  cities.map((city) => {
-    return {
-      name: city,
-      value: 0,
-    };
-  });
-
-export const getNumOfCities = (cities, initNumOfCities) => {
-  let numOfCities = [...initNumOfCities];
-  numOfCities.forEach((numOfCity, index) =>
-    cities.forEach((city) => {
-      if (numOfCity.name === city) {
-        numOfCities[index].value += 1;
-      }
-    })
-  );
-  return numOfCities;
-};
-
-export const descSortNumOfCites = (numOfCities) =>
-  numOfCities.sort((prev, next) => next.value - prev.value);
-
-export const getTopTenCities = (SortedNumOfCites) =>
-  SortedNumOfCites.filter((SortedNumOfCity, index) => index < 10);
-
 const ScenicSpots = (props) => {
   const { history } = props;
   const navBarHeight = useSelector((state) => state.navBar.height);
