@@ -180,7 +180,6 @@ const ScenicSpots = (props) => {
 
   useEffect(() => {
     history.listen(() => {
-      console.log('A')
       const searchParams = new URLSearchParams(
         window.location.search.slice("1")
       );
@@ -194,10 +193,6 @@ const ScenicSpots = (props) => {
       });
     });
   }, []);
-
-  useEffect(() => {
-    console.log("qureyParams", qureyParams);
-  }, [qureyParams]);
 
   // useEffect(() => {
   //   if (qureyParams.category !== "" || qureyParams.city !== "") {
