@@ -3,8 +3,24 @@ import styled from "styled-components/macro";
 import { __0D0B0C__, __D2D2D2__ } from "variable/variable";
 
 const Input = (props) => {
-  const { className, style, placeholder = "placeholder..." } = props;
-  return <Box style={style} className={className} placeholder={placeholder} />;
+  const {
+    className,
+    style,
+    placeholder = "placeholder...",
+    value = "",
+    setValue = () => {},
+  } = props;
+  return (
+    <Box
+      style={style}
+      className={className}
+      placeholder={placeholder}
+      value={value}
+      onChange={(e) => {
+        setValue(e.target.value);
+      }}
+    />
+  );
 };
 
 const Box = styled.input`

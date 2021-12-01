@@ -26,6 +26,8 @@ const Tool = (props) => {
     onCatgoreyChange = () => {},
     onCountiesChange = () => {},
     onClickSearchButton = () => {},
+    keyword = "",
+    setKeyword = () => {},
   } = props;
 
   return (
@@ -37,7 +39,11 @@ const Tool = (props) => {
             <Remark>台北、台中、台南、屏東、宜蘭……遊遍台灣</Remark>
           </Title>
           <SearchBox>
-            <SearchBar placeholder="搜尋關鍵字" />
+            <SearchBar
+              placeholder="搜尋關鍵字"
+              value={keyword}
+              setValue={setKeyword}
+            />
             <GpshButton>
               <GpsIcon height={"24px"} />
             </GpshButton>

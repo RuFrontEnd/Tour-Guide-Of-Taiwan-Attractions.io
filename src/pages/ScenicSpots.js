@@ -1,49 +1,18 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/macro";
-import { withRouter, Link } from "react-router-dom";
-import { path } from "variable/path";
+import { withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
-import { getAuthorizationHeader } from "variable/auth";
-import { getRandomInt } from "utils/random";
-import { useQuery } from "hooks/useQuery";
-import { ReactComponent as WelcomeToTaiwan } from "assets/welcomeToTaiwan.svg";
-import { ReactComponent as Search } from "assets/search.svg";
-import { ReactComponent as Gps } from "assets/gps.svg";
-import { ReactComponent as Location } from "assets/location.svg";
-import { ReactComponent as Triangle } from "assets/triangle_title.svg";
-import { ReactComponent as direction } from "assets/direction.svg";
-import landing from "assets/landing.png";
-import cardImg_tmp from "assets/cardImg_tmp.png";
-import cardSmImg_tmp from "assets/cardSmImg_tmp.png";
-import detailCard_tmp from "assets/detailCard_tmp.png";
-import boardImg_tmp from "assets/boardImg_tmp.png";
 import SmallCards from "layouts/SmallCards";
 import DetailModal from "layouts/DetailModal";
 import Cards from "layouts/Cards";
 import Tool from "layouts/Tool";
 import CityCarousel from "layouts/CityCarousel";
-import Paper from "components/Paper";
-import Board from "components/Board";
 import Background from "layouts/Background";
-import Input from "components/Input";
-import SquareButton from "components/SquareButton";
-import Dropdown from "components/Dropdown";
-import Category from "components/Category";
-import Card from "components/Card";
-import CardSm from "components/CardSm";
-import Space from "layouts/Space";
-import DetailCard from "components/DetailCard";
-import RectButton from "components/RectButton";
-
-import { baseURL, counties } from "variable/variable";
+import { counties } from "variable/variable";
 import { getScenicSpots } from "api/scenicSpots";
 import { getActivities } from "api/activities";
-import { pipe } from "utils/pipe";
-import { removeRepeatedValue, raisingSortValue } from "utils/array";
-import { sortValue } from "utils/sort";
 
 const categories = [
   { value: "", content: "不分類別" },
@@ -104,38 +73,18 @@ export const descSortNumOfCites = (numOfCities) =>
 export const getTopTenCities = (SortedNumOfCites) =>
   SortedNumOfCites.filter((SortedNumOfCity, index) => index < 10);
 
-export const searchAndFilter = (
-  history,
-  selectedCategories,
-  selectedCity,
-  keyword,
-  setQureyParams
-) => {
-  setQureyParams({
-    category: selectedCategories,
-    city: selectedCity,
-  });
-};
-
 const ScenicSpots = (props) => {
-  const { history, location } = props;
-  const qurey = useQuery();
+  const { history } = props;
   const navBarHeight = useSelector((state) => state.navBar.height);
   const [isShowDetail, setIsShowDetail] = useState(false);
-  const [isFiltered, setIsFiltered] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState("none");
-  const [selectedCity, setSelectedCity] = useState("none"); // 下拉選單選擇的城市
-  const [scenicSpots, setScenicSpots] = useState([]);
-  const [cityScenicSpots, setCityScenicSpots] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
   const [hotScenicSpots, setHotScenicSpots] = useState([]);
-  const [activities, setActivities] = useState([]);
   const [hotActivities, setHotActivities] = useState([]);
-  const [qureyParams, setQureyParams] = useState([]);
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     getActivities().then((_activities) => {
-      setActivities(_activities);
-
       let pictureOwnedActivities = _activities.filter((_activitiy) => {
         return JSON.stringify(_activitiy.Picture) !== "{}";
       });
@@ -151,8 +100,6 @@ const ScenicSpots = (props) => {
     });
 
     getScenicSpots().then((_scenicSpots) => {
-      setScenicSpots(_scenicSpots);
-
       let pictureOwnedScenicSpots = _scenicSpots.filter((_scenicSpot) => {
         return JSON.stringify(_scenicSpot.Picture) !== "{}";
       });
@@ -174,35 +121,8 @@ const ScenicSpots = (props) => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   history.listen(() => {
-  //     const searchParams = new URLSearchParams(
-  //       window.location.search.slice("1")
-  //     );
-  //     const qureyCity = searchParams.get("city");
-  //     const qureyCategory = searchParams.get("categories");
-  //     setSelectedCity(qureyCity);
-  //     setSelectedCategories(qureyCategory);
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log("selectedCity", selectedCity);
-  // }, [selectedCity]);
-
-  // useEffect(() => {
-  //   if (qureyParams.category !== "" || qureyParams.city !== "") {
-  //     let params = new URLSearchParams();
-  //     params.set("city", selectedCity);
-  //     params.set("categories", selectedCategories);
-  //     history.push(`?${params}`);
-  //   }
-  // }, [qureyParams]);
-
-  // let params = new URLSearchParams(window.location.search.slice(1));
-
   return (
-    <Background className="SCENICSPOTS">
+    <Background>
       <NavBarHeight height={navBarHeight} />
       <Tool
         categories={categories}
@@ -212,35 +132,15 @@ const ScenicSpots = (props) => {
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
         onClickSearchButton={() => {
-          if (selectedCategories !== "none" || selectedCity !== "none") {
-            history.push({
-              pathname: "/scenicSpots/filter",
-              search: `?category=${selectedCategories}&city=${selectedCity}`,
-            });
-          }
-          // searchAndFilter(
-          //   history,
-          //   selectedCategories,
-          //   selectedCity,
-          //   "",
-          //   setQureyParams
-          // );
+          history.push({
+            pathname: "/scenicSpots/filter",
+            search: `?category=${selectedCategories}&city=${selectedCity}&keyword=${keyword}`,
+          });
         }}
-        // onCatgoreyChange={(e) => {
-
-        //   pushToSelectedCategorey(
-        //     history,
-        //     setSelectedCategories,
-        //     e.target.value
-        //   );
-        // }}
-        // onCountiesChange={(e) => {
-        //   pushToSelectedCity(history, setSelectedCity, e.target.value);
-        // }}
+        keyword={keyword}
+        setKeyword={setKeyword}
       />
-
       <CityCarousel onClickBoard={(e) => {}} setSelected={setSelectedCity} />
-
       <HotActivitiesCards
         title="熱門活動"
         activities={hotActivities}
@@ -249,16 +149,14 @@ const ScenicSpots = (props) => {
           setIsShowDetail(true);
         }}
       />
-
       <HotScenicSpotSmCards
         title="熱門景點"
         spots={hotScenicSpots}
         onClick={() => {
           setIsShowDetail(true);
-          console.log('a')
+          console.log("a");
         }}
       />
-
       <DetailModal
         isShowDetail={isShowDetail}
         setIsShowDetail={setIsShowDetail}
