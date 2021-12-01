@@ -30,10 +30,10 @@ const routes = [
     component: <ScenicSpots />,
     path: path[0],
   },
-  {
-    component: <ScenicSpotsFilter />,
-    path: "/scenicspots/filter",
-  },
+  // {
+  //   component: <ScenicSpotsFilter />,
+  //   path: "/scenicspots/filter",
+  // },
   {
     component: <FoodAndAccommodation />,
     path: "/foodAndAccommodation",
@@ -59,10 +59,11 @@ function App() {
         // fallback={<FallBack />}
         >
           <Navbar />
-          {/* <ScrollToTop /> */}
+          <ScrollToTop />
 
           {/* <Switch> */}
-            {routes.map((route) => (
+          {routes.map((route) => (
+            <>
               <Route exact path={route.path}>
                 {({ match }) => (
                   <CSSTransition
@@ -75,8 +76,12 @@ function App() {
                   </CSSTransition>
                 )}
               </Route>
-            ))}
-            {/* <Redirect to={routes[0].path} /> */}
+              <Route exact path={"/scenicspots/filter"}>
+                <ScenicSpotsFilter />
+              </Route>
+            </>
+          ))}
+          {/* <Redirect to={routes[0].path} /> */}
           {/* </Switch> */}
         </Suspense>
         <Footer />

@@ -2,23 +2,29 @@
 .transition-enter {
   position: absolute !important;
   opacity: 0;
+  /* transform: translateY(-50px); */
 } 
 
 .transition-enter-active {
   position: absolute !important;
   opacity: 1;
-  transition: opacity 500ms;
+  /* transform: translateY(0px); */
+  /* transition: opacity 500ms; */
+  transition: 500ms;
 } 
 
 
 /* Dom消失時 */
 .transition-exit {
   position: absolute !important;
+  /* transform: translateY(0px); */
   opacity: 1;
 }
 
 .transition-exit-active {
   position: absolute !important;
+  /* transform: translateY(-50px); */
   opacity: 0;
-  transition: opacity 500ms;
+  transition: 500ms;
+  /* transition: opacity 500ms; */
 }
