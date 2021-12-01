@@ -179,13 +179,20 @@ const ScenicSpots = (props) => {
   }, []);
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search.slice("1"));
-    const qureyCity = searchParams.get("city");
-    const qureyCategory = searchParams.get("category");
-    setSelectedCity(qureyCity);
-    setSelectedCategories(qureyCategory);
-    // history.listen(() => {
-    // });
+    history.listen(() => {
+      
+      const searchParams = new URLSearchParams(
+        window.location.search.slice("1")
+      );
+      const qureyCity = searchParams.get("city");
+      const qureyCategory = searchParams.get("category");
+      setSelectedCity(qureyCity);
+      setSelectedCategories(qureyCategory);
+      setQureyParams({
+        category: selectedCategories,
+        city: selectedCity,
+      });
+    });
   }, []);
 
   // useEffect(() => {
@@ -240,7 +247,7 @@ const ScenicSpots = (props) => {
         //   display:
         //     selectedCity && selectedCategories !== "景點" ? "block" : "none",
         // }}
-        title={`${selectedCity === "不分縣市" ? "" : selectedCity} 活動`}
+        title={`${qureyParams.city} 活動`}
         icon={<Triangle />}
         spots={hotScenicSpots}
       />

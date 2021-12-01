@@ -25,7 +25,7 @@ import ScrollToTop from "components/ScrollToTop";
 
 setAxiosDefaultURL("https://swin-opendata.herokuapp.com/api/v1/data/");
 
-const routes = [
+const transitionRoutes = [
   {
     component: <ScenicSpots />,
     path: path[0],
@@ -37,6 +37,13 @@ const routes = [
   {
     component: <FoodAndAccommodation />,
     path: "/foodAndAccommodation",
+  },
+];
+
+const routes = [
+  {
+    component: <ScenicSpotsFilter />,
+    path: "/scenicspots/filter",
   },
 ];
 
@@ -59,12 +66,12 @@ function App() {
         // fallback={<FallBack />}
         >
           <Navbar />
-          <ScrollToTop />
+          {/* <ScrollToTop /> */}
 
           {/* <Switch> */}
-          {routes.map((route) => (
+          {transitionRoutes.map((transitionRoute) => (
             <>
-              <Route exact path={route.path}>
+              <Route exact path={transitionRoute.path}>
                 {({ match }) => (
                   <CSSTransition
                     in={match != null}
@@ -72,14 +79,16 @@ function App() {
                     classNames="transition"
                     unmountOnExit
                   >
-                    {route.component}
+                    {transitionRoute.component}
                   </CSSTransition>
                 )}
               </Route>
-              <Route exact path={"/scenicspots/filter"}>
-                <ScenicSpotsFilter />
-              </Route>
             </>
+          ))}
+          {routes.map((route) => (
+            <Route exact path={route.path}>
+              {route.component}
+            </Route>
           ))}
           {/* <Redirect to={routes[0].path} /> */}
           {/* </Switch> */}
