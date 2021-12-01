@@ -180,24 +180,24 @@ const ScenicSpots = (props) => {
 
   useEffect(() => {
     history.listen(() => {
-      
+      console.log('A')
       const searchParams = new URLSearchParams(
         window.location.search.slice("1")
       );
-      const qureyCity = searchParams.get("city");
       const qureyCategory = searchParams.get("category");
-      setSelectedCity(qureyCity);
+      const qureyCity = searchParams.get("city");
       setSelectedCategories(qureyCategory);
+      setSelectedCity(qureyCity);
       setQureyParams({
-        category: selectedCategories,
-        city: selectedCity,
+        category: qureyCategory,
+        city: qureyCity,
       });
     });
   }, []);
 
-  // useEffect(() => {
-  //   console.log("selectedCity", selectedCity);
-  // }, [selectedCity]);
+  useEffect(() => {
+    console.log("qureyParams", qureyParams);
+  }, [qureyParams]);
 
   // useEffect(() => {
   //   if (qureyParams.category !== "" || qureyParams.city !== "") {
