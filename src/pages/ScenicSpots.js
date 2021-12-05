@@ -13,6 +13,7 @@ import Background from "layouts/Background";
 import { counties } from "variable/variable";
 import { getScenicSpots } from "api/scenicSpots";
 import { getActivities } from "api/activities";
+import { pushSearchParamAndPushUrl } from "utils/url";
 
 const categories = [
   { value: "", content: "不分類別" },
@@ -86,15 +87,28 @@ const ScenicSpots = (props) => {
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
         onClickSearchButton={() => {
-          history.push({
-            pathname: "/scenicSpots/filter",
-            search: `?category=${selectedCategories}&city=${selectedCity}&keyword=${keyword}`,
-          });
+          pushSearchParamAndPushUrl(
+            [
+              { key: "category", value: selectedCategories },
+              { key: "city", value: selectedCity },
+            ],
+            `${window.location.origin}/scenicSpots/filter`
+          );
         }}
         keyword={keyword}
         setKeyword={setKeyword}
       />
-      <CityCarousel setSelected={setSelectedCity} />
+      <CityCarousel
+        setSelected={setSelectedCity}
+        onClickBoard={(e) => {
+          pushSearchParamAndPushUrl(
+            [
+              { key: "city", value: e.currentTarget.dataset.value },
+            ],
+            `${window.location.origin}/scenicSpots/filter`
+          );
+        }}
+      />
       <HotActivitiesCards
         title="熱門活動"
         activities={hotActivities}

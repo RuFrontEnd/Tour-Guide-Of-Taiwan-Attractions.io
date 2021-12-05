@@ -168,18 +168,24 @@ const ScenicSpots = (props) => {
   useEffect(() => {
     if (selectedCity === null) return;
     getCityScenicSpots(selectedCity).then((data) => {
-      setTotalScenicSpotsPages(Math.ceil(data.length / 20));
-      setTotalScenicSpots(data);
-      const _cityScenicSpots = data.slice(
-        (scenicSpotsPage - 1) * 20,
-        scenicSpotsPage * 20
+      const _totalScenicSpots = data.filter((item) =>
+        item.Picture.hasOwnProperty("PictureUrl1")
       );
+      setTotalScenicSpots(_totalScenicSpots);
+      setTotalScenicSpotsPages(Math.ceil(_totalScenicSpots.length / 20));
+      let _cityScenicSpots = [];
+      if (data.length !== 0) {
+        _cityScenicSpots = _totalScenicSpots.slice(
+          (scenicSpotsPage - 1) * 20,
+          scenicSpotsPage * 20
+        );
+      }
       setCityScenicSpots(_cityScenicSpots);
     });
   }, [selectedCity]);
 
   useEffect(() => {
-    pushSearchParam("scenicSpotsPage", scenicSpotsPage);
+    // pushSearchParam("scenicSpotsPage", scenicSpotsPage);
     // const searchParams = new URLSearchParams(window.location.search.slice("1"));
     // if (searchParams.has("scenicSpotsPage")) {
     //   searchParams.delete("scenicSpotsPage");
@@ -195,11 +201,10 @@ const ScenicSpots = (props) => {
     //   });
     // }
     if (selectedCity === null) return;
-    const _cityScenicSpots = totalScenicSpots.slice(
+    const _cityScenicSpots = totalScenicSpots?.slice(
       (scenicSpotsPage - 1) * 20,
       scenicSpotsPage * 20
     );
-    console.log("_cityScenicSpots", _cityScenicSpots);
     setCityScenicSpots(_cityScenicSpots);
   }, [scenicSpotsPage]);
 

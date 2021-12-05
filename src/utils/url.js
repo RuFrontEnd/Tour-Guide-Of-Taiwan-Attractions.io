@@ -4,10 +4,23 @@ function getParams(qureyName) {
   return params.get(qureyName); // URLSearchParams()類別下的方法
 }
 
-export const pushSearchParam = (paramKey, param, pathname) => {
+export const pushSearchParam = (params) => {
   const url = new URL(window.location);
   const searchParams = new URLSearchParams(window.location.search.slice("1"));
-  searchParams.has(paramKey) && searchParams.delete(paramKey);
-  url.searchParams.set(paramKey, param);
+  params.map((param) => {
+    searchParams.has(param.key) && searchParams.delete(param.key);
+    url.searchParams.set(param.key, param);
+  });
   window.history.pushState({}, "", url);
+};
+
+export const pushSearchParamAndPushUrl = (params, pathName) => {
+  const url = new URL(pathName);
+  const searchParams = new URLSearchParams(window.location.search.slice("1"));
+  params.map((param) => {
+    searchParams.has(param.key) && searchParams.delete(param.key);
+    url.searchParams.set(param.key, param.value);
+  });
+  console.log("url", url);
+  window.location.href = url;
 };

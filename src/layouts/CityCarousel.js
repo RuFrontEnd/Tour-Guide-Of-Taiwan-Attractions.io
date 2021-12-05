@@ -165,20 +165,8 @@ export const getFilterCityQureyString = (hotCityName) => {
   }`;
 };
 
-export const switchToSelectedCity = (history, cityValue) => {
-  history.push({
-    pathname: "/scenicSpots/filter",
-    search: `?category=&city=${cityValue}&keyword=`,
-  });
-};
-
 const CityCarousel = (props) => {
-  const {
-    history,
-    style,
-    className,
-    onClickBoard = () => {},
-  } = props;
+  const { style, className, onClickBoard = () => {} } = props;
 
   return (
     <Space style={style} className={className}>
@@ -190,8 +178,8 @@ const CityCarousel = (props) => {
           index % 2 === 0 ? (
             <CarouselItem>
               <CityBoard
+                dataValue={city.value}
                 onClick={(e) => {
-                  switchToSelectedCity(history, city.value);
                   onClickBoard(e);
                 }}
               >
@@ -207,8 +195,8 @@ const CityCarousel = (props) => {
             <CarouselItem>
               <CityBoards>
                 <HalfCityBoard
+                  dataValue={city.value[0]}
                   onClick={(e) => {
-                    switchToSelectedCity(history, city.value[0]);
                     onClickBoard(e);
                   }}
                 >
@@ -220,8 +208,8 @@ const CityCarousel = (props) => {
                   <HalfMask />
                 </HalfCityBoard>
                 <HalfCityBoard
+                  dataValue={city.value[1]}
                   onClick={(e) => {
-                    switchToSelectedCity(history, city.value[1]);
                     onClickBoard(e);
                   }}
                 >

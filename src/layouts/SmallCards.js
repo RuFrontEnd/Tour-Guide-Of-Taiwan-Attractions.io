@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
 import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
+import { ReactComponent as Triangle } from "assets/triangle_title.svg";
 import Category from "components/Category";
 import CardSm from "components/CardSm";
 import Space from "layouts/Space";
@@ -20,7 +21,7 @@ const SmallCards = (props) => {
 
   return (
     <Box className={className} style={style}>
-      <Title title={title}>{icon}</Title>
+      <Title title={title}>{icon ? icon : <Triangle />}</Title>
       <Cards>
         {Array.isArray(spots) &&
           spots.map((spot) => (

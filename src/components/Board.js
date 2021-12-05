@@ -3,9 +3,14 @@ import styled from "styled-components/macro";
 import { __0D0B0C__, __FF1D6C__ } from "variable/variable";
 
 const Board = (props) => {
-  const { style, className, children, onClick } = props;
+  const { style, className, children, onClick, dataValue } = props;
   return (
-    <Box style={style} className={className} onClick={onClick}>
+    <Box
+      style={style}
+      className={className}
+      onClick={onClick}
+      data-value={dataValue}
+    >
       {children}
     </Box>
   );
