@@ -197,6 +197,7 @@ const ScenicSpots = (props) => {
       (scenicSpotsPage - 1) * 20,
       scenicSpotsPage * 20
     );
+    console.log("_cityScenicSpots", _cityScenicSpots);
     setCityScenicSpots(_cityScenicSpots);
   }, [scenicSpotsPage]);
 
