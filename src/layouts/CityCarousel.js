@@ -168,7 +168,7 @@ export const getFilterCityQureyString = (hotCityName) => {
 export const switchToSelectedCity = (history, cityValue) => {
   history.push({
     pathname: "/scenicSpots/filter",
-    search: `?category=&city=${cityValue}`,
+    search: `?category=&city=${cityValue}&keyword=`,
   });
 };
 
