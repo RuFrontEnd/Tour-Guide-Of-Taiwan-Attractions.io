@@ -139,7 +139,9 @@ const ScenicSpots = (props) => {
   const [isFiltered, setIsFiltered] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null); // 下拉選單選擇的城市
+  const [totalScenicSpots, setTotalScenicSpots] = useState(0);
   const [scenicSpotsPage, setScenicSpotsPage] = useState(1);
+  const [totalScenicSpotsPages, setTotalScenicSpotsPages] = useState(0);
   const [cityScenicSpots, setCityScenicSpots] = useState([]);
   const [activities, setActivities] = useState([]);
   const [qureyParams, setQureyParams] = useState([]);
@@ -164,8 +166,13 @@ const ScenicSpots = (props) => {
 
   useEffect(() => {
     if (selectedCity === null) return;
-    getCityScenicSpots(selectedCity).then((_cityScenicSpots) => {
-      console.log("_cityScenicSpots", _cityScenicSpots);
+    getCityScenicSpots(selectedCity).then((data) => {
+      setTotalScenicSpotsPages(Math.ceil(data.length / 20));
+      setTotalScenicSpots(data);
+      const _cityScenicSpots = data.slice(
+        (scenicSpotsPage - 1) * 20,
+        scenicSpotsPage * 20
+      );
       setCityScenicSpots(_cityScenicSpots);
     });
   }, [selectedCity]);
@@ -185,6 +192,12 @@ const ScenicSpots = (props) => {
         search: `${searchParams}&scenicSpotsPage=${scenicSpotsPage}`,
       });
     }
+    if (selectedCity === null) return;
+    const _cityScenicSpots = totalScenicSpots.slice(
+      (scenicSpotsPage - 1) * 20,
+      scenicSpotsPage * 20
+    );
+    setCityScenicSpots(_cityScenicSpots);
   }, [scenicSpotsPage]);
 
   return (
@@ -229,7 +242,7 @@ const ScenicSpots = (props) => {
         // spots={}
       />
       <Paginate
-        count={cityScenicSpots.length / 20}
+        count={totalScenicSpotsPages}
         previousIcon={Arrow}
         nextIcon={ArrowRight}
         setPage={setScenicSpotsPage}

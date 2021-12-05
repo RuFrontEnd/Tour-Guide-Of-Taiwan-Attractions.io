@@ -8,9 +8,11 @@ export const getScenicSpots = (top) => {
   }).then((res) => res.json());
 };
 
-export const getCityScenicSpots = (city, top) => {
+export const getCityScenicSpots = (city, top, skip) => {
   return fetch(
-    `${baseURL}/v2/Tourism/ScenicSpot/${city}?${top && `$top=${top}`}`,
+    `${baseURL}/v2/Tourism/ScenicSpot/${city}?${
+      top && `$top=${top}${skip && `&skip=${skip}`}`
+    }`,
     {
       headers: getAuthorizationHeader(),
       method: "GET",
