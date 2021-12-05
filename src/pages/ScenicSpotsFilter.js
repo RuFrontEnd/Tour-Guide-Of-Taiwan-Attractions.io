@@ -15,6 +15,8 @@ import { ReactComponent as Gps } from "assets/gps.svg";
 import { ReactComponent as Location } from "assets/location.svg";
 import { ReactComponent as Triangle } from "assets/triangle_title.svg";
 import { ReactComponent as direction } from "assets/direction.svg";
+import { ReactComponent as Arrow } from "assets/arrow.svg";
+import { ReactComponent as ArrowRight } from "assets/arrow_right.svg";
 import landing from "assets/landing.png";
 import cardImg_tmp from "assets/cardImg_tmp.png";
 import cardSmImg_tmp from "assets/cardSmImg_tmp.png";
@@ -137,10 +139,11 @@ const ScenicSpots = (props) => {
   const [isFiltered, setIsFiltered] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null); // 下拉選單選擇的城市
-  const [scenicSpots, setScenicSpots] = useState([]);
+  const [scenicSpotsPage, setScenicSpotsPage] = useState(1);
   const [cityScenicSpots, setCityScenicSpots] = useState([]);
   const [activities, setActivities] = useState([]);
   const [qureyParams, setQureyParams] = useState([]);
+  const [keyword, setKeyword] = useState("");
 
   const handleFilterState = () => {
     const parmas = getParamsFromUrl();
@@ -166,6 +169,23 @@ const ScenicSpots = (props) => {
       setCityScenicSpots(_cityScenicSpots);
     });
   }, [selectedCity]);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search.slice("1"));
+    if (searchParams.has("scenicSpotsPage")) {
+      searchParams.delete("scenicSpotsPage");
+      history.push({
+        pathname: "/scenicSpots/filter",
+        search: `${searchParams}&scenicSpotsPage=${scenicSpotsPage}`,
+      });
+    }
+    if (!searchParams.has("scenicSpotsPage")) {
+      history.push({
+        pathname: "/scenicSpots/filter",
+        search: `${searchParams}&scenicSpotsPage=${scenicSpotsPage}`,
+      });
+    }
+  }, [scenicSpotsPage]);
 
   return (
     <Background>
@@ -208,7 +228,12 @@ const ScenicSpots = (props) => {
         icon={<Triangle />}
         // spots={}
       />
-       <Pagination count={10} />
+      <Paginate
+        count={cityScenicSpots.length / 20}
+        previousIcon={Arrow}
+        nextIcon={ArrowRight}
+        setPage={setScenicSpotsPage}
+      />
 
       <ScenicSpotSmCards
         // style={{
@@ -227,6 +252,11 @@ const ScenicSpots = (props) => {
     </Background>
   );
 };
+
+const Paginate = styled(Pagination)`
+  display: flex;
+  justify-content: center;
+`;
 
 const ScenicSpotSmCards = styled(SmallCards)``;
 
