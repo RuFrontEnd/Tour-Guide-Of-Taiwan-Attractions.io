@@ -121,6 +121,13 @@ export const searchAndFilter = (
   });
 };
 
+export const getParamsFromUrl = () => {
+  const searchParams = new URLSearchParams(window.location.search.slice("1"));
+  const _qureyCategory = searchParams.get("category");
+  const _qureyCity = searchParams.get("city");
+  return { qureyCategory: _qureyCategory, qureyCity: _qureyCity };
+};
+
 const ScenicSpots = (props) => {
   const { history, location } = props;
   const qurey = useQuery();
@@ -135,6 +142,16 @@ const ScenicSpots = (props) => {
   const [activities, setActivities] = useState([]);
   const [hotActivities, setHotActivities] = useState([]);
   const [qureyParams, setQureyParams] = useState([]);
+
+  const handleFilterState = () => {
+    const parmas = getParamsFromUrl();
+    setSelectedCategories(parmas.qureyCategory);
+    setSelectedCity(parmas.qureyCity);
+    setQureyParams({
+      category: parmas.qureyCategory,
+      city: parmas.qureyCity,
+    });
+  };
 
   useEffect(() => {
     getActivities().then((_activities) => {
@@ -179,29 +196,12 @@ const ScenicSpots = (props) => {
   }, []);
 
   useEffect(() => {
-    history.listen(() => {
-      const searchParams = new URLSearchParams(
-        window.location.search.slice("1")
-      );
-      const qureyCategory = searchParams.get("category");
-      const qureyCity = searchParams.get("city");
-      setSelectedCategories(qureyCategory);
-      setSelectedCity(qureyCity);
-      setQureyParams({
-        category: qureyCategory,
-        city: qureyCity,
-      });
-    });
+    handleFilterState();
   }, []);
 
-  // useEffect(() => {
-  //   if (qureyParams.category !== "" || qureyParams.city !== "") {
-  //     let params = new URLSearchParams();
-  //     params.set("city", selectedCity);
-  //     params.set("categories", selectedCategories);
-  //     history.push(`?${params}`);
-  //   }
-  // }, [qureyParams]);
+  useEffect(() => {
+    handleFilterState();
+  }, []);
 
   // let params = new URLSearchParams(window.location.search.slice(1));
 
