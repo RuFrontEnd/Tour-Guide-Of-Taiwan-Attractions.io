@@ -177,10 +177,7 @@ const CityCarousel = (props) => {
     history,
     style,
     className,
-    setSelected = () => {},
     onClickBoard = () => {},
-    onClickHalfTopBoard = () => {},
-    onClickHalfBottonBoard = () => {},
   } = props;
 
   return (

@@ -45,6 +45,7 @@ import { baseURL, counties } from "variable/variable";
 import { getCityScenicSpots } from "api/scenicSpots";
 import { getActivities } from "api/activities";
 import { pipe } from "utils/pipe";
+import { pushSearchParam } from "utils/url";
 import { removeRepeatedValue, raisingSortValue } from "utils/array";
 import { sortValue } from "utils/sort";
 
@@ -178,20 +179,21 @@ const ScenicSpots = (props) => {
   }, [selectedCity]);
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search.slice("1"));
-    if (searchParams.has("scenicSpotsPage")) {
-      searchParams.delete("scenicSpotsPage");
-      history.push({
-        pathname: "/scenicSpots/filter",
-        search: `${searchParams}&scenicSpotsPage=${scenicSpotsPage}`,
-      });
-    }
-    if (!searchParams.has("scenicSpotsPage")) {
-      history.push({
-        pathname: "/scenicSpots/filter",
-        search: `${searchParams}&scenicSpotsPage=${scenicSpotsPage}`,
-      });
-    }
+    pushSearchParam("scenicSpotsPage", scenicSpotsPage);
+    // const searchParams = new URLSearchParams(window.location.search.slice("1"));
+    // if (searchParams.has("scenicSpotsPage")) {
+    //   searchParams.delete("scenicSpotsPage");
+    //   history.push({
+    //     pathname: "/scenicSpots/filter",
+    //     search: `${searchParams}&scenicSpotsPage=${scenicSpotsPage}`,
+    //   });
+    // }
+    // if (!searchParams.has("scenicSpotsPage")) {
+    //   history.push({
+    //     pathname: "/scenicSpots/filter",
+    //     search: `${searchParams}&scenicSpotsPage=${scenicSpotsPage}`,
+    //   });
+    // }
     if (selectedCity === null) return;
     const _cityScenicSpots = totalScenicSpots.slice(
       (scenicSpotsPage - 1) * 20,

@@ -94,7 +94,7 @@ const ScenicSpots = (props) => {
         keyword={keyword}
         setKeyword={setKeyword}
       />
-      <CityCarousel onClickBoard={(e) => {}} setSelected={setSelectedCity} />
+      <CityCarousel setSelected={setSelectedCity} />
       <HotActivitiesCards
         title="熱門活動"
         activities={hotActivities}
@@ -108,7 +108,6 @@ const ScenicSpots = (props) => {
         spots={hotScenicSpots}
         onClick={() => {
           setIsShowDetail(true);
-          console.log("a");
         }}
       />
       <DetailModal
