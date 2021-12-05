@@ -37,9 +37,10 @@ import CardSm from "components/CardSm";
 import Space from "layouts/Space";
 import DetailCard from "components/DetailCard";
 import RectButton from "components/RectButton";
+import Pagination from "components/Pagination";
 
 import { baseURL, counties } from "variable/variable";
-import { getScenicSpots } from "api/scenicSpots";
+import { getCityScenicSpots } from "api/scenicSpots";
 import { getActivities } from "api/activities";
 import { pipe } from "utils/pipe";
 import { removeRepeatedValue, raisingSortValue } from "utils/array";
@@ -134,13 +135,11 @@ const ScenicSpots = (props) => {
   const navBarHeight = useSelector((state) => state.navBar.height);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState("");
-  const [selectedCity, setSelectedCity] = useState(""); // 下拉選單選擇的城市
+  const [selectedCategories, setSelectedCategories] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null); // 下拉選單選擇的城市
   const [scenicSpots, setScenicSpots] = useState([]);
   const [cityScenicSpots, setCityScenicSpots] = useState([]);
-  const [hotScenicSpots, setHotScenicSpots] = useState([]);
   const [activities, setActivities] = useState([]);
-  const [hotActivities, setHotActivities] = useState([]);
   const [qureyParams, setQureyParams] = useState([]);
 
   const handleFilterState = () => {
@@ -154,56 +153,19 @@ const ScenicSpots = (props) => {
   };
 
   useEffect(() => {
-    getActivities().then((_activities) => {
-      setActivities(_activities);
-
-      let pictureOwnedActivities = _activities.filter((_activitiy) => {
-        return JSON.stringify(_activitiy.Picture) !== "{}";
-      });
-
-      let _hotActivities = [
-        pictureOwnedActivities[0],
-        pictureOwnedActivities[55],
-        pictureOwnedActivities[97],
-        pictureOwnedActivities[103],
-      ];
-
-      setHotActivities(_hotActivities);
+    history.listen(() => {
+      handleFilterState();
     });
-
-    getScenicSpots().then((_scenicSpots) => {
-      setScenicSpots(_scenicSpots);
-
-      let pictureOwnedScenicSpots = _scenicSpots.filter((_scenicSpot) => {
-        return JSON.stringify(_scenicSpot.Picture) !== "{}";
-      });
-
-      let _hotScenicSpots = [
-        pictureOwnedScenicSpots[105],
-        pictureOwnedScenicSpots[637],
-        pictureOwnedScenicSpots[842],
-        pictureOwnedScenicSpots[848],
-        pictureOwnedScenicSpots[909],
-        pictureOwnedScenicSpots[1849],
-        pictureOwnedScenicSpots[1868],
-        pictureOwnedScenicSpots[2183],
-        pictureOwnedScenicSpots[2368],
-        pictureOwnedScenicSpots[2500],
-      ];
-
-      setHotScenicSpots(_hotScenicSpots);
-    });
-  }, []);
-
-  useEffect(() => {
     handleFilterState();
   }, []);
 
   useEffect(() => {
-    handleFilterState();
-  }, []);
-
-  // let params = new URLSearchParams(window.location.search.slice(1));
+    if (selectedCity === null) return;
+    getCityScenicSpots(selectedCity).then((_cityScenicSpots) => {
+      console.log("_cityScenicSpots", _cityScenicSpots);
+      setCityScenicSpots(_cityScenicSpots);
+    });
+  }, [selectedCity]);
 
   return (
     <Background>
@@ -242,10 +204,11 @@ const ScenicSpots = (props) => {
         //   display:
         //     selectedCity && selectedCategories !== "景點" ? "block" : "none",
         // }}
-        title={`${qureyParams.city} 活動`}
+        title={`${selectedCity === "不分縣市" ? "" : selectedCity} 活動`}
         icon={<Triangle />}
-        spots={hotScenicSpots}
+        // spots={}
       />
+       <Pagination count={10} />
 
       <ScenicSpotSmCards
         // style={{
@@ -254,7 +217,7 @@ const ScenicSpots = (props) => {
         // }}
         title={`${selectedCity === "不分縣市" ? "" : selectedCity} 景點`}
         icon={<Triangle />}
-        spots={activities}
+        spots={cityScenicSpots}
       />
 
       <DetailModal
