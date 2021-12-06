@@ -51,6 +51,7 @@ const Box = styled(Paper)`
 `;
 
 const Image = styled.img`
+  object-fit: cover;
   background-color: grey;
   width: 182px;
   height: 137px;
@@ -66,6 +67,10 @@ const Title = styled.h2`
   height: 42px;
   line-height: 21px;
   margin-bottom: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 `;
 
 const More = styled.div`
