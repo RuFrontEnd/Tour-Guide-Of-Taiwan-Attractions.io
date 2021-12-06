@@ -250,6 +250,7 @@ const ScenicSpots = (props) => {
         previousIcon={Arrow}
         nextIcon={ArrowRight}
         setPage={setScenicSpotsPage}
+        page={scenicSpotsPage}
       />
 
       <ScenicSpotSmCards

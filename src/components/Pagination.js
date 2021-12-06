@@ -9,6 +9,7 @@ const Pagination = (props) => {
     style,
     count,
     setPage = () => {},
+    page,
     previousIcon,
     nextIcon,
   } = props;
@@ -19,6 +20,7 @@ const Pagination = (props) => {
           setPage(page);
         }}
         count={count}
+        page={page}
         variant="outlined"
         shape="rounded"
         renderItem={(item) => (
