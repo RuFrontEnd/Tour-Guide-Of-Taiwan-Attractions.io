@@ -193,10 +193,6 @@ const ScenicSpots = (props) => {
     setCityScenicSpots(_cityScenicSpots);
   }, [scenicSpotsPage]);
 
-  useEffect(() => {
-    console.log("keyword", keyword);
-  }, [keyword]);
-
   return (
     <Background>
       <NavBarHeight height={navBarHeight} />
@@ -223,49 +219,52 @@ const ScenicSpots = (props) => {
           });
           setScenicSpotsPage(1);
         }}
-        // onCatgoreyChange={(e) => {
+      />
+      <Activity
+        style={{
+          display: qureyParams.category === "scenicSpot" ? "none" : "block",
+        }}
+      >
+        <ActivitySmCards
+          title={`${
+            qureyParams.city === "不分縣市" ? "" : qureyParams.city
+          } 活動`}
+          icon={<Triangle />}
+          // spots={}
+        />
+        <Paginate
+          count={totalScenicSpotsPages}
+          previousIcon={Arrow}
+          nextIcon={ArrowRight}
+          setPage={setScenicSpotsPage}
+          page={scenicSpotsPage}
+        />
+      </Activity>
 
-        //   pushToSelectedCategorey(
-        //     history,
-        //     setSelectedCategories,
-        //     e.target.value
-        //   );
-        // }}
-        // onCountiesChange={(e) => {
-        //   pushToSelectedCity(history, setSelectedCity, e.target.value);
-        // }}
-      />
-
-      <ActivitySmCards
-        // style={{
-        //   display:
-        //     selectedCity && selectedCategories !== "景點" ? "block" : "none",
-        // }}
-        title={`${
-          qureyParams.city === "不分縣市" ? "" : qureyParams.city
-        } 活動`}
-        icon={<Triangle />}
-        // spots={}
-      />
-      <Paginate
-        count={totalScenicSpotsPages}
-        previousIcon={Arrow}
-        nextIcon={ArrowRight}
-        setPage={setScenicSpotsPage}
-        page={scenicSpotsPage}
-      />
-
-      <ScenicSpotSmCards
-        // style={{
-        //   display:
-        //     selectedCity && !selectedCategories !== "活動" ? "block" : "none",
-        // }}
-        title={`${
-          qureyParams.city === "不分縣市" ? "" : qureyParams.city
-        } 景點`}
-        icon={<Triangle />}
-        spots={cityScenicSpots}
-      />
+      <ScenicSpot
+        style={{
+          display: qureyParams.category === "activity" ? "none" : "block",
+        }}
+      >
+        <ScenicSpotSmCards
+          // style={{
+          //   display:
+          //     selectedCity && !selectedCategories !== "活動" ? "block" : "none",
+          // }}
+          title={`${
+            qureyParams.city === "不分縣市" ? "" : qureyParams.city
+          } 景點`}
+          icon={<Triangle />}
+          spots={cityScenicSpots}
+        />
+        <Paginate
+          count={totalScenicSpotsPages}
+          previousIcon={Arrow}
+          nextIcon={ArrowRight}
+          setPage={setScenicSpotsPage}
+          page={scenicSpotsPage}
+        />
+      </ScenicSpot>
 
       <DetailModal
         isShowDetail={isShowDetail}
@@ -282,11 +281,11 @@ const Paginate = styled(Pagination)`
 
 const ScenicSpotSmCards = styled(SmallCards)``;
 
+const ScenicSpot = styled.section``;
+
 const ActivitySmCards = styled(SmallCards)``;
 
-const HotScenicSpotSmCards = styled(SmallCards)``;
-
-const HotActivitiesCards = styled(Cards)``;
+const Activity = styled.section``;
 
 const NavBarHeight = styled.div`
   height: ${(props) => props.height}px;

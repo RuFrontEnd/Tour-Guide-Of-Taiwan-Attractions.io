@@ -72,16 +72,16 @@ function App() {
           {transitionRoutes.map((transitionRoute) => (
             <>
               <Route exact path={transitionRoute.path}>
-                {({ match }) => (
+                {/* {({ match }) => (
                   <CSSTransition
                     in={match != null}
                     timeout={500}
                     classNames="transition"
                     unmountOnExit
-                  >
-                    {transitionRoute.component}
-                  </CSSTransition>
-                )}
+                  > */}
+                {transitionRoute.component}
+                {/* </CSSTransition>
+                )} */}
               </Route>
             </>
           ))}
