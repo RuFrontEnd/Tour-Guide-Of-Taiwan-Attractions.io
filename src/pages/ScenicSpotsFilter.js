@@ -108,23 +108,6 @@ export const descSortNumOfCites = (numOfCities) =>
 export const getTopTenCities = (SortedNumOfCites) =>
   SortedNumOfCites.filter((SortedNumOfCity, index) => index < 10);
 
-export const searchAndFilter = (
-  history,
-  selectedCategories,
-  selectedCity,
-  keyword,
-  setQureyParams
-) => {
-  history.push({
-    pathname: "/scenicSpots/filter",
-    search: `?category=${selectedCategories}&city=${selectedCity}`,
-  });
-  setQureyParams({
-    category: selectedCategories,
-    city: selectedCity,
-  });
-};
-
 export const getParamsFromUrl = () => {
   const searchParams = new URLSearchParams(window.location.search.slice("1"));
   const _keyword = searchParams.get("keyowrd");
@@ -153,7 +136,7 @@ const ScenicSpots = (props) => {
   const [qureyParams, setQureyParams] = useState([]);
   const [keyword, setKeyword] = useState("");
 
-  const handleFilterState = () => {
+  const getFilterStateFromSearchParam = () => {
     const parmas = getParamsFromUrl();
     setKeyword(parmas.keyword);
     setSelectedCategories(parmas.qureyCategory);
@@ -168,12 +151,13 @@ const ScenicSpots = (props) => {
 
   useEffect(() => {
     history.listen(() => {
-      handleFilterState();
+      getFilterStateFromSearchParam();
     }); // 監聽上一頁 / 下一頁
-    handleFilterState();
+    getFilterStateFromSearchParam();
   }, []);
 
   useEffect(() => {
+    console.log("qureyParams", qureyParams);
     if (selectedCity === null) return;
     getCityScenicSpots(selectedCity).then((data) => {
       const _totalScenicSpots = data.filter((item) =>
@@ -182,12 +166,19 @@ const ScenicSpots = (props) => {
       setTotalScenicSpots(_totalScenicSpots);
       setTotalScenicSpotsPages(Math.ceil(_totalScenicSpots.length / 20));
       let _cityScenicSpots = [];
-      if (data.length !== 0) {
+      if (data.length !== 0 && !qureyParams.keyword) {
         _cityScenicSpots = _totalScenicSpots.slice(
           (scenicSpotsPage - 1) * 20,
           scenicSpotsPage * 20
         );
-      }
+      } // 篩選城市
+      if (data.length !== 0 && qureyParams.keyword) {
+        _cityScenicSpots = _totalScenicSpots
+          .filter((_totalScenicSpot) =>
+            _totalScenicSpot.ScenicSpotName.includes(qureyParams.keyword)
+          )
+          .slice((scenicSpotsPage - 1) * 20, scenicSpotsPage * 20);
+      } // 搜尋功能
       setCityScenicSpots(_cityScenicSpots);
     });
   }, [qureyParams]);
@@ -202,6 +193,10 @@ const ScenicSpots = (props) => {
     setCityScenicSpots(_cityScenicSpots);
   }, [scenicSpotsPage]);
 
+  useEffect(() => {
+    console.log("keyword", keyword);
+  }, [keyword]);
+
   return (
     <Background>
       <NavBarHeight height={navBarHeight} />
@@ -212,6 +207,8 @@ const ScenicSpots = (props) => {
         setSelectedCategories={setSelectedCategories}
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
+        keyword={keyword}
+        setKeyword={setKeyword}
         onClickSearchButton={() => {
           pushSearchParam([
             { key: "keyword", value: keyword },
@@ -219,7 +216,12 @@ const ScenicSpots = (props) => {
             { key: "city", value: selectedCity },
             { key: "scenicSpotsPage", value: scenicSpotsPage },
           ]);
-          handleFilterState();
+          setQureyParams({
+            keyword: keyword,
+            category: selectedCategories,
+            city: selectedCity,
+          });
+          setScenicSpotsPage(1);
         }}
         // onCatgoreyChange={(e) => {
 
