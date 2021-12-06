@@ -43,6 +43,7 @@ import Pagination from "components/Pagination";
 
 import { baseURL, counties } from "variable/variable";
 import { getCityScenicSpots } from "api/scenicSpots";
+import { getCityActivities } from "api/activities";
 import { getActivities } from "api/activities";
 import { pipe } from "utils/pipe";
 import { pushSearchParam } from "utils/url";
@@ -124,17 +125,23 @@ const ScenicSpots = (props) => {
   const { history, location } = props;
   const qurey = useQuery();
   const navBarHeight = useSelector((state) => state.navBar.height);
-  const [isShowDetail, setIsShowDetail] = useState(false);
-  const [isFiltered, setIsFiltered] = useState(false);
+  // 篩選相關state
+  const [keyword, setKeyword] = useState("");
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null); // 下拉選單選擇的城市
-  const [totalScenicSpots, setTotalScenicSpots] = useState(0);
+  const [qureyParams, setQureyParams] = useState([]);
+  // 活動相關 state
+  const [totalActivities, setTotalActivities] = useState([]);
+  const [activitiesPage, setActivitiesPage] = useState(0);
+  const [totalActivitiesPages, setTotalActivitiesPages] = useState(0);
+  const [cityActivities, setCityActivities] = useState([]);
+  // 景點相關 state
+  const [totalScenicSpots, setTotalScenicSpots] = useState([]);
   const [scenicSpotsPage, setScenicSpotsPage] = useState(1);
   const [totalScenicSpotsPages, setTotalScenicSpotsPages] = useState(0);
   const [cityScenicSpots, setCityScenicSpots] = useState([]);
-  const [activities, setActivities] = useState([]);
-  const [qureyParams, setQureyParams] = useState([]);
-  const [keyword, setKeyword] = useState("");
+  // 其他 state
+  const [isShowDetail, setIsShowDetail] = useState(false);
 
   const getFilterStateFromSearchParam = () => {
     const parmas = getParamsFromUrl();
@@ -142,6 +149,7 @@ const ScenicSpots = (props) => {
     setSelectedCategories(parmas.qureyCategory);
     setSelectedCity(parmas.qureyCity);
     setScenicSpotsPage(1);
+    setActivitiesPage(1);
     setQureyParams({
       keyword: parmas.keyword,
       category: parmas.qureyCategory,
@@ -157,11 +165,37 @@ const ScenicSpots = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("qureyParams", qureyParams);
     if (selectedCity === null) return;
+    getCityActivities(selectedCity).then((data) => {
+      const _totalActivities = data.filter(
+        (item) =>
+          item.Picture.hasOwnProperty("PictureUrl1") &&
+          item.hasOwnProperty("City")
+      );
+      setTotalActivities(_totalActivities);
+      setTotalActivitiesPages(Math.ceil(_totalActivities.length / 20));
+      let _cityActivities = [];
+      if (data.length !== 0 && !qureyParams.keyword) {
+        _cityActivities = _totalActivities.slice(
+          (scenicSpotsPage - 1) * 20,
+          scenicSpotsPage * 20
+        );
+      } // 篩選城市
+      if (data.length !== 0 && qureyParams.keyword) {
+        _cityActivities = _totalActivities
+          .filter((_totalScenicSpot) =>
+            _totalScenicSpot.ScenicSpotName.includes(qureyParams.keyword)
+          )
+          .slice((scenicSpotsPage - 1) * 20, scenicSpotsPage * 20);
+      } // 搜尋功能
+      setCityActivities(_cityActivities);
+    }); // 接活動資料
+
     getCityScenicSpots(selectedCity).then((data) => {
-      const _totalScenicSpots = data.filter((item) =>
-        item.Picture.hasOwnProperty("PictureUrl1")
+      const _totalScenicSpots = data.filter(
+        (item) =>
+          item.Picture.hasOwnProperty("PictureUrl1") &&
+          item.hasOwnProperty("City")
       );
       setTotalScenicSpots(_totalScenicSpots);
       setTotalScenicSpotsPages(Math.ceil(_totalScenicSpots.length / 20));
@@ -180,18 +214,33 @@ const ScenicSpots = (props) => {
           .slice((scenicSpotsPage - 1) * 20, scenicSpotsPage * 20);
       } // 搜尋功能
       setCityScenicSpots(_cityScenicSpots);
-    });
+    }); // 接景點資料
   }, [qureyParams]);
 
   useEffect(() => {
     pushSearchParam([{ key: "scenicSpotsPage", value: scenicSpotsPage }]);
     if (selectedCity === null) return;
+    const _activities = totalActivities?.slice(
+      (scenicSpotsPage - 1) * 20,
+      scenicSpotsPage * 20
+    );
+    setCityActivities(_activities);
     const _cityScenicSpots = totalScenicSpots?.slice(
       (scenicSpotsPage - 1) * 20,
       scenicSpotsPage * 20
     );
     setCityScenicSpots(_cityScenicSpots);
   }, [scenicSpotsPage]);
+
+  useEffect(() => {
+    pushSearchParam([{ key: "activitiesPage", value: activitiesPage }]);
+    if (selectedCity === null) return;
+    const _activities = totalActivities?.slice(
+      (activitiesPage - 1) * 20,
+      activitiesPage * 20
+    );
+    setCityActivities(_activities);
+  }, [activitiesPage]);
 
   return (
     <Background>
@@ -211,6 +260,7 @@ const ScenicSpots = (props) => {
             { key: "category", value: selectedCategories },
             { key: "city", value: selectedCity },
             { key: "scenicSpotsPage", value: scenicSpotsPage },
+            { key: "activitiesPage", value: activitiesPage },
           ]);
           setQureyParams({
             keyword: keyword,
@@ -230,14 +280,14 @@ const ScenicSpots = (props) => {
             qureyParams.city === "不分縣市" ? "" : qureyParams.city
           } 活動`}
           icon={<Triangle />}
-          // spots={}
+          spots={cityActivities}
         />
         <Paginate
-          count={totalScenicSpotsPages}
+          count={totalActivitiesPages}
           previousIcon={Arrow}
           nextIcon={ArrowRight}
-          setPage={setScenicSpotsPage}
-          page={scenicSpotsPage}
+          setPage={setActivitiesPage}
+          page={activitiesPage}
         />
       </Activity>
 
@@ -247,10 +297,6 @@ const ScenicSpots = (props) => {
         }}
       >
         <ScenicSpotSmCards
-          // style={{
-          //   display:
-          //     selectedCity && !selectedCategories !== "活動" ? "block" : "none",
-          // }}
           title={`${
             qureyParams.city === "不分縣市" ? "" : qureyParams.city
           } 景點`}

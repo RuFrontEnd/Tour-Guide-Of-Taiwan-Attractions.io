@@ -8,9 +8,11 @@ export const getActivities = (top) => {
   }).then((res) => res.json());
 };
 
-export const getActivitiesSpots = (city, top) => {
+export const getCityActivities = (city, top, skip) => {
   return fetch(
-    `${baseURL}/v2/Tourism/Activity/${city}?${top && `$top=${top}`}`,
+    `${baseURL}/v2/Tourism/Activity/${city}?${
+      top && `$top=${top}${skip && `&skip=${skip}`}`
+    }`,
     {
       headers: getAuthorizationHeader(),
       method: "GET",
