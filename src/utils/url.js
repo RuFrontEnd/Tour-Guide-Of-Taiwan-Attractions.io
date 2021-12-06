@@ -9,7 +9,7 @@ export const pushSearchParam = (params) => {
   const searchParams = new URLSearchParams(window.location.search.slice("1"));
   params.map((param) => {
     searchParams.has(param.key) && searchParams.delete(param.key);
-    url.searchParams.set(param.key, param);
+    url.searchParams.set(param.key, param.value);
   });
   window.history.pushState({}, "", url);
 };
@@ -21,6 +21,5 @@ export const pushSearchParamAndPushUrl = (params, pathName) => {
     searchParams.has(param.key) && searchParams.delete(param.key);
     url.searchParams.set(param.key, param.value);
   });
-  console.log("url", url);
   window.location.href = url;
 };
