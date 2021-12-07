@@ -14,6 +14,7 @@ const Card = (props) => {
     info = { src: "", alt: "", title: "標題", area: "某某市 某某區" },
     buttonText = "",
     onClickButton = () => {},
+    dataId,
   } = props;
 
   const $image = useRef();
@@ -47,7 +48,12 @@ const Card = (props) => {
               <Location />
               <District>{info.area}</District>
             </Area>
-            <DeatiledButton onClick={onClickButton}>
+            <DeatiledButton
+              onClick={(e) => {
+                onClickButton(e);
+              }}
+              dataId={dataId}
+            >
               {buttonText}
             </DeatiledButton>
           </More>

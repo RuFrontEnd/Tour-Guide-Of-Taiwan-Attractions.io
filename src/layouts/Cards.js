@@ -23,9 +23,10 @@ const Cards = (props) => {
         <Triangle />
       </Title>
       <CardsBox>
-        {activities.map((activity) => (
+        {activities.map((activity, activityIndex) => (
           <CardBox key={activity.title}>
             <CardItem
+              dataId={activityIndex}
               info={{
                 src: activity.Picture.PictureUrl1,
                 alt: "圖片",
@@ -34,8 +35,8 @@ const Cards = (props) => {
                 area: activity.City,
               }}
               buttonText={buttonText}
-              onClickButton={() => {
-                onClickButton();
+              onClickButton={(e) => {
+                onClickButton(e);
               }}
             />
           </CardBox>

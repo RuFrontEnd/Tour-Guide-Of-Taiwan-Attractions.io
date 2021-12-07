@@ -7,7 +7,13 @@ import disableScroll from "disable-scroll";
 import { RemoveScrollBar } from "react-remove-scroll-bar";
 
 const DetailModal = (props) => {
-  const { className, isShowDetail = false, setIsShowDetail = () => {} } = props;
+  const {
+    className,
+    isShowDetail = false,
+    setIsShowDetail = () => {},
+    info = {},
+    children,
+  } = props;
   const navBarHeight = useSelector((state) => state.navBar.height);
 
   useEffect(() => {
@@ -32,9 +38,9 @@ const DetailModal = (props) => {
           isShowDetail && "detailModal-modal-detailCardBox-active"
         }`}
       >
-        <DetailCard />
+        <DetailCard info={info}>{children}</DetailCard>
       </DetailCardBox>
-      {/* {isShowDetail && <RemoveScrollBar />} */}
+      {isShowDetail && <RemoveScrollBar />}
     </Modal>
   );
 };

@@ -16,21 +16,7 @@ import { ReactComponent as TelephoneRef } from "assets/telephone.svg";
 import SquareButton from "components/SquareButton";
 
 const DetailCard = (props) => {
-  const {
-    className,
-    style,
-    children,
-    info = {
-      src: "",
-      alt: "",
-      title: "標題",
-      time: "時段",
-      fee: "費用",
-      area: "某某市某某區某某路某段(某街)",
-      tel: "886-x-xxxxxxxx",
-    },
-    onClick = () => {},
-  } = props;
+  const { className, style, children, info = {}, onClick = () => {} } = props;
   return (
     <Container
       style={style}
@@ -185,6 +171,8 @@ const Telephone = styled(TelephoneRef)`
 `;
 
 const Illustrate = styled.p`
+  display: flex;
+  align-items: center;
   font-size: 14px;
   margin-left: 10px;
   color: ${__0D0B0C__()};

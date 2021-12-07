@@ -37,6 +37,7 @@ const ScenicSpots = (props) => {
   const [hotScenicSpots, setHotScenicSpots] = useState([]);
   const [hotActivities, setHotActivities] = useState([]);
   const [keyword, setKeyword] = useState("");
+  const [modalInfo, setModalInfo] = useState([]);
 
   useEffect(() => {
     getActivities().then((_activities) => {
@@ -77,8 +78,12 @@ const ScenicSpots = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log('keyword', keyword)
-  }, [keyword]);
+    console.log("hotActivities", hotActivities);
+  }, [hotActivities]);
+
+  useEffect(() => {
+    console.log("hotScenicSpots", hotScenicSpots);
+  }, [hotScenicSpots]);
 
   return (
     <Background>
@@ -116,8 +121,25 @@ const ScenicSpots = (props) => {
         title="熱門活動"
         activities={hotActivities}
         buttonText={"活動詳情"}
-        onClickButton={() => {
+        onClickButton={(e) => {
+          const targetId = Number(e.currentTarget.dataset.id);
+          const _title = hotActivities[targetId].ActivityName || "暫無";
+          const _time =
+            `${hotActivities[targetId].StartTime.slice(
+              0,
+              10
+            )} - ${hotActivities[targetId].EndTime.slice(0, 10)}` || "暫無";
+          const _fee = "免費";
+          const _area = hotActivities[targetId].Address || "暫無";
+          const _tel = hotActivities[targetId].Phone || "暫無";
           setIsShowDetail(true);
+          setModalInfo({
+            title: _title,
+            time: _time,
+            fee: _fee,
+            area: _area,
+            tel: _tel,
+          });
         }}
       />
       <HotScenicSpotSmCards
@@ -130,6 +152,7 @@ const ScenicSpots = (props) => {
       <DetailModal
         isShowDetail={isShowDetail}
         setIsShowDetail={setIsShowDetail}
+        info={modalInfo}
       />
     </Background>
   );
