@@ -76,6 +76,10 @@ const ScenicSpots = (props) => {
     });
   }, []);
 
+  useEffect(() => {
+    console.log('keyword', keyword)
+  }, [keyword]);
+
   return (
     <Background>
       <NavBarHeight height={navBarHeight} />
@@ -86,25 +90,24 @@ const ScenicSpots = (props) => {
         setSelectedCategories={setSelectedCategories}
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
+        keyword={keyword}
+        setKeyword={setKeyword}
         onClickSearchButton={() => {
           pushSearchParamAndPushUrl(
             [
+              { key: "keyword", value: keyword },
               { key: "category", value: selectedCategories },
               { key: "city", value: selectedCity },
             ],
             `${window.location.origin}/scenicSpots/filter`
           );
         }}
-        keyword={keyword}
-        setKeyword={setKeyword}
       />
       <CityCarousel
         setSelected={setSelectedCity}
         onClickBoard={(e) => {
           pushSearchParamAndPushUrl(
-            [
-              { key: "city", value: e.currentTarget.dataset.value },
-            ],
+            [{ key: "city", value: e.currentTarget.dataset.value }],
             `${window.location.origin}/scenicSpots/filter`
           );
         }}

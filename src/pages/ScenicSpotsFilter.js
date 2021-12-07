@@ -111,13 +111,13 @@ export const getTopTenCities = (SortedNumOfCites) =>
 
 export const getParamsFromUrl = () => {
   const searchParams = new URLSearchParams(window.location.search.slice("1"));
-  const _keyword = searchParams.get("keyowrd");
-  const _qureyCategory = searchParams.get("category");
-  const _qureyCity = searchParams.get("city");
+  const _keyword = searchParams.get("keyword");
+  const _category = searchParams.get("category");
+  const _city = searchParams.get("city");
   return {
     keyword: _keyword,
-    qureyCategory: _qureyCategory,
-    qureyCity: _qureyCity,
+    category: _category,
+    city: _city,
   };
 };
 
@@ -144,16 +144,16 @@ const ScenicSpots = (props) => {
   const [isShowDetail, setIsShowDetail] = useState(false);
 
   const getFilterStateFromSearchParam = () => {
-    const parmas = getParamsFromUrl();
-    setKeyword(parmas.keyword);
-    setSelectedCategories(parmas.qureyCategory);
-    setSelectedCity(parmas.qureyCity);
+    const urlSearchParams = getParamsFromUrl();
+    setKeyword(urlSearchParams.keyword);
+    setSelectedCategories(urlSearchParams.category);
+    setSelectedCity(urlSearchParams.city);
     setScenicSpotsPage(1);
     setActivitiesPage(1);
     setQureyParams({
-      keyword: parmas.keyword,
-      category: parmas.qureyCategory,
-      city: parmas.qureyCity,
+      keyword: urlSearchParams.Keyword,
+      category: urlSearchParams.category,
+      city: urlSearchParams.city,
     });
   };
 
@@ -182,10 +182,14 @@ const ScenicSpots = (props) => {
         );
       } // 篩選城市
       if (data.length !== 0 && qureyParams.keyword) {
+        console.log("_totalActivities", _totalActivities);
         _cityActivities = _totalActivities
-          .filter((_totalScenicSpot) =>
-            _totalScenicSpot.ScenicSpotName.includes(qureyParams.keyword)
-          )
+          .filter((_totalActivities) => {
+            console.log("_totalActivities", _totalActivities);
+            return _totalActivities.ActivityName.includes(
+              qureyParams.keyword
+            );
+          })
           .slice((scenicSpotsPage - 1) * 20, scenicSpotsPage * 20);
       } // 搜尋功能
       setCityActivities(_cityActivities);
@@ -241,6 +245,10 @@ const ScenicSpots = (props) => {
     );
     setCityActivities(_activities);
   }, [activitiesPage]);
+
+  useEffect(() => {
+    console.log("keyword", keyword);
+  }, [keyword]);
 
   return (
     <Background>
