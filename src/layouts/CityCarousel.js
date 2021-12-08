@@ -159,11 +159,6 @@ export const getCountyName = (cityName) => {
   return county;
 };
 
-export const getFilterCityQureyString = (hotCityName) => {
-  return `${path[0]}?city_en=${getCountyName(hotCityName).en}&&city_zh=${
-    getCountyName(hotCityName).zh
-  }`;
-};
 
 const CityCarousel = (props) => {
   const { style, className, onClickBoard = () => {} } = props;

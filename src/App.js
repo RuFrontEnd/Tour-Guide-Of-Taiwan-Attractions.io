@@ -68,9 +68,8 @@ function App() {
           <Navbar />
           {/* <ScrollToTop /> */}
 
-          {/* <Switch> */}
-          {transitionRoutes.map((transitionRoute) => (
-            <>
+          <Switch>
+            {transitionRoutes.map((transitionRoute) => (
               <Route exact path={transitionRoute.path}>
                 {/* {({ match }) => (
                   <CSSTransition
@@ -83,15 +82,14 @@ function App() {
                 {/* </CSSTransition>
                 )} */}
               </Route>
-            </>
-          ))}
-          {routes.map((route) => (
-            <Route exact path={route.path}>
-              {route.component}
-            </Route>
-          ))}
-          {/* <Redirect to={routes[0].path} /> */}
-          {/* </Switch> */}
+            ))}
+            {routes.map((route) => (
+              <Route exact path={route.path}>
+                {route.component}
+              </Route>
+            ))}
+            <Redirect to={transitionRoutes[0].path} />
+          </Switch>
         </Suspense>
         <Footer />
       </>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/macro";
 import Paper from "components/Paper";
 import {
@@ -17,6 +17,48 @@ import SquareButton from "components/SquareButton";
 
 const DetailCard = (props) => {
   const { className, style, children, info = {}, onClick = () => {} } = props;
+  const [currentImgIndex, setCurrentImgIndex] = useState(0);
+  let countOfImg = 0;
+  let imgSrc = "";
+  let imgAlt = "";
+
+  if (Array.isArray(info.images)) {
+    countOfImg = info.images.length;
+    if (info.images[currentImgIndex].hasOwnProperty("src")) {
+      imgSrc = info.images[currentImgIndex].src;
+    }
+    if (info.images[currentImgIndex].hasOwnProperty("alt")) {
+      imgAlt = info.images[currentImgIndex].alt;
+    }
+  }
+
+  const getNextImage = () => {
+    console.log("N");
+    console.log("countOfImg", countOfImg);
+    console.log("currentImgIndex", currentImgIndex);
+    console.log("info.images", info.images);
+    if (currentImgIndex !== countOfImg - 1) {
+      setCurrentImgIndex((currentImgIndex) => currentImgIndex + 1);
+    }
+    if (currentImgIndex === countOfImg - 1) {
+      setCurrentImgIndex(0);
+      console.log("TTT");
+    }
+  };
+
+  const getPrevImage = () => {
+    console.log("P");
+    console.log("countOfImg", countOfImg);
+    console.log("currentImgIndex", currentImgIndex);
+    console.log("info.images", info.images);
+    if (currentImgIndex === 0) {
+      setCurrentImgIndex(countOfImg - 1);
+    }
+    if (currentImgIndex !== 0) {
+      setCurrentImgIndex((currentImgIndex) => currentImgIndex - 1);
+    }
+  };
+
   return (
     <Container
       style={style}
@@ -29,12 +71,12 @@ const DetailCard = (props) => {
       rotateOfShadow={8}
     >
       <Wrap>
-        <Image src={info.src} alt={info.alt} />
+        <Image src={imgSrc} alt={imgAlt} />
         <Buttons>
-          <LeftSwitchButton>
+          <LeftSwitchButton onClick={getPrevImage}>
             <LeftArrow />
           </LeftSwitchButton>
-          <RightSwitchButton>
+          <RightSwitchButton onClick={getNextImage}>
             <RightArrow />
           </RightSwitchButton>
         </Buttons>
@@ -77,6 +119,7 @@ const Wrap = styled.div`
 `;
 
 const Image = styled.img`
+  object-fit: cover;
   background-color: grey;
   width: 612px;
   height: 459px;

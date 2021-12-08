@@ -104,7 +104,7 @@ const ScenicSpots = (props) => {
               { key: "category", value: selectedCategories },
               { key: "city", value: selectedCity },
             ],
-            `${window.location.origin}/scenicSpots/filter`
+            `${window.location.origin}/scenicspots/filter`
           );
         }}
       />
@@ -113,7 +113,7 @@ const ScenicSpots = (props) => {
         onClickBoard={(e) => {
           pushSearchParamAndPushUrl(
             [{ key: "city", value: e.currentTarget.dataset.value }],
-            `${window.location.origin}/scenicSpots/filter`
+            `${window.location.origin}/scenicspots/filter`
           );
         }}
       />
@@ -132,6 +132,18 @@ const ScenicSpots = (props) => {
           const _fee = "免費";
           const _area = hotActivities[targetId].Address || "暫無";
           const _tel = hotActivities[targetId].Phone || "暫無";
+          console.log("hotActivities", hotActivities);
+
+          const filterPictureKeys = Object.keys(
+            hotActivities[targetId].Picture
+          ).filter((key) => key.match(/PictureUrl[0-9]+/));
+          const _images = filterPictureKeys.map((filterPictureKey) => {
+            return {
+              src: hotActivities[targetId].Picture[filterPictureKey],
+              alt: "圖片",
+            };
+          });
+
           setIsShowDetail(true);
           setModalInfo({
             title: _title,
@@ -139,6 +151,7 @@ const ScenicSpots = (props) => {
             fee: _fee,
             area: _area,
             tel: _tel,
+            images: _images,
           });
         }}
       />

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import DetailCard from "components/DetailCard";
 import disableScroll from "disable-scroll";
 import { RemoveScrollBar } from "react-remove-scroll-bar";
+import { CSSTransition } from "react-transition-group";
 
 const DetailModal = (props) => {
   const {
@@ -23,29 +24,33 @@ const DetailModal = (props) => {
   }, [isShowDetail]);
 
   return (
-    <Modal
-      className={`${className} detailModal-modal ${
-        isShowDetail && "detailModal-modal-active"
-      }`}
-      navBarHeight={navBarHeight}
-      onClick={() => {
-        disableScroll.off();
-        setIsShowDetail(false);
-      }}
-    >
-      <DetailCardBox
-        className={`detailModal-modal-detailCardBox ${
-          isShowDetail && "detailModal-modal-detailCardBox-active"
-        }`}
+    <CSSTransition in={isShowDetail} unmountOnExit>
+      <Modal
+        // className={`${className} detailModal-modal ${
+        //   isShowDetail && "detailModal-modal-active"
+        // }`}
+        navBarHeight={navBarHeight}
+        onClick={() => {
+          disableScroll.off();
+          setIsShowDetail(false);
+        }}
       >
-        <DetailCard info={info}>{children}</DetailCard>
-      </DetailCardBox>
-      {isShowDetail && <RemoveScrollBar />}
-    </Modal>
+        <DetailCardBox
+        // className={`detailModal-modal-detailCardBox ${
+        //   isShowDetail && "detailModal-modal-detailCardBox-active"
+        // }`}
+        >
+          <DetailCard info={info}>{children}</DetailCard>
+        </DetailCardBox>
+        {isShowDetail && <RemoveScrollBar />}
+      </Modal>
+    </CSSTransition>
   );
 };
 
 const Modal = styled.div`
+  background-color: ${__D2D2D2__(0.5)};
+  backdrop-filter: blur(10px);
   position: fixed;
   z-index: 1001;
   top: ${(props) => `${props.navBarHeight}px`};
@@ -58,7 +63,7 @@ const Modal = styled.div`
   transition: 0.5s;
 
   &.detailModal-modal {
-    visibility: hidden;
+    display: none;
     background-color: ${__D2D2D2__(0)};
     opacity: 0;
     backdrop-filter: blur(0px);
@@ -66,7 +71,7 @@ const Modal = styled.div`
   }
 
   &.detailModal-modal-active {
-    visibility: visible;
+    display: flex;
     background-color: ${__D2D2D2__(0.5)};
     backdrop-filter: blur(10px);
     opacity: 1;
