@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
-import MulitCarousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
+import { Swiper, SwiperSlide } from "swiper/react/swiper-react.js";
+import SwiperCore, { Navigation } from "swiper";
+import "swiper/swiper.min.css";
+import "swiper/modules/navigation/navigation.scss";
 import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
 import { useQuery } from "hooks/useQuery";
 import { path } from "variable/path";
@@ -25,13 +27,15 @@ import kaohsiung from "assets/kaohsiung.png";
 import pingtung from "assets/pingtung.png";
 import yilan from "assets/yilan.png";
 import hualien from "assets/hualien.png";
-import daito from "assets/daito.png";
+import taitungCounty from "assets/taitungCounty.png";
 import mazu from "assets/mazu.png";
 import miaoli from "assets/miaoli.png";
 import yunlin from "assets/yunlin.jpg";
 import changhua from "assets/changhua.jpg";
 import penghu from "assets/penghu.jpg";
 import kinmen from "assets/kinmen.jpg";
+
+SwiperCore.use([Navigation]);
 
 const cities = [
   { name: "台　北", value: "Taipei", src: taipei },
@@ -67,159 +71,123 @@ const cities = [
   { name: "外　島", value: "OffshoreIslands", src: penghu },
   {
     name: ["花　蓮", "台　東"],
-    value: ["Hualien", "Daito"],
-    src: [hualien, daito],
+    value: ["Hualien", "TaitungCounty"],
+    src: [hualien, taitungCounty],
   },
 ];
 
-const responsive = {
-  superLargeDesktop: {
-    breakpoint: { max: 4000, min: 3000 },
-    items: 5,
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 5,
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-  },
+const createswiperConfig = (prevButtonClassName, nextButtonClassName) => {
+  return {
+    spaceBetween: 13,
+    slidesPerView: 5,
+    breakpoints: {
+      0: {
+        slidesPerView: 2,
+        grid: {
+          rows: 1.5,
+        },
+      },
+      576: {
+        slidesPerView: 4,
+        grid: {
+          rows: 1.5,
+        },
+      },
+      992: {
+        slidesPerView: 5,
+        grid: {
+          rows: 1.5,
+        },
+      },
+    },
+    // wrapperTag: "ul",
+    navigation: {
+      prevEl: `.${prevButtonClassName}`,
+      nextEl: `.${nextButtonClassName}`,
+    },
+    // onInit: (swiper) => {
+    //   console.log("swiper", swiper);
+    //   swiper.params.navigation.prevEl = prevButtonRef.current;
+    //   swiper.params.navigation.nextEl = nextButtonRef.current;
+    //   swiper.navigation.init();
+    //   swiper.navigation.update();
+    // },
+    // className: "ps-1",
+  };
 };
-
-export const getCountyName = (cityName) => {
-  let county = {};
-  if (cityName.match(/台　北/)) {
-    county = { en: "Taipei", zh: "台北市" };
-  }
-  if (cityName.match(/新　北/)) {
-    county = { en: "NewTaipei", zh: "新北市" };
-  }
-  if (cityName.match(/桃　園/)) {
-    county = { en: "Taoyuan", zh: "桃園市" };
-  }
-  if (cityName.match(/基　隆/)) {
-    county = { en: "Keelung", zh: "基隆市" };
-  }
-  if (cityName.match(/新竹市/)) {
-    county = { en: "Hsinchu", zh: "新竹市" };
-  }
-  if (cityName.match(/新竹縣/)) {
-    county = { en: "HsinchuCounty", zh: "新竹縣" };
-  }
-  if (cityName.match(/嘉　義/)) {
-    county = { en: "Chiayi", zh: "嘉義縣" };
-  }
-  if (cityName.match(/南　投/)) {
-    county = { en: "Nantou", zh: "南投縣" };
-  }
-  if (cityName.match(/台　中/)) {
-    county = { en: "Taichung", zh: "台中市" };
-  }
-  if (cityName.match(/高　雄/)) {
-    county = { en: "Kaohsiung", zh: "高雄市" };
-  }
-  if (cityName.match(/屏　東/)) {
-    county = { en: "Pingtung", zh: "屏東縣" };
-  }
-  if (cityName.match(/台　南/)) {
-    county = { en: "Tainan", zh: "台南市" };
-  }
-  if (cityName.match(/花　蓮/)) {
-    county = { en: "Hualien", zh: "花蓮縣" };
-  }
-  if (cityName.match(/台　東/)) {
-    county = { en: "Taoyuan", zh: "台東縣" };
-  }
-  if (cityName.match(/宜　蘭/)) {
-    county = { en: "Yilan", zh: "宜蘭縣" };
-  }
-  if (cityName.match(/苗　栗/)) {
-    county = { en: "MiaoliCounty", zh: "苗栗縣" };
-  }
-  if (cityName.match(/雲　林/)) {
-    county = { en: "Yunlin", zh: "雲林縣" };
-  }
-  if (cityName.match(/彰　化/)) {
-    county = { en: "ChanghuaCounty", zh: "彰化縣" };
-  }
-  if (cityName.match(/澎　湖/)) {
-    county = { en: "Penghu", zh: "澎湖縣" };
-  }
-  if (cityName.match(/金　門/)) {
-    county = { en: "Kinmen", zh: "金門縣" };
-  }
-  if (cityName.match(/馬　祖/)) {
-    county = { en: "Mazu", zh: "連江縣" };
-  }
-  return county;
-};
-
 
 const CityCarousel = (props) => {
   const { style, className, onClickBoard = () => {} } = props;
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const $prevButton = useRef();
+  const $nextButton = useRef();
 
   return (
     <Space style={style} className={className}>
       <Kind title="造訪城市">
         <Triangle />
       </Kind>
-      <Carousel responsive={responsive}>
-        {cities.map((city, index) =>
-          index % 2 === 0 ? (
-            <CarouselItem>
-              <CityBoard
-                dataValue={city.value}
-                onClick={(e) => {
-                  onClickBoard(e);
-                }}
-              >
-                <Img src={city.src} />
-                <Info>
-                  <Icon />
-                  <Name>{city.name}</Name>
-                </Info>
-                <Mask />
-              </CityBoard>
-            </CarouselItem>
-          ) : (
-            <CarouselItem>
-              <CityBoards>
-                <HalfCityBoard
-                  dataValue={city.value[0]}
+
+      <SwiperBox>
+        <PrevButton class="custom_next">Custom Prev</PrevButton>
+        <NextButton class="custom_prev">Custom Next</NextButton>
+        <Swiper
+          {...createswiperConfig("custom_next", "custom_prev")}
+          // onSlideChange={() => console.log("slide change")}
+          // onSwiper={(swiper) => console.log(swiper)}
+        >
+          {cities.map((city, index) =>
+            !Array.isArray(city.name) ? (
+              <SwiperSlide>
+                <CityBoard
+                  dataValue={city.value}
                   onClick={(e) => {
                     onClickBoard(e);
                   }}
                 >
-                  <Img src={city.src[0]} />
-                  <HalfInfo>
+                  <Img src={city.src} />
+                  <Info>
                     <Icon />
-                    <Name>{city.name[0]}</Name>
-                  </HalfInfo>
-                  <HalfMask />
-                </HalfCityBoard>
-                <HalfCityBoard
-                  dataValue={city.value[1]}
-                  onClick={(e) => {
-                    onClickBoard(e);
-                  }}
-                >
-                  <Img src={city.src[1]} />
-                  <HalfInfo>
-                    <Icon />
-                    <Name>{city.name[1]}</Name>
-                  </HalfInfo>
-                  <HalfMask />
-                </HalfCityBoard>
-              </CityBoards>
-            </CarouselItem>
-          )
-        )}
-      </Carousel>
+                    <Name>{city.name}</Name>
+                  </Info>
+                  <Mask />
+                </CityBoard>
+              </SwiperSlide>
+            ) : (
+              <SwiperSlide>
+                <CityBoards>
+                  <HalfCityBoard
+                    dataValue={city.value[0]}
+                    onClick={(e) => {
+                      onClickBoard(e);
+                    }}
+                  >
+                    <Img src={city.src[0]} />
+                    <HalfInfo>
+                      <Icon />
+                      <Name>{city.name[0]}</Name>
+                    </HalfInfo>
+                    <HalfMask />
+                  </HalfCityBoard>
+                  <HalfCityBoard
+                    dataValue={city.value[1]}
+                    onClick={(e) => {
+                      onClickBoard(e);
+                    }}
+                  >
+                    <Img src={city.src[1]} />
+                    <HalfInfo>
+                      <Icon />
+                      <Name>{city.name[1]}</Name>
+                    </HalfInfo>
+                    <HalfMask />
+                  </HalfCityBoard>
+                </CityBoards>
+              </SwiperSlide>
+            )
+          )}
+        </Swiper>
+      </SwiperBox>
     </Space>
   );
 };
@@ -321,17 +289,26 @@ const CityBoard = styled(Board)`
   padding: 14px 12px;
 `;
 
-const CarouselItem = styled.div`
-  padding: 0px 6.5px;
-`;
-
-const Carousel = styled(MulitCarousel)`
-  height: 245px;
-  padding-bottom: 60px;
-`;
-
 const Kind = styled(Category)`
   margin-bottom: 12px;
+`;
+
+const NextButton = styled.button`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+`;
+
+const PrevButton = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+`;
+
+const SwiperBox = styled.div`
+  position: relative;
 `;
 
 export default withRouter(CityCarousel);

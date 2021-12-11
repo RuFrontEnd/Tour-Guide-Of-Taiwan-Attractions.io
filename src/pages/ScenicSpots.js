@@ -156,7 +156,7 @@ const ScenicSpots = (props) => {
         );
       }}
     >
-      <CityCarousel
+      <CitySwiper
         setSelected={setSelectedCity}
         onClickBoard={(e) => {
           pushSearchParamAndPushUrl(
@@ -196,5 +196,9 @@ const HotActivitiesCards = styled(Cards)``;
 const SearchLayout = styled(SearchTool)`
   padding-bottom: 50px;
 `;
+
+const CitySwiper = styled(CityCarousel)`
+  margin-bottom: 60px;
+`
 
 export default withRouter(ScenicSpots);

@@ -14,6 +14,7 @@ import { ReactComponent as ClockRef } from "assets/clock.svg";
 import { ReactComponent as StampRef } from "assets/stamp.svg";
 import { ReactComponent as TelephoneRef } from "assets/telephone.svg";
 import SquareButton from "components/SquareButton";
+import DirectButton from "components/DirectButton";
 
 const DetailCard = (props) => {
   const { className, style, children, info = {}, onClick = () => {} } = props;
@@ -38,7 +39,6 @@ const DetailCard = (props) => {
     }
     if (currentImgIndex === countOfImg - 1) {
       setCurrentImgIndex(0);
-      console.log("TTT");
     }
   };
 
@@ -66,12 +66,8 @@ const DetailCard = (props) => {
         <Image src={imgSrc} alt={imgAlt} />
         {info.images.length > 1 && (
           <Buttons>
-            <LeftSwitchButton onClick={getPrevImage}>
-              <LeftArrow />
-            </LeftSwitchButton>
-            <RightSwitchButton onClick={getNextImage}>
-              <RightArrow />
-            </RightSwitchButton>
+            <LeftDirectButton onClick={getPrevImage} />
+            <RightDirectButton onClick={getNextImage} direction={'R'}/>
           </Buttons>
         )}
         <Info>
@@ -117,30 +113,20 @@ const Image = styled.img`
   background-color: grey;
   width: 612px;
   height: 459px;
-  margin-bottom: 22px;
+  margin-bottom: 18.5px;
 `;
 
 const Buttons = styled.div`
-  margin-bottom: 22px;
+  margin-bottom: 18.5px;
   justify-self: end;
 `;
 
-const LeftArrow = styled(Arrow)``;
-
-const LeftSwitchButton = styled(SquareButton)`
-  margin-right: 9px;
+const LeftDirectButton = styled(DirectButton)`
+  margin: 4.5px;
 `;
 
-const RightArrow = styled(Arrow)`
-  transform: rotate(180deg);
-  & > path {
-    fill: ${__FFF__()};
-  }
-`;
-
-const RightSwitchButton = styled(SquareButton)`
-  margin-left: 9px;
-  background-color: ${__0D0B0C__()};
+const RightDirectButton = styled(DirectButton)`
+  margin: 4.5px;
 `;
 
 const Info = styled.div``;
