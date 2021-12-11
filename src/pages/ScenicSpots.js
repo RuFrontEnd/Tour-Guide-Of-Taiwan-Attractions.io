@@ -7,9 +7,8 @@ import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
 import SmallCards from "layouts/SmallCards";
 import DetailModal from "layouts/DetailModal";
 import Cards from "layouts/Cards";
-import Tool from "layouts/Tool";
+import SearchTool from "layouts/SearchTool";
 import CityCarousel from "layouts/CityCarousel";
-import Background from "layouts/Background";
 import { counties } from "variable/variable";
 import { getScenicSpots } from "api/scenicSpots";
 import { getActivities } from "api/activities";
@@ -72,8 +71,6 @@ const ScenicSpots = (props) => {
 
   const putHotScenicspotInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
-    console.log("e.currentTarget", e.currentTarget);
-    console.log("targetId", targetId);
     const _title = hotScenicSpots[targetId].Name || "暫無";
     const _time = "永久開放";
     const _fee = "免費";
@@ -138,37 +135,27 @@ const ScenicSpots = (props) => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log("hotActivities", hotActivities);
-  }, [hotActivities]);
-
-  useEffect(() => {
-    console.log("hotScenicSpots", hotScenicSpots);
-  }, [hotScenicSpots]);
-
   return (
-    <Background>
-      <NavBarHeight height={navBarHeight} />
-      <Tool
-        categories={categories}
-        counties={countiesOptions}
-        selectedCategories={selectedCategories}
-        setSelectedCategories={setSelectedCategories}
-        selectedCity={selectedCity}
-        setSelectedCity={setSelectedCity}
-        keyword={keyword}
-        setKeyword={setKeyword}
-        onClickSearchButton={() => {
-          pushSearchParamAndPushUrl(
-            [
-              { key: "keyword", value: keyword },
-              { key: "category", value: selectedCategories },
-              { key: "city", value: selectedCity },
-            ],
-            `${window.location.origin}/scenicspots/filter`
-          );
-        }}
-      />
+    <SearchLayout
+      categories={categories}
+      counties={countiesOptions}
+      selectedCategories={selectedCategories}
+      setSelectedCategories={setSelectedCategories}
+      selectedCity={selectedCity}
+      setSelectedCity={setSelectedCity}
+      keyword={keyword}
+      setKeyword={setKeyword}
+      onClickSearchButton={() => {
+        pushSearchParamAndPushUrl(
+          [
+            { key: "keyword", value: keyword },
+            { key: "category", value: selectedCategories },
+            { key: "city", value: selectedCity },
+          ],
+          `${window.location.origin}/scenicspots/filter`
+        );
+      }}
+    >
       <CityCarousel
         setSelected={setSelectedCity}
         onClickBoard={(e) => {
@@ -190,7 +177,6 @@ const ScenicSpots = (props) => {
         title="熱門景點"
         spots={hotScenicSpots}
         onClick={(e) => {
-          console.log("hotScenicSpots", hotScenicSpots);
           putHotScenicspotInfosToDetailModal(e);
         }}
       />
@@ -199,7 +185,7 @@ const ScenicSpots = (props) => {
         setIsShowDetail={setIsShowDetail}
         info={modalInfo}
       />
-    </Background>
+    </SearchLayout>
   );
 };
 
@@ -207,8 +193,8 @@ const HotScenicSpotSmCards = styled(SmallCards)``;
 
 const HotActivitiesCards = styled(Cards)``;
 
-const NavBarHeight = styled.div`
-  height: ${(props) => props.height}px;
+const SearchLayout = styled(SearchTool)`
+  padding-bottom: 50px;
 `;
 
 export default withRouter(ScenicSpots);

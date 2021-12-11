@@ -33,10 +33,6 @@ const DetailCard = (props) => {
   }
 
   const getNextImage = () => {
-    console.log("N");
-    console.log("countOfImg", countOfImg);
-    console.log("currentImgIndex", currentImgIndex);
-    console.log("info.images", info.images);
     if (currentImgIndex !== countOfImg - 1) {
       setCurrentImgIndex((currentImgIndex) => currentImgIndex + 1);
     }
@@ -47,10 +43,6 @@ const DetailCard = (props) => {
   };
 
   const getPrevImage = () => {
-    console.log("P");
-    console.log("countOfImg", countOfImg);
-    console.log("currentImgIndex", currentImgIndex);
-    console.log("info.images", info.images);
     if (currentImgIndex === 0) {
       setCurrentImgIndex(countOfImg - 1);
     }
@@ -72,14 +64,16 @@ const DetailCard = (props) => {
     >
       <Wrap>
         <Image src={imgSrc} alt={imgAlt} />
-        <Buttons>
-          <LeftSwitchButton onClick={getPrevImage}>
-            <LeftArrow />
-          </LeftSwitchButton>
-          <RightSwitchButton onClick={getNextImage}>
-            <RightArrow />
-          </RightSwitchButton>
-        </Buttons>
+        {info.images.length > 1 && (
+          <Buttons>
+            <LeftSwitchButton onClick={getPrevImage}>
+              <LeftArrow />
+            </LeftSwitchButton>
+            <RightSwitchButton onClick={getNextImage}>
+              <RightArrow />
+            </RightSwitchButton>
+          </Buttons>
+        )}
         <Info>
           <Title>{info.title}</Title>
           <Intro>{children}</Intro>

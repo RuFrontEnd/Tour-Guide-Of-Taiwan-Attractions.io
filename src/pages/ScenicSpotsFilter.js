@@ -24,6 +24,7 @@ import detailCard_tmp from "assets/detailCard_tmp.png";
 import boardImg_tmp from "assets/boardImg_tmp.png";
 import SmallCards from "layouts/SmallCards";
 import DetailModal from "layouts/DetailModal";
+import SearchTool from "layouts/SearchTool";
 import Cards from "layouts/Cards";
 import Tool from "layouts/Tool";
 import CityCarousel from "layouts/CityCarousel";
@@ -142,6 +143,7 @@ const ScenicSpots = (props) => {
   const [cityScenicSpots, setCityScenicSpots] = useState([]);
   // 其他 state
   const [isShowDetail, setIsShowDetail] = useState(false);
+  const [modalInfo, setModalInfo] = useState([]);
 
   const getFilterStateFromSearchParam = () => {
     const urlSearchParams = getParamsFromUrl();
@@ -154,6 +156,65 @@ const ScenicSpots = (props) => {
       keyword: urlSearchParams.Keyword,
       category: urlSearchParams.category,
       city: urlSearchParams.city,
+    });
+  };
+
+  const putCityActivityInfosToDetailModal = (e) => {
+    const targetId = Number(e.currentTarget.dataset.id);
+    const _title = cityActivities[targetId].ActivityName || "暫無";
+    const _time =
+      `${cityActivities[targetId].StartTime.slice(0, 10)} - ${cityActivities[
+        targetId
+      ].EndTime.slice(0, 10)}` || "暫無";
+    const _fee = "免費";
+    const _area = cityActivities[targetId].Address || "暫無";
+    const _tel = cityActivities[targetId].Phone || "暫無";
+    const filterPictureKeys = Object.keys(
+      cityActivities[targetId].Picture
+    ).filter((key) => key.match(/PictureUrl[0-9]+/));
+    const _images = filterPictureKeys.map((filterPictureKey) => {
+      return {
+        src: cityActivities[targetId].Picture[filterPictureKey],
+        alt: "圖片",
+      };
+    });
+
+    setIsShowDetail(true);
+    setModalInfo({
+      title: _title,
+      time: _time,
+      fee: _fee,
+      area: _area,
+      tel: _tel,
+      images: _images,
+    });
+  };
+
+  const putCityScenicspotInfosToDetailModal = (e) => {
+    const targetId = Number(e.currentTarget.dataset.id);
+    const _title = cityScenicSpots[targetId].Name || "暫無";
+    const _time = "永久開放";
+    const _fee = "免費";
+    const _area = cityScenicSpots[targetId].Address || "暫無";
+    const _tel = cityScenicSpots[targetId].Phone || "暫無";
+    const filterPictureKeys = Object.keys(
+      cityScenicSpots[targetId].Picture
+    ).filter((key) => key.match(/PictureUrl[0-9]+/));
+    const _images = filterPictureKeys.map((filterPictureKey) => {
+      return {
+        src: cityScenicSpots[targetId].Picture[filterPictureKey],
+        alt: "圖片",
+      };
+    });
+
+    setIsShowDetail(true);
+    setModalInfo({
+      title: _title,
+      time: _time,
+      fee: _fee,
+      area: _area,
+      tel: _tel,
+      images: _images,
     });
   };
 
@@ -186,9 +247,7 @@ const ScenicSpots = (props) => {
         _cityActivities = _totalActivities
           .filter((_totalActivities) => {
             console.log("_totalActivities", _totalActivities);
-            return _totalActivities.ActivityName.includes(
-              qureyParams.keyword
-            );
+            return _totalActivities.ActivityName.includes(qureyParams.keyword);
           })
           .slice((scenicSpotsPage - 1) * 20, scenicSpotsPage * 20);
       } // 搜尋功能
@@ -246,38 +305,32 @@ const ScenicSpots = (props) => {
     setCityActivities(_activities);
   }, [activitiesPage]);
 
-  useEffect(() => {
-    console.log("keyword", keyword);
-  }, [keyword]);
-
   return (
-    <Background>
-      <NavBarHeight height={navBarHeight} />
-      <Tool
-        categories={categories}
-        counties={countiesOptions}
-        selectedCategories={selectedCategories}
-        setSelectedCategories={setSelectedCategories}
-        selectedCity={selectedCity}
-        setSelectedCity={setSelectedCity}
-        keyword={keyword}
-        setKeyword={setKeyword}
-        onClickSearchButton={() => {
-          pushSearchParam([
-            { key: "keyword", value: keyword },
-            { key: "category", value: selectedCategories },
-            { key: "city", value: selectedCity },
-            { key: "scenicSpotsPage", value: scenicSpotsPage },
-            { key: "activitiesPage", value: activitiesPage },
-          ]);
-          setQureyParams({
-            keyword: keyword,
-            category: selectedCategories,
-            city: selectedCity,
-          });
-          setScenicSpotsPage(1);
-        }}
-      />
+    <SearchLayout
+      categories={categories}
+      counties={countiesOptions}
+      selectedCategories={selectedCategories}
+      setSelectedCategories={setSelectedCategories}
+      selectedCity={selectedCity}
+      setSelectedCity={setSelectedCity}
+      keyword={keyword}
+      setKeyword={setKeyword}
+      onClickSearchButton={() => {
+        pushSearchParam([
+          { key: "keyword", value: keyword },
+          { key: "category", value: selectedCategories },
+          { key: "city", value: selectedCity },
+          { key: "scenicSpotsPage", value: scenicSpotsPage },
+          { key: "activitiesPage", value: activitiesPage },
+        ]);
+        setQureyParams({
+          keyword: keyword,
+          category: selectedCategories,
+          city: selectedCity,
+        });
+        setScenicSpotsPage(1);
+      }}
+    >
       <Activity
         style={{
           display: qureyParams.category === "scenicSpot" ? "none" : "block",
@@ -289,6 +342,9 @@ const ScenicSpots = (props) => {
           } 活動`}
           icon={<Triangle />}
           spots={cityActivities}
+          onClick={(e) => {
+            putCityActivityInfosToDetailModal(e);
+          }}
         />
         <Paginate
           count={totalActivitiesPages}
@@ -310,6 +366,9 @@ const ScenicSpots = (props) => {
           } 景點`}
           icon={<Triangle />}
           spots={cityScenicSpots}
+          onClick={(e) => {
+            putCityScenicspotInfosToDetailModal(e);
+          }}
         />
         <Paginate
           count={totalScenicSpotsPages}
@@ -323,8 +382,9 @@ const ScenicSpots = (props) => {
       <DetailModal
         isShowDetail={isShowDetail}
         setIsShowDetail={setIsShowDetail}
+        info={modalInfo}
       />
-    </Background>
+    </SearchLayout>
   );
 };
 
@@ -343,6 +403,10 @@ const Activity = styled.section``;
 
 const NavBarHeight = styled.div`
   height: ${(props) => props.height}px;
+`;
+
+const SearchLayout = styled(SearchTool)`
+  padding-bottom: 40px;
 `;
 
 export default withRouter(ScenicSpots);
