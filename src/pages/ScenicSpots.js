@@ -39,6 +39,67 @@ const ScenicSpots = (props) => {
   const [keyword, setKeyword] = useState("");
   const [modalInfo, setModalInfo] = useState([]);
 
+  const putHotActivityInfosToDetailModal = (e) => {
+    const targetId = Number(e.currentTarget.dataset.id);
+    const _title = hotActivities[targetId].ActivityName || "暫無";
+    const _time =
+      `${hotActivities[targetId].StartTime.slice(0, 10)} - ${hotActivities[
+        targetId
+      ].EndTime.slice(0, 10)}` || "暫無";
+    const _fee = "免費";
+    const _area = hotActivities[targetId].Address || "暫無";
+    const _tel = hotActivities[targetId].Phone || "暫無";
+    const filterPictureKeys = Object.keys(
+      hotActivities[targetId].Picture
+    ).filter((key) => key.match(/PictureUrl[0-9]+/));
+    const _images = filterPictureKeys.map((filterPictureKey) => {
+      return {
+        src: hotActivities[targetId].Picture[filterPictureKey],
+        alt: "圖片",
+      };
+    });
+
+    setIsShowDetail(true);
+    setModalInfo({
+      title: _title,
+      time: _time,
+      fee: _fee,
+      area: _area,
+      tel: _tel,
+      images: _images,
+    });
+  };
+
+  const putHotScenicspotInfosToDetailModal = (e) => {
+    const targetId = Number(e.currentTarget.dataset.id);
+    console.log("e.currentTarget", e.currentTarget);
+    console.log("targetId", targetId);
+    const _title = hotScenicSpots[targetId].Name || "暫無";
+    const _time = "永久開放";
+    const _fee = "免費";
+    const _area = hotScenicSpots[targetId].Address || "暫無";
+    const _tel = hotScenicSpots[targetId].Phone || "暫無";
+    const filterPictureKeys = Object.keys(
+      hotScenicSpots[targetId].Picture
+    ).filter((key) => key.match(/PictureUrl[0-9]+/));
+    const _images = filterPictureKeys.map((filterPictureKey) => {
+      return {
+        src: hotScenicSpots[targetId].Picture[filterPictureKey],
+        alt: "圖片",
+      };
+    });
+
+    setIsShowDetail(true);
+    setModalInfo({
+      title: _title,
+      time: _time,
+      fee: _fee,
+      area: _area,
+      tel: _tel,
+      images: _images,
+    });
+  };
+
   useEffect(() => {
     getActivities().then((_activities) => {
       let pictureOwnedActivities = _activities.filter((_activitiy) => {
@@ -122,44 +183,15 @@ const ScenicSpots = (props) => {
         activities={hotActivities}
         buttonText={"活動詳情"}
         onClickButton={(e) => {
-          const targetId = Number(e.currentTarget.dataset.id);
-          const _title = hotActivities[targetId].ActivityName || "暫無";
-          const _time =
-            `${hotActivities[targetId].StartTime.slice(
-              0,
-              10
-            )} - ${hotActivities[targetId].EndTime.slice(0, 10)}` || "暫無";
-          const _fee = "免費";
-          const _area = hotActivities[targetId].Address || "暫無";
-          const _tel = hotActivities[targetId].Phone || "暫無";
-          console.log("hotActivities", hotActivities);
-
-          const filterPictureKeys = Object.keys(
-            hotActivities[targetId].Picture
-          ).filter((key) => key.match(/PictureUrl[0-9]+/));
-          const _images = filterPictureKeys.map((filterPictureKey) => {
-            return {
-              src: hotActivities[targetId].Picture[filterPictureKey],
-              alt: "圖片",
-            };
-          });
-
-          setIsShowDetail(true);
-          setModalInfo({
-            title: _title,
-            time: _time,
-            fee: _fee,
-            area: _area,
-            tel: _tel,
-            images: _images,
-          });
+          putHotActivityInfosToDetailModal(e);
         }}
       />
       <HotScenicSpotSmCards
         title="熱門景點"
         spots={hotScenicSpots}
-        onClick={() => {
-          setIsShowDetail(true);
+        onClick={(e) => {
+          console.log("hotScenicSpots", hotScenicSpots);
+          putHotScenicspotInfosToDetailModal(e);
         }}
       />
       <DetailModal

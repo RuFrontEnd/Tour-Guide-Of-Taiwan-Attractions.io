@@ -50,14 +50,14 @@ const NavBar = (props) => {
             <FoodIcon />
             美食住宿
           </FoodtLink>
-          <TrafficLink
+          {/* <TrafficLink
             onClick={() => {
               transferAddress("/foodAndAccommodation");
             }}
           >
             <TrafficIcon />
             景點交通
-          </TrafficLink>
+          </TrafficLink> */}
         </Options>
       </Wrap>
     </Container>

@@ -12,6 +12,7 @@ const Paper = (props) => {
     leftShadowOffsetWidth,
     rightShadowOffsetWidth,
     onClick = () => {},
+    dataId,
   } = props;
   return (
     <Box
@@ -23,6 +24,7 @@ const Paper = (props) => {
       leftShadowOffsetWidth={leftShadowOffsetWidth}
       rightShadowOffsetWidth={rightShadowOffsetWidth}
       children={children}
+      data-id={dataId}
     >
       {children}
     </Box>

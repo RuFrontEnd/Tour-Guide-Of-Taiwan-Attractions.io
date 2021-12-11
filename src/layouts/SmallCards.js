@@ -24,7 +24,7 @@ const SmallCards = (props) => {
       <Title title={title}>{icon ? icon : <Triangle />}</Title>
       <Cards>
         {Array.isArray(spots) &&
-          spots.map((spot) => (
+          spots.map((spot, spotIndex) => (
             <CardBox>
               <SmallCard
                 onClick={onClick}
@@ -36,6 +36,7 @@ const SmallCards = (props) => {
                   title: spot.Name,
                   area: spot.City,
                 }}
+                dataId={spotIndex}
               />
             </CardBox>
           ))}
