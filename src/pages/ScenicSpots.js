@@ -70,7 +70,6 @@ const ScenicSpots = (props) => {
   };
 
   const putHotScenicspotInfosToDetailModal = (e) => {
-    console.log("hotScenicSpots", hotScenicSpots);
     const targetId = Number(e.currentTarget.dataset.id);
     const _title = hotScenicSpots[targetId].Name || "暫無";
     const _description = hotScenicSpots[targetId].DescriptionDetail;
