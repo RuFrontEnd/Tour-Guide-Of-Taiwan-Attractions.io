@@ -48,13 +48,21 @@ const SmallCards = (props) => {
 const SmallCard = styled(CardSm)``;
 
 const CardItem = styled.li`
-  margin: 0px 4.5px;
+  /* margin: 0px 4.5px; */
   margin-bottom: 35px;
 `;
 
 const Cards = styled.ul`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 576px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 const Title = styled(Category)`

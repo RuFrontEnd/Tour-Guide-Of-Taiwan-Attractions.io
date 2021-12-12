@@ -51,22 +51,14 @@ const CardItem = styled(Card)`
 `;
 
 const CardBox = styled.li`
-  margin: 0px 10.5px 48px 0px;
+  margin-bottom: 48px;
   display: flex;
   justify-content: center;
-
-  &:nth-child(odd) {
-    margin: 0px 10.5px 48px 0px;
-  }
-
-  &:nth-child(even) {
-    margin: 0px 0px 48px 10.5px;
-  }
 `;
 
 const CardsBox = styled.ul`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns:1fr 1fr;
 `;
 
 const Title = styled(Category)`

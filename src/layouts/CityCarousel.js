@@ -95,12 +95,18 @@ const createswiperConfig = (
         // },
       },
       576: {
-        slidesPerView: 4,
+        slidesPerView: 3,
         // grid: {
         //   rows: 1.5,
         // },
       },
       992: {
+        slidesPerView: 4,
+        // grid: {
+        //   rows: 1.5,
+        // },
+      },
+      1200: {
         slidesPerView: 5,
         // grid: {
         //   rows: 1.5,

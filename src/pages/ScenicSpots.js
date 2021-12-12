@@ -195,8 +195,7 @@ const ScenicSpots = (props) => {
   );
 };
 
-const InfoModal = styled(DetailModal)`
-`;
+const InfoModal = styled(DetailModal)``;
 
 const HotScenicSpotSmCards = styled(SmallCards)``;
 
@@ -206,8 +205,6 @@ const SearchLayout = styled(SearchTool)`
   padding-bottom: 50px;
 `;
 
-const CitySwiper = styled(CityCarousel)`
-  margin-bottom: 60px;
-`;
+const CitySwiper = styled(CityCarousel)``;
 
 export default withRouter(ScenicSpots);

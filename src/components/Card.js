@@ -28,21 +28,19 @@ const Card = (props) => {
       rotateOfShadow={8}
     >
       <Wrap>
-        <ImageBox>
-          <Image
-            src={info.src ? info.src : noImg}
-            alt={info.alt}
-            ref={$image}
-            onError={() => {
-              $image.current.src = noImg;
-            }}
-          />
-        </ImageBox>
+        <Image
+          src={info.src ? info.src : noImg}
+          alt={info.alt}
+          ref={$image}
+          onError={() => {
+            $image.current.src = noImg;
+          }}
+        />
         <Info>
-          <Content>
+          <div>
             <Title>{info.title}</Title>
             <Intro>{info.description}</Intro>
-          </Content>
+          </div>
           <More>
             <Area>
               <Location />
@@ -68,7 +66,6 @@ const Container = styled(Paper)`
   height: auto;
   box-sizing: border-box;
   padding: 16px;
-  padding-right: 25px;
 `;
 
 const Wrap = styled.div`
@@ -77,24 +74,19 @@ const Wrap = styled.div`
 
 const Image = styled.img`
   object-fit: cover;
+  aspect-ratio: 1 / 1;
   background-color: ${__F6F7FB__()};
-  width: 187px;
-  height: 196px;
-`;
-
-const ImageBox = styled.div`
-  padding-right: 16px;
-  height: 196px;
+  max-width: 100%;
+  height: auto;
+  max-height: 190px;
+  margin-right: 16px;
 `;
 
 const Info = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  word-break: break-all;
-`;
-
-const Content = styled.div``;
+`
 
 const Title = styled.h2`
   font-size: 16px;
@@ -121,15 +113,13 @@ const Intro = styled.p`
 
 const More = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
 `;
 
 const Area = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 27px;
-  font-size: 14px;
-  line-height: 21px;
 `;
 
 const Location = styled(LocationRef)`
