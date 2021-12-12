@@ -88,8 +88,9 @@ const LandingImg = styled.div`
 `;
 
 const LandingImgBox = styled(Paper)`
+  aspect-ratio:32 / 9;
   width: 100%;
-  height: 536px;
+  height: auto;
   padding: 23px 27px;
   margin-bottom: 90px;
 `;

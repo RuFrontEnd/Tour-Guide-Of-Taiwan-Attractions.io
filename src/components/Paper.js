@@ -32,8 +32,6 @@ const Paper = (props) => {
 };
 
 const Box = styled.section`
-  width: 600px;
-  height: 300px;
   display: inline-block;
   background-color: white;
   position: relative;

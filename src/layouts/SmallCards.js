@@ -25,7 +25,7 @@ const SmallCards = (props) => {
       <Cards>
         {Array.isArray(spots) &&
           spots.map((spot, spotIndex) => (
-            <CardBox>
+            <CardItem>
               <SmallCard
                 onClick={onClick}
                 info={{
@@ -38,7 +38,7 @@ const SmallCards = (props) => {
                 }}
                 dataId={spotIndex}
               />
-            </CardBox>
+            </CardItem>
           ))}
       </Cards>
     </Box>
@@ -47,21 +47,12 @@ const SmallCards = (props) => {
 
 const SmallCard = styled(CardSm)``;
 
-const CardBox = styled.li`
-  /* margin: 0px 4.5px 35px 4.5px; */
-  display: flex;
-  justify-content: center;
-
-  &:nth-child(5n + 1) {
-    /* margin: 0px 4.5px 35px 0px; */
-  }
-
-  &:nth-child(5n) {
-    /* margin: 0px 0px 35px 4.5px; */
-  }
+const CardItem = styled.li`
+  margin: 0px 4.5px;
+  margin-bottom: 35px;
 `;
 
-const Cards = styled.div`
+const Cards = styled.ul`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
 `;
