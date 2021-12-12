@@ -14,14 +14,12 @@ const DirectButton = (props) => {
   const {
     className,
     style,
-    children,
-    info = {},
     onClick = () => {},
     direction = "L",
   } = props;
 
   return (
-    <Button className={className} onClick={onClick}>
+    <Button className={className} style={style} onClick={onClick}>
       {direction === "L" && <LeftArrowIcon />}
       {direction === "R" && <RightArrowIcon />}
       {direction === "U" && <UpArrowIcon />}

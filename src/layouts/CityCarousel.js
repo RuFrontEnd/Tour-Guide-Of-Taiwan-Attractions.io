@@ -10,8 +10,6 @@ import { useQuery } from "hooks/useQuery";
 import { path } from "variable/path";
 import { ReactComponent as Location } from "assets/location.svg";
 import { ReactComponent as Triangle } from "assets/triangle_title.svg";
-import Board from "components/Board";
-import Category from "components/Category";
 import Space from "layouts/Space";
 import taipei from "assets/taipei.png";
 import newTaipei from "assets/new_taipei.png";
@@ -34,6 +32,9 @@ import yunlin from "assets/yunlin.jpg";
 import changhua from "assets/changhua.jpg";
 import penghu from "assets/penghu.jpg";
 import kinmen from "assets/kinmen.jpg";
+import Board from "components/Board";
+import Category from "components/Category";
+import DirectButton from "components/DirectButton";
 
 SwiperCore.use([Navigation]);
 
@@ -76,35 +77,44 @@ const cities = [
   },
 ];
 
-const createswiperConfig = (prevButtonClassName, nextButtonClassName) => {
+const createswiperConfig = (
+  prevButtonClassName,
+  nextButtonClassName,
+  onReachBeginning,
+  onReachEnd,
+  onFromEdge
+) => {
   return {
     spaceBetween: 13,
     slidesPerView: 5,
     breakpoints: {
       0: {
         slidesPerView: 2,
-        grid: {
-          rows: 1.5,
-        },
+        // grid: {
+        //   rows: 1.5,
+        // },
       },
       576: {
         slidesPerView: 4,
-        grid: {
-          rows: 1.5,
-        },
+        // grid: {
+        //   rows: 1.5,
+        // },
       },
       992: {
         slidesPerView: 5,
-        grid: {
-          rows: 1.5,
-        },
+        // grid: {
+        //   rows: 1.5,
+        // },
       },
     },
-    // wrapperTag: "ul",
     navigation: {
       prevEl: `.${prevButtonClassName}`,
       nextEl: `.${nextButtonClassName}`,
     },
+    onReachBeginning: onReachBeginning,
+    onReachEnd: onReachEnd,
+    onFromEdge: onFromEdge,
+
     // onInit: (swiper) => {
     //   console.log("swiper", swiper);
     //   swiper.params.navigation.prevEl = prevButtonRef.current;
@@ -119,8 +129,23 @@ const createswiperConfig = (prevButtonClassName, nextButtonClassName) => {
 const CityCarousel = (props) => {
   const { style, className, onClickBoard = () => {} } = props;
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [isShowPrevButton, setIsShowPrevButton] = useState(false);
+  const [isShowNextButton, setIsShowNextButton] = useState(true);
   const $prevButton = useRef();
   const $nextButton = useRef();
+
+  const onReachBeginning = () => {
+    setIsShowPrevButton(false);
+  };
+
+  const onReachEnd = () => {
+    setIsShowNextButton(false);
+  };
+
+  const onFromEdge = () => {
+    setIsShowPrevButton(true);
+    setIsShowNextButton(true);
+  };
 
   return (
     <Space style={style} className={className}>
@@ -129,12 +154,29 @@ const CityCarousel = (props) => {
       </Kind>
 
       <SwiperBox>
-        <PrevButton class="custom_next">Custom Prev</PrevButton>
-        <NextButton class="custom_prev">Custom Next</NextButton>
+        <PrevButton
+          className="custom_prev"
+          style={{
+            visibility: isShowPrevButton ? "visible" : "hidden",
+          }}
+        />
+
+        <NextButton
+          className="custom_next"
+          style={{
+            visibility: isShowNextButton ? "visible" : "hidden",
+          }}
+          direction={"R"}
+        />
+
         <Swiper
-          {...createswiperConfig("custom_next", "custom_prev")}
-          // onSlideChange={() => console.log("slide change")}
-          // onSwiper={(swiper) => console.log(swiper)}
+          {...createswiperConfig(
+            "custom_prev",
+            "custom_next",
+            onReachBeginning,
+            onReachEnd,
+            onFromEdge
+          )}
         >
           {cities.map((city, index) =>
             !Array.isArray(city.name) ? (
@@ -293,18 +335,20 @@ const Kind = styled(Category)`
   margin-bottom: 12px;
 `;
 
-const NextButton = styled.button`
+const NextButton = styled(DirectButton)`
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: 2;
+  top: 50%;
+  right: -60px;
+  transform: translateY(-50%);
 `;
 
-const PrevButton = styled.button`
+const PrevButton = styled(DirectButton)`
   position: absolute;
-  top: 0;
-  right: 0;
   z-index: 2;
+  top: 50%;
+  left: -60px;
+  transform: translateY(-50%);
 `;
 
 const SwiperBox = styled.div`
