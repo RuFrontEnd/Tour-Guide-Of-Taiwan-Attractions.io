@@ -6,7 +6,7 @@ import { ReactComponent as Triangle } from "assets/triangle_title.svg";
 import Category from "components/Category";
 import CardSm from "components/CardSm";
 import Space from "layouts/Space";
-import noImg from "assets/no-img.jpg";
+import noImg from "assets/noImg.png";
 
 const SmallCards = (props) => {
   const {

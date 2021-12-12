@@ -1,9 +1,14 @@
 import React, { useRef } from "react";
 import styled from "styled-components/macro";
 import Paper from "components/Paper";
-import { __ACACAC__, __FF1D6C__, __007350__ } from "variable/variable";
+import {
+  __ACACAC__,
+  __FF1D6C__,
+  __007350__,
+  __F6F7FB__,
+} from "variable/variable";
 import { ReactComponent as LocationRef } from "assets/location.svg";
-import noImg from "assets/no-img.jpg";
+import noImg from "assets/noImg-s.png";
 
 const CardSm = (props) => {
   const {
@@ -54,7 +59,7 @@ const Box = styled(Paper)`
 
 const Image = styled.img`
   object-fit: cover;
-  background-color: grey;
+  background-color: ${__F6F7FB__()};
   width: 182px;
   height: 137px;
   margin-bottom: 10px;

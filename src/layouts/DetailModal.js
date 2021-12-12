@@ -13,6 +13,7 @@ const DetailModal = (props) => {
     isShowDetail = false,
     setIsShowDetail = () => {},
     info = {},
+    CardHeight,
     children,
   } = props;
   const navBarHeight = useSelector((state) => state.navBar.height);
@@ -29,6 +30,7 @@ const DetailModal = (props) => {
         // className={`${className} detailModal-modal ${
         //   isShowDetail && "detailModal-modal-active"
         // }`}
+        className={className}
         navBarHeight={navBarHeight}
         onClick={() => {
           disableScroll.off();
@@ -40,7 +42,9 @@ const DetailModal = (props) => {
         //   isShowDetail && "detailModal-modal-detailCardBox-active"
         // }`}
         >
-          <DetailCard info={info}>{children}</DetailCard>
+          <DetailCard info={info} height={CardHeight}>
+            {children}
+          </DetailCard>
         </DetailCardBox>
         {isShowDetail && <RemoveScrollBar />}
       </Modal>

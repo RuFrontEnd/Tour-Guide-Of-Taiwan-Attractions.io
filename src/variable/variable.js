@@ -21,6 +21,8 @@ export const roboto = "'Roboto', sans-serif";
 
 export const __FFF__ = (opacity) =>
   `${opacity ? `rgba(255, 255, 255, ${opacity})` : "#FFF"}`;
+export const __F6F7FB__ = (opacity) =>
+  `${opacity ? `rgba(246, 247, 251, ${opacity})` : "#F6F7FB"}`;
 export const __0D0B0C__ = (opacity) =>
   `${opacity ? `rgba(13, 11, 12, ${opacity})` : "#0D0B0C"}`;
 export const __FF1D6C__ = getCreateColorMethod([255, 29, 108], "#FF1D6C");
@@ -53,5 +55,5 @@ export const counties = [
   { en: "TaitungCounty", zh: "台東縣" },
   { en: "HualienCounty", zh: "花蓮縣" },
   // { en: "Mazu", zh: "連江縣" },
-  { en: "OffshoreIslands", zh: "外島" }
+  { en: "OffshoreIslands", zh: "外島" },
 ];

@@ -17,7 +17,14 @@ import SquareButton from "components/SquareButton";
 import DirectButton from "components/DirectButton";
 
 const DetailCard = (props) => {
-  const { className, style, children, info = {}, onClick = () => {} } = props;
+  const {
+    className,
+    style,
+    children,
+    info = {},
+    onClick = () => {},
+    height,
+  } = props;
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
   let countOfImg = 0;
   let imgSrc = "";
@@ -67,7 +74,7 @@ const DetailCard = (props) => {
         {info.images.length > 1 && (
           <Buttons>
             <LeftDirectButton onClick={getPrevImage} />
-            <RightDirectButton onClick={getNextImage} direction={'R'}/>
+            <RightDirectButton onClick={getNextImage} direction={"R"} />
           </Buttons>
         )}
         <Info>
@@ -106,13 +113,14 @@ const Container = styled(Paper)`
 
 const Wrap = styled.div`
   display: grid;
+  width: 600px;
 `;
 
 const Image = styled.img`
   object-fit: cover;
   background-color: grey;
-  width: 612px;
-  height: 459px;
+  width: 100%;
+  height: 400px;
   margin-bottom: 18.5px;
 `;
 
@@ -138,11 +146,13 @@ const Title = styled.h2`
 `;
 
 const Intro = styled.p`
-  width: 612px;
+  max-height: 120px;
+  overflow-y:auto;
   color: ${__0D0B0C__()};
   font-size: 14px;
   line-height: 21px;
   margin-bottom: 14px;
+  letter-spacing: 0.25px;
 `;
 
 const More = styled.ul`

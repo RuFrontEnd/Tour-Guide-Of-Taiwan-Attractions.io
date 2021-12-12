@@ -70,8 +70,10 @@ const ScenicSpots = (props) => {
   };
 
   const putHotScenicspotInfosToDetailModal = (e) => {
+    console.log("hotScenicSpots", hotScenicSpots);
     const targetId = Number(e.currentTarget.dataset.id);
     const _title = hotScenicSpots[targetId].Name || "暫無";
+    const _description = hotScenicSpots[targetId].DescriptionDetail;
     const _time = "永久開放";
     const _fee = "免費";
     const _area = hotScenicSpots[targetId].Address || "暫無";
@@ -89,6 +91,7 @@ const ScenicSpots = (props) => {
     setIsShowDetail(true);
     setModalInfo({
       title: _title,
+      description: _description,
       time: _time,
       fee: _fee,
       area: _area,
@@ -135,6 +138,8 @@ const ScenicSpots = (props) => {
     });
   }, []);
 
+  console.log("modalInfo", modalInfo);
+
   return (
     <SearchLayout
       categories={categories}
@@ -180,14 +185,19 @@ const ScenicSpots = (props) => {
           putHotScenicspotInfosToDetailModal(e);
         }}
       />
-      <DetailModal
+      <InfoModal
         isShowDetail={isShowDetail}
         setIsShowDetail={setIsShowDetail}
         info={modalInfo}
-      />
+      >
+        {modalInfo.description}
+      </InfoModal>
     </SearchLayout>
   );
 };
+
+const InfoModal = styled(DetailModal)`
+`;
 
 const HotScenicSpotSmCards = styled(SmallCards)``;
 
@@ -199,6 +209,6 @@ const SearchLayout = styled(SearchTool)`
 
 const CitySwiper = styled(CityCarousel)`
   margin-bottom: 60px;
-`
+`;
 
 export default withRouter(ScenicSpots);

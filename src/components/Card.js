@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import styled from "styled-components/macro";
 import Paper from "components/Paper";
-import { __ACACAC__, __FF1D6C__ } from "variable/variable";
+import { __ACACAC__, __FF1D6C__, __F6F7FB__ } from "variable/variable";
 import { ReactComponent as LocationRef } from "assets/location.svg";
 import RectButton from "components/RectButton";
-import noImg from "assets/no-img.jpg";
+import noImg from "assets/noImg-m.png";
 
 const Card = (props) => {
   const {
@@ -76,10 +76,10 @@ const Wrap = styled.div`
 `;
 
 const Image = styled.img`
-  background-color: grey;
+  object-fit: cover;
+  background-color: ${__F6F7FB__()};
   width: 187px;
   height: 196px;
-  object-fit: cover;
 `;
 
 const ImageBox = styled.div`
