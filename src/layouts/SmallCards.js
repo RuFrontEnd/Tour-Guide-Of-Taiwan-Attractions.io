@@ -48,7 +48,7 @@ const SmallCards = (props) => {
 const SmallCard = styled(CardSm)``;
 
 const CardItem = styled.li`
-  /* margin: 0px 4.5px; */
+  margin: 0px 4.5px;
   margin-bottom: 35px;
 `;
 
@@ -58,6 +58,10 @@ const Cards = styled.ul`
 
   @media (max-width: 992px) {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   @media (max-width: 576px) {

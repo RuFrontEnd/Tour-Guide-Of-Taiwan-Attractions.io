@@ -243,10 +243,8 @@ const ScenicSpots = (props) => {
         );
       } // 篩選城市
       if (data.length !== 0 && qureyParams.keyword) {
-        console.log("_totalActivities", _totalActivities);
         _cityActivities = _totalActivities
           .filter((_totalActivities) => {
-            console.log("_totalActivities", _totalActivities);
             return _totalActivities.ActivityName.includes(qureyParams.keyword);
           })
           .slice((scenicSpotsPage - 1) * 20, scenicSpotsPage * 20);

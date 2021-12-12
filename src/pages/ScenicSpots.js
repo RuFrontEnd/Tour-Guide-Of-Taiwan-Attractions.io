@@ -137,8 +137,6 @@ const ScenicSpots = (props) => {
     });
   }, []);
 
-  console.log("modalInfo", modalInfo);
-
   return (
     <SearchLayout
       categories={categories}

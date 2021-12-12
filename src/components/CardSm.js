@@ -51,8 +51,8 @@ const CardSm = (props) => {
 };
 
 const Box = styled(Paper)`
-  width: auto;
-  height: auto;
+   width:100%;
+  height: 100%;
   box-sizing: border-box;
   padding: 12px 12px 15.5px 12px;
 `;
@@ -61,10 +61,8 @@ const Image = styled.img`
   aspect-ratio:9 / 7;
   object-fit: cover;
   background-color: ${__F6F7FB__()};
-  max-width:100%;
+  width:100%;
   height: auto;
-  /* width: 182px; */
-  /* height: 137px; */
   margin-bottom: 10px;
 `;
 

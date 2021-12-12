@@ -20,8 +20,6 @@ const Box = styled.section`
   background-color: white;
   box-sizing: border-box;
   cursor: pointer;
-  width: 150px;
-  height: 200px;
   box-shadow: 0px 4px 3px 0px ${__0D0B0C__(0.2)};
   transition: 0.1s;
 

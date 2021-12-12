@@ -90,27 +90,15 @@ const createswiperConfig = (
     breakpoints: {
       0: {
         slidesPerView: 2,
-        // grid: {
-        //   rows: 1.5,
-        // },
       },
+      //   576: {
+      //     slidesPerView: 3,
+      //   },
       576: {
-        slidesPerView: 3,
-        // grid: {
-        //   rows: 1.5,
-        // },
+        slidesPerView: 4,
       },
       992: {
-        slidesPerView: 4,
-        // grid: {
-        //   rows: 1.5,
-        // },
-      },
-      1200: {
         slidesPerView: 5,
-        // grid: {
-        //   rows: 1.5,
-        // },
       },
     },
     navigation: {
@@ -120,15 +108,6 @@ const createswiperConfig = (
     onReachBeginning: onReachBeginning,
     onReachEnd: onReachEnd,
     onFromEdge: onFromEdge,
-
-    // onInit: (swiper) => {
-    //   console.log("swiper", swiper);
-    //   swiper.params.navigation.prevEl = prevButtonRef.current;
-    //   swiper.params.navigation.nextEl = nextButtonRef.current;
-    //   swiper.navigation.init();
-    //   swiper.navigation.update();
-    // },
-    // className: "ps-1",
   };
 };
 
@@ -155,55 +134,54 @@ const CityCarousel = (props) => {
 
   return (
     <Space style={style} className={className}>
-      <Kind title="造訪城市">
-        <Triangle />
-      </Kind>
+      <Box>
+        <Kind title="造訪城市">
+          <Triangle />
+        </Kind>
+        <SwiperBox>
+          <PrevButton
+            className="custom_prev"
+            style={{
+              visibility: isShowPrevButton ? "visible" : "hidden",
+            }}
+          />
 
-      <SwiperBox>
-        <PrevButton
-          className="custom_prev"
-          style={{
-            visibility: isShowPrevButton ? "visible" : "hidden",
-          }}
-        />
+          <NextButton
+            className="custom_next"
+            style={{
+              visibility: isShowNextButton ? "visible" : "hidden",
+            }}
+            direction={"R"}
+          />
 
-        <NextButton
-          className="custom_next"
-          style={{
-            visibility: isShowNextButton ? "visible" : "hidden",
-          }}
-          direction={"R"}
-        />
-
-        <Swiper
-          {...createswiperConfig(
-            "custom_prev",
-            "custom_next",
-            onReachBeginning,
-            onReachEnd,
-            onFromEdge
-          )}
-        >
-          {cities.map((city, index) =>
-            !Array.isArray(city.name) ? (
-              <SwiperSlide>
-                <CityBoard
-                  dataValue={city.value}
-                  onClick={(e) => {
-                    onClickBoard(e);
-                  }}
-                >
-                  <Img src={city.src} />
-                  <Info>
-                    <Icon />
-                    <Name>{city.name}</Name>
-                  </Info>
-                  <Mask />
-                </CityBoard>
-              </SwiperSlide>
-            ) : (
-              <SwiperSlide>
-                <CityBoards>
+          <Swiper
+            {...createswiperConfig(
+              "custom_prev",
+              "custom_next",
+              onReachBeginning,
+              onReachEnd,
+              onFromEdge
+            )}
+          >
+            {cities.map((city, index) =>
+              !Array.isArray(city.name) ? (
+                <SwiperSlide>
+                  <CityBoard
+                    dataValue={city.value}
+                    onClick={(e) => {
+                      onClickBoard(e);
+                    }}
+                  >
+                    <Img src={city.src} />
+                    <Info>
+                      <Icon />
+                      <Name>{city.name}</Name>
+                    </Info>
+                    <Mask />
+                  </CityBoard>
+                </SwiperSlide>
+              ) : (
+                <SwiperSlide>
                   <HalfCityBoard
                     dataValue={city.value[0]}
                     onClick={(e) => {
@@ -230,12 +208,12 @@ const CityCarousel = (props) => {
                     </HalfInfo>
                     <HalfMask />
                   </HalfCityBoard>
-                </CityBoards>
-              </SwiperSlide>
-            )
-          )}
-        </Swiper>
-      </SwiperBox>
+                </SwiperSlide>
+              )
+            )}
+          </Swiper>
+        </SwiperBox>
+      </Box>
     </Space>
   );
 };
@@ -315,25 +293,18 @@ const Img = styled.img`
 
 const HalfCityBoard = styled(Board)`
   position: relative;
-  width: 100%;
-  height: 120px;
+  aspect-ratio: 5 / 3;
   padding: 7px 8px;
   margin-bottom: 5px;
 `;
 
-const CityBoards = styled(Board)`
-  width: 100%;
-  height: 100%;
-`;
-
 const CityBoard = styled(Board)`
   position: relative;
+  aspect-ratio: 40 / 49;
   display: flex;
   justify-content: center;
   align-items: center;
   object-fit: cover;
-  width: 100%;
-  height: 245px;
   padding: 14px 12px;
 `;
 
@@ -355,6 +326,10 @@ const PrevButton = styled(DirectButton)`
   top: 50%;
   left: -60px;
   transform: translateY(-50%);
+`;
+
+const Box = styled.div`
+  margin-bottom: 60px;
 `;
 
 const SwiperBox = styled.div`

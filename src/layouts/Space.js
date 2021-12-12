@@ -13,9 +13,17 @@ const Space = (props) => {
 const Box = styled.section`
   padding: 0px 20px;
   box-sizing: border-box;
-  max-width: ${(props) => (props.full ? "auto" : "1080px")};
+  max-width: ${(props) => (props.full ? "auto" : "1104px")};
   margin: auto;
 
+  /* @media (max-width: 1280px) {
+    max-width: ${(props) => (props.full ? "auto" : "960px")};
+  } */
+
+  @media (max-width: 768px) {
+    max-width: ${(props) => (props.full ? "auto" : "720px")};
+  }
+  /* 
   @media (max-width: 1200px) {
     max-width: ${(props) => (props.full ? "auto" : "900px")};
   }
@@ -26,7 +34,7 @@ const Box = styled.section`
 
   @media (max-width: 768px) {
     max-width: ${(props) => (props.full ? "auto" : "576px")};
-  }
+  } */
 `;
 
 export default Space;
