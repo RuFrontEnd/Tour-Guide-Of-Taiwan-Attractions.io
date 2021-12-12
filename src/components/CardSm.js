@@ -58,15 +58,18 @@ const Box = styled(Paper)`
 `;
 
 const Image = styled.img`
+  aspect-ratio:9 / 7;
   object-fit: cover;
   background-color: ${__F6F7FB__()};
-  width: 182px;
-  height: 137px;
+  max-width:100%;
+  height: auto;
+  /* width: 182px; */
+  /* height: 137px; */
   margin-bottom: 10px;
 `;
 
 const Info = styled.div`
-  max-width: 182px;
+  /* max-width: 182px; */
 `;
 
 const Title = styled.h2`

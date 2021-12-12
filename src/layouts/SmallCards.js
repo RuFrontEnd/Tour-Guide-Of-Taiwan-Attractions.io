@@ -48,16 +48,16 @@ const SmallCards = (props) => {
 const SmallCard = styled(CardSm)``;
 
 const CardBox = styled.li`
-  margin: 0px 4.5px 35px 4.5px;
+  /* margin: 0px 4.5px 35px 4.5px; */
   display: flex;
   justify-content: center;
 
   &:nth-child(5n + 1) {
-    margin: 0px 4.5px 35px 0px;
+    /* margin: 0px 4.5px 35px 0px; */
   }
 
   &:nth-child(5n) {
-    margin: 0px 0px 35px 4.5px;
+    /* margin: 0px 0px 35px 4.5px; */
   }
 `;
 
@@ -70,8 +70,6 @@ const Title = styled(Category)`
   margin-bottom: 12px;
 `;
 
-const Box = styled(Space)`
-  cursor: pointer;
-`;
+const Box = styled(Space)``;
 
 export default withRouter(SmallCards);
