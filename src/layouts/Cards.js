@@ -22,10 +22,10 @@ const Cards = (props) => {
       <Title title={title}>
         <Triangle />
       </Title>
-      <CardsBox>
+      <CardUl>
         {activities.map((activity, activityIndex) => (
-          <CardBox key={activity.title}>
-            <CardItem
+          <CardLi key={activity.title}>
+            <HotActivityCard
               dataId={activityIndex}
               info={{
                 src: activity.Picture.PictureUrl1,
@@ -39,26 +39,81 @@ const Cards = (props) => {
                 onClickButton(e);
               }}
             />
-          </CardBox>
+          </CardLi>
         ))}
-      </CardsBox>
+      </CardUl>
     </Space>
   );
 };
 
-const CardItem = styled(Card)`
-  width: 100%;
+const HotActivityCard = styled(Card)`
+  aspect-ratio: 100 / 43;
+  & #Card-Intro {
+    @media (max-width: 1200px) {
+      -webkit-line-clamp: 3;
+    }
+
+    @media (max-width: 992px) {
+      display: none;
+    }
+  }
+
+  & #Card-DeatiledButton {
+    @media (max-width: 992px) {
+      display: none;
+    }
+  }
 `;
 
-const CardBox = styled.li`
+const CardLi = styled.li`
   margin-bottom: 48px;
   display: flex;
   justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+
+  &:nth-child(2n - 1) {
+    padding-right: 15px;
+    padding-left: 0px;
+
+    @media (max-width: 992px) {
+      padding-right: 8.5px;
+    }
+
+    @media (max-width: 576px) {
+      padding-right: 0px;
+    }
+  }
+
+  &:nth-child(2n) {
+    padding-left: 15px;
+    padding-right: 0px;
+
+    @media (max-width: 992px) {
+      padding-left: 8.5px;
+    }
+
+    @media (max-width: 576px) {
+      padding-left: 0px;
+    }
+  }
+
+  & {
+    @media (max-width: 992px) {
+      margin-bottom: 15px;
+    }
+  }
 `;
 
-const CardsBox = styled.ul`
+const CardUl = styled.ul`
   display: grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+
+  & {
+    @media (max-width: 576px) {
+      grid-template-columns: 1fr;
+    }
+  }
 `;
 
 const Title = styled(Category)`

@@ -163,54 +163,56 @@ const CityCarousel = (props) => {
               onFromEdge
             )}
           >
-            {cities.map((city, index) =>
-              !Array.isArray(city.name) ? (
-                <SwiperSlide>
-                  <CityBoard
-                    dataValue={city.value}
-                    onClick={(e) => {
-                      onClickBoard(e);
-                    }}
-                  >
-                    <Img src={city.src} />
-                    <Info>
-                      <Icon />
-                      <Name>{city.name}</Name>
-                    </Info>
-                    <Mask />
-                  </CityBoard>
-                </SwiperSlide>
-              ) : (
-                <SwiperSlide>
-                  <HalfCityBoard
-                    dataValue={city.value[0]}
-                    onClick={(e) => {
-                      onClickBoard(e);
-                    }}
-                  >
-                    <Img src={city.src[0]} />
-                    <HalfInfo>
-                      <Icon />
-                      <Name>{city.name[0]}</Name>
-                    </HalfInfo>
-                    <HalfMask />
-                  </HalfCityBoard>
-                  <HalfCityBoard
-                    dataValue={city.value[1]}
-                    onClick={(e) => {
-                      onClickBoard(e);
-                    }}
-                  >
-                    <Img src={city.src[1]} />
-                    <HalfInfo>
-                      <Icon />
-                      <Name>{city.name[1]}</Name>
-                    </HalfInfo>
-                    <HalfMask />
-                  </HalfCityBoard>
-                </SwiperSlide>
-              )
-            )}
+            {cities.map((city, index) => (
+              <SwiperSlide key={city.name || city.name[0]}>
+                {!Array.isArray(city.name) ? (
+                  <>
+                    <CityBoard
+                      dataValue={city.value}
+                      onClick={(e) => {
+                        onClickBoard(e);
+                      }}
+                    >
+                      <Img src={city.src} />
+                      <Info>
+                        <Icon />
+                        <Name>{city.name}</Name>
+                      </Info>
+                      <Mask />
+                    </CityBoard>
+                  </>
+                ) : (
+                  <>
+                    <HalfCityBoard
+                      dataValue={city.value[0]}
+                      onClick={(e) => {
+                        onClickBoard(e);
+                      }}
+                    >
+                      <Img src={city.src[0]} />
+                      <HalfInfo>
+                        <Icon />
+                        <Name>{city.name[0]}</Name>
+                      </HalfInfo>
+                      <HalfMask />
+                    </HalfCityBoard>
+                    <HalfCityBoard
+                      dataValue={city.value[1]}
+                      onClick={(e) => {
+                        onClickBoard(e);
+                      }}
+                    >
+                      <Img src={city.src[1]} />
+                      <HalfInfo>
+                        <Icon />
+                        <Name>{city.name[1]}</Name>
+                      </HalfInfo>
+                      <HalfMask />
+                    </HalfCityBoard>
+                  </>
+                )}
+              </SwiperSlide>
+            ))}
           </Swiper>
         </SwiperBox>
       </Box>

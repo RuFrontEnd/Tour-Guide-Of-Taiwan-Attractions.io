@@ -39,7 +39,7 @@ const Card = (props) => {
         <Info>
           <div>
             <Title>{info.title}</Title>
-            <Intro>{info.description}</Intro>
+            <Intro id="Card-Intro">{info.description}</Intro>
           </div>
           <More>
             <Area>
@@ -47,6 +47,7 @@ const Card = (props) => {
               <District>{info.area}</District>
             </Area>
             <DeatiledButton
+              id="Card-DeatiledButton"
               onClick={(e) => {
                 onClickButton(e);
               }}
@@ -62,14 +63,16 @@ const Card = (props) => {
 };
 
 const Container = styled(Paper)`
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
   padding: 16px;
 `;
 
 const Wrap = styled.div`
   display: flex;
+  width: 100%;
+  height: 100%;
 `;
 
 const Image = styled.img`
@@ -78,7 +81,6 @@ const Image = styled.img`
   background-color: ${__F6F7FB__()};
   max-width: 100%;
   height: auto;
-  max-height: 190px;
   margin-right: 16px;
 `;
 
@@ -86,7 +88,7 @@ const Info = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-`
+`;
 
 const Title = styled.h2`
   font-size: 16px;

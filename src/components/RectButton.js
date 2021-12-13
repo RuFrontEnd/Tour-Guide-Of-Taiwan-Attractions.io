@@ -5,13 +5,14 @@ import { __FFF__, __FF1D6C__ } from "variable/variable";
 const RectButton = (props) => {
   const {
     className,
+    id,
     style,
     children = "方形按鈕",
     onClick = () => {},
     dataId,
   } = props;
   return (
-    <Box style={style} className={className} onClick={onClick} data-id={dataId}>
+    <Box style={style} className={className} id={id} onClick={onClick} data-id={dataId}>
       {children}
     </Box>
   );
