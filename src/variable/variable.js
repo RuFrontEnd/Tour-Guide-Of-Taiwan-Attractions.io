@@ -33,6 +33,16 @@ export const __007350__ = (opacity) =>
 export const __FFB72C__ = getCreateColorMethod([255, 183, 44], "#FFB72C");
 export const __D2D2D2__ = getCreateColorMethod([210, 210, 210], "#D2D2D2");
 
+export const size = {
+  mobileS: "320px",
+  mobileM: "375px",
+  mobileL: "425px",
+  tablet: "768px",
+  laptop: "1024px",
+  laptopL: "1440px",
+  desktop: "2560px",
+};
+
 export const counties = [
   { en: "", zh: "不分縣市" },
   { en: "Taipei", zh: "台北市" },

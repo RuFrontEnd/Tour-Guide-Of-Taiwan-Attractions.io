@@ -48,13 +48,34 @@ const Cards = (props) => {
 
 const HotActivityCard = styled(Card)`
   aspect-ratio: 100 / 43;
+
   & #Card-Intro {
     @media (max-width: 1200px) {
       -webkit-line-clamp: 3;
     }
 
     @media (max-width: 992px) {
+      -webkit-line-clamp: 2;
+    }
+
+    @media (max-width: 768px) {
       display: none;
+    }
+
+    @media (max-width: 576px) {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+    }
+
+    @media (max-width: 425px) {
+      display: none;
+      /* -webkit-line-clamp: 1; */
+    }
+  }
+
+  & #Card-Title {
+    @media (max-width: 768px) {
+      -webkit-line-clamp: 2;
     }
   }
 
@@ -71,6 +92,12 @@ const CardLi = styled.li`
   justify-content: center;
   width: 100%;
   box-sizing: border-box;
+
+  & {
+    @media (max-width: 992px) {
+      margin-bottom: 15px;
+    }
+  }
 
   &:nth-child(2n - 1) {
     padding-right: 15px;
@@ -97,12 +124,6 @@ const CardLi = styled.li`
       padding-left: 0px;
     }
   }
-
-  & {
-    @media (max-width: 992px) {
-      margin-bottom: 15px;
-    }
-  }
 `;
 
 const CardUl = styled.ul`
@@ -110,8 +131,15 @@ const CardUl = styled.ul`
   grid-template-columns: 1fr 1fr;
 
   & {
+    @media (max-width: 992px) {
+     margin-bottom: 50px;
+    }
+  }
+
+  & {
     @media (max-width: 576px) {
       grid-template-columns: 1fr;
+      margin-bottom: 40px;
     }
   }
 `;

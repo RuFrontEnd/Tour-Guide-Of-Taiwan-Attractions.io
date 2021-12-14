@@ -38,7 +38,7 @@ const Card = (props) => {
         />
         <Info>
           <div>
-            <Title>{info.title}</Title>
+            <Title id="Card-Title">{info.title}</Title>
             <Intro id="Card-Intro">{info.description}</Intro>
           </div>
           <More>

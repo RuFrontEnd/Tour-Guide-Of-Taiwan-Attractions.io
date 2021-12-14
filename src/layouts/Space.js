@@ -35,6 +35,10 @@ const Box = styled.section`
   @media (max-width: 768px) {
     max-width: ${(props) => (props.full ? "auto" : "576px")};
   } */
+
+  @media (max-width: 425px) {
+    padding: 0px 16px;
+  }
 `;
 
 export default Space;
