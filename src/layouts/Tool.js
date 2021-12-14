@@ -32,9 +32,13 @@ const Tool = (props) => {
 
   return (
     <Box style={style} className={className}>
-      <LandingImgBox widthOfShadowLength={"80%"} rotateOfShadow={2}>
+      <LandingImgBox
+        id="Tool-LandingImgBox"
+        widthOfShadowLength={"80%"}
+        rotateOfShadow={2}
+      >
         <LandingImg>
-          <Title>
+          <Title id="Tool-Title">
             <WelcomeToTaiwan />
             <Remark>台北、台中、台南、屏東、宜蘭……遊遍台灣</Remark>
           </Title>
@@ -88,7 +92,7 @@ const LandingImg = styled.div`
 `;
 
 const LandingImgBox = styled(Paper)`
-  aspect-ratio:32 / 9;
+  aspect-ratio: 32 / 9;
   width: 100%;
   height: auto;
   padding: 23px 27px;

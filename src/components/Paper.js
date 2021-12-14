@@ -6,6 +6,7 @@ const Paper = (props) => {
   const {
     style,
     className,
+    id,
     children,
     widthOfShadowLength,
     rotateOfShadow,
@@ -18,6 +19,7 @@ const Paper = (props) => {
     <Box
       style={style}
       className={className}
+      id={id}
       onClick={onClick}
       widthOfShadowLength={widthOfShadowLength}
       rotateOfShadow={rotateOfShadow}

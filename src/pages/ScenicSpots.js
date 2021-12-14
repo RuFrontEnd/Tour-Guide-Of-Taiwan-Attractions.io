@@ -158,7 +158,7 @@ const ScenicSpots = (props) => {
         );
       }}
     >
-      {/* <CitySwiper
+      <CitySwiper
         setSelected={setSelectedCity}
         onClickBoard={(e) => {
           pushSearchParamAndPushUrl(
@@ -166,7 +166,7 @@ const ScenicSpots = (props) => {
             `${window.location.origin}/scenicspots/filter`
           );
         }}
-      /> */}
+      />
       <HotActivitiesCards
         title="熱門活動"
         activities={hotActivities}
@@ -201,6 +201,18 @@ const HotActivitiesCards = styled(Cards)``;
 
 const SearchLayout = styled(SearchTool)`
   padding-bottom: 50px;
+
+  #Tool-Title {
+    @media (max-width: 992px) {
+      display: none;
+    }
+  }
+
+  #Tool-LandingImgBox {
+    @media (max-width: 992px) {
+      margin-bottom: 35px;
+    }
+  }
 `;
 
 const CitySwiper = styled(CityCarousel)``;
