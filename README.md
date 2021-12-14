@@ -30,6 +30,8 @@ Tour guide of Taiwan attractions
 
 ## Remark
 
+支援最低解析度: 360px
+
 Design by [KT](https://www.behance.net/KT_Designer)
 
 <!-- Taiwan photo by <a href="https://unsplash.com/@jcs_chen?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">JCS Chen</a> on <a href="https://unsplash.com/s/photos/%E8%87%BA%E7%81%A3?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>

@@ -132,7 +132,7 @@ const CardUl = styled.ul`
 
   & {
     @media (max-width: 992px) {
-     margin-bottom: 50px;
+      margin-bottom: 50px;
     }
   }
 
