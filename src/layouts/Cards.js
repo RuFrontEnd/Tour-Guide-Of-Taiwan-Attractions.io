@@ -64,7 +64,7 @@ const HotActivityCard = styled(Card)`
 
     @media (max-width: 576px) {
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
     }
 
     @media (max-width: 425px) {
@@ -81,6 +81,14 @@ const HotActivityCard = styled(Card)`
 
   & #Card-DeatiledButton {
     @media (max-width: 992px) {
+      display: none;
+    }
+
+    @media (max-width: 576px) {
+      display: block;
+    }
+
+    @media (max-width: 425px) {
       display: none;
     }
   }
