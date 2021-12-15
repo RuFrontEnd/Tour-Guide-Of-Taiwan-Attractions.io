@@ -85,8 +85,7 @@ const Tool = (props) => {
   );
 };
 
-const Welcome = styled(WelcomeToTaiwan)`
-`;
+const Welcome = styled(WelcomeToTaiwan)``;
 
 const Content = styled.div`
   grid-column-start: 5;
@@ -95,6 +94,11 @@ const Content = styled.div`
   @media (max-width: 1200px) {
     grid-column-start: 4;
     grid-column-end: 10;
+  }
+
+  @media (max-width: 576px) {
+    grid-column-start: 1;
+    grid-column-end: 13;
   }
 `;
 
@@ -119,6 +123,10 @@ const LandingImgBox = styled(Paper)`
   height: auto;
   padding: 23px 27px;
   margin-bottom: 90px;
+
+  @media (max-width: 576px) {
+    aspect-ratio: 2 / 1;
+  }
 `;
 
 const Box = styled.section``;
