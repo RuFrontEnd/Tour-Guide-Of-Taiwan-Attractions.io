@@ -38,46 +38,72 @@ const Tool = (props) => {
         rotateOfShadow={2}
       >
         <LandingImg>
-          <Title id="Tool-Title">
-            <WelcomeToTaiwan />
-            <Remark>台北、台中、台南、屏東、宜蘭……遊遍台灣</Remark>
-          </Title>
-          <SearchBox>
-            <SearchBar
-              placeholder="搜尋關鍵字"
-              value={keyword}
-              setValue={setKeyword}
-            />
-            <GpshButton>
-              <GpsIcon height={"24px"} />
-            </GpshButton>
-          </SearchBox>
-          <DropdownBox>
-            <CatgoreyDropdown
-              selected={selectedCategories}
-              setSelected={setSelectedCategories}
-              options={categories}
-              onChange={(e) => {
-                onCatgoreyChange(e);
-              }}
-            />
-            <CountiesDropdown
-              options={counties}
-              selected={selectedCity}
-              setSelected={setSelectedCity}
-              onChange={(e) => {
-                onCountiesChange(e);
-              }}
-            />
-            <SearchButton onClick={onClickSearchButton}>
-              <SearchIcon width={"16px"} />
-            </SearchButton>
-          </DropdownBox>
+          <Grid>
+            <Content>
+              <TitleBox>
+                <Title id="Tool-Title">
+                  <Welcome width={"100%"} height={"100%"} />
+                  <Remark>台北、台中、台南、屏東、宜蘭……遊遍台灣</Remark>
+                </Title>
+              </TitleBox>
+              <SearchBox>
+                <SearchBar
+                  placeholder="搜尋關鍵字"
+                  value={keyword}
+                  setValue={setKeyword}
+                />
+                {/* <GpshButton>
+                  <GpsIcon height={"24px"} />
+                </GpshButton> */}
+              </SearchBox>
+              <DropdownBox>
+                <CatgoreyDropdown
+                  selected={selectedCategories}
+                  setSelected={setSelectedCategories}
+                  options={categories}
+                  onChange={(e) => {
+                    onCatgoreyChange(e);
+                  }}
+                />
+                <CountiesDropdown
+                  options={counties}
+                  selected={selectedCity}
+                  setSelected={setSelectedCity}
+                  onChange={(e) => {
+                    onCountiesChange(e);
+                  }}
+                />
+                <SearchButton onClick={onClickSearchButton}>
+                  <SearchIcon width={"16px"} />
+                </SearchButton>
+              </DropdownBox>
+            </Content>
+          </Grid>
         </LandingImg>
       </LandingImgBox>
     </Box>
   );
 };
+
+const Welcome = styled(WelcomeToTaiwan)`
+`;
+
+const Content = styled.div`
+  grid-column-start: 5;
+  grid-column-end: 9;
+
+  @media (max-width: 1200px) {
+    grid-column-start: 4;
+    grid-column-end: 10;
+  }
+`;
+
+const Grid = styled.div`
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(12, 1fr);
+  height: 100%;
+`;
 
 const LandingImg = styled.div`
   width: 100%;
@@ -85,10 +111,6 @@ const LandingImg = styled.div`
   background-image: url(${landing});
   background-size: cover;
   background-position: center center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
 const LandingImgBox = styled(Paper)`
@@ -113,12 +135,12 @@ const GpshButton = styled(SquareButton)`
 `;
 
 const CountiesDropdown = styled(Dropdown)`
-  width: 219px;
-  margin-right: 6px;
+  flex: 1;
+  margin-right: 7px;
 `;
 
 const CatgoreyDropdown = styled(Dropdown)`
-  width: 219px;
+  flex: 1;
   margin-right: 7px;
 `;
 
@@ -139,8 +161,7 @@ const SearchButton = styled(SquareButton)`
 `;
 
 const SearchBar = styled(Input)`
-  width: 445px;
-  margin-right: 6px;
+  width: 100%;
 `;
 
 const SearchBox = styled.div`
@@ -155,6 +176,8 @@ const Remark = styled.p`
   font-weight: 400;
   line-height: 21px;
 `;
+
+const TitleBox = styled.div``;
 
 const Title = styled.div`
   margin-bottom: 16px;

@@ -158,7 +158,7 @@ const ScenicSpots = (props) => {
         );
       }}
     >
-      <CitySwiper
+      {/* <CitySwiper
         setSelected={setSelectedCity}
         onClickBoard={(e) => {
           pushSearchParamAndPushUrl(
@@ -166,7 +166,7 @@ const ScenicSpots = (props) => {
             `${window.location.origin}/scenicspots/filter`
           );
         }}
-      />
+      /> */}
       <HotActivitiesCards
         title="熱門活動"
         activities={hotActivities}
