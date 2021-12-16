@@ -70,16 +70,18 @@ const TaiwanLogo = styled(Logo)`
   cursor: pointer;
 `;
 
-const TrafficIcon = styled(Traffic)`
-  margin-right: 8px;
-`;
-
 const FoodIcon = styled(Food)`
   margin-right: 8px;
+  @media (max-width: 425px) {
+    margin-right: 0px;
+  }
 `;
 
 const AttractionIcon = styled(Attraction)`
   margin-right: 8px;
+  @media (max-width: 425px) {
+    margin-right: 0px;
+  }
 `;
 
 const TrafficLink = styled.div`
@@ -92,7 +94,7 @@ const TrafficLink = styled.div`
 `;
 
 const Text = styled.p`
-  @media (max-width: 576px) {
+  @media (max-width: 425px) {
     display: none;
   }
 `;
@@ -111,6 +113,9 @@ const FoodtLink = styled(Link)`
 const AttractLink = styled(Link)`
   color: ${__FF1D6C__()};
   margin-right: 27px;
+  @media (max-width: 576px) {
+    margin-right: 20px;
+  }
 `;
 
 const Options = styled.div`
