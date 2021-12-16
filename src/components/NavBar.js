@@ -26,31 +26,32 @@ const NavBar = (props) => {
   }, []);
 
   return (
-    <Container className={className} full>
-      <Wrap ref={$NavbarContainer}>
-        <TaiwanLogo
-          onClick={() => {
-            history.push('/scenicspots');
-          }}
-        />
-        <Options>
-          <AttractLink
+    <Container className={className}>
+      <Wrap>
+        <Box ref={$NavbarContainer}>
+          <TaiwanLogo
             onClick={() => {
-              history.push('/scenicspots');
+              history.push("/scenicspots");
             }}
-          >
-            <AttractionIcon />
-            活動景點
-          </AttractLink>
-          <FoodtLink
-            onClick={() => {
-              transferAddress("/foodAndAccommodation");
-            }}
-          >
-            <FoodIcon />
-            美食住宿
-          </FoodtLink>
-          {/* <TrafficLink
+          />
+          <Options>
+            <AttractLink
+              onClick={() => {
+                history.push("/scenicspots");
+              }}
+            >
+              <AttractionIcon />
+              <Text>活動景點</Text>
+            </AttractLink>
+            <FoodtLink
+              onClick={() => {
+                transferAddress("/foodAndAccommodation");
+              }}
+            >
+              <FoodIcon />
+              <Text>美食住宿</Text>
+            </FoodtLink>
+            {/* <TrafficLink
             onClick={() => {
               transferAddress("/foodAndAccommodation");
             }}
@@ -58,7 +59,8 @@ const NavBar = (props) => {
             <TrafficIcon />
             景點交通
           </TrafficLink> */}
-        </Options>
+          </Options>
+        </Box>
       </Wrap>
     </Container>
   );
@@ -89,21 +91,26 @@ const TrafficLink = styled.div`
   text-decoration: underline;
 `;
 
-const FoodtLink = styled.div`
+const Text = styled.p`
+  @media (max-width: 576px) {
+    display: none;
+  }
+`;
+
+const Link = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: ${__FFB72C__()};
-  margin-left: 27px;
   text-decoration: underline;
 `;
 
-const AttractLink = styled.div`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
+const FoodtLink = styled(Link)`
+  color: ${__FFB72C__()};
+`;
+
+const AttractLink = styled(Link)`
   color: ${__FF1D6C__()};
-  text-decoration: underline;
+  margin-right: 27px;
 `;
 
 const Options = styled.div`
@@ -112,14 +119,17 @@ const Options = styled.div`
   align-items: center;
 `;
 
-const Wrap = styled.div`
+const Box = styled.div`
   background-color: ${__FFF__()};
-  padding: 18px 0px;
   display: flex;
   justify-content: space-between;
+  padding-top: 18px;
+  padding-bottom: 18px;
 `;
 
-const Container = styled(Space)`
+const Wrap = styled(Space)``;
+
+const Container = styled.div`
   position: fixed;
   z-index: 2000;
   top: 0;
