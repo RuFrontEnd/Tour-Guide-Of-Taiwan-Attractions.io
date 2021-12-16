@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useEffect, forwardRef } from "react";
 import styled from "styled-components/macro";
 
-const Space = (props) => {
+const Space = forwardRef((props, ref) => {
   const { children, className, style, full } = props;
+
   return (
-    <Box full={full} style={style} className={className}>
+    <Box full={full} style={style} className={className} ref={ref}>
       {children}
     </Box>
   );
-};
+});
 
 const Box = styled.section`
   padding: 0px 20px;
