@@ -3,6 +3,7 @@ import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
 import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
 import { ReactComponent as Triangle } from "assets/triangle_title.svg";
+import { ReactComponent as Union } from "assets/union.svg";
 import Category from "components/Category";
 import CardSm from "components/CardSm";
 import LoadingCardSm from "components/LoadingCardSm";
@@ -53,9 +54,44 @@ const SmallCards = (props) => {
             </CardItem>
           ))}
       </Cards>
+      {!isWaiting && spots.length === 0 && (
+        <NoResult>
+          <UnionIcon />
+          <Message>
+            <Oops>Oops!</Oops>
+            <Sorry>很抱歉，找不到符合此搜尋相關的內容。</Sorry>
+          </Message>
+        </NoResult>
+      )}
     </Box>
   );
 };
+
+const Sorry = styled.p`
+  color: ${__D2D2D2__()};
+  font-size: 18px;
+  line-height: 26px;
+`;
+
+const Oops = styled.p`
+  margin-bottom: 4px;
+  color: ${__FFB72C__()};
+  font-size: 20px;
+  font-weight: 500;
+`;
+
+const Message = styled.div``;
+
+const UnionIcon = styled(Union)`
+  margin-right: 16px;
+`;
+
+const NoResult = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 32px 0px;
+`;
 
 const SmallCard = styled(CardSm)``;
 

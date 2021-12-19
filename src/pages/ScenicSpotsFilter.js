@@ -64,6 +64,8 @@ const countiesOptions = counties.map((county) => {
   };
 });
 
+const countOfWaitingCard = 20;
+
 export const handleClickActivityCard = () => {
   document.body.style.overflow = "hidden";
 };
@@ -141,19 +143,22 @@ const ScenicSpots = (props) => {
   const [scenicSpotsPage, setScenicSpotsPage] = useState(1);
   const [totalScenicSpotsPages, setTotalScenicSpotsPages] = useState(0);
   const [cityScenicSpots, setCityScenicSpots] = useState([]);
-  // 其他 state
-  const [isShowDetail, setIsShowDetail] = useState(false);
+  // modal詳細資訊
   const [modalInfo, setModalInfo] = useState([]);
+  // 顯示狀態
+  const [isLoading, setIsLoading] = useState(true);
+  const [isShowDetail, setIsShowDetail] = useState(false);
 
   const getFilterStateFromSearchParam = () => {
     const urlSearchParams = getParamsFromUrl();
+    console.log("urlSearchParams", urlSearchParams);
     setKeyword(urlSearchParams.keyword);
     setSelectedCategories(urlSearchParams.category);
     setSelectedCity(urlSearchParams.city);
     setScenicSpotsPage(1);
     setActivitiesPage(1);
     setQureyParams({
-      keyword: urlSearchParams.Keyword,
+      keyword: urlSearchParams.keyword,
       category: urlSearchParams.category,
       city: urlSearchParams.city,
     });
@@ -280,6 +285,10 @@ const ScenicSpots = (props) => {
       } // 搜尋功能
       setCityScenicSpots(_cityScenicSpots);
     }); // 接景點資料
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1 * 1000);
   }, [qureyParams]);
 
   useEffect(() => {
@@ -307,6 +316,10 @@ const ScenicSpots = (props) => {
     setCityActivities(_activities);
   }, [activitiesPage]);
 
+  useEffect(() => {
+    console.log("cityActivities", cityActivities);
+  }, [cityActivities]);
+
   return (
     <SearchLayout
       categories={categories}
@@ -318,6 +331,7 @@ const ScenicSpots = (props) => {
       keyword={keyword}
       setKeyword={setKeyword}
       onClickSearchButton={() => {
+        setIsLoading(true);
         pushSearchParam([
           { key: "keyword", value: keyword },
           { key: "category", value: selectedCategories },
@@ -347,14 +361,18 @@ const ScenicSpots = (props) => {
           onClick={(e) => {
             putCityActivityInfosToDetailModal(e);
           }}
+          isWaiting={isLoading}
+          countOfWaitingCard={countOfWaitingCard}
         />
-        <Paginate
-          count={totalActivitiesPages}
-          previousIcon={Arrow}
-          nextIcon={ArrowRight}
-          setPage={setActivitiesPage}
-          page={activitiesPage}
-        />
+        {cityActivities.length !== 0 && (
+          <Paginate
+            count={totalActivitiesPages}
+            previousIcon={Arrow}
+            nextIcon={ArrowRight}
+            setPage={setActivitiesPage}
+            page={activitiesPage}
+          />
+        )}
       </Activity>
 
       <ScenicSpot
@@ -371,14 +389,18 @@ const ScenicSpots = (props) => {
           onClick={(e) => {
             putCityScenicspotInfosToDetailModal(e);
           }}
+          isWaiting={isLoading}
+          countOfWaitingCard={countOfWaitingCard}
         />
-        <Paginate
-          count={totalScenicSpotsPages}
-          previousIcon={Arrow}
-          nextIcon={ArrowRight}
-          setPage={setScenicSpotsPage}
-          page={scenicSpotsPage}
-        />
+        {cityScenicSpots.length !== 0 && (
+          <Paginate
+            count={totalScenicSpotsPages}
+            previousIcon={Arrow}
+            nextIcon={ArrowRight}
+            setPage={setScenicSpotsPage}
+            page={scenicSpotsPage}
+          />
+        )}
       </ScenicSpot>
 
       <DetailModal

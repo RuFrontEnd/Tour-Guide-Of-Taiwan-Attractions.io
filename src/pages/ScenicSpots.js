@@ -30,17 +30,14 @@ const countiesOptions = counties.map((county) => {
 const ScenicSpots = (props) => {
   const { history } = props;
   const navBarHeight = useSelector((state) => state.navBar.height);
-
   // 篩選條件
   const [selectedCategories, setSelectedCategories] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [keyword, setKeyword] = useState("");
-
   // 顯示資料
   const [hotScenicSpots, setHotScenicSpots] = useState([]);
   const [hotActivities, setHotActivities] = useState([]);
   const [modalInfo, setModalInfo] = useState([]);
-
   // 顯示狀態
   const [isLoading, setIsLoading] = useState(true);
   const [isShowDetail, setIsShowDetail] = useState(false);
