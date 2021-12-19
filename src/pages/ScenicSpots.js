@@ -13,8 +13,6 @@ import { counties } from "variable/variable";
 import { getScenicSpots } from "api/scenicSpots";
 import { getActivities } from "api/activities";
 import { pushSearchParamAndPushUrl } from "utils/url";
-import LoadingCard from "components/LoadingCard";
-import Card from "components/Card";
 
 const categories = [
   { value: "", content: "不分類別" },
@@ -32,13 +30,20 @@ const countiesOptions = counties.map((county) => {
 const ScenicSpots = (props) => {
   const { history } = props;
   const navBarHeight = useSelector((state) => state.navBar.height);
-  const [isShowDetail, setIsShowDetail] = useState(false);
+
+  // 篩選條件
   const [selectedCategories, setSelectedCategories] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [keyword, setKeyword] = useState("");
+
+  // 顯示資料
   const [hotScenicSpots, setHotScenicSpots] = useState([]);
   const [hotActivities, setHotActivities] = useState([]);
-  const [keyword, setKeyword] = useState("");
   const [modalInfo, setModalInfo] = useState([]);
+
+  // 顯示狀態
+  const [isLoading, setIsLoading] = useState(true);
+  const [isShowDetail, setIsShowDetail] = useState(false);
 
   const putHotActivityInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
@@ -141,6 +146,13 @@ const ScenicSpots = (props) => {
     });
   }, []);
 
+  useEffect(() => {
+    if (hotScenicSpots.length !== 0 && hotActivities.length !== 0)
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1 * 1000);
+  }, [hotScenicSpots, hotActivities]);
+
   return (
     <SearchLayout
       categories={categories}
@@ -169,7 +181,7 @@ const ScenicSpots = (props) => {
         onClickButton={(e) => {
           putHotActivityInfosToDetailModal(e);
         }}
-        isWating={true}
+        isWaiting={isLoading}
         countOfWaitingCard={4}
       />
       <HotScenicSpotSmCards
@@ -178,7 +190,7 @@ const ScenicSpots = (props) => {
         onClick={(e) => {
           putHotScenicspotInfosToDetailModal(e);
         }}
-        isWating={true}
+        isWaiting={isLoading}
         countOfWaitingCard={10}
       />
       <InfoModal

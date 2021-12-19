@@ -18,7 +18,7 @@ const SmallCards = (props) => {
     icon,
     spots,
     onClick = () => {},
-    isWating = false,
+    isWaiting = false,
     countOfWaitingCard,
   } = props;
 
@@ -28,7 +28,7 @@ const SmallCards = (props) => {
     <Box className={className} style={style}>
       <Title title={title}>{icon ? icon : <Triangle />}</Title>
       <Cards>
-        {!isWating &&
+        {!isWaiting &&
           Array.isArray(spots) &&
           spots.map((spot, spotIndex) => (
             <CardItem>
@@ -46,7 +46,7 @@ const SmallCards = (props) => {
               />
             </CardItem>
           ))}
-        {isWating &&
+        {isWaiting &&
           WatingCards.map((WatingCard) => (
             <CardItem>
               <LoadingCardSm />

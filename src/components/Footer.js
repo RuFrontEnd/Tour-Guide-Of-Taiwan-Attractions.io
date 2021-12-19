@@ -10,13 +10,21 @@ const Footer = (props) => {
       <Wrap>
         <Box>
           <Text>Taiwan Tourguide ©</Text>
-          <Text>Code: Luke_Xie</Text>
-          <Text>Design: KT</Text>
+          <Text>
+            Code:
+            <Link href="https://github.com/RuFrontEnd" target="_blank"> Luke_Xie</Link>
+          </Text>
+          <Text>
+            Design:
+            <Link href="https://www.behance.net/KT_Designer" target="_blank"> KT</Link>
+          </Text>
         </Box>
       </Wrap>
     </Container>
   );
 };
+
+const Link = styled.a``;
 
 const Text = styled.p`
   padding: 0px 2px;

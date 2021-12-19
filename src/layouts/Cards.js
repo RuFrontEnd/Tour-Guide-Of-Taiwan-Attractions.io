@@ -16,7 +16,7 @@ const Cards = (props) => {
     activities,
     onClickButton = () => {},
     buttonText,
-    isWaiting = true,
+    isWaiting = false,
     countOfWaitingCard,
   } = props;
 
@@ -144,6 +144,24 @@ const CardLi = styled.li`
       padding-left: 0px;
     }
   }
+
+  & #LoadingCard-IntroBox > span:nth-child(1) {
+    @media (max-width: 992px) {
+      display: none;
+    }
+  }
+
+  & #LoadingCard-IntroBox > span:nth-child(1),
+  #LoadingCard-IntroBox > span:nth-child(2) {
+    @media (max-width: 768px) {
+      display: none;
+    }
+
+    @media (max-width: 576px) {
+      display: inline;
+    }
+  }
+
 `;
 
 const CardUl = styled.ul`

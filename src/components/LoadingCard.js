@@ -25,8 +25,12 @@ const LoadingCard = (props) => {
         </ImageBox>
         <Info>
           <Instruction>
-            <Title id="Card-Title" />
-            <Intro id="Card-Intro" count={3} />
+            <Title id="LoadingCard-Title" />
+            <IntroBox id="LoadingCard-IntroBox">
+              <Intro />
+              <Intro />
+              <Intro />
+            </IntroBox>
           </Instruction>
           <Area />
         </Info>
@@ -73,6 +77,8 @@ const Title = styled(Skeleton)`
 const Intro = styled(Skeleton)`
   margin: 2.5px 0px;
 `;
+
+const IntroBox = styled.div``;
 
 const More = styled.div`
   display: flex;
