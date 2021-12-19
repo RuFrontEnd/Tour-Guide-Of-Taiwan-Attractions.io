@@ -71,6 +71,10 @@ const Sorry = styled.p`
   color: ${__D2D2D2__()};
   font-size: 18px;
   line-height: 26px;
+
+  @media (max-width: 576px) {
+    font-size: 16px;
+  }
 `;
 
 const Oops = styled.p`
@@ -78,12 +82,22 @@ const Oops = styled.p`
   color: ${__FFB72C__()};
   font-size: 20px;
   font-weight: 500;
+
+  @media (max-width: 576px) {
+    font-size: 18px;
+    text-align: center;
+  }
 `;
 
 const Message = styled.div``;
 
 const UnionIcon = styled(Union)`
   margin-right: 16px;
+
+  @media (max-width: 576px) {
+    margin-right: 0px;
+    margin-bottom: 12px;
+  }
 `;
 
 const NoResult = styled.div`
@@ -91,6 +105,10 @@ const NoResult = styled.div`
   justify-content: center;
   align-items: center;
   margin: 32px 0px;
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+  }
 `;
 
 const SmallCard = styled(CardSm)``;

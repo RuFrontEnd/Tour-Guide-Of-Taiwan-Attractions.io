@@ -432,7 +432,19 @@ const NavBarHeight = styled.div`
 `;
 
 const SearchLayout = styled(SearchTool)`
-  padding-bottom: 40px;
+  padding-bottom: 50px;
+
+  #Tool-Title {
+    @media (max-width: 992px) {
+      display: none;
+    }
+  }
+
+  #Tool-LandingImgBox {
+    @media (max-width: 992px) {
+      margin-bottom: 35px;
+    }
+  }
 `;
 
 export default withRouter(ScenicSpots);
