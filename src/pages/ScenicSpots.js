@@ -39,8 +39,10 @@ const ScenicSpots = (props) => {
   const [modalInfo, setModalInfo] = useState([]);
 
   const putHotActivityInfosToDetailModal = (e) => {
+    console.log('hotActivities',hotActivities)
     const targetId = Number(e.currentTarget.dataset.id);
     const _title = hotActivities[targetId].ActivityName || "暫無";
+    const _description=  hotActivities[targetId].Description
     const _time =
       `${hotActivities[targetId].StartTime.slice(0, 10)} - ${hotActivities[
         targetId
@@ -61,6 +63,7 @@ const ScenicSpots = (props) => {
     setIsShowDetail(true);
     setModalInfo({
       title: _title,
+      description: _description,
       time: _time,
       fee: _fee,
       area: _area,

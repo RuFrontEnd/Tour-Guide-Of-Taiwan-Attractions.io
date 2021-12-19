@@ -80,7 +80,7 @@ const DetailCard = (props) => {
         <Info>
           <Title>{info.title}</Title>
           <Intro>{children}</Intro>
-          <More>
+          <More id="DetailCard-More">
             <Trait className="detailCard-trait">
               <Clock />
               <Illustrate>{info.time}</Illustrate>
@@ -113,10 +113,10 @@ const Container = styled(Paper)`
 
 const Wrap = styled.div`
   display: grid;
-  width: 600px;
 `;
 
 const Image = styled.img`
+  aspect-ratio: 3/2;
   object-fit: cover;
   background-color: grey;
   width: 100%;
@@ -146,8 +146,9 @@ const Title = styled.h2`
 `;
 
 const Intro = styled.p`
+  max-width: 600px;
   max-height: 120px;
-  overflow-y:auto;
+  overflow-y: auto;
   color: ${__0D0B0C__()};
   font-size: 14px;
   line-height: 21px;

@@ -84,6 +84,7 @@ const Modal = styled.div`
 `;
 
 const DetailCardBox = styled.div`
+  padding: 0px 20px;
   &.detailModal-modal-detailCardBox {
     transform: translateY(-20px);
     transition: 0.25s;
@@ -92,6 +93,23 @@ const DetailCardBox = styled.div`
   &.detailModal-modal-detailCardBox-active {
     transform: translateY(0px);
     transition: 0.25s;
+  }
+
+  & #DetailCard-More {
+    @media (max-width: 425px) {
+      grid-template-areas:
+        "a"
+        "b"
+        "c"
+        "d";
+    }
+  }
+
+  & .detailCard-trait:nth-child(1),
+  .detailCard-trait:nth-child(2),
+  .detailCard-trait:nth-child(3),
+  .detailCard-trait:nth-child(4) {
+    margin-bottom: 16px;
   }
 `;
 
