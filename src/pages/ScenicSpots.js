@@ -13,7 +13,8 @@ import { counties } from "variable/variable";
 import { getScenicSpots } from "api/scenicSpots";
 import { getActivities } from "api/activities";
 import { pushSearchParamAndPushUrl } from "utils/url";
-import CardSmLoading from "components/CardSmLoading";
+import LoadingCard from "components/LoadingCard";
+import Card from "components/Card";
 
 const categories = [
   { value: "", content: "不分類別" },
@@ -161,17 +162,6 @@ const ScenicSpots = (props) => {
         );
       }}
     >
-      <div style={{ maxWidth: "500px" }}>
-        {/* <CitySwiper
-        setSelected={setSelectedCity}
-        onClickBoard={(e) => {
-          pushSearchParamAndPushUrl(
-            [{ key: "city", value: e.currentTarget.dataset.value }],
-            `${window.location.origin}/scenicspots/filter`
-          );
-        }}
-      /> */}
-      </div>
       <HotActivitiesCards
         title="熱門活動"
         activities={hotActivities}
@@ -179,6 +169,8 @@ const ScenicSpots = (props) => {
         onClickButton={(e) => {
           putHotActivityInfosToDetailModal(e);
         }}
+        isWating={true}
+        countOfWaitingCard={4}
       />
       <HotScenicSpotSmCards
         title="熱門景點"

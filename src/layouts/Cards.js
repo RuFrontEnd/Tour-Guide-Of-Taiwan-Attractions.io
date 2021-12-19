@@ -6,6 +6,7 @@ import { ReactComponent as Triangle } from "assets/triangle_title.svg";
 import Category from "components/Category";
 import Card from "components/Card";
 import Space from "layouts/Space";
+import LoadingCard from "components/LoadingCard";
 
 const Cards = (props) => {
   const {
@@ -15,7 +16,11 @@ const Cards = (props) => {
     activities,
     onClickButton = () => {},
     buttonText,
+    isWaiting = true,
+    countOfWaitingCard,
   } = props;
+
+  const watingCards = new Array(countOfWaitingCard).fill(null);
 
   return (
     <Space className={className} style={style}>
@@ -23,24 +28,31 @@ const Cards = (props) => {
         <Triangle />
       </Title>
       <CardUl>
-        {activities.map((activity, activityIndex) => (
-          <CardLi key={activity.title}>
-            <HotActivityCard
-              dataId={activityIndex}
-              info={{
-                src: activity.Picture.PictureUrl1,
-                alt: "圖片",
-                title: activity.Name,
-                description: activity.Description,
-                area: activity.City,
-              }}
-              buttonText={buttonText}
-              onClickButton={(e) => {
-                onClickButton(e);
-              }}
-            />
-          </CardLi>
-        ))}
+        {!isWaiting &&
+          activities.map((activity, activityIndex) => (
+            <CardLi key={activity.title}>
+              <HotActivityCard
+                dataId={activityIndex}
+                info={{
+                  src: activity.Picture.PictureUrl1,
+                  alt: "圖片",
+                  title: activity.Name,
+                  description: activity.Description,
+                  area: activity.City,
+                }}
+                buttonText={buttonText}
+                onClickButton={(e) => {
+                  onClickButton(e);
+                }}
+              />
+            </CardLi>
+          ))}
+        {isWaiting &&
+          watingCards.map((watingCard) => (
+            <CardLi>
+              <LoadingCard />
+            </CardLi>
+          ))}
       </CardUl>
     </Space>
   );

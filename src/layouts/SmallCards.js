@@ -5,7 +5,7 @@ import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
 import { ReactComponent as Triangle } from "assets/triangle_title.svg";
 import Category from "components/Category";
 import CardSm from "components/CardSm";
-import CardSmLoading from "components/CardSmLoading";
+import LoadingCardSm from "components/LoadingCardSm";
 import Space from "layouts/Space";
 import noImg from "assets/noImg.png";
 
@@ -49,7 +49,7 @@ const SmallCards = (props) => {
         {isWating &&
           WatingCards.map((WatingCard) => (
             <CardItem>
-              <CardSmLoading />
+              <LoadingCardSm />
             </CardItem>
           ))}
       </Cards>

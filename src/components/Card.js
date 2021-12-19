@@ -37,10 +37,10 @@ const Card = (props) => {
           }}
         />
         <Info>
-          <div>
+          <Instruction>
             <Title id="Card-Title">{info.title}</Title>
             <Intro id="Card-Intro">{info.description}</Intro>
-          </div>
+          </Instruction>
           <More>
             <Area>
               <Location />
@@ -84,10 +84,13 @@ const Image = styled.img`
   margin-right: 16px;
 `;
 
+const Instruction = styled.div``;
+
 const Info = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
 `;
 
 const Title = styled.h2`

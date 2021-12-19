@@ -4,7 +4,7 @@ import Paper from "components/Paper";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-const CardSmLoading = (props) => {
+const LoadingCardSm = (props) => {
   const { className, style, onClick = () => {}, dataId } = props;
 
   return (
@@ -64,4 +64,4 @@ const MoreBox = styled.div`
  width: 25%;
 `
 
-export default CardSmLoading;
+export default LoadingCardSm;
