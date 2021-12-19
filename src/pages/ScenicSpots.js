@@ -13,6 +13,7 @@ import { counties } from "variable/variable";
 import { getScenicSpots } from "api/scenicSpots";
 import { getActivities } from "api/activities";
 import { pushSearchParamAndPushUrl } from "utils/url";
+import CardSmLoading from "components/CardSmLoading";
 
 const categories = [
   { value: "", content: "不分類別" },
@@ -41,7 +42,7 @@ const ScenicSpots = (props) => {
   const putHotActivityInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
     const _title = hotActivities[targetId].ActivityName || "暫無";
-    const _description=  hotActivities[targetId].Description
+    const _description = hotActivities[targetId].Description;
     const _time =
       `${hotActivities[targetId].StartTime.slice(0, 10)} - ${hotActivities[
         targetId
@@ -160,7 +161,8 @@ const ScenicSpots = (props) => {
         );
       }}
     >
-      {/* <CitySwiper
+      <div style={{ maxWidth: "500px" }}>
+        {/* <CitySwiper
         setSelected={setSelectedCity}
         onClickBoard={(e) => {
           pushSearchParamAndPushUrl(
@@ -169,6 +171,7 @@ const ScenicSpots = (props) => {
           );
         }}
       /> */}
+      </div>
       <HotActivitiesCards
         title="熱門活動"
         activities={hotActivities}
@@ -183,6 +186,8 @@ const ScenicSpots = (props) => {
         onClick={(e) => {
           putHotScenicspotInfosToDetailModal(e);
         }}
+        isWating={true}
+        countOfWaitingCard={10}
       />
       <InfoModal
         isShowDetail={isShowDetail}

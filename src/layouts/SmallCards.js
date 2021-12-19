@@ -5,6 +5,7 @@ import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
 import { ReactComponent as Triangle } from "assets/triangle_title.svg";
 import Category from "components/Category";
 import CardSm from "components/CardSm";
+import CardSmLoading from "components/CardSmLoading";
 import Space from "layouts/Space";
 import noImg from "assets/noImg.png";
 
@@ -17,13 +18,18 @@ const SmallCards = (props) => {
     icon,
     spots,
     onClick = () => {},
+    isWating = false,
+    countOfWaitingCard,
   } = props;
+
+  const WatingCards = new Array(countOfWaitingCard).fill(null);
 
   return (
     <Box className={className} style={style}>
       <Title title={title}>{icon ? icon : <Triangle />}</Title>
       <Cards>
-        {Array.isArray(spots) &&
+        {!isWating &&
+          Array.isArray(spots) &&
           spots.map((spot, spotIndex) => (
             <CardItem>
               <SmallCard
@@ -38,6 +44,12 @@ const SmallCards = (props) => {
                 }}
                 dataId={spotIndex}
               />
+            </CardItem>
+          ))}
+        {isWating &&
+          WatingCards.map((WatingCard) => (
+            <CardItem>
+              <CardSmLoading />
             </CardItem>
           ))}
       </Cards>
