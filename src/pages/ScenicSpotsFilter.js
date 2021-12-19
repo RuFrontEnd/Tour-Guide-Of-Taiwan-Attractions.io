@@ -162,6 +162,7 @@ const ScenicSpots = (props) => {
   const putCityActivityInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
     const _title = cityActivities[targetId].ActivityName || "暫無";
+    const _description = cityActivities[targetId].Description;
     const _time =
       `${cityActivities[targetId].StartTime.slice(0, 10)} - ${cityActivities[
         targetId
@@ -182,6 +183,7 @@ const ScenicSpots = (props) => {
     setIsShowDetail(true);
     setModalInfo({
       title: _title,
+      description: _description,
       time: _time,
       fee: _fee,
       area: _area,
@@ -193,6 +195,7 @@ const ScenicSpots = (props) => {
   const putCityScenicspotInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
     const _title = cityScenicSpots[targetId].Name || "暫無";
+    const _description = cityScenicSpots[targetId].Description;
     const _time = "永久開放";
     const _fee = "免費";
     const _area = cityScenicSpots[targetId].Address || "暫無";
@@ -210,6 +213,7 @@ const ScenicSpots = (props) => {
     setIsShowDetail(true);
     setModalInfo({
       title: _title,
+      description: _description,
       time: _time,
       fee: _fee,
       area: _area,
@@ -381,7 +385,9 @@ const ScenicSpots = (props) => {
         isShowDetail={isShowDetail}
         setIsShowDetail={setIsShowDetail}
         info={modalInfo}
-      />
+      >
+        {modalInfo.description}
+      </DetailModal>
     </SearchLayout>
   );
 };

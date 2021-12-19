@@ -39,7 +39,6 @@ const ScenicSpots = (props) => {
   const [modalInfo, setModalInfo] = useState([]);
 
   const putHotActivityInfosToDetailModal = (e) => {
-    console.log('hotActivities',hotActivities)
     const targetId = Number(e.currentTarget.dataset.id);
     const _title = hotActivities[targetId].ActivityName || "暫無";
     const _description=  hotActivities[targetId].Description
