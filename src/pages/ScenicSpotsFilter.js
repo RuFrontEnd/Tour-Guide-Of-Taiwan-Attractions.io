@@ -25,6 +25,7 @@ import boardImg_tmp from "assets/boardImg_tmp.png";
 import SmallCards from "layouts/SmallCards";
 import DetailModal from "layouts/DetailModal";
 import SearchTool from "layouts/SearchTool";
+import FilterItems from "layouts/FilterItems";
 import Cards from "layouts/Cards";
 import Tool from "layouts/Tool";
 import CityCarousel from "layouts/CityCarousel";
@@ -227,6 +228,58 @@ const ScenicSpots = (props) => {
     });
   };
 
+  const handleSearch = () => {
+    setIsLoading(true);
+    pushSearchParam([
+      { key: "keyword", value: keyword },
+      { key: "category", value: selectedCategories },
+      { key: "city", value: selectedCity },
+      { key: "scenicSpotsPage", value: scenicSpotsPage },
+      { key: "activitiesPage", value: activitiesPage },
+    ]);
+    setQureyParams({
+      keyword: keyword,
+      category: selectedCategories,
+      city: selectedCity,
+    });
+    setScenicSpotsPage(1);
+  };
+
+  const FilterItemsProps = {
+    isWaiting: isLoading,
+    setIsWaiting:setIsLoading,
+    searchInfos: {
+      categories: categories,
+      counties: countiesOptions,
+      selectedCategories: selectedCategories,
+      setSelectedCategories: setSelectedCategories,
+      selectedCity: selectedCity,
+      setSelectedCity: setSelectedCity,
+      keyword: keyword,
+      setKeyword: setKeyword,
+      onClickSearchButton: handleSearch,
+    },
+    firstSmCardsInfos: {
+      icon: <Triangle />,
+      spots: cityActivities,
+      setSpots: setCityActivities,
+      onClickCard: putCityActivityInfosToDetailModal,
+      countOfWaitingCard: 20,
+    },
+    secondSmCardsInfos: {
+      icon: <Triangle />,
+      spots: cityScenicSpots,
+      setSpots: setCityScenicSpots,
+      onClickCard: putCityScenicspotInfosToDetailModal,
+      countOfWaitingCard: 20,
+    },
+    modalInfos: {
+      isShowDetail: isShowDetail,
+      setIsShowDetail: setIsShowDetail,
+      infos: modalInfo,
+    },
+  };
+
   useEffect(() => {
     history.listen(() => {
       getFilterStateFromSearchParam();
@@ -316,98 +369,7 @@ const ScenicSpots = (props) => {
     setCityActivities(_activities);
   }, [activitiesPage]);
 
-  return (
-    <SearchLayout
-      categories={categories}
-      counties={countiesOptions}
-      selectedCategories={selectedCategories}
-      setSelectedCategories={setSelectedCategories}
-      selectedCity={selectedCity}
-      setSelectedCity={setSelectedCity}
-      keyword={keyword}
-      setKeyword={setKeyword}
-      onClickSearchButton={() => {
-        setIsLoading(true);
-        pushSearchParam([
-          { key: "keyword", value: keyword },
-          { key: "category", value: selectedCategories },
-          { key: "city", value: selectedCity },
-          { key: "scenicSpotsPage", value: scenicSpotsPage },
-          { key: "activitiesPage", value: activitiesPage },
-        ]);
-        setQureyParams({
-          keyword: keyword,
-          category: selectedCategories,
-          city: selectedCity,
-        });
-        setScenicSpotsPage(1);
-      }}
-    >
-      <Activity
-        style={{
-          display: qureyParams.category === "scenicSpot" ? "none" : "block",
-        }}
-      >
-        <ActivitySmCards
-          title={`${
-            qureyParams.city === "不分縣市" ? "" : qureyParams.city
-          } 活動`}
-          icon={<Triangle />}
-          spots={cityActivities}
-          onClick={(e) => {
-            putCityActivityInfosToDetailModal(e);
-          }}
-          isWaiting={isLoading}
-          countOfWaitingCard={countOfWaitingCard}
-        />
-        {cityActivities.length !== 0 && (
-          <Paginate
-            count={totalActivitiesPages}
-            previousIcon={Arrow}
-            nextIcon={ArrowRight}
-            setPage={setActivitiesPage}
-            page={activitiesPage}
-          />
-        )}
-      </Activity>
-
-      <ScenicSpot
-        style={{
-          display: qureyParams.category === "activity" ? "none" : "block",
-        }}
-      >
-        <ScenicSpotSmCards
-          title={`${
-            qureyParams.city === "不分縣市" ? "" : qureyParams.city
-          } 景點`}
-          icon={<Triangle />}
-          spots={cityScenicSpots}
-          onClick={(e) => {
-            putCityScenicspotInfosToDetailModal(e);
-          }}
-          isWaiting={isLoading}
-          countOfWaitingCard={countOfWaitingCard}
-        />
-        {cityScenicSpots.length !== 0 && (
-          <Paginate
-            count={totalScenicSpotsPages}
-            previousIcon={Arrow}
-            nextIcon={ArrowRight}
-            setPage={setScenicSpotsPage}
-            page={scenicSpotsPage}
-          />
-        )}
-      </ScenicSpot>
-
-      <DetailModal
-        isShowDetail={isShowDetail}
-        setIsShowDetail={setIsShowDetail}
-        info={modalInfo}
-      >
-        {modalInfo.description}
-      </DetailModal>
-    </SearchLayout>
-  );
+  return <FilterItems {...FilterItemsProps} />;
 };
 
 const Paginate = styled(Pagination)`

@@ -12,10 +12,12 @@ const Pagination = (props) => {
     page,
     previousIcon,
     nextIcon,
+    onClick,
   } = props;
   return (
     <Box style={style} className={className}>
       <MuiPagination
+        onClick={onClick}
         onChange={(e, page) => {
           setPage(page);
         }}
