@@ -316,10 +316,6 @@ const ScenicSpots = (props) => {
     setCityActivities(_activities);
   }, [activitiesPage]);
 
-  useEffect(() => {
-    console.log("cityActivities", cityActivities);
-  }, [cityActivities]);
-
   return (
     <SearchLayout
       categories={categories}
