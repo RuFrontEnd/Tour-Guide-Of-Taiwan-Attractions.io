@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
-import { useSelector } from "react-redux";
 import "react-multi-carousel/lib/styles.css";
-import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
-import SmallCards from "layouts/SmallCards";
-import DetailModal from "layouts/DetailModal";
-import Cards from "layouts/Cards";
-import SearchTool from "layouts/SearchTool";
-import CityCarousel from "layouts/CityCarousel";
 import { counties } from "variable/variable";
 import { getScenicSpots } from "api/scenicSpots";
 import { getActivities } from "api/activities";
 import { pushSearchParamAndPushUrl } from "utils/url";
+import HotItems from "layouts/HotItems";
 
 const categories = [
   { value: "", content: "不分類別" },
@@ -28,8 +21,6 @@ const countiesOptions = counties.map((county) => {
 });
 
 const ScenicSpots = (props) => {
-  const { history } = props;
-  const navBarHeight = useSelector((state) => state.navBar.height);
   // 篩選條件
   const [selectedCategories, setSelectedCategories] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
@@ -105,6 +96,50 @@ const ScenicSpots = (props) => {
     });
   };
 
+  const handleSearch = () => {
+    pushSearchParamAndPushUrl(
+      [
+        { key: "keyword", value: keyword },
+        { key: "category", value: selectedCategories },
+        { key: "city", value: selectedCity },
+      ],
+      `${window.location.origin}/scenicspots/filter`
+    );
+  };
+
+  const HotItemsProps = {
+    isWaiting: isLoading,
+    searchInfos: {
+      categories: categories,
+      counties: countiesOptions,
+      selectedCategories: selectedCategories,
+      setSelectedCategories: setSelectedCategories,
+      selectedCity: selectedCity,
+      setSelectedCity: setSelectedCity,
+      keyword: keyword,
+      setKeyword: setKeyword,
+      onClickSearchButton: handleSearch,
+    },
+    lCardsInfos: {
+      title: "熱門活動",
+      spots: hotActivities,
+      buttonText: "活動詳情",
+      onClickButton: putHotActivityInfosToDetailModal,
+      countOfWaitingCard: 4,
+    },
+    sCardsInfos: {
+      title: "熱門景點",
+      spots: hotScenicSpots,
+      onClickButton: putHotScenicspotInfosToDetailModal,
+      countOfWaitingCard: 10,
+    },
+    modalInfos: {
+      isShowDetail: isShowDetail,
+      setIsShowDetail: setIsShowDetail,
+      infos: modalInfo,
+    },
+  };
+
   useEffect(() => {
     getActivities().then((_activities) => {
       let pictureOwnedActivities = _activities.filter((_activitiy) => {
@@ -150,79 +185,7 @@ const ScenicSpots = (props) => {
       }, 1 * 1000);
   }, [hotScenicSpots, hotActivities]);
 
-  return (
-    <SearchLayout
-      categories={categories}
-      counties={countiesOptions}
-      selectedCategories={selectedCategories}
-      setSelectedCategories={setSelectedCategories}
-      selectedCity={selectedCity}
-      setSelectedCity={setSelectedCity}
-      keyword={keyword}
-      setKeyword={setKeyword}
-      onClickSearchButton={() => {
-        pushSearchParamAndPushUrl(
-          [
-            { key: "keyword", value: keyword },
-            { key: "category", value: selectedCategories },
-            { key: "city", value: selectedCity },
-          ],
-          `${window.location.origin}/scenicspots/filter`
-        );
-      }}
-    >
-      <HotActivitiesCards
-        title="熱門活動"
-        activities={hotActivities}
-        buttonText={"活動詳情"}
-        onClickButton={(e) => {
-          putHotActivityInfosToDetailModal(e);
-        }}
-        isWaiting={isLoading}
-        countOfWaitingCard={4}
-      />
-      <HotScenicSpotSmCards
-        title="熱門景點"
-        spots={hotScenicSpots}
-        onClick={(e) => {
-          putHotScenicspotInfosToDetailModal(e);
-        }}
-        isWaiting={isLoading}
-        countOfWaitingCard={10}
-      />
-      <InfoModal
-        isShowDetail={isShowDetail}
-        setIsShowDetail={setIsShowDetail}
-        info={modalInfo}
-      >
-        {modalInfo.description}
-      </InfoModal>
-    </SearchLayout>
-  );
+  return <HotItems {...HotItemsProps} />;
 };
-
-const InfoModal = styled(DetailModal)``;
-
-const HotScenicSpotSmCards = styled(SmallCards)``;
-
-const HotActivitiesCards = styled(Cards)``;
-
-const SearchLayout = styled(SearchTool)`
-  padding-bottom: 50px;
-
-  #Tool-Title {
-    @media (max-width: 992px) {
-      display: none;
-    }
-  }
-
-  #Tool-LandingImgBox {
-    @media (max-width: 992px) {
-      margin-bottom: 35px;
-    }
-  }
-`;
-
-const CitySwiper = styled(CityCarousel)``;
 
 export default withRouter(ScenicSpots);

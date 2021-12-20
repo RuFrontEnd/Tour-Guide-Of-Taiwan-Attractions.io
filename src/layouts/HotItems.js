@@ -10,16 +10,16 @@ import SearchTool from "layouts/SearchTool";
 const HotItems = (props) => {
   const {
     isWaiting,
+    searchInfos,
     lCardsInfos,
     sCardsInfos,
     modalInfos,
-    searchInfos,
   } = props;
 
   return (
     <SearchLayout
       categories={searchInfos.categories}
-      counties={searchInfos.countiesOptions}
+      counties={searchInfos.counties}
       selectedCategories={searchInfos.selectedCategories}
       setSelectedCategories={searchInfos.setSelectedCategories}
       selectedCity={searchInfos.selectedCity}
