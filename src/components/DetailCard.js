@@ -1,39 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components/macro";
 import Paper from "components/Paper";
-import {
-  __ACACAC__,
-  __FF1D6C__,
-  __007350__,
-  __0D0B0C__,
-  __FFF__,
-} from "variable/variable";
-import { ReactComponent as Arrow } from "assets/arrow.svg";
+import { __FF1D6C__, __0D0B0C__ } from "variable/variable";
+import noImg from "assets/noImg.png";
 import { ReactComponent as LocationRef } from "assets/location.svg";
 import { ReactComponent as ClockRef } from "assets/clock.svg";
 import { ReactComponent as StampRef } from "assets/stamp.svg";
 import { ReactComponent as TelephoneRef } from "assets/telephone.svg";
-import SquareButton from "components/SquareButton";
 import DirectButton from "components/DirectButton";
+import Skeleton from "react-loading-skeleton";
 
 const DetailCard = (props) => {
-  const {
-    className,
-    style,
-    children,
-    info = {},
-    onClick = () => {},
-    height,
-  } = props;
+  const { className, style, children, info = {}, onClick = () => {} } = props;
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
+  const [isImgLoading, setIsImgLoading] = useState(true);
+  const $image = useRef();
   let countOfImg = 0;
-  let imgSrc = "";
+  let img = "";
   let imgAlt = "";
+
+  console.log('info',info)
 
   if (Array.isArray(info.images)) {
     countOfImg = info.images.length;
     if (info.images[currentImgIndex].hasOwnProperty("src")) {
-      imgSrc = info.images[currentImgIndex].src;
+      img = info.images[currentImgIndex].src;
     }
     if (info.images[currentImgIndex].hasOwnProperty("alt")) {
       imgAlt = info.images[currentImgIndex].alt;
@@ -70,7 +61,24 @@ const DetailCard = (props) => {
       rotateOfShadow={8}
     >
       <Wrap>
-        <Image src={imgSrc} alt={imgAlt} />
+        <LoadingImage style={{ display: isImgLoading ? "block" : "none" }} />
+        <Image
+          style={{ display: isImgLoading ? "none" : "block" }}
+          ref={$image}
+          src={img}
+          alt={imgAlt}
+          onLoad={() => {
+            setTimeout(() => {
+              setIsImgLoading(false);
+            }, 1 * 1000);
+          }}
+          onError={() => {
+            img = noImg;
+            setTimeout(() => {
+              setIsImgLoading(false);
+            }, 1 * 1000);
+          }}
+        />
         {info.images.length > 1 && (
           <Buttons>
             <LeftDirectButton onClick={getPrevImage} />
@@ -115,12 +123,20 @@ const Wrap = styled.div`
   display: grid;
 `;
 
+const LoadingImage = styled(Skeleton)`
+  aspect-ratio: 3/2;
+  object-fit: cover;
+  width: 100%;
+  max-height: 400px;
+  margin-bottom: 18.5px;
+`;
+
 const Image = styled.img`
   aspect-ratio: 3/2;
   object-fit: cover;
   background-color: grey;
   width: 100%;
-  height: 400px;
+  max-height: 400px;
   margin-bottom: 18.5px;
 `;
 

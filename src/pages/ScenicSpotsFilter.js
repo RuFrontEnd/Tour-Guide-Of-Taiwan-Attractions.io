@@ -126,9 +126,7 @@ export const getParamsFromUrl = () => {
 };
 
 const ScenicSpots = (props) => {
-  const { history, location } = props;
-  const qurey = useQuery();
-  const navBarHeight = useSelector((state) => state.navBar.height);
+  const { history } = props;
   // 篩選相關state
   const [keyword, setKeyword] = useState("");
   const [selectedCategories, setSelectedCategories] = useState(null);
@@ -137,12 +135,10 @@ const ScenicSpots = (props) => {
   // 活動相關 state
   const [totalActivities, setTotalActivities] = useState([]);
   const [activitiesPage, setActivitiesPage] = useState(0);
-  const [totalActivitiesPages, setTotalActivitiesPages] = useState(0);
   const [cityActivities, setCityActivities] = useState([]);
   // 景點相關 state
   const [totalScenicSpots, setTotalScenicSpots] = useState([]);
   const [scenicSpotsPage, setScenicSpotsPage] = useState(1);
-  const [totalScenicSpotsPages, setTotalScenicSpotsPages] = useState(0);
   const [cityScenicSpots, setCityScenicSpots] = useState([]);
   // modal詳細資訊
   const [modalInfo, setModalInfo] = useState([]);
@@ -296,7 +292,6 @@ const ScenicSpots = (props) => {
           item.hasOwnProperty("City")
       );
       setTotalActivities(_totalActivities);
-      setTotalActivitiesPages(Math.ceil(_totalActivities.length / 20));
       let _cityActivities = [];
       if (data.length !== 0 && !qureyParams.keyword) {
         _cityActivities = _totalActivities.slice(
@@ -321,7 +316,6 @@ const ScenicSpots = (props) => {
           item.hasOwnProperty("City")
       );
       setTotalScenicSpots(_totalScenicSpots);
-      setTotalScenicSpotsPages(Math.ceil(_totalScenicSpots.length / 20));
       let _cityScenicSpots = [];
       if (data.length !== 0 && !qureyParams.keyword) {
         _cityScenicSpots = _totalScenicSpots.slice(
@@ -371,38 +365,5 @@ const ScenicSpots = (props) => {
 
   return <FilterItems {...FilterItemsProps} />;
 };
-
-const Paginate = styled(Pagination)`
-  display: flex;
-  justify-content: center;
-`;
-
-const ScenicSpotSmCards = styled(SmallCards)``;
-
-const ScenicSpot = styled.section``;
-
-const ActivitySmCards = styled(SmallCards)``;
-
-const Activity = styled.section``;
-
-const NavBarHeight = styled.div`
-  height: ${(props) => props.height}px;
-`;
-
-const SearchLayout = styled(SearchTool)`
-  padding-bottom: 50px;
-
-  #Tool-Title {
-    @media (max-width: 992px) {
-      display: none;
-    }
-  }
-
-  #Tool-LandingImgBox {
-    @media (max-width: 992px) {
-      margin-bottom: 35px;
-    }
-  }
-`;
 
 export default withRouter(ScenicSpots);
