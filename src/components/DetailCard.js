@@ -19,7 +19,7 @@ const DetailCard = (props) => {
   let img = "";
   let imgAlt = "";
 
-  console.log('info',info)
+  console.log("info", info);
 
   if (Array.isArray(info.images)) {
     countOfImg = info.images.length;
@@ -49,6 +49,19 @@ const DetailCard = (props) => {
     }
   };
 
+  useEffect(() => {
+    const myVar = setTimeout(() => {
+      if ($image.current.complete === false) {
+        $image.current.src = noImg;
+        setIsImgLoading(false);
+      }
+    }, 2 * 1000);
+
+    return () => {
+      clearTimeout(myVar);
+    };
+  }, []);
+
   return (
     <Container
       style={style}
@@ -68,12 +81,7 @@ const DetailCard = (props) => {
           src={img}
           alt={imgAlt}
           onLoad={() => {
-            setTimeout(() => {
-              setIsImgLoading(false);
-            }, 1 * 1000);
-          }}
-          onError={() => {
-            img = noImg;
+            console.log("BBB");
             setTimeout(() => {
               setIsImgLoading(false);
             }, 1 * 1000);
