@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import styled from "styled-components/macro";
 import Paper from "components/Paper";
 import {
-  __ACACAC__,
   __FF1D6C__,
   __007350__,
   __F6F7FB__,
@@ -68,7 +67,6 @@ const Image = styled.img`
 `;
 
 const Info = styled.div`
-  /* max-width: 182px; */
 `;
 
 const Title = styled.h2`

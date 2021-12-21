@@ -193,13 +193,7 @@ const FilterItems = (props) => {
         }}
       >
         <FirstSmCards
-          title={`${
-            !qureyParams.city
-              ? ""
-              : qureyParams.city === "不分縣市"
-              ? ""
-              : qureyParams.city
-          } ${firstSmCardsInfos.title}`}
+          title={firstSmCardsInfos.title}
           icon={firstSmCardsInfos.icon}
           spots={firstSmCardsInfos.spots}
           onClick={(e) => {
@@ -230,13 +224,7 @@ const FilterItems = (props) => {
         }}
       >
         <SecondSmCards
-          title={`${
-            !qureyParams.city
-              ? ""
-              : qureyParams.city === "不分縣市"
-              ? ""
-              : qureyParams.city
-          } ${secondSmCardsInfos.title}`}
+          title={secondSmCardsInfos.title}
           icon={secondSmCardsInfos.icon}
           spots={secondSmCardsInfos.spots}
           onClick={(e) => {
