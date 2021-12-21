@@ -9,15 +9,7 @@ import SmallCards from "layouts/SmallCards";
 import DetailModal from "layouts/DetailModal";
 import SearchTool from "layouts/SearchTool";
 import Pagination from "components/Pagination";
-import { getCityScenicSpots } from "api/scenicSpots";
-import { getCityActivities } from "api/activities";
 import { pushSearchParam } from "utils/url";
-
-const categories = [
-  { value: "", content: "不分類別" },
-  { value: "scenicSpot", content: "景點" },
-  { value: "activity", content: "活動" },
-];
 
 const countiesOptions = counties.map((county) => {
   return {
@@ -56,6 +48,12 @@ const FilterItems = (props) => {
   const [totalScenicSpots, setTotalScenicSpots] = useState([]);
   const [scenicSpotsPage, setScenicSpotsPage] = useState(1);
   const [totalScenicSpotsPages, setTotalScenicSpotsPages] = useState(0);
+
+  const categories = [
+    { value: "", content: "不分類別" },
+    { value: "activity", content: firstSmCardsInfos.title },
+    { value: "scenicSpot", content: secondSmCardsInfos.title },
+  ];
 
   const getFilterStateFromSearchParam = () => {
     const urlSearchParams = getParamsFromUrl();
@@ -101,7 +99,7 @@ const FilterItems = (props) => {
 
   useEffect(() => {
     if (selectedCity === null) return;
-    getCityActivities(selectedCity).then((data) => {
+    firstSmCardsInfos.getData(selectedCity).then((data) => {
       const _totalActivities = data.filter(
         (item) =>
           item.Picture.hasOwnProperty("PictureUrl1") &&
@@ -119,7 +117,7 @@ const FilterItems = (props) => {
       firstSmCardsInfos.setSpots(_spots);
     }); // 接FirstSmCards資料
 
-    getCityScenicSpots(selectedCity).then((data) => {
+    secondSmCardsInfos.getData(selectedCity).then((data) => {
       const _totalScenicSpots = data.filter(
         (item) =>
           item.Picture.hasOwnProperty("PictureUrl1") &&

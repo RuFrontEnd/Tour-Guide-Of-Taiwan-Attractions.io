@@ -103,7 +103,7 @@ const NoResult = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 32px 0px;
+  padding: 32px 0px;
 
   @media (max-width: 576px) {
     flex-direction: column;
