@@ -1,56 +1,13 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components/macro";
-import { withRouter, Link } from "react-router-dom";
-import { path } from "variable/path";
-import { useSelector } from "react-redux";
-import Carousel from "react-multi-carousel";
+import { withRouter } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
-import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
-import { getAuthorizationHeader } from "variable/auth";
-import { getRandomInt } from "utils/random";
-import { useQuery } from "hooks/useQuery";
-import { ReactComponent as WelcomeToTaiwan } from "assets/welcomeToTaiwan.svg";
-import { ReactComponent as Search } from "assets/search.svg";
-import { ReactComponent as Gps } from "assets/gps.svg";
-import { ReactComponent as Location } from "assets/location.svg";
 import { ReactComponent as Triangle } from "assets/triangle_title.svg";
-import { ReactComponent as direction } from "assets/direction.svg";
-import { ReactComponent as Arrow } from "assets/arrow.svg";
-import { ReactComponent as ArrowRight } from "assets/arrow_right.svg";
-import landing from "assets/landing.png";
-import cardImg_tmp from "assets/cardImg_tmp.png";
-import cardSmImg_tmp from "assets/cardSmImg_tmp.png";
-import detailCard_tmp from "assets/detailCard_tmp.png";
-import boardImg_tmp from "assets/boardImg_tmp.png";
-import SmallCards from "layouts/SmallCards";
-import DetailModal from "layouts/DetailModal";
-import SearchTool from "layouts/SearchTool";
 import FilterItems from "layouts/FilterItems";
-import Cards from "layouts/Cards";
-import Tool from "layouts/Tool";
-import CityCarousel from "layouts/CityCarousel";
-import Paper from "components/Paper";
-import Board from "components/Board";
-import Background from "layouts/Background";
-import Input from "components/Input";
-import SquareButton from "components/SquareButton";
-import Dropdown from "components/Dropdown";
-import Category from "components/Category";
-import Card from "components/Card";
-import CardSm from "components/CardSm";
-import Space from "layouts/Space";
-import DetailCard from "components/DetailCard";
-import RectButton from "components/RectButton";
-import Pagination from "components/Pagination";
 
-import { baseURL, counties } from "variable/variable";
+import { counties } from "variable/variable";
 import { getCityScenicSpots } from "api/scenicSpots";
 import { getCityActivities } from "api/activities";
-import { getActivities } from "api/activities";
-import { pipe } from "utils/pipe";
 import { pushSearchParam } from "utils/url";
-import { removeRepeatedValue, raisingSortValue } from "utils/array";
-import { sortValue } from "utils/sort";
 
 const categories = [
   { value: "", content: "不分類別" },
@@ -64,8 +21,6 @@ const countiesOptions = counties.map((county) => {
     content: county.zh,
   };
 });
-
-const countOfWaitingCard = 20;
 
 export const handleClickActivityCard = () => {
   document.body.style.overflow = "hidden";
@@ -148,7 +103,6 @@ const ScenicSpots = (props) => {
 
   const getFilterStateFromSearchParam = () => {
     const urlSearchParams = getParamsFromUrl();
-    console.log("urlSearchParams", urlSearchParams);
     setKeyword(urlSearchParams.keyword);
     setSelectedCategories(urlSearchParams.category);
     setSelectedCity(urlSearchParams.city);

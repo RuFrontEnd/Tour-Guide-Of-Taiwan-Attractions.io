@@ -19,8 +19,6 @@ const DetailCard = (props) => {
   let img = "";
   let imgAlt = "";
 
-  console.log("info", info);
-
   if (Array.isArray(info.images)) {
     countOfImg = info.images.length;
     if (info.images[currentImgIndex].hasOwnProperty("src")) {
@@ -81,7 +79,6 @@ const DetailCard = (props) => {
           src={img}
           alt={imgAlt}
           onLoad={() => {
-            console.log("BBB");
             setTimeout(() => {
               setIsImgLoading(false);
             }, 1 * 1000);

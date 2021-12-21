@@ -45,7 +45,7 @@ const NavBar = (props) => {
             </AttractLink>
             <FoodtLink
               onClick={() => {
-                transferAddress("/foodAndAccommodation");
+                transferAddress("/food");
               }}
             >
               <FoodIcon />
