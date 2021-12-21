@@ -29,12 +29,8 @@ setAxiosDefaultURL("https://swin-opendata.herokuapp.com/api/v1/data/");
 const transitionRoutes = [
   {
     component: <ScenicSpots />,
-    path: '/scenicspots',
+    path: "/scenicspots",
   },
-  // {
-  //   component: <ScenicSpotsFilter />,
-  //   path: "/scenicspots/filter",
-  // },
   {
     component: <Foods />,
     path: "/foods",
@@ -71,8 +67,7 @@ function App() {
         // fallback={<FallBack />}
         >
           <Navbar />
-          {/* <ScrollToTop /> */}
-
+          <ScrollToTop />
           <Switch>
             {transitionRoutes.map((transitionRoute) => (
               <Route exact path={transitionRoute.path}>

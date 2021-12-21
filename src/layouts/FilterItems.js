@@ -27,8 +27,6 @@ export const getParamsFromUrl = () => {
 const FilterItems = (props) => {
   const {
     history,
-    isWaiting,
-    setIsWaiting,
     searchInfos,
     firstSmCardsInfos,
     secondSmCardsInfos,
@@ -120,9 +118,24 @@ const FilterItems = (props) => {
     }); // 接景點資料
 
     setTimeout(() => {
-      setIsWaiting(false);
+      firstSmCardsInfos.setIsWaiting(false);
+      secondSmCardsInfos.setIsWaiting(false);
     }, 1 * 1000);
   }, [qureyParams]);
+
+  useEffect(() => {
+    pushSearchParam([{ key: "activitiesPage", value: activitiesPage }]);
+    if (selectedCity === null) return;
+
+    const _activities = totalActivities?.slice(
+      (activitiesPage - 1) * 20,
+      activitiesPage * 20
+    );
+    firstSmCardsInfos.setSpots(_activities);
+    setTimeout(() => {
+      firstSmCardsInfos.setIsWaiting(false);
+    }, 0.25 * 1000);
+  }, [activitiesPage]);
 
   useEffect(() => {
     pushSearchParam([{ key: "scenicSpotsPage", value: scenicSpotsPage }]);
@@ -138,27 +151,9 @@ const FilterItems = (props) => {
     );
     secondSmCardsInfos.setSpots(_cityScenicSpots);
     setTimeout(() => {
-      setIsWaiting(false);
+      secondSmCardsInfos.setIsWaiting(false);
     }, 0.25 * 1000);
   }, [scenicSpotsPage]);
-
-  useEffect(() => {
-    pushSearchParam([{ key: "activitiesPage", value: activitiesPage }]);
-    if (selectedCity === null) return;
-
-    const _activities = totalActivities?.slice(
-      (activitiesPage - 1) * 20,
-      activitiesPage * 20
-    );
-    firstSmCardsInfos.setSpots(_activities);
-    setTimeout(() => {
-      setIsWaiting(false);
-    }, 0.25 * 1000);
-  }, [activitiesPage]);
-
-  useEffect(() => {
-    console.log("qureyParams", qureyParams);
-  }, [qureyParams]);
 
   return (
     <SearchLayout
@@ -192,13 +187,15 @@ const FilterItems = (props) => {
           onClick={(e) => {
             firstSmCardsInfos.onClickCard(e);
           }}
-          isWaiting={isWaiting}
+          isWaiting={firstSmCardsInfos.isWaiting}
           countOfWaitingCard={firstSmCardsInfos.countOfWaitingCard}
         />
         {firstSmCardsInfos.spots.length !== 0 && (
           <Paginate
             onClick={() => {
-              setIsWaiting(true);
+              if (totalActivitiesPages !== 1) {
+                firstSmCardsInfos.setIsWaiting(true);
+              }
             }}
             count={totalActivitiesPages}
             previousIcon={Arrow}
@@ -227,13 +224,15 @@ const FilterItems = (props) => {
           onClick={(e) => {
             secondSmCardsInfos.onClickCard(e);
           }}
-          isWaiting={isWaiting}
+          isWaiting={secondSmCardsInfos.isWaiting}
           countOfWaitingCard={secondSmCardsInfos.countOfWaitingCard}
         />
         {secondSmCardsInfos.spots.length !== 0 && (
           <Paginate
             onClick={() => {
-              setIsWaiting(true);
+              if (totalActivitiesPages !== 1) {
+                secondSmCardsInfos.setIsWaiting(true);
+              }
             }}
             count={totalScenicSpotsPages}
             previousIcon={Arrow}

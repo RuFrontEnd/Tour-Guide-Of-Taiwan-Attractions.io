@@ -98,7 +98,8 @@ const ScenicSpots = (props) => {
   // modal詳細資訊
   const [modalInfo, setModalInfo] = useState([]);
   // 顯示狀態
-  const [isLoading, setIsLoading] = useState(true);
+  const [isFirstCardsLoading, setIsFirstCardsLoading] = useState(true);
+  const [isSecondCardsLoading, setIsSecondCardsLoading] = useState(true);
   const [isShowDetail, setIsShowDetail] = useState(false);
 
   const getFilterStateFromSearchParam = () => {
@@ -149,7 +150,6 @@ const ScenicSpots = (props) => {
   };
 
   const putCityScenicspotInfosToDetailModal = (e) => {
-    console.log("cityScenicSpots", cityScenicSpots);
     const targetId = Number(e.currentTarget.dataset.id);
     const _title = cityScenicSpots[targetId]?.Name;
     const _description = cityScenicSpots[targetId]?.DescriptionDetail;
@@ -180,7 +180,8 @@ const ScenicSpots = (props) => {
   };
 
   const handleSearch = () => {
-    setIsLoading(true);
+    setIsFirstCardsLoading(true);
+    setIsSecondCardsLoading(true);
     pushSearchParam([
       { key: "keyword", value: keyword },
       { key: "category", value: selectedCategories },
@@ -197,8 +198,6 @@ const ScenicSpots = (props) => {
   };
 
   const FilterItemsProps = {
-    isWaiting: isLoading,
-    setIsWaiting: setIsLoading,
     searchInfos: {
       categories: categories,
       counties: countiesOptions,
@@ -211,7 +210,9 @@ const ScenicSpots = (props) => {
       onClickSearchButton: handleSearch,
     },
     firstSmCardsInfos: {
-      title:'活動',
+      isWaiting: isFirstCardsLoading,
+      setIsWaiting: setIsFirstCardsLoading,
+      title: "活動",
       icon: <Triangle />,
       spots: cityActivities,
       setSpots: setCityActivities,
@@ -219,7 +220,9 @@ const ScenicSpots = (props) => {
       countOfWaitingCard: 20,
     },
     secondSmCardsInfos: {
-      title:'景點',
+      isWaiting: isSecondCardsLoading,
+      setIsWaiting: setIsSecondCardsLoading,
+      title: "景點",
       icon: <Triangle />,
       spots: cityScenicSpots,
       setSpots: setCityScenicSpots,
@@ -291,7 +294,8 @@ const ScenicSpots = (props) => {
     }); // 接景點資料
 
     setTimeout(() => {
-      setIsLoading(false);
+      setIsFirstCardsLoading(false);
+      setIsSecondCardsLoading(false);
     }, 1 * 1000);
   }, [qureyParams]);
 
