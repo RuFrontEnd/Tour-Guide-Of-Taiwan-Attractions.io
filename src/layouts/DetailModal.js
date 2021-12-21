@@ -96,6 +96,7 @@ const DetailCardBox = styled.div`
   }
 
   & #DetailCard-More {
+    max-width: 600px;
     @media (max-width: 425px) {
       grid-template-areas:
         "a"

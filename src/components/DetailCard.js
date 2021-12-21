@@ -231,6 +231,7 @@ const Illustrate = styled.p`
   font-size: 14px;
   margin-left: 10px;
   color: ${__0D0B0C__()};
+  line-height: 21px;
 `;
 
 export default DetailCard;

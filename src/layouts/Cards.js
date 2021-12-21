@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
 import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
-import { ReactComponent as Triangle } from "assets/triangle_title.svg";
 import Category from "components/Category";
 import Card from "components/Card";
 import Space from "layouts/Space";
@@ -13,19 +12,20 @@ const Cards = (props) => {
     className,
     style,
     title,
+    icon,
     activities,
     onClickButton = () => {},
     buttonText,
     isWaiting = false,
     countOfWaitingCard,
   } = props;
-
+  
   const watingCards = new Array(countOfWaitingCard).fill(null);
 
   return (
     <Space className={className} style={style}>
       <Title title={title}>
-        <Triangle />
+        {icon}
       </Title>
       <CardUl>
         {!isWaiting &&
@@ -38,7 +38,7 @@ const Cards = (props) => {
                   alt: "圖片",
                   title: activity.Name,
                   description: activity.Description,
-                  area: activity.City,
+                  area: activity.City || '',
                 }}
                 buttonText={buttonText}
                 onClickButton={(e) => {

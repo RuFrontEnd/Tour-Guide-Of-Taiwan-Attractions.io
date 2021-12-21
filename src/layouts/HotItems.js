@@ -8,13 +8,8 @@ import Cards from "layouts/Cards";
 import SearchTool from "layouts/SearchTool";
 
 const HotItems = (props) => {
-  const {
-    isWaiting,
-    searchInfos,
-    lCardsInfos,
-    sCardsInfos,
-    modalInfos,
-  } = props;
+  const { isWaiting, icon, searchInfos, lCardsInfos, sCardsInfos, modalInfos } =
+    props;
 
   return (
     <SearchLayout
@@ -32,6 +27,7 @@ const HotItems = (props) => {
     >
       <LCards
         title={lCardsInfos.title}
+        icon={lCardsInfos.icon}
         activities={lCardsInfos.spots}
         buttonText={lCardsInfos.buttonText}
         onClickButton={(e) => {
@@ -42,6 +38,7 @@ const HotItems = (props) => {
       />
       <SCards
         title={sCardsInfos.title}
+        icon={sCardsInfos.icon}
         spots={sCardsInfos.spots}
         onClick={(e) => {
           sCardsInfos.onClickButton(e);

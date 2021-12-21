@@ -14,7 +14,6 @@ const SmallCards = (props) => {
   const {
     className,
     style,
-    history,
     title,
     icon,
     spots,

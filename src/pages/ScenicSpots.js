@@ -5,6 +5,7 @@ import { counties } from "variable/variable";
 import { getScenicSpots } from "api/scenicSpots";
 import { getActivities } from "api/activities";
 import { pushSearchParamAndPushUrl } from "utils/url";
+import { ReactComponent as Triangle } from "assets/triangle_title.svg";
 import HotItems from "layouts/HotItems";
 
 const categories = [
@@ -122,6 +123,7 @@ const ScenicSpots = (props) => {
     },
     lCardsInfos: {
       title: "熱門活動",
+      icon: <Triangle />,
       spots: hotActivities,
       buttonText: "活動詳情",
       onClickButton: putHotActivityInfosToDetailModal,
@@ -129,6 +131,7 @@ const ScenicSpots = (props) => {
     },
     sCardsInfos: {
       title: "熱門景點",
+      icon: <Triangle />,
       spots: hotScenicSpots,
       onClickButton: putHotScenicspotInfosToDetailModal,
       countOfWaitingCard: 10,
