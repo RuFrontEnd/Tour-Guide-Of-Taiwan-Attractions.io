@@ -38,7 +38,6 @@ const Box = styled.section`
   background-color: white;
   position: relative;
   box-sizing: border-box;
-  /* opacity: 0.5; */
 
   &:before,
   &:after {

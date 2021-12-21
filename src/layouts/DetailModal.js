@@ -116,6 +116,10 @@ const DetailCardBox = styled.div`
   & #DetailCard-Image {
     max-width: 600px;
   }
+
+  & #DetailCard-LoadingImage {
+    width: 600px;
+  }
 `;
 
 export default DetailModal;

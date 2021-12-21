@@ -72,7 +72,7 @@ const DetailCard = (props) => {
       rotateOfShadow={8}
     >
       <Wrap>
-        <LoadingImage style={{ display: isImgLoading ? "block" : "none" }} />
+        <LoadingImage style={{ display: isImgLoading ? "block" : "none" }} id="DetailCard-LoadingImage"/>
         <Image
           id="DetailCard-Image"
           style={{ display: isImgLoading ? "none" : "block" }}
