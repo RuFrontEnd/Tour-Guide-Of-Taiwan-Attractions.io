@@ -112,6 +112,10 @@ const DetailCardBox = styled.div`
   .detailCard-trait:nth-child(4) {
     margin-bottom: 16px;
   }
+
+  & #DetailCard-Image {
+    max-width: 600px;
+  }
 `;
 
 export default DetailModal;

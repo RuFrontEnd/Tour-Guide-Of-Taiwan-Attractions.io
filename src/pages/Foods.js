@@ -35,15 +35,14 @@ const Foods = (props) => {
   const [isShowDetail, setIsShowDetail] = useState(false);
 
   const putHotHotelInfosToDetailModal = (e) => {
-    console.log("hotHotels", hotHotels);
     const targetId = Number(e.currentTarget.dataset.id);
-    const _title = hotHotels[targetId].HotelName;
-    const _description = hotHotels[targetId].Description;
+    const _title = hotHotels[targetId]?.HotelName || '';
+    const _description = hotHotels[targetId]?.Description || '';
     const _time = hotHotels[targetId]?.OpenTime || "24小時開放";
     const _fee = hotHotels[targetId]?.Spec || "暫無資訊";
-    const _area = hotHotels[targetId].Address || "暫無資訊";
-    const _tel = hotHotels[targetId].Phone || "暫無資訊";
-    const filterPictureKeys = Object.keys(hotHotels[targetId].Picture).filter(
+    const _area = hotHotels[targetId]?.Address || "請聯絡主辦方詢問地點";
+    const _tel = hotHotels[targetId]?.Phone || "暫無資訊";
+    const filterPictureKeys = Object.keys(hotHotels[targetId]?.Picture).filter(
       (key) => key.match(/PictureUrl[0-9]+/)
     );
     const _images = filterPictureKeys.map((filterPictureKey) => {
@@ -66,13 +65,12 @@ const Foods = (props) => {
   };
 
   const putHotFoodsInfosToDetailModal = (e) => {
-    console.log("hotFoods", hotFoods);
     const targetId = Number(e.currentTarget.dataset.id);
-    const _title = hotFoods[targetId].Name;
-    const _description = hotFoods[targetId]?.Description;
+    const _title = hotFoods[targetId].Name || '';
+    const _description = hotFoods[targetId]?.Description || '';
     const _time = hotFoods[targetId]?.OpenTime || "暫無資訊";
     const _fee = hotFoods[targetId]?.Class || "其他";
-    const _area = hotFoods[targetId]?.Address || "暫無資訊";
+    const _area = hotFoods[targetId]?.Address || "請聯絡主辦方詢問地點";
     const _tel = hotFoods[targetId]?.Phone || "暫無資訊";
     const filterPictureKeys = Object.keys(hotFoods[targetId].Picture).filter(
       (key) => key.match(/PictureUrl[0-9]+/)

@@ -74,6 +74,7 @@ const DetailCard = (props) => {
       <Wrap>
         <LoadingImage style={{ display: isImgLoading ? "block" : "none" }} />
         <Image
+          id="DetailCard-Image"
           style={{ display: isImgLoading ? "none" : "block" }}
           ref={$image}
           src={img}

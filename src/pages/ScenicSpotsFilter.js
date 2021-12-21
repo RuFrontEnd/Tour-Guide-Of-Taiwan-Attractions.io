@@ -118,15 +118,15 @@ const ScenicSpots = (props) => {
 
   const putCityActivityInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
-    const _title = cityActivities[targetId].ActivityName || "暫無";
-    const _description = cityActivities[targetId].Description;
+    const _title = cityActivities[targetId]?.ActivityName || "";
+    const _description = cityActivities[targetId]?.Description || "";
     const _time =
-      `${cityActivities[targetId].StartTime.slice(0, 10)} - ${cityActivities[
+      `${cityActivities[targetId]?.StartTime?.slice(0, 10)} - ${cityActivities[
         targetId
-      ].EndTime.slice(0, 10)}` || "暫無";
-    const _fee = "免費";
-    const _area = cityActivities[targetId].Address || "暫無";
-    const _tel = cityActivities[targetId].Phone || "暫無";
+      ]?.EndTime?.slice(0, 10)}` || "24小時";
+    const _fee = cityActivities[targetId].Charge || "免費";
+    const _area = cityActivities[targetId].Address || "請聯絡主辦方詢問地點";
+    const _tel = cityActivities[targetId].Phone || "暫不提供";
     const filterPictureKeys = Object.keys(
       cityActivities[targetId].Picture
     ).filter((key) => key.match(/PictureUrl[0-9]+/));
@@ -152,11 +152,11 @@ const ScenicSpots = (props) => {
   const putCityScenicspotInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
     const _title = cityScenicSpots[targetId]?.Name;
-    const _description = cityScenicSpots[targetId]?.DescriptionDetail;
+    const _description = cityScenicSpots[targetId]?.DescriptionDetail || '';
     const _time = cityScenicSpots[targetId]?.OpenTime || "24小時開放";
     const _fee = "免費";
-    const _area = cityScenicSpots[targetId]?.Address || "暫無";
-    const _tel = cityScenicSpots[targetId]?.Phone || "暫無";
+    const _area = cityScenicSpots[targetId]?.Address || "請聯絡主辦方詢問地點";
+    const _tel = cityScenicSpots[targetId]?.Phone || "暫不提供";
     const filterPictureKeys = Object.keys(
       cityScenicSpots[targetId].Picture
     ).filter((key) => key.match(/PictureUrl[0-9]+/));

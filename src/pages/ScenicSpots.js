@@ -36,15 +36,15 @@ const ScenicSpots = (props) => {
 
   const putHotActivityInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
-    const _title = hotActivities[targetId].ActivityName || "暫無";
-    const _description = hotActivities[targetId].Description;
+    const _title = hotActivities[targetId]?.ActivityName || '';
+    const _description = hotActivities[targetId]?.Description || '';
     const _time =
-      `${hotActivities[targetId].StartTime.slice(0, 10)} - ${hotActivities[
+      `${hotActivities[targetId]?.StartTime?.slice(0, 10)} - ${hotActivities[
         targetId
-      ].EndTime.slice(0, 10)}` || "暫無";
-    const _fee = "免費";
-    const _area = hotActivities[targetId].Address || "暫無";
-    const _tel = hotActivities[targetId].Phone || "暫無";
+      ]?.EndTime?.slice(0, 10)}` || "24小時開放";
+    const _fee = hotActivities[targetId]?.Charge || "免費";
+    const _area = hotActivities[targetId].Address || "請聯絡主辦方詢問地點";
+    const _tel = hotActivities[targetId]?.Phone || "暫不提供";
     const filterPictureKeys = Object.keys(
       hotActivities[targetId].Picture
     ).filter((key) => key.match(/PictureUrl[0-9]+/));
@@ -69,12 +69,12 @@ const ScenicSpots = (props) => {
 
   const putHotScenicspotInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
-    const _title = hotScenicSpots[targetId].Name || "暫無";
-    const _description = hotScenicSpots[targetId].DescriptionDetail;
-    const _time = "永久開放";
+    const _title = hotScenicSpots[targetId]?.Name || "";
+    const _description = hotScenicSpots[targetId]?.DescriptionDetail || '';
+    const _time = hotScenicSpots[targetId]?.OpenTime || "24小時開放";
     const _fee = "免費";
-    const _area = hotScenicSpots[targetId].Address || "暫無";
-    const _tel = hotScenicSpots[targetId].Phone || "暫無";
+    const _area = hotScenicSpots[targetId].Address || "請聯絡主辦方詢問地點";
+    const _tel = hotScenicSpots[targetId]?.Phone || "暫無";
     const filterPictureKeys = Object.keys(
       hotScenicSpots[targetId].Picture
     ).filter((key) => key.match(/PictureUrl[0-9]+/));

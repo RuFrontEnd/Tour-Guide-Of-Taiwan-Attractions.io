@@ -99,6 +99,7 @@ const FilterItems = (props) => {
           item.hasOwnProperty("City")
       );
       setTotalScenicSpots(_totalScenicSpots);
+      console.log('_totalScenicSpots',_totalScenicSpots)
       setTotalScenicSpotsPages(Math.ceil(_totalScenicSpots.length / 20));
       let _cityScenicSpots = [];
       if (data.length !== 0 && !qureyParams.keyword) {
