@@ -114,10 +114,12 @@ const DetailCardBox = styled.div`
   }
 
   & #DetailCard-Image {
-    max-width: 600px;
+    width: 600px;
   }
 
-  & #DetailCard-LoadingImage {
+  & #DetailCard-LoadingImage,
+  #DetailCard-Image,
+  #DetailCard-Intro {
     width: 600px;
 
     @media (max-width: 768px) {
@@ -129,15 +131,15 @@ const DetailCardBox = styled.div`
     }
   }
 
-  & #DetailCard-Intro {
-    width: 600px;
+  & {
+    width: 662px;
 
     @media (max-width: 768px) {
-      width: 473px;
+      width: 537px;
     }
 
     @media (max-width: 576px) {
-      width: 256px;
+      width: 320px;
     }
   }
 `;
