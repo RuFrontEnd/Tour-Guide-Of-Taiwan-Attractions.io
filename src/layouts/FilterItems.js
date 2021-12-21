@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "react-multi-carousel/lib/styles.css";
 import { counties } from "variable/variable";
 import { ReactComponent as Arrow } from "assets/arrow.svg";
@@ -32,6 +33,9 @@ export const getParamsFromUrl = () => {
 
 const FilterItems = (props) => {
   const { history, firstSmCardsInfos, secondSmCardsInfos, modalInfos } = props;
+  const navBarHeight = useSelector((state) => state.navBar.height);
+  const $firstTitle = useRef();
+  const $secondTitle = useRef();
 
   // 篩選相關state
   const [keyword, setKeyword] = useState("");
@@ -173,6 +177,11 @@ const FilterItems = (props) => {
     }, 0.25 * 1000);
   }, [scenicSpotsPage]);
 
+  window.onscroll = () => {
+    console.log("window.scrollY", window.scrollY);
+    console.log("document.body.scrollTop", document.body.scrollTop);
+  };
+
   return (
     <SearchLayout
       categories={categories}
@@ -194,6 +203,7 @@ const FilterItems = (props) => {
       >
         <FirstSmCards
           title={firstSmCardsInfos.title}
+          titleRef={$firstTitle}
           icon={firstSmCardsInfos.icon}
           spots={firstSmCardsInfos.spots}
           onClick={(e) => {
@@ -204,9 +214,12 @@ const FilterItems = (props) => {
         />
         {firstSmCardsInfos.spots.length !== 0 && (
           <Paginate
-            onClick={() => {
-              if (totalActivitiesPages !== 1) {
-                firstSmCardsInfos.setIsWaiting(true);
+            onClick={(e) => {
+              if (totalActivitiesPages !== 1 && e.target.ariaLabel !== null) {
+                window.scrollTo({
+                  top: $firstTitle.current.offsetTop - (navBarHeight + 10),
+                  left: 0,
+                });
               }
             }}
             count={totalActivitiesPages}
@@ -225,6 +238,7 @@ const FilterItems = (props) => {
       >
         <SecondSmCards
           title={secondSmCardsInfos.title}
+          titleRef={$secondTitle}
           icon={secondSmCardsInfos.icon}
           spots={secondSmCardsInfos.spots}
           onClick={(e) => {
@@ -235,9 +249,12 @@ const FilterItems = (props) => {
         />
         {secondSmCardsInfos.spots.length !== 0 && (
           <Paginate
-            onClick={() => {
-              if (totalActivitiesPages !== 1) {
-                secondSmCardsInfos.setIsWaiting(true);
+            onClick={(e) => {
+              if (totalActivitiesPages !== 1 && e.target.ariaLabel !== null) {
+                window.scrollTo({
+                  top: $secondTitle.current.offsetTop - (navBarHeight + 10),
+                  left: 0,
+                });
               }
             }}
             count={totalScenicSpotsPages}

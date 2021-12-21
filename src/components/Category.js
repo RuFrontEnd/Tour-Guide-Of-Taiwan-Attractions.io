@@ -1,15 +1,21 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import styled from "styled-components/macro";
 
-const Category = (props) => {
-  const { className, style, children = <Square />, title = "標題" } = props;
+const Category = forwardRef((props) => {
+  const {
+    className,
+    style,
+    children = <Square />,
+    title = "標題",
+    ref,
+  } = props;
   return (
-    <Box style={style} className={className}>
+    <Box style={style} className={className} ref={ref}>
       <Icon>{children}</Icon>
       <Title>{title}</Title>
     </Box>
   );
-};
+});
 
 const Square = styled.div`
   width: 100%;
@@ -23,8 +29,7 @@ const Box = styled.section`
   align-items: center;
 `;
 
-const Icon = styled.div`
-`;
+const Icon = styled.div``;
 
 const Title = styled.section`
   padding-left: 14px;

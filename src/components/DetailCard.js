@@ -72,7 +72,12 @@ const DetailCard = (props) => {
       rotateOfShadow={8}
     >
       <Wrap>
-        <LoadingImage style={{ display: isImgLoading ? "block" : "none" }} id="DetailCard-LoadingImage"/>
+        <LoadingImageBox
+          style={{ display: isImgLoading ? "block" : "none" }}
+          id="DetailCard-LoadingImage"
+        >
+          <LoadingImage />
+        </LoadingImageBox>
         <Image
           id="DetailCard-Image"
           style={{ display: isImgLoading ? "none" : "block" }}
@@ -93,7 +98,7 @@ const DetailCard = (props) => {
         )}
         <Info>
           <Title>{info.title}</Title>
-          <Intro>{children}</Intro>
+          <Intro id="DetailCard-Intro">{children}</Intro>
           <More id="DetailCard-More">
             <Trait className="detailCard-trait">
               <Clock />
@@ -132,10 +137,14 @@ const Wrap = styled.div`
 const LoadingImage = styled(Skeleton)`
   aspect-ratio: 3/2;
   object-fit: cover;
-  width: 100%;
   max-height: 400px;
   margin-bottom: 18.5px;
 `;
+
+const LoadingImageBox = styled.div`
+   width: 100%;
+`
+
 
 const Image = styled.img`
   aspect-ratio: 3/2;
@@ -168,7 +177,6 @@ const Title = styled.h2`
 `;
 
 const Intro = styled.p`
-  max-width: 600px;
   max-height: 120px;
   overflow-y: auto;
   color: ${__0D0B0C__()};

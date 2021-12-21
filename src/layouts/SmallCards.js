@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef, useRef } from "react";
 import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
 import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
@@ -10,11 +10,12 @@ import LoadingCardSm from "components/LoadingCardSm";
 import Space from "layouts/Space";
 import noImg from "assets/noImg.png";
 
-const SmallCards = (props) => {
+const SmallCards = forwardRef((props) => {
   const {
     className,
     style,
     title,
+    titleRef,
     icon,
     spots,
     onClick = () => {},
@@ -25,7 +26,7 @@ const SmallCards = (props) => {
   const WatingCards = new Array(countOfWaitingCard).fill(null);
 
   return (
-    <Box className={className} style={style}>
+    <Box className={className} style={style} ref={titleRef} id="SmallCard">
       <Title title={title}>{icon ? icon : <Triangle />}</Title>
       <Cards>
         {!isWaiting &&
@@ -64,7 +65,7 @@ const SmallCards = (props) => {
       )}
     </Box>
   );
-};
+});
 
 const Sorry = styled.p`
   color: ${__D2D2D2__()};

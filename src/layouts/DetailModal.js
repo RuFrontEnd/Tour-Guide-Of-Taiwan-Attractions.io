@@ -97,7 +97,7 @@ const DetailCardBox = styled.div`
 
   & #DetailCard-More {
     max-width: 600px;
-    @media (max-width: 425px) {
+    @media (max-width: 576px) {
       grid-template-areas:
         "a"
         "b"
@@ -119,6 +119,26 @@ const DetailCardBox = styled.div`
 
   & #DetailCard-LoadingImage {
     width: 600px;
+
+    @media (max-width: 768px) {
+      width: 473px;
+    }
+
+    @media (max-width: 576px) {
+      width: 256px;
+    }
+  }
+
+  & #DetailCard-Intro {
+    width: 600px;
+
+    @media (max-width: 768px) {
+      width: 473px;
+    }
+
+    @media (max-width: 576px) {
+      width: 256px;
+    }
   }
 `;
 
