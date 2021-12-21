@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
+import { counties } from "variable/variable";
 import { ReactComponent as Arrow } from "assets/arrow.svg";
 import { ReactComponent as ArrowRight } from "assets/arrow_right.svg";
 import SmallCards from "layouts/SmallCards";
@@ -11,6 +12,19 @@ import Pagination from "components/Pagination";
 import { getCityScenicSpots } from "api/scenicSpots";
 import { getCityActivities } from "api/activities";
 import { pushSearchParam } from "utils/url";
+
+const categories = [
+  { value: "", content: "不分類別" },
+  { value: "scenicSpot", content: "景點" },
+  { value: "activity", content: "活動" },
+];
+
+const countiesOptions = counties.map((county) => {
+  return {
+    value: county.en,
+    content: county.zh,
+  };
+});
 
 export const getParamsFromUrl = () => {
   const searchParams = new URLSearchParams(window.location.search.slice("1"));
@@ -25,20 +39,19 @@ export const getParamsFromUrl = () => {
 };
 
 const FilterItems = (props) => {
-  const {
-    history,
-    searchInfos,
-    firstSmCardsInfos,
-    secondSmCardsInfos,
-    modalInfos,
-  } = props;
+  const { history, firstSmCardsInfos, secondSmCardsInfos, modalInfos } = props;
+
   // 篩選相關state
+  const [keyword, setKeyword] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null); // 下拉選單選擇的城市
   const [qureyParams, setQureyParams] = useState([]);
+
   // 活動相關 state
   const [totalActivities, setTotalActivities] = useState([]);
   const [activitiesPage, setActivitiesPage] = useState(0);
   const [totalActivitiesPages, setTotalActivitiesPages] = useState(0);
+
   // 景點相關 state
   const [totalScenicSpots, setTotalScenicSpots] = useState([]);
   const [scenicSpotsPage, setScenicSpotsPage] = useState(1);
@@ -46,8 +59,8 @@ const FilterItems = (props) => {
 
   const getFilterStateFromSearchParam = () => {
     const urlSearchParams = getParamsFromUrl();
-    searchInfos.setKeyword(urlSearchParams.keyword);
-    searchInfos.setSelectedCategories(urlSearchParams.category);
+    setKeyword(urlSearchParams.keyword);
+    setSelectedCategories(urlSearchParams.category);
     setSelectedCity(urlSearchParams.city);
     setScenicSpotsPage(1);
     setActivitiesPage(1);
@@ -56,6 +69,27 @@ const FilterItems = (props) => {
       category: urlSearchParams.category,
       city: urlSearchParams.city,
     });
+  };
+
+  const handleSearch = () => {
+    firstSmCardsInfos.setIsWaiting(true);
+    secondSmCardsInfos.setIsWaiting(true);
+
+    pushSearchParam([
+      { key: "keyword", value: keyword },
+      { key: "category", value: selectedCategories },
+      { key: "city", value: selectedCity },
+      { key: "scenicSpotsPage", value: scenicSpotsPage },
+      { key: "activitiesPage", value: activitiesPage },
+    ]);
+
+    setQureyParams({
+      keyword: keyword,
+      category: selectedCategories,
+      city: selectedCity,
+    });
+
+    setScenicSpotsPage(1);
   };
 
   useEffect(() => {
@@ -71,52 +105,37 @@ const FilterItems = (props) => {
       const _totalActivities = data.filter(
         (item) =>
           item.Picture.hasOwnProperty("PictureUrl1") &&
-          item.hasOwnProperty("City")
+          item.hasOwnProperty("City") &&
+          item.Name.includes(qureyParams.keyword)
       );
+
+      const _spots = _totalActivities.slice(
+        (scenicSpotsPage - 1) * 20,
+        scenicSpotsPage * 20
+      );
+
       setTotalActivities(_totalActivities);
       setTotalActivitiesPages(Math.ceil(_totalActivities.length / 20));
-      let _cityActivities = [];
-      if (data.length !== 0 && !qureyParams.keyword) {
-        _cityActivities = _totalActivities.slice(
-          (scenicSpotsPage - 1) * 20,
-          scenicSpotsPage * 20
-        );
-      } // 篩選城市
-      if (data.length !== 0 && qureyParams.keyword) {
-        _cityActivities = _totalActivities
-          .filter((_totalActivities) => {
-            return _totalActivities.ActivityName.includes(qureyParams.keyword);
-          })
-          .slice((scenicSpotsPage - 1) * 20, scenicSpotsPage * 20);
-      } // 搜尋功能
-      firstSmCardsInfos.setSpots(_cityActivities);
-    }); // 接活動資料
+      firstSmCardsInfos.setSpots(_spots);
+    }); // 接FirstSmCards資料
 
     getCityScenicSpots(selectedCity).then((data) => {
       const _totalScenicSpots = data.filter(
         (item) =>
           item.Picture.hasOwnProperty("PictureUrl1") &&
-          item.hasOwnProperty("City")
+          item.hasOwnProperty("City") &&
+          item.Name.includes(qureyParams.keyword)
       );
+
+      const _spots = _totalScenicSpots.slice(
+        (scenicSpotsPage - 1) * 20,
+        scenicSpotsPage * 20
+      );
+
       setTotalScenicSpots(_totalScenicSpots);
-      console.log('_totalScenicSpots',_totalScenicSpots)
       setTotalScenicSpotsPages(Math.ceil(_totalScenicSpots.length / 20));
-      let _cityScenicSpots = [];
-      if (data.length !== 0 && !qureyParams.keyword) {
-        _cityScenicSpots = _totalScenicSpots.slice(
-          (scenicSpotsPage - 1) * 20,
-          scenicSpotsPage * 20
-        );
-      } // 篩選城市
-      if (data.length !== 0 && qureyParams.keyword) {
-        _cityScenicSpots = _totalScenicSpots
-          .filter((_totalScenicSpot) =>
-            _totalScenicSpot.ScenicSpotName.includes(qureyParams.keyword)
-          )
-          .slice((scenicSpotsPage - 1) * 20, scenicSpotsPage * 20);
-      } // 搜尋功能
-      secondSmCardsInfos.setSpots(_cityScenicSpots);
-    }); // 接景點資料
+      secondSmCardsInfos.setSpots(_spots);
+    }); // 接SecondSmCards資料
 
     setTimeout(() => {
       firstSmCardsInfos.setIsWaiting(false);
@@ -158,16 +177,16 @@ const FilterItems = (props) => {
 
   return (
     <SearchLayout
-      categories={searchInfos.categories}
-      counties={searchInfos.counties}
-      selectedCategories={searchInfos.selectedCategories}
-      setSelectedCategories={searchInfos.setSelectedCategories}
-      selectedCity={searchInfos.selectedCity}
-      setSelectedCity={searchInfos.setSelectedCity}
-      keyword={searchInfos.keyword}
-      setKeyword={searchInfos.setKeyword}
+      categories={categories}
+      counties={countiesOptions}
+      selectedCategories={selectedCategories}
+      setSelectedCategories={setSelectedCategories}
+      selectedCity={selectedCity}
+      setSelectedCity={setSelectedCity}
+      keyword={keyword}
+      setKeyword={setKeyword}
       onClickSearchButton={(e) => {
-        searchInfos.onClickSearchButton(e);
+        handleSearch(e);
       }}
     >
       <FirstSmCardsBox

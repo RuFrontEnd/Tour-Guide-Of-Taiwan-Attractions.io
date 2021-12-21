@@ -3,24 +3,9 @@ import { withRouter } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import { ReactComponent as Triangle } from "assets/triangle_title.svg";
 import FilterItems from "layouts/FilterItems";
-
-import { counties } from "variable/variable";
 import { getCityScenicSpots } from "api/scenicSpots";
 import { getCityActivities } from "api/activities";
 import { pushSearchParam } from "utils/url";
-
-const categories = [
-  { value: "", content: "不分類別" },
-  { value: "scenicSpot", content: "景點" },
-  { value: "activity", content: "活動" },
-];
-
-const countiesOptions = counties.map((county) => {
-  return {
-    value: county.en,
-    content: county.zh,
-  };
-});
 
 export const handleClickActivityCard = () => {
   document.body.style.overflow = "hidden";
@@ -102,19 +87,6 @@ const ScenicSpots = (props) => {
   const [isSecondCardsLoading, setIsSecondCardsLoading] = useState(true);
   const [isShowDetail, setIsShowDetail] = useState(false);
 
-  const getFilterStateFromSearchParam = () => {
-    const urlSearchParams = getParamsFromUrl();
-    setKeyword(urlSearchParams.keyword);
-    setSelectedCategories(urlSearchParams.category);
-    setSelectedCity(urlSearchParams.city);
-    setScenicSpotsPage(1);
-    setActivitiesPage(1);
-    setQureyParams({
-      keyword: urlSearchParams.keyword,
-      category: urlSearchParams.category,
-      city: urlSearchParams.city,
-    });
-  };
 
   const putCityActivityInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
@@ -179,36 +151,7 @@ const ScenicSpots = (props) => {
     });
   };
 
-  const handleSearch = () => {
-    setIsFirstCardsLoading(true);
-    setIsSecondCardsLoading(true);
-    pushSearchParam([
-      { key: "keyword", value: keyword },
-      { key: "category", value: selectedCategories },
-      { key: "city", value: selectedCity },
-      { key: "scenicSpotsPage", value: scenicSpotsPage },
-      { key: "activitiesPage", value: activitiesPage },
-    ]);
-    setQureyParams({
-      keyword: keyword,
-      category: selectedCategories,
-      city: selectedCity,
-    });
-    setScenicSpotsPage(1);
-  };
-
   const FilterItemsProps = {
-    searchInfos: {
-      categories: categories,
-      counties: countiesOptions,
-      selectedCategories: selectedCategories,
-      setSelectedCategories: setSelectedCategories,
-      selectedCity: selectedCity,
-      setSelectedCity: setSelectedCity,
-      keyword: keyword,
-      setKeyword: setKeyword,
-      onClickSearchButton: handleSearch,
-    },
     firstSmCardsInfos: {
       isWaiting: isFirstCardsLoading,
       setIsWaiting: setIsFirstCardsLoading,
@@ -235,13 +178,6 @@ const ScenicSpots = (props) => {
       infos: modalInfo,
     },
   };
-
-  useEffect(() => {
-    history.listen(() => {
-      getFilterStateFromSearchParam();
-    }); // 監聽上一頁 / 下一頁
-    getFilterStateFromSearchParam();
-  }, []);
 
   useEffect(() => {
     if (selectedCity === null) return;
