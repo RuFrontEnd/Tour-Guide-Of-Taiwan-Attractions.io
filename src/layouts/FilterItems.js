@@ -177,11 +177,6 @@ const FilterItems = (props) => {
     }, 0.25 * 1000);
   }, [scenicSpotsPage]);
 
-  window.onscroll = () => {
-    console.log("window.scrollY", window.scrollY);
-    console.log("document.body.scrollTop", document.body.scrollTop);
-  };
-
   return (
     <SearchLayout
       categories={categories}
@@ -215,10 +210,12 @@ const FilterItems = (props) => {
         {firstSmCardsInfos.spots.length !== 0 && (
           <Paginate
             onClick={(e) => {
+              firstSmCardsInfos.setIsWaiting(true)
               if (totalActivitiesPages !== 1 && e.target.ariaLabel !== null) {
                 window.scrollTo({
                   top: $firstTitle.current.offsetTop - (navBarHeight + 10),
                   left: 0,
+                  behavior: "smooth",
                 });
               }
             }}
@@ -251,9 +248,11 @@ const FilterItems = (props) => {
           <Paginate
             onClick={(e) => {
               if (totalActivitiesPages !== 1 && e.target.ariaLabel !== null) {
+                secondSmCardsInfos.setIsWaiting(true)
                 window.scrollTo({
                   top: $secondTitle.current.offsetTop - (navBarHeight + 10),
                   left: 0,
+                  behavior: "smooth",
                 });
               }
             }}
