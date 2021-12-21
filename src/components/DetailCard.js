@@ -187,11 +187,23 @@ const More = styled.ul`
   .detailCard-trait:nth-child(2) {
     margin-bottom: 32px;
   }
+
+  & > .detailCard-trait:nth-child(1),
+  .detailCard-trait:nth-child(3) {
+    margin-right: 24px;
+  }
+
+  @media (max-width: 576px) {
+    & > .detailCard-trait:nth-child(1),
+    .detailCard-trait:nth-child(3) {
+      margin-right: 0px;
+    }
+  }
 `;
 
 const Trait = styled.li`
   display: flex;
-  align-self: center;
+  align-items: center;
 `;
 
 const Location = styled(LocationRef)`

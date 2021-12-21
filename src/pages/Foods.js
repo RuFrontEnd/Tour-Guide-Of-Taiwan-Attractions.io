@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import { counties } from "variable/variable";
-import { getScenicSpots } from "api/scenicSpots";
 import { getHotels } from "api/hotels";
 import { getFoods } from "api/foods";
 import { pushSearchParamAndPushUrl } from "utils/url";
@@ -22,7 +21,7 @@ const countiesOptions = counties.map((county) => {
   };
 });
 
-const Food = (props) => {
+const Foods = (props) => {
   // 篩選條件
   const [selectedCategories, setSelectedCategories] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
@@ -36,19 +35,20 @@ const Food = (props) => {
   const [isShowDetail, setIsShowDetail] = useState(false);
 
   const putHotHotelInfosToDetailModal = (e) => {
+    console.log("hotHotels", hotHotels);
     const targetId = Number(e.currentTarget.dataset.id);
-    const _title = hotFoods[targetId].HotelName || "暫無";
-    const _description = hotFoods[targetId].Description;
-    const _time = hotFoods[targetId]?.OpenTime || "永久開放";
-    const _fee = "免費";
-    const _area = hotFoods[targetId].Address || "暫無";
-    const _tel = hotFoods[targetId].Phone || "暫無";
-    const filterPictureKeys = Object.keys(
-      hotFoods[targetId].Picture
-    ).filter((key) => key.match(/PictureUrl[0-9]+/));
+    const _title = hotHotels[targetId].HotelName;
+    const _description = hotHotels[targetId].Description;
+    const _time = hotHotels[targetId]?.OpenTime || "24小時開放";
+    const _fee = hotHotels[targetId]?.Spec || "暫無資訊";
+    const _area = hotHotels[targetId].Address || "暫無資訊";
+    const _tel = hotHotels[targetId].Phone || "暫無資訊";
+    const filterPictureKeys = Object.keys(hotHotels[targetId].Picture).filter(
+      (key) => key.match(/PictureUrl[0-9]+/)
+    );
     const _images = filterPictureKeys.map((filterPictureKey) => {
       return {
-        src: hotFoods[targetId].Picture[filterPictureKey],
+        src: hotHotels[targetId].Picture[filterPictureKey],
         alt: "圖片",
       };
     });
@@ -66,19 +66,20 @@ const Food = (props) => {
   };
 
   const putHotFoodsInfosToDetailModal = (e) => {
+    console.log("hotFoods", hotFoods);
     const targetId = Number(e.currentTarget.dataset.id);
-    const _title = hotHotels[targetId].Name || "暫無";
-    const _description = hotHotels[targetId].DescriptionDetail;
-    const _time = "永久開放";
-    const _fee = "免費";
-    const _area = hotHotels[targetId].Address || "暫無";
-    const _tel = hotHotels[targetId].Phone || "暫無";
-    const filterPictureKeys = Object.keys(
-      hotHotels[targetId].Picture
-    ).filter((key) => key.match(/PictureUrl[0-9]+/));
+    const _title = hotFoods[targetId].Name;
+    const _description = hotFoods[targetId]?.Description;
+    const _time = hotFoods[targetId]?.OpenTime || "暫無資訊";
+    const _fee = hotFoods[targetId]?.Class || "其他";
+    const _area = hotFoods[targetId]?.Address || "暫無資訊";
+    const _tel = hotFoods[targetId]?.Phone || "暫無資訊";
+    const filterPictureKeys = Object.keys(hotFoods[targetId].Picture).filter(
+      (key) => key.match(/PictureUrl[0-9]+/)
+    );
     const _images = filterPictureKeys.map((filterPictureKey) => {
       return {
-        src: hotHotels[targetId].Picture[filterPictureKey],
+        src: hotFoods[targetId].Picture[filterPictureKey],
         alt: "圖片",
       };
     });
@@ -102,7 +103,7 @@ const Food = (props) => {
         { key: "category", value: selectedCategories },
         { key: "city", value: selectedCity },
       ],
-      `${window.location.origin}/scenicspots/filter`
+      `${window.location.origin}/foods/filter`
     );
   };
 
@@ -122,7 +123,7 @@ const Food = (props) => {
     lCardsInfos: {
       title: "熱門住宿",
       icon: <Rectangle />,
-      spots: hotFoods,
+      spots: hotHotels,
       buttonText: "活動詳情",
       onClickButton: putHotHotelInfosToDetailModal,
       countOfWaitingCard: 4,
@@ -130,7 +131,7 @@ const Food = (props) => {
     sCardsInfos: {
       title: "熱門美食",
       icon: <Rectangle />,
-      spots: hotHotels,
+      spots: hotFoods,
       onClickButton: putHotFoodsInfosToDetailModal,
       countOfWaitingCard: 10,
     },
@@ -154,7 +155,7 @@ const Food = (props) => {
         pictureOwnedActivities[3570],
       ];
 
-      setHotFoods(_hotActivities);
+      setHotHotels(_hotActivities);
     });
 
     getFoods().then((_scenicSpots) => {
@@ -175,7 +176,7 @@ const Food = (props) => {
         pictureOwnedScenicSpots[1204],
       ];
 
-      setHotHotels(_hotScenicSpots);
+      setHotFoods(_hotScenicSpots);
     });
   }, []);
 
@@ -189,4 +190,4 @@ const Food = (props) => {
   return <HotItems {...HotItemsProps} />;
 };
 
-export default withRouter(Food);
+export default withRouter(Foods);

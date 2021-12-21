@@ -156,6 +156,10 @@ const FilterItems = (props) => {
     }, 0.25 * 1000);
   }, [activitiesPage]);
 
+  useEffect(() => {
+    console.log("qureyParams", qureyParams);
+  }, [qureyParams]);
+
   return (
     <SearchLayout
       categories={searchInfos.categories}
@@ -177,8 +181,12 @@ const FilterItems = (props) => {
       >
         <FirstSmCards
           title={`${
-            qureyParams.city === "不分縣市" ? "" : qureyParams.city
-          } 活動`}
+            !qureyParams.city
+              ? ""
+              : qureyParams.city === "不分縣市"
+              ? ""
+              : qureyParams.city
+          } ${firstSmCardsInfos.title}`}
           icon={firstSmCardsInfos.icon}
           spots={firstSmCardsInfos.spots}
           onClick={(e) => {
@@ -208,8 +216,12 @@ const FilterItems = (props) => {
       >
         <SecondSmCards
           title={`${
-            qureyParams.city === "不分縣市" ? "" : qureyParams.city
-          } 景點`}
+            !qureyParams.city
+              ? ""
+              : qureyParams.city === "不分縣市"
+              ? ""
+              : qureyParams.city
+          } ${secondSmCardsInfos.title}`}
           icon={secondSmCardsInfos.icon}
           spots={secondSmCardsInfos.spots}
           onClick={(e) => {

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
-import { ReactComponent as Triangle } from "assets/triangle_title.svg";
+import { ReactComponent as Rectangle } from "assets/rectangle.svg";
 import FilterItems from "layouts/FilterItems";
-
 import { counties } from "variable/variable";
-import { getCityScenicSpots } from "api/scenicSpots";
-import { getCityActivities } from "api/activities";
+import { getCityHotels } from "api/hotels";
+import { getCityFoods } from "api/foods";
 import { pushSearchParam } from "utils/url";
 
 const categories = [
@@ -80,7 +79,7 @@ export const getParamsFromUrl = () => {
   };
 };
 
-const ScenicSpots = (props) => {
+const FoodsFilter = (props) => {
   const { history } = props;
   // 篩選相關state
   const [keyword, setKeyword] = useState("");
@@ -117,12 +116,9 @@ const ScenicSpots = (props) => {
 
   const putCityActivityInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
-    const _title = cityActivities[targetId].ActivityName || "暫無";
+    const _title = cityActivities[targetId].HotelName || "暫無";
     const _description = cityActivities[targetId].Description;
-    const _time =
-      `${cityActivities[targetId].StartTime.slice(0, 10)} - ${cityActivities[
-        targetId
-      ].EndTime.slice(0, 10)}` || "暫無";
+    const _time = "永久開放";
     const _fee = "免費";
     const _area = cityActivities[targetId].Address || "暫無";
     const _tel = cityActivities[targetId].Phone || "暫無";
@@ -151,12 +147,12 @@ const ScenicSpots = (props) => {
   const putCityScenicspotInfosToDetailModal = (e) => {
     console.log("cityScenicSpots", cityScenicSpots);
     const targetId = Number(e.currentTarget.dataset.id);
-    const _title = cityScenicSpots[targetId]?.Name;
-    const _description = cityScenicSpots[targetId]?.DescriptionDetail;
-    const _time = cityScenicSpots[targetId]?.OpenTime || "24小時開放";
+    const _title = cityScenicSpots[targetId].Name || "暫無";
+    const _description = cityScenicSpots[targetId].Description;
+    const _time = "永久開放";
     const _fee = "免費";
-    const _area = cityScenicSpots[targetId]?.Address || "暫無";
-    const _tel = cityScenicSpots[targetId]?.Phone || "暫無";
+    const _area = cityScenicSpots[targetId].Address || "暫無";
+    const _tel = cityScenicSpots[targetId].Phone || "暫無";
     const filterPictureKeys = Object.keys(
       cityScenicSpots[targetId].Picture
     ).filter((key) => key.match(/PictureUrl[0-9]+/));
@@ -196,7 +192,7 @@ const ScenicSpots = (props) => {
     setScenicSpotsPage(1);
   };
 
-  const FilterItemsProps = {
+  const filterItemsProps = {
     isWaiting: isLoading,
     setIsWaiting: setIsLoading,
     searchInfos: {
@@ -211,16 +207,16 @@ const ScenicSpots = (props) => {
       onClickSearchButton: handleSearch,
     },
     firstSmCardsInfos: {
-      title:'活動',
-      icon: <Triangle />,
+      title:'住宿',
+      icon: <Rectangle />,
       spots: cityActivities,
       setSpots: setCityActivities,
       onClickCard: putCityActivityInfosToDetailModal,
       countOfWaitingCard: 20,
     },
     secondSmCardsInfos: {
-      title:'景點',
-      icon: <Triangle />,
+      title:'美食',
+      icon: <Rectangle />,
       spots: cityScenicSpots,
       setSpots: setCityScenicSpots,
       onClickCard: putCityScenicspotInfosToDetailModal,
@@ -242,7 +238,7 @@ const ScenicSpots = (props) => {
 
   useEffect(() => {
     if (selectedCity === null) return;
-    getCityActivities(selectedCity).then((data) => {
+    getCityHotels(selectedCity).then((data) => {
       const _totalActivities = data.filter(
         (item) =>
           item.Picture.hasOwnProperty("PictureUrl1") &&
@@ -258,15 +254,15 @@ const ScenicSpots = (props) => {
       } // 篩選城市
       if (data.length !== 0 && qureyParams.keyword) {
         _cityActivities = _totalActivities
-          .filter((_totalActivities) => {
-            return _totalActivities.ActivityName.includes(qureyParams.keyword);
-          })
+          .filter((_totalActivities) =>
+            _totalActivities.HotelName.includes(qureyParams.keyword)
+          )
           .slice((scenicSpotsPage - 1) * 20, scenicSpotsPage * 20);
       } // 搜尋功能
       setCityActivities(_cityActivities);
     }); // 接活動資料
 
-    getCityScenicSpots(selectedCity).then((data) => {
+    getCityFoods(selectedCity).then((data) => {
       const _totalScenicSpots = data.filter(
         (item) =>
           item.Picture.hasOwnProperty("PictureUrl1") &&
@@ -283,7 +279,7 @@ const ScenicSpots = (props) => {
       if (data.length !== 0 && qureyParams.keyword) {
         _cityScenicSpots = _totalScenicSpots
           .filter((_totalScenicSpot) =>
-            _totalScenicSpot.ScenicSpotName.includes(qureyParams.keyword)
+            _totalScenicSpot.Name.includes(qureyParams.keyword)
           )
           .slice((scenicSpotsPage - 1) * 20, scenicSpotsPage * 20);
       } // 搜尋功能
@@ -320,7 +316,7 @@ const ScenicSpots = (props) => {
     setCityActivities(_activities);
   }, [activitiesPage]);
 
-  return <FilterItems {...FilterItemsProps} />;
+  return <FilterItems {...filterItemsProps} />;
 };
 
-export default withRouter(ScenicSpots);
+export default withRouter(FoodsFilter);

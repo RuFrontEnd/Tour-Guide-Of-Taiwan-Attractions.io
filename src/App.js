@@ -20,7 +20,8 @@ import Navbar from "components/NavBar";
 import Footer from "components/Footer";
 import ScenicSpots from "pages/ScenicSpots";
 import ScenicSpotsFilter from "pages/ScenicSpotsFilter";
-import Food from "pages/Food";
+import Foods from "pages/Foods";
+import FoodsFilter from "pages/FoodsFilter";
 import ScrollToTop from "components/ScrollToTop";
 
 setAxiosDefaultURL("https://swin-opendata.herokuapp.com/api/v1/data/");
@@ -28,15 +29,15 @@ setAxiosDefaultURL("https://swin-opendata.herokuapp.com/api/v1/data/");
 const transitionRoutes = [
   {
     component: <ScenicSpots />,
-    path: path[0],
+    path: '/scenicspots',
   },
   // {
   //   component: <ScenicSpotsFilter />,
   //   path: "/scenicspots/filter",
   // },
   {
-    component: <Food />,
-    path: "/food",
+    component: <Foods />,
+    path: "/foods",
   },
 ];
 
@@ -44,6 +45,10 @@ const routes = [
   {
     component: <ScenicSpotsFilter />,
     path: "/scenicspots/filter",
+  },
+  {
+    component: <FoodsFilter />,
+    path: "/foods/filter",
   },
 ];
 
