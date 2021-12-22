@@ -104,15 +104,21 @@ const HotActivityCard = styled(Card)`
 
   & #Card-DeatiledButton {
     @media (max-width: 992px) {
-      display: none;
+      width: 88px;
+    }
+
+    @media (max-width: 768px) {
+      width: 72px;
+      font-size: 14px;
     }
 
     @media (max-width: 576px) {
-      display: block;
+      width: 120px;
     }
 
     @media (max-width: 425px) {
-      display: none;
+      width: 76px;
+      font-size: 14px;
     }
   }
 `;
@@ -135,7 +141,7 @@ const CardLi = styled.li`
     padding-left: 0px;
 
     @media (max-width: 992px) {
-      padding-right: 8.5px;
+      padding-right: 4.5px;
     }
 
     @media (max-width: 576px) {
@@ -148,7 +154,7 @@ const CardLi = styled.li`
     padding-right: 0px;
 
     @media (max-width: 992px) {
-      padding-left: 8.5px;
+      padding-left: 4.5px;
     }
 
     @media (max-width: 576px) {
@@ -170,6 +176,13 @@ const CardLi = styled.li`
 
     @media (max-width: 576px) {
       display: inline;
+    }
+  }
+
+  & #Card-District{
+    @media (max-width: 768px) {
+      margin-left: 6px;
+      font-size: 12px;
     }
   }
 `;

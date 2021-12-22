@@ -91,10 +91,10 @@ const createswiperConfig = (
       0: {
         slidesPerView: 2,
       },
-      //   576: {
-      //     slidesPerView: 3,
-      //   },
       576: {
+        slidesPerView: 3,
+      },
+      768: {
         slidesPerView: 4,
       },
       992: {
@@ -320,6 +320,10 @@ const NextButton = styled(DirectButton)`
   top: 50%;
   right: -60px;
   transform: translateY(-50%);
+  
+  @media (max-width: 1280px) {
+    display: none;
+  }
 `;
 
 const PrevButton = styled(DirectButton)`
@@ -328,6 +332,10 @@ const PrevButton = styled(DirectButton)`
   top: 50%;
   left: -60px;
   transform: translateY(-50%);
+
+  @media (max-width: 1280px) {
+    display: none;
+  }
 `;
 
 const Box = styled.div`

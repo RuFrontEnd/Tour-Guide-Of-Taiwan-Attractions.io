@@ -50,7 +50,7 @@ const Card = (props) => {
           <More>
             <Area>
               <Location />
-              <District>{info.area}</District>
+              <District id="Card-District">{info.area}</District>
             </Area>
             <DeatiledButton
               id="Card-DeatiledButton"

@@ -90,10 +90,31 @@ const Welcome = styled(WelcomeToTaiwan)``;
 const Content = styled.div`
   grid-column-start: 5;
   grid-column-end: 9;
+  padding: 0px 50px;
+
+  @media (max-width: 1600px) {
+    padding: 0px 0px;
+  }
+
+  @media (max-width: 1440px) {
+    grid-column-start: 5;
+    grid-column-end: 9;
+  }
 
   @media (max-width: 1200px) {
     grid-column-start: 4;
     grid-column-end: 10;
+    padding: 0px 50px;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 0px 0px;
+  }
+
+  @media (max-width: 768px) {
+    grid-column-start: 3;
+    grid-column-end: 11;
+    padding: 0px 20px;
   }
 
   @media (max-width: 576px) {

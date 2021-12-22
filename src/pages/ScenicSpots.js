@@ -121,6 +121,9 @@ const ScenicSpots = (props) => {
       setKeyword: setKeyword,
       onClickSearchButton: handleSearch,
     },
+    citySwiperInfos: {
+      path: `${window.location.origin}/scenicSpots/filter`,
+    },
     lCardsInfos: {
       title: "熱門活動",
       icon: <Triangle />,

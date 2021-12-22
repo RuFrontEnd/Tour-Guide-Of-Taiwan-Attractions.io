@@ -36,8 +36,8 @@ const Foods = (props) => {
 
   const putHotHotelInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
-    const _title = hotHotels[targetId]?.HotelName || '';
-    const _description = hotHotels[targetId]?.Description || '';
+    const _title = hotHotels[targetId]?.HotelName || "";
+    const _description = hotHotels[targetId]?.Description || "";
     const _time = hotHotels[targetId]?.OpenTime || "24小時開放";
     const _fee = hotHotels[targetId]?.Spec || "暫無資訊";
     const _area = hotHotels[targetId]?.Address || "請聯絡主辦方詢問地點";
@@ -66,8 +66,8 @@ const Foods = (props) => {
 
   const putHotFoodsInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
-    const _title = hotFoods[targetId].Name || '';
-    const _description = hotFoods[targetId]?.Description || '';
+    const _title = hotFoods[targetId].Name || "";
+    const _description = hotFoods[targetId]?.Description || "";
     const _time = hotFoods[targetId]?.OpenTime || "暫無資訊";
     const _fee = hotFoods[targetId]?.Class || "其他";
     const _area = hotFoods[targetId]?.Address || "請聯絡主辦方詢問地點";
@@ -117,6 +117,9 @@ const Foods = (props) => {
       keyword: keyword,
       setKeyword: setKeyword,
       onClickSearchButton: handleSearch,
+    },
+    citySwiperInfos: {
+      path: `${window.location.origin}/foods/filter`,
     },
     lCardsInfos: {
       title: "熱門住宿",
