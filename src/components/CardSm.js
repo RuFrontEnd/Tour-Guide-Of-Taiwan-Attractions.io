@@ -1,11 +1,7 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components/macro";
 import Paper from "components/Paper";
-import {
-  __FF1D6C__,
-  __007350__,
-  __F6F7FB__,
-} from "variable/variable";
+import { __FF1D6C__, __007350__, __F6F7FB__ } from "variable/variable";
 import { ReactComponent as LocationRef } from "assets/location.svg";
 import noImg from "assets/noImg-s.png";
 
@@ -19,10 +15,23 @@ const CardSm = (props) => {
     widthOfShadowLength,
     rotateOfShadow,
     leftShadowOffsetWidth,
-    rightShadowOffsetWidth
+    rightShadowOffsetWidth,
   } = props;
 
   const $image = useRef();
+
+  useEffect(() => {
+    const myVar = setTimeout(() => {
+      if ($image.current.complete === false) {
+        $image.current.src = noImg;
+      }
+    }, 2 * 1000);
+
+    return () => {
+      clearTimeout(myVar);
+    };
+  }, []);
+
   return (
     <Box
       style={style}
@@ -40,9 +49,9 @@ const CardSm = (props) => {
         src={info.src}
         alt={info.alt}
         ref={$image}
-        onError={() => {
-          $image.current.src = noImg;
-        }}
+        // onError={() => {
+        //   $image.current.src = noImg;
+        // }}
       />
       <Info>
         <Title>{info.title}</Title>
@@ -68,14 +77,15 @@ const Box = styled(Paper)`
 const Image = styled.img`
   aspect-ratio: 9 / 7;
   object-fit: cover;
-  background-color: ${__F6F7FB__()};
+  background-image: url(${noImg});
+  background-size: cover;
+  background-position: center;
   width: 100%;
   height: auto;
   margin-bottom: 10px;
 `;
 
-const Info = styled.div`
-`;
+const Info = styled.div``;
 
 const Title = styled.h2`
   font-size: 14px;
