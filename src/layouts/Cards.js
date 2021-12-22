@@ -19,14 +19,12 @@ const Cards = (props) => {
     isWaiting = false,
     countOfWaitingCard,
   } = props;
-  
+
   const watingCards = new Array(countOfWaitingCard).fill(null);
 
   return (
     <Space className={className} style={style}>
-      <Title title={title}>
-        {icon}
-      </Title>
+      <Title title={title}>{icon}</Title>
       <CardUl>
         {!isWaiting &&
           activities.map((activity, activityIndex) => (
@@ -38,19 +36,28 @@ const Cards = (props) => {
                   alt: "圖片",
                   title: activity.Name,
                   description: activity.Description,
-                  area: activity.City || '',
+                  area: activity.City || "",
                 }}
                 buttonText={buttonText}
                 onClickButton={(e) => {
                   onClickButton(e);
                 }}
+                widthOfShadowLength={"80%"}
+                rotateOfShadow={5}
+                leftShadowOffsetWidth={"2px"}
+                rightShadowOffsetWidth={"2px"}
               />
             </CardLi>
           ))}
         {isWaiting &&
           watingCards.map((watingCard) => (
             <CardLi>
-              <LoadingCard />
+              <LoadingCard
+                widthOfShadowLength={"80%"}
+                rotateOfShadow={5}
+                leftShadowOffsetWidth={"2px"}
+                rightShadowOffsetWidth={"2px"}
+              />
             </CardLi>
           ))}
       </CardUl>
@@ -60,6 +67,10 @@ const Cards = (props) => {
 
 const HotActivityCard = styled(Card)`
   aspect-ratio: 100 / 43;
+
+  & #Card-Container {
+    background-color: red;
+  }
 
   & #Card-Intro {
     @media (max-width: 1200px) {
@@ -161,7 +172,6 @@ const CardLi = styled.li`
       display: inline;
     }
   }
-
 `;
 
 const CardUl = styled.ul`

@@ -27,6 +27,8 @@ const Pagination = (props) => {
         shape="rounded"
         renderItem={(item) => (
           <PaginationItem
+            // disabled={true}
+            id={item.innerHtml}
             components={{
               previous: previousIcon ? previousIcon : "",
               next: nextIcon ? nextIcon : "",

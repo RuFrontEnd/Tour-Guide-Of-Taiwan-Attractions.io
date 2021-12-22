@@ -15,6 +15,10 @@ const Card = (props) => {
     buttonText = "",
     onClickButton = () => {},
     dataId,
+    widthOfShadowLength,
+    rotateOfShadow,
+    leftShadowOffsetWidth,
+    rightShadowOffsetWidth,
   } = props;
 
   const $image = useRef();
@@ -24,8 +28,10 @@ const Card = (props) => {
       style={style}
       className={className}
       onClick={onClick}
-      widthOfShadowLength={"50%"}
-      rotateOfShadow={8}
+      widthOfShadowLength={widthOfShadowLength}
+      rotateOfShadow={rotateOfShadow}
+      leftShadowOffsetWidth={leftShadowOffsetWidth}
+      rightShadowOffsetWidth={rightShadowOffsetWidth}
     >
       <Wrap>
         <Image

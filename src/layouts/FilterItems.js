@@ -37,7 +37,12 @@ const FilterItems = (props) => {
   const $firstTitle = useRef();
   const $secondTitle = useRef();
 
-  // 篩選相關state
+  // 是否捲動到該標題 state
+  const [isCanScrollToFirstTitle, setIsCanScrollToFirstTitle] = useState(false);
+  const [isCanScrollToSecondtTitle, setIsCanScrollToSecondTitle] =
+    useState(false);
+
+  // 篩選相關 state
   const [keyword, setKeyword] = useState("");
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null); // 下拉選單選擇的城市
@@ -177,6 +182,26 @@ const FilterItems = (props) => {
     }, 0.25 * 1000);
   }, [scenicSpotsPage]);
 
+  useEffect(() => {
+    if (activitiesPage === 0 || !isCanScrollToFirstTitle) return;
+    firstSmCardsInfos.setIsWaiting(true);
+    window.scrollTo({
+      top: $firstTitle.current.offsetTop - (navBarHeight + 10),
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [activitiesPage]);
+
+  useEffect(() => {
+    if (scenicSpotsPage === 0 || !isCanScrollToFirstTitle) return;
+    secondSmCardsInfos.setIsWaiting(true);
+    window.scrollTo({
+      top: $secondTitle.current.offsetTop - (navBarHeight + 10),
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [scenicSpotsPage]);
+
   return (
     <SearchLayout
       categories={categories}
@@ -209,15 +234,8 @@ const FilterItems = (props) => {
         />
         {firstSmCardsInfos.spots.length !== 0 && (
           <Paginate
-            onClick={(e) => {
-              firstSmCardsInfos.setIsWaiting(true)
-              if (totalActivitiesPages !== 1 && e.target.ariaLabel !== null) {
-                window.scrollTo({
-                  top: $firstTitle.current.offsetTop - (navBarHeight + 10),
-                  left: 0,
-                  behavior: "smooth",
-                });
-              }
+            onClick={() => {
+              setIsCanScrollToFirstTitle(true);
             }}
             count={totalActivitiesPages}
             previousIcon={Arrow}
@@ -247,14 +265,7 @@ const FilterItems = (props) => {
         {secondSmCardsInfos.spots.length !== 0 && (
           <Paginate
             onClick={(e) => {
-              if (totalActivitiesPages !== 1 && e.target.ariaLabel !== null) {
-                secondSmCardsInfos.setIsWaiting(true)
-                window.scrollTo({
-                  top: $secondTitle.current.offsetTop - (navBarHeight + 10),
-                  left: 0,
-                  behavior: "smooth",
-                });
-              }
+              setIsCanScrollToSecondTitle(true);
             }}
             count={totalScenicSpotsPages}
             previousIcon={Arrow}

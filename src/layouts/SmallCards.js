@@ -44,13 +44,22 @@ const SmallCards = forwardRef((props) => {
                   area: spot.City,
                 }}
                 dataId={spotIndex}
+                widthOfShadowLength={"80%"}
+                rotateOfShadow={12}
+                leftShadowOffsetWidth={"2px"}
+                rightShadowOffsetWidth={"2px"}
               />
             </CardItem>
           ))}
         {isWaiting &&
           WatingCards.map((WatingCard) => (
             <CardItem>
-              <LoadingCardSm />
+              <LoadingCardSm
+                widthOfShadowLength={"80%"}
+                rotateOfShadow={12}
+                leftShadowOffsetWidth={"2px"}
+                rightShadowOffsetWidth={"2px"}
+              />
             </CardItem>
           ))}
       </Cards>

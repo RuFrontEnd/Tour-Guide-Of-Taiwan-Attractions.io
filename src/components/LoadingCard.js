@@ -9,15 +9,25 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const LoadingCard = (props) => {
-  const { className, style, onClick } = props;
+  const {
+    className,
+    style,
+    onClick,
+    widthOfShadowLength,
+    rotateOfShadow,
+    leftShadowOffsetWidth,
+    rightShadowOffsetWidth,
+  } = props;
 
   return (
     <Container
       style={style}
       className={className}
       onClick={onClick}
-      widthOfShadowLength={"50%"}
-      rotateOfShadow={8}
+      widthOfShadowLength={widthOfShadowLength}
+      rotateOfShadow={rotateOfShadow}
+      leftShadowOffsetWidth={leftShadowOffsetWidth}
+      rightShadowOffsetWidth={rightShadowOffsetWidth}
     >
       <Wrap>
         <ImageBox>

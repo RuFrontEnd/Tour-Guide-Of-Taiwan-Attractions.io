@@ -5,7 +5,16 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const LoadingCardSm = (props) => {
-  const { className, style, onClick = () => {}, dataId } = props;
+  const {
+    className,
+    style,
+    onClick = () => {},
+    dataId,
+    widthOfShadowLength,
+    rotateOfShadow,
+    leftShadowOffsetWidth,
+    rightShadowOffsetWidth,
+  } = props;
 
   return (
     <Box
@@ -15,6 +24,10 @@ const LoadingCardSm = (props) => {
       rotateOfShadow={8}
       onClick={onClick}
       dataId={dataId}
+      widthOfShadowLength={widthOfShadowLength}
+      rotateOfShadow={rotateOfShadow}
+      leftShadowOffsetWidth={leftShadowOffsetWidth}
+      rightShadowOffsetWidth={rightShadowOffsetWidth}
     >
       <Image />
       <Info>
@@ -61,7 +74,7 @@ const More = styled(Skeleton)`
 `;
 
 const MoreBox = styled.div`
- width: 25%;
-`
+  width: 25%;
+`;
 
 export default LoadingCardSm;

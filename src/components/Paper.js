@@ -53,19 +53,17 @@ const Box = styled.section`
     background: ${__0D0B0C__()};
     box-shadow: 0 15px 10px ${__0D0B0C__()};
     opacity: 0.3;
-    transform: skewY(-2.5deg);
-    /* transform: ${(props) =>
+    transform: ${(props) =>
       props.rotateOfShadow
         ? `rotate(-${props.rotateOfShadow}deg)`
-        : "rotate(-3deg)"}; */
+        : "rotate(-3deg)"};
   }
 
   &:after {
-    transform: skewY(2.5deg);
-    /* transform: ${(props) =>
+    transform: ${(props) =>
       props.rotateOfShadow
         ? `rotate(${props.rotateOfShadow}deg)`
-        : "rotate(3deg)"}; */
+        : "rotate(3deg)"};
     right: ${(props) =>
       props.rightShadowOffsetWidth ? props.rightShadowOffsetWidth : "10px"};
     left: auto;
