@@ -119,7 +119,7 @@ const Foods = (props) => {
       onClickSearchButton: handleSearch,
     },
     citySwiperInfos: {
-      path: `${window.location.origin}/foods/filter`,
+      path: `/foods/filter`,
     },
     lCardsInfos: {
       title: "熱門住宿",
