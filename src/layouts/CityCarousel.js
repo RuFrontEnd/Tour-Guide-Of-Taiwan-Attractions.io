@@ -6,32 +6,31 @@ import SwiperCore, { Navigation } from "swiper";
 import "swiper/swiper.min.css";
 import "swiper/modules/navigation/navigation.scss";
 import { __FFF__, __FF1D6C__, __FFB72C__, __D2D2D2__ } from "variable/variable";
-import { useQuery } from "hooks/useQuery";
-import { path } from "variable/path";
 import { ReactComponent as Location } from "assets/location.svg";
 import { ReactComponent as Triangle } from "assets/triangle_title.svg";
 import Space from "layouts/Space";
 import taipei from "assets/taipei.png";
 import newTaipei from "assets/new_taipei.png";
 import taoyuan from "assets/taoyuan.png";
+import taichung from "assets/taichung.png";
+import tainan from "assets/tainan.png";
+import kaohsiung from "assets/kaohsiung.png";
 import keelung from "assets/keelung.png";
 import hsinchu from "assets/hsinchu.png";
 import hsinchuCounty from "assets/hsinchuCounty.jpg";
-import taichung from "assets/taichung.png";
-import nantou from "assets/nantou.png";
-import chiayi from "assets/chiayi.png";
-import tainan from "assets/tainan.png";
-import kaohsiung from "assets/kaohsiung.png";
-import pingtung from "assets/pingtung.png";
-import yilan from "assets/yilan.png";
-import hualien from "assets/hualien.png";
+import miaoliCounty from "assets/miaoliCounty.png";
+import changhuaCounty from "assets/changhuaCounty.jpg";
+import nantouCounty from "assets/nantouCounty.png";
+import yunlinCounty from "assets/yunlinCounty.jpg";
+import chiayiCounty from "assets/chiayiCounty.png";
+import chiayi from "assets/chiayi.jpg";
+import pingtungCounty from "assets/pingtungCounty.png";
+import yilanCounty from "assets/yilanCounty.png";
+import hualienCounty from "assets/hualienCounty.png";
 import taitungCounty from "assets/taitungCounty.png";
-import mazu from "assets/mazu.png";
-import miaoli from "assets/miaoli.png";
-import yunlin from "assets/yunlin.jpg";
-import changhua from "assets/changhua.jpg";
-import penghu from "assets/penghu.jpg";
-import kinmen from "assets/kinmen.jpg";
+import kinmenCounty from "assets/kinmenCounty.jpg";
+import penghuCounty from "assets/penghuCounty.jpg";
+import lienchiangCounty from "assets/lienchiangCounty.png";
 import Board from "components/Board";
 import Category from "components/Category";
 import DirectButton from "components/DirectButton";
@@ -39,41 +38,80 @@ import DirectButton from "components/DirectButton";
 SwiperCore.use([Navigation]);
 
 const cities = [
-  { name: "台　北", value: "Taipei", src: taipei },
   {
-    name: ["新　北", "桃　園"],
+    name: "台北市",
+    value: "Taipei",
+    src: taipei,
+  },
+  {
+    name: ["新北市", "桃園市"],
     value: ["NewTaipei", "Taoyuan"],
     src: [newTaipei, taoyuan],
   },
-  { name: "基　隆", value: "Keelung", src: keelung },
   {
-    name: ["新　竹", "台　中"],
-    value: ["Hsinchu", "Taichung"],
-    src: [hsinchu, taichung],
+    name: "台中市",
+    value: "Taichung",
+    src: taichung,
   },
-  { name: "台　南", src: tainan, value: "Tainan" },
   {
-    name: ["嘉　義", "南　投"],
-    value: ["Chiayi", "Nantou"],
-    src: [chiayi, nantou],
+    name: ["台南市", "高雄市"],
+    value: ["Tainan", "Kaohsiung"],
+    src: [tainan, kaohsiung],
   },
-  { name: "宜　蘭", src: yilan, value: "Yilan" },
   {
-    name: ["高　雄", "屏　東"],
-    value: ["Kaohsiung", "Pingtung"],
-    src: [kaohsiung, pingtung],
+    name: "基隆市",
+    value: "Keelung",
+    src: keelung,
   },
-  { name: "彰　化", value: "Changhua", src: changhua },
   {
-    name: ["苗　栗", "雲　林"],
-    value: ["Miaoli", "Yunlin"],
-    src: [miaoli, yunlin],
+    name: ["新竹市", "新竹縣"],
+    value: ["Hsinchu", "HsinchuCounty"],
+    src: [hsinchu, hsinchuCounty],
   },
-  { name: "外　島", value: "OffshoreIslands", src: penghu },
   {
-    name: ["花　蓮", "台　東"],
-    value: ["Hualien", "TaitungCounty"],
-    src: [hualien, taitungCounty],
+    name: "苗栗縣",
+    value: "MiaoliCounty",
+    src: miaoliCounty,
+  },
+  {
+    name: ["彰化縣", "南投縣"],
+    value: ["ChanghuaCounty", "NantouCounty"],
+    src: [changhuaCounty, nantouCounty],
+  },
+  {
+    name: "雲林縣",
+    value: "YunlinCounty",
+    src: yunlinCounty,
+  },
+  {
+    name: ["嘉義縣", "嘉義市"],
+    value: ["ChiayiCounty", "Chiayi"],
+    src: [chiayiCounty, chiayi],
+  },
+  {
+    name: "屏東縣",
+    value: "PingtungCounty",
+    src: pingtungCounty,
+  },
+  {
+    name: ["宜蘭縣", "花蓮縣"],
+    value: ["YilanCounty", "HualienCounty"],
+    src: [yilanCounty, hualienCounty],
+  },
+  {
+    name: "台東縣",
+    value: "TaitungCounty",
+    src: taitungCounty,
+  },
+  {
+    name: ["金門縣", "澎湖縣"],
+    value: ["KinmenCounty", "PenghuCounty"],
+    src: [kinmenCounty, penghuCounty],
+  },
+  {
+    name: "連江縣",
+    value: "LienchiangCounty",
+    src: lienchiangCounty,
   },
 ];
 
@@ -113,11 +151,8 @@ const createswiperConfig = (
 
 const CityCarousel = (props) => {
   const { style, className, onClickBoard = () => {} } = props;
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [isShowPrevButton, setIsShowPrevButton] = useState(false);
   const [isShowNextButton, setIsShowNextButton] = useState(true);
-  const $prevButton = useRef();
-  const $nextButton = useRef();
 
   const onReachBeginning = () => {
     setIsShowPrevButton(false);
@@ -320,7 +355,7 @@ const NextButton = styled(DirectButton)`
   top: 50%;
   right: -60px;
   transform: translateY(-50%);
-  
+
   @media (max-width: 1280px) {
     display: none;
   }

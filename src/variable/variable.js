@@ -45,25 +45,46 @@ export const size = {
 
 export const counties = [
   { en: "", zh: "不分縣市" },
+
+
+
+
+
+  
   { en: "Taipei", zh: "台北市" },
-  { en: "Keelung", zh: "基隆市" },
+
   { en: "NewTaipei", zh: "新北市" },
-  { en: "YilanCounty", zh: "宜蘭縣" },
   { en: "Taoyuan", zh: "桃園市" },
-  { en: "Hsinchu", zh: "新竹縣市" },
-  { en: "MiaoliCounty", zh: "苗栗縣" },
+
   { en: "Taichung", zh: "台中市" },
-  { en: "ChanghuaCounty", zh: "彰化縣" },
-  { en: "NantouCounty", zh: "南投縣" },
-  { en: "Chiayi", zh: "嘉義縣市" },
-  { en: "YunlinCounty", zh: "雲林縣" },
+
   { en: "Tainan", zh: "台南市" },
   { en: "Kaohsiung", zh: "高雄市" },
-  // { en: "Penghu", zh: "澎湖縣" },
-  // { en: "Kinmen", zh: "金門縣" },
+  
+  { en: "Keelung", zh: "基隆市" },
+
+  { en: "Hsinchu", zh: "新竹市" },
+  { en: "HsinchuCounty", zh: "新竹縣" },
+
+  { en: "MiaoliCounty", zh: "苗栗縣" },
+
+  { en: "ChanghuaCounty", zh: "彰化縣" },
+  { en: "NantouCounty", zh: "南投縣" },
+
+  { en: "YunlinCounty", zh: "雲林縣" },
+
+  { en: "ChiayiCounty", zh: "嘉義縣" },
+  { en: "Chiayi", zh: "嘉義市" },
+
   { en: "PingtungCounty", zh: "屏東縣" },
-  { en: "TaitungCounty", zh: "台東縣" },
+
+  { en: "YilanCounty", zh: "宜蘭縣" },
   { en: "HualienCounty", zh: "花蓮縣" },
-  // { en: "Mazu", zh: "連江縣" },
-  { en: "OffshoreIslands", zh: "外島" },
+
+  { en: "TaitungCounty", zh: "台東縣" },
+  
+  { en: "KinmenCounty", zh: "金門縣" },
+  { en: "PenghuCounty", zh: "澎湖縣" },
+
+  { en: "LienchiangCounty", zh: "連江縣" },
 ];

@@ -103,45 +103,57 @@ const FilterItems = (props) => {
     // history.listen(() => {
     //   getFilterStateFromSearchParam();
     // }); // 監聽上一頁 / 下一頁
-    getFilterStateFromSearchParam();
+    try {
+      getFilterStateFromSearchParam();
+    } catch (err) {
+      console.debug("getFilterStateFromSearchParam執行錯誤", err);
+    }
   }, []);
 
   useEffect(() => {
     if (selectedCity === null) return;
     firstSmCardsInfos.getData(selectedCity).then((data) => {
-      const _totalActivities = data.filter(
-        (item) =>
-          item.Picture.hasOwnProperty("PictureUrl1") &&
-          item.hasOwnProperty("City") &&
-          item.Name.includes(qureyParams.keyword)
-      );
+      try {
+        const _totalActivities = data.filter(
+          (item) =>
+            item.Picture.hasOwnProperty("PictureUrl1") &&
+            item.hasOwnProperty("City") &&
+            item.Name.includes(qureyParams.keyword)
+        );
 
-      const _spots = _totalActivities.slice(
-        (scenicSpotsPage - 1) * 20,
-        scenicSpotsPage * 20
-      );
+        const _spots = _totalActivities.slice(
+          (scenicSpotsPage - 1) * 20,
+          scenicSpotsPage * 20
+        );
 
-      setTotalActivities(_totalActivities);
-      setTotalActivitiesPages(Math.ceil(_totalActivities.length / 20));
-      firstSmCardsInfos.setSpots(_spots);
+        setTotalActivities(_totalActivities);
+        setTotalActivitiesPages(Math.ceil(_totalActivities.length / 20));
+        firstSmCardsInfos.setSpots(_spots);
+      } catch (err) {
+        console.debug("接FirstSmCards資料執行錯誤", err);
+      }
     }); // 接FirstSmCards資料
 
     secondSmCardsInfos.getData(selectedCity).then((data) => {
-      const _totalScenicSpots = data.filter(
-        (item) =>
-          item.Picture.hasOwnProperty("PictureUrl1") &&
-          item.hasOwnProperty("City") &&
-          item.Name.includes(qureyParams.keyword)
-      );
+      try {
+        const _totalScenicSpots = data.filter(
+          (item) =>
+            item.Picture.hasOwnProperty("PictureUrl1") &&
+            item.hasOwnProperty("City") &&
+            item.Name.includes(qureyParams.keyword)
+        );
 
-      const _spots = _totalScenicSpots.slice(
-        (scenicSpotsPage - 1) * 20,
-        scenicSpotsPage * 20
-      );
+        const _spots = _totalScenicSpots.slice(
+          (scenicSpotsPage - 1) * 20,
+          scenicSpotsPage * 20
+        );
 
-      setTotalScenicSpots(_totalScenicSpots);
-      setTotalScenicSpotsPages(Math.ceil(_totalScenicSpots.length / 20));
-      secondSmCardsInfos.setSpots(_spots);
+        setTotalScenicSpots(_totalScenicSpots);
+        setTotalScenicSpotsPages(Math.ceil(_totalScenicSpots.length / 20));
+        secondSmCardsInfos.setSpots(_spots);
+      } catch (err) {
+        console.debug("接SecondSmCards資料執行錯誤", err);
+      }
     }); // 接SecondSmCards資料
 
     setTimeout(() => {
@@ -193,7 +205,7 @@ const FilterItems = (props) => {
   }, [activitiesPage]);
 
   useEffect(() => {
-    if (scenicSpotsPage === 0 || !isCanScrollToFirstTitle) return;
+    if (scenicSpotsPage === 0 || !isCanScrollToSecondtTitle) return;
     secondSmCardsInfos.setIsWaiting(true);
     window.scrollTo({
       top: $secondTitle.current.offsetTop - (navBarHeight + 10),

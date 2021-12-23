@@ -19,6 +19,7 @@ const HotItems = (props) => {
     sCardsInfos,
     modalInfos,
   } = props;
+  console.log("searchInfos.selectedCity", searchInfos.selectedCity);
 
   return (
     <SearchLayout
@@ -35,11 +36,10 @@ const HotItems = (props) => {
       }}
     >
       <CitySwiper
-        setSelected={searchInfos.setSelectedCity}
         onClickBoard={(e) => {
           history.push({
             pathname: citySwiperInfos.path,
-            search: `?city=${searchInfos.selectedCity}`,
+            search: `?category=&keyword=&city=${e.currentTarget.dataset.value}`,
           });
         }}
       />
