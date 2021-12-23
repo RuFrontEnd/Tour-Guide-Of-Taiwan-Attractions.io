@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components/macro";
 import { withRouter } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
-import { pushSearchParamAndPushUrl } from "utils/url";
 import SmallCards from "layouts/SmallCards";
 import DetailModal from "layouts/DetailModal";
 import Cards from "layouts/Cards";
@@ -12,6 +11,7 @@ import CityCarousel from "layouts/CityCarousel";
 const HotItems = (props) => {
   const {
     isWaiting,
+    history,
     icon,
     searchInfos,
     citySwiperInfos,
@@ -37,14 +37,10 @@ const HotItems = (props) => {
       <CitySwiper
         setSelected={searchInfos.setSelectedCity}
         onClickBoard={(e) => {
-          pushSearchParamAndPushUrl(
-            [
-              { key: "keyword", value: "" },
-              { key: "category", value: "" },
-              { key: "city", value: searchInfos.selectedCity },
-            ],
-            citySwiperInfos.path
-          );
+          history.push({
+            pathname: citySwiperInfos.path,
+            search: `?city=${searchInfos.selectedCity}`,
+          });
         }}
       />
       <LCards

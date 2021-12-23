@@ -88,7 +88,7 @@ function App() {
                 {route.component}
               </Route>
             ))}
-            <Redirect to={transitionRoutes[0].path} />
+            {/* <Redirect to={transitionRoutes[0].path} /> */}
           </Switch>
         </Suspense>
         <Footer />

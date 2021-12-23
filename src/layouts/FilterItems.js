@@ -100,9 +100,9 @@ const FilterItems = (props) => {
   };
 
   useEffect(() => {
-    history.listen(() => {
-      getFilterStateFromSearchParam();
-    }); // 監聽上一頁 / 下一頁
+    // history.listen(() => {
+    //   getFilterStateFromSearchParam();
+    // }); // 監聽上一頁 / 下一頁
     getFilterStateFromSearchParam();
   }, []);
 

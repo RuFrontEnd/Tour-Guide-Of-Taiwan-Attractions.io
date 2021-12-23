@@ -36,8 +36,8 @@ const ScenicSpots = (props) => {
 
   const putHotActivityInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
-    const _title = hotActivities[targetId]?.ActivityName || '';
-    const _description = hotActivities[targetId]?.Description || '';
+    const _title = hotActivities[targetId]?.ActivityName || "";
+    const _description = hotActivities[targetId]?.Description || "";
     const _time =
       `${hotActivities[targetId]?.StartTime?.slice(0, 10)} - ${hotActivities[
         targetId
@@ -70,7 +70,7 @@ const ScenicSpots = (props) => {
   const putHotScenicspotInfosToDetailModal = (e) => {
     const targetId = Number(e.currentTarget.dataset.id);
     const _title = hotScenicSpots[targetId]?.Name || "";
-    const _description = hotScenicSpots[targetId]?.DescriptionDetail || '';
+    const _description = hotScenicSpots[targetId]?.DescriptionDetail || "";
     const _time = hotScenicSpots[targetId]?.OpenTime || "24小時開放";
     const _fee = "免費";
     const _area = hotScenicSpots[targetId].Address || "請聯絡主辦方詢問地點";
@@ -122,7 +122,7 @@ const ScenicSpots = (props) => {
       onClickSearchButton: handleSearch,
     },
     citySwiperInfos: {
-      path: `${window.location.origin}/scenicSpots/filter`,
+      path: "scenicspots/filter",
     },
     lCardsInfos: {
       title: "熱門活動",

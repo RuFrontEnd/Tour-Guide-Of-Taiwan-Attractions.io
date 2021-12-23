@@ -64,7 +64,7 @@ export const getParamsFromUrl = () => {
   };
 };
 
-const ScenicSpots = (props) => {
+const ScenicSpotsFilter = (props) => {
   // 活動相關 state
   const [cityActivities, setCityActivities] = useState([]);
   // 景點相關 state
@@ -172,4 +172,4 @@ const ScenicSpots = (props) => {
   return <FilterItems {...FilterItemsProps} />;
 };
 
-export default withRouter(ScenicSpots);
+export default withRouter(ScenicSpotsFilter);
