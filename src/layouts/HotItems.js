@@ -36,6 +36,7 @@ const HotItems = (props) => {
       }}
     >
       <CitySwiper
+        icon={lCardsInfos.icon}
         onClickBoard={(e) => {
           history.push({
             pathname: citySwiperInfos.path,

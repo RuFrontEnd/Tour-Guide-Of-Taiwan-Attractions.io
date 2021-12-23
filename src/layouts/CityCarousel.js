@@ -150,7 +150,7 @@ const createswiperConfig = (
 };
 
 const CityCarousel = (props) => {
-  const { style, className, onClickBoard = () => {} } = props;
+  const { style, className, onClickBoard = () => {}, icon } = props;
   const [isShowPrevButton, setIsShowPrevButton] = useState(false);
   const [isShowNextButton, setIsShowNextButton] = useState(true);
 
@@ -170,9 +170,7 @@ const CityCarousel = (props) => {
   return (
     <Space style={style} className={className}>
       <Box>
-        <Kind title="造訪城市">
-          <Triangle />
-        </Kind>
+        <Kind title="造訪城市">{icon}</Kind>
         <SwiperBox>
           <PrevButton
             className="custom_prev"
