@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components/macro";
-import { withRouter } from "react-router-dom";
+import { withRouter, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "react-multi-carousel/lib/styles.css";
 import { counties } from "variable/variable";
@@ -41,12 +41,19 @@ const FilterItems = (props) => {
   const [isCanScrollToFirstTitle, setIsCanScrollToFirstTitle] = useState(false);
   const [isCanScrollToSecondtTitle, setIsCanScrollToSecondTitle] =
     useState(false);
+  const urlSearchParams = getParamsFromUrl();
 
   // 篩選相關 state
-  const [keyword, setKeyword] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState(null);
-  const [selectedCity, setSelectedCity] = useState(null); // 下拉選單選擇的城市
+  const [keyword, setKeyword] = useState(urlSearchParams.keyword);
+  const [selectedCategories, setSelectedCategories] = useState(
+    urlSearchParams.category
+  );
+  const [selectedCity, setSelectedCity] = useState(urlSearchParams.city); // 下拉選單選擇的城市
   const [qureyParams, setQureyParams] = useState([]);
+
+  console.log('keyword',keyword)
+  console.log('selectedCategories',selectedCategories)
+  console.log('selectedCity',selectedCity)
 
   // 活動相關 state
   const [totalActivities, setTotalActivities] = useState([]);
@@ -65,17 +72,17 @@ const FilterItems = (props) => {
   ];
 
   const getFilterStateFromSearchParam = () => {
-    const urlSearchParams = getParamsFromUrl();
-    setKeyword(urlSearchParams.keyword);
-    setSelectedCategories(urlSearchParams.category);
-    setSelectedCity(urlSearchParams.city);
-    setScenicSpotsPage(1);
-    setActivitiesPage(1);
-    setQureyParams({
-      keyword: urlSearchParams.keyword,
-      category: urlSearchParams.category,
-      city: urlSearchParams.city,
-    });
+    // const urlSearchParams = getParamsFromUrl();
+    // setKeyword(urlSearchParams.keyword);
+    // setSelectedCategories(urlSearchParams.category);
+    // setSelectedCity(urlSearchParams.city);
+    // setScenicSpotsPage(1);
+    // setActivitiesPage(1);
+    // setQureyParams({
+    //   keyword: urlSearchParams.keyword,
+    //   category: urlSearchParams.category,
+    //   city: urlSearchParams.city,
+    // });
   };
 
   const handleSearch = () => {
@@ -112,86 +119,86 @@ const FilterItems = (props) => {
 
   useEffect(() => {
     if (selectedCity === null) return;
-    firstSmCardsInfos.getData(selectedCity).then((data) => {
-      try {
-        const _totalActivities = data.filter(
-          (item) =>
-            item.Picture.hasOwnProperty("PictureUrl1") &&
-            item.hasOwnProperty("City") &&
-            item.Name.includes(qureyParams.keyword)
-        );
+    // firstSmCardsInfos.getData(selectedCity).then((data) => {
+    //   try {
+    //     const _totalActivities = data.filter(
+    //       (item) =>
+    //         item.Picture.hasOwnProperty("PictureUrl1") &&
+    //         item.hasOwnProperty("City") &&
+    //         item.Name.includes(qureyParams.keyword)
+    //     );
 
-        const _spots = _totalActivities.slice(
-          (scenicSpotsPage - 1) * 20,
-          scenicSpotsPage * 20
-        );
+    //     const _spots = _totalActivities.slice(
+    //       (scenicSpotsPage - 1) * 20,
+    //       scenicSpotsPage * 20
+    //     );
 
-        setTotalActivities(_totalActivities);
-        setTotalActivitiesPages(Math.ceil(_totalActivities.length / 20));
-        firstSmCardsInfos.setSpots(_spots);
-      } catch (err) {
-        console.debug("接FirstSmCards資料執行錯誤", err);
-      }
-    }); // 接FirstSmCards資料
+    //     setTotalActivities(_totalActivities);
+    //     setTotalActivitiesPages(Math.ceil(_totalActivities.length / 20));
+    //     firstSmCardsInfos.setSpots(_spots);
+    //   } catch (err) {
+    //     console.debug("接FirstSmCards資料執行錯誤", err);
+    //   }
+    // }); // 接FirstSmCards資料
 
-    secondSmCardsInfos.getData(selectedCity).then((data) => {
-      try {
-        const _totalScenicSpots = data.filter(
-          (item) =>
-            item.Picture.hasOwnProperty("PictureUrl1") &&
-            item.hasOwnProperty("City") &&
-            item.Name.includes(qureyParams.keyword)
-        );
+    // secondSmCardsInfos.getData(selectedCity).then((data) => {
+    //   try {
+    //     const _totalScenicSpots = data.filter(
+    //       (item) =>
+    //         item.Picture.hasOwnProperty("PictureUrl1") &&
+    //         item.hasOwnProperty("City") &&
+    //         item.Name.includes(qureyParams.keyword)
+    //     );
 
-        const _spots = _totalScenicSpots.slice(
-          (scenicSpotsPage - 1) * 20,
-          scenicSpotsPage * 20
-        );
+    //     const _spots = _totalScenicSpots.slice(
+    //       (scenicSpotsPage - 1) * 20,
+    //       scenicSpotsPage * 20
+    //     );
 
-        setTotalScenicSpots(_totalScenicSpots);
-        setTotalScenicSpotsPages(Math.ceil(_totalScenicSpots.length / 20));
-        secondSmCardsInfos.setSpots(_spots);
-      } catch (err) {
-        console.debug("接SecondSmCards資料執行錯誤", err);
-      }
-    }); // 接SecondSmCards資料
+    //     setTotalScenicSpots(_totalScenicSpots);
+    //     setTotalScenicSpotsPages(Math.ceil(_totalScenicSpots.length / 20));
+    //     secondSmCardsInfos.setSpots(_spots);
+    //   } catch (err) {
+    //     console.debug("接SecondSmCards資料執行錯誤", err);
+    //   }
+    // }); // 接SecondSmCards資料
 
-    setTimeout(() => {
-      firstSmCardsInfos.setIsWaiting(false);
-      secondSmCardsInfos.setIsWaiting(false);
-    }, 1 * 1000);
+    // setTimeout(() => {
+    //   firstSmCardsInfos.setIsWaiting(false);
+    //   secondSmCardsInfos.setIsWaiting(false);
+    // }, 1 * 1000);
   }, [qureyParams]);
 
   useEffect(() => {
-    pushSearchParam([{ key: "activitiesPage", value: activitiesPage }]);
     if (selectedCity === null) return;
+    // pushSearchParam([{ key: "activitiesPage", value: activitiesPage }]);
 
-    const _activities = totalActivities?.slice(
-      (activitiesPage - 1) * 20,
-      activitiesPage * 20
-    );
-    firstSmCardsInfos.setSpots(_activities);
-    setTimeout(() => {
-      firstSmCardsInfos.setIsWaiting(false);
-    }, 0.25 * 1000);
+    // const _activities = totalActivities?.slice(
+    //   (activitiesPage - 1) * 20,
+    //   activitiesPage * 20
+    // );
+    // firstSmCardsInfos.setSpots(_activities);
+    // setTimeout(() => {
+    //   firstSmCardsInfos.setIsWaiting(false);
+    // }, 0.25 * 1000);
   }, [activitiesPage]);
 
   useEffect(() => {
-    pushSearchParam([{ key: "scenicSpotsPage", value: scenicSpotsPage }]);
     if (selectedCity === null) return;
-    const _activities = totalActivities?.slice(
-      (scenicSpotsPage - 1) * 20,
-      scenicSpotsPage * 20
-    );
-    firstSmCardsInfos.setSpots(_activities);
-    const _cityScenicSpots = totalScenicSpots?.slice(
-      (scenicSpotsPage - 1) * 20,
-      scenicSpotsPage * 20
-    );
-    secondSmCardsInfos.setSpots(_cityScenicSpots);
-    setTimeout(() => {
-      secondSmCardsInfos.setIsWaiting(false);
-    }, 0.25 * 1000);
+    // pushSearchParam([{ key: "scenicSpotsPage", value: scenicSpotsPage }]);
+    // const _activities = totalActivities?.slice(
+    //   (scenicSpotsPage - 1) * 20,
+    //   scenicSpotsPage * 20
+    // );
+    // firstSmCardsInfos.setSpots(_activities);
+    // const _cityScenicSpots = totalScenicSpots?.slice(
+    //   (scenicSpotsPage - 1) * 20,
+    //   scenicSpotsPage * 20
+    // );
+    // secondSmCardsInfos.setSpots(_cityScenicSpots);
+    // setTimeout(() => {
+    //   secondSmCardsInfos.setIsWaiting(false);
+    // }, 0.25 * 1000);
   }, [scenicSpotsPage]);
 
   useEffect(() => {

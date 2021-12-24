@@ -12,14 +12,12 @@ const HotItems = (props) => {
   const {
     isWaiting,
     history,
-    icon,
     searchInfos,
     citySwiperInfos,
     lCardsInfos,
     sCardsInfos,
     modalInfos,
   } = props;
-  console.log("searchInfos.selectedCity", searchInfos.selectedCity);
 
   return (
     <SearchLayout
