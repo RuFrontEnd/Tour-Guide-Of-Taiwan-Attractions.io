@@ -22,6 +22,7 @@ const countiesOptions = counties.map((county) => {
 });
 
 const Foods = (props) => {
+  const { history } = props;
   // 篩選條件
   const [selectedCategories, setSelectedCategories] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
@@ -95,14 +96,12 @@ const Foods = (props) => {
   };
 
   const handleSearch = () => {
-    pushSearchParamAndPushUrl(
-      [
-        { key: "keyword", value: keyword },
-        { key: "category", value: selectedCategories },
-        { key: "city", value: selectedCity },
-      ],
-      `${window.location.origin}/foods/filter`
-    );
+    const _pathName = "/foods/filter";
+    const _search = `?keyword=${keyword}&category=${selectedCategories}&city=${selectedCity}`;
+    history.push({
+      pathname: _pathName,
+      search: _search,
+    });
   };
 
   const HotItemsProps = {

@@ -10,7 +10,6 @@ import SmallCards from "layouts/SmallCards";
 import DetailModal from "layouts/DetailModal";
 import SearchTool from "layouts/SearchTool";
 import Pagination from "components/Pagination";
-import { pushSearchParam } from "utils/url";
 
 const countiesOptions = counties.map((county) => {
   return {
@@ -19,21 +18,8 @@ const countiesOptions = counties.map((county) => {
   };
 });
 
-export const getParamsFromUrl = () => {
-  const searchParams = new URLSearchParams(window.location.search.slice("1"));
-  const _keyword = searchParams.get("keyword");
-  const _category = searchParams.get("category");
-  const _city = searchParams.get("city");
-  return {
-    keyword: _keyword,
-    category: _category,
-    city: _city,
-  };
-};
-
 const FilterItems = (props) => {
-  const { history, path, firstSmCardsInfos, secondSmCardsInfos, modalInfos } =
-    props;
+  const { history, firstSmCardsInfos, secondSmCardsInfos, modalInfos } = props;
   const navBarHeight = useSelector((state) => state.navBar.height);
   const $firstTitle = useRef();
   const $secondTitle = useRef();
@@ -50,7 +36,6 @@ const FilterItems = (props) => {
   const [isCanScrollToFirstTitle, setIsCanScrollToFirstTitle] = useState(false);
   const [isCanScrollToSecondtTitle, setIsCanScrollToSecondTitle] =
     useState(false);
-  const urlSearchParams = getParamsFromUrl();
 
   // 篩選相關 state
   const [keyword, setKeyword] = useState(_keyword);
@@ -59,7 +44,7 @@ const FilterItems = (props) => {
 
   // 活動相關 state
   const [totalActivities, setTotalActivities] = useState([]);
-  const [activitiesPage, setActivitiesPage] = useState(0);
+  const [activitiesPage, setActivitiesPage] = useState(1);
   const [totalActivitiesPages, setTotalActivitiesPages] = useState(0);
 
   // 景點相關 state
@@ -73,14 +58,11 @@ const FilterItems = (props) => {
     { value: "scenicSpot", content: secondSmCardsInfos.title },
   ];
 
-  const getFilterData = (city) => {
+  const getFilterData = (city, keyword) => {
+    console.log("city", city);
+    console.log("keyword", keyword);
     const filterPropA = "PictureUrl1";
     const filterPropB = "City";
-
-    // firstSmCardsInfos.setIsWaiting(true);
-    // secondSmCardsInfos.setIsWaiting(true);
-    // setActivitiesPage(1);
-    // setScenicSpotsPage(1);
 
     firstSmCardsInfos
       .getData(city)
@@ -140,9 +122,16 @@ const FilterItems = (props) => {
   };
 
   const handleSearch = () => {
+    const initialPage = 1;
+    firstSmCardsInfos.setIsWaiting(true);
+    secondSmCardsInfos.setIsWaiting(true);
+    setActivitiesPage(initialPage);
+    setScenicSpotsPage(initialPage);
     searchParams.set("keyword", keyword);
     searchParams.set("category", selectedCategories);
     searchParams.set("city", selectedCity);
+    searchParams.set("activitiesPage", initialPage);
+    searchParams.set("scenicSpotsPage", initialPage);
     const url = new URL(window.location.href);
     url.search = searchParams;
     history.push({
@@ -150,126 +139,64 @@ const FilterItems = (props) => {
     });
   };
 
-  // useEffect(() => {
-  //   console.log("selectedCity", selectedCity);
-  // }, [selectedCity]);
-
-  // const [getFirstOne, setGetFirstOne] = useState(false);
-
   useEffect(() => {
     const listenHistory = history.listen((location) => {
-      firstSmCardsInfos.setIsWaiting(true);
-      secondSmCardsInfos.setIsWaiting(true);
       const searchParams = new URLSearchParams(location.search);
-      getFilterData(searchParams.get("city"));
+      getFilterData(searchParams.get("city"), searchParams.get("keyword"));
     });
-    // const listenHistory = history.listen(() => {
-    //   console.log("A");
-    // const searchParams = new URLSearchParams(
-    //   window.location.search.slice("1")
-    // );
-    // console.log("searchParams", searchParams);
-    //   const _keyword = searchParams.get("keyword");
-    //   const _category = searchParams.get("category");
-    //   const _city = searchParams.get("city");
-    //   const _activitiesPage = searchParams.get("activitiesPage");
-    //   const _scenicSpotsPage = searchParams.get("scenicSpotsPage");
-    //   //     console.log("_activitiesPage", _activitiesPage);
-    //   setKeyword(_keyword);
-    //   setSelectedCategories(_category);
-    //   setSelectedCity(_city);
-    //   setActivitiesPage(_activitiesPage);
-    //   setScenicSpotsPage(_scenicSpotsPage);
-    //   getFilterData()
-    // });
-    getFilterData(selectedCity);
-    // console.log("searchParams", searchParams);
-    // const _keyword = searchParams.get("keyword");
-    // const _selectedCity = searchParams.get("city");
-    // const _selectedCategory = searchParams.get("category");
-    // console.log('_keyword',_keyword)
-    // console.log('_selectedCity',_selectedCity)
-    // console.log('_selectedCategory',_selectedCategory)
+    getFilterData(selectedCity, keyword);
     return () => {
       listenHistory();
     };
   }, []);
 
-  // useEffect(() => {
-  //   console.log("keyword", keyword);
-  // }, [keyword]);
+  useEffect(() => {
+    if (!isCanScrollToFirstTitle) return;
+    const url = new URL(window.location.href);
+    searchParams.set("activitiesPage", activitiesPage);
+    url.search = searchParams;
+    const _activities = totalActivities?.slice(
+      (activitiesPage - 1) * 20,
+      activitiesPage * 20
+    );
 
-  // useEffect(() => {
-  //   console.log("selectedCategories", selectedCategories);
-  // }, [selectedCategories]);
+    firstSmCardsInfos.setIsWaiting(true);
+    firstSmCardsInfos.setSpots(_activities);
 
-  // useEffect(() => {
-  //   console.log("selectedCity", selectedCity);
-  // }, [selectedCity]);
+    window.scrollTo({
+      top: $firstTitle.current.offsetTop - (navBarHeight + 10),
+      left: 0,
+      behavior: "smooth",
+    });
 
-  // useEffect(() => {
-  //   console.log("activitiesPage", activitiesPage);
-  // }, [activitiesPage]);
-
-  // useEffect(() => {
-  //   console.log("scenicSpotsPage", scenicSpotsPage);
-  // }, [scenicSpotsPage]);
-
-  // useEffect(() => {
-  //   if (activitiesPage === 0 || !isCanScrollToFirstTitle) return;
-  //   const _search = `?keyword=${keyword}&category=${selectedCategories}&city=${selectedCity}&activitiesPage=${activitiesPage}&scenicSpotsPage=${scenicSpotsPage}`;
-  //   const _activities = totalActivities?.slice(
-  //     (activitiesPage - 1) * 20,
-  //     activitiesPage * 20
-  //   );
-
-  //   firstSmCardsInfos.setIsWaiting(true);
-  //   firstSmCardsInfos.setSpots(_activities);
-
-  //   window.scrollTo({
-  //     top: $firstTitle.current.offsetTop - (navBarHeight + 10),
-  //     left: 0,
-  //     behavior: "smooth",
-  //   });
-
-  //   history.push({
-  //     search: _search,
-  //   });
-  // }, [activitiesPage]);
-
-  // useEffect(() => {
-  //   if (scenicSpotsPage === 0 || !isCanScrollToSecondtTitle) return;
-  //   const _search = `?keyword=${keyword}&category=${selectedCategories}&city=${selectedCity}&activitiesPage=${activitiesPage}&scenicSpotsPage=${scenicSpotsPage}`;
-  //   const _activities = totalScenicSpots?.slice(
-  //     (activitiesPage - 1) * 20,
-  //     activitiesPage * 20
-  //   );
-
-  //   secondSmCardsInfos.setIsWaiting(true);
-  //   secondSmCardsInfos.setSpots(_activities);
-
-  //   window.scrollTo({
-  //     top: $secondTitle.current.offsetTop - (navBarHeight + 10),
-  //     left: 0,
-  //     behavior: "smooth",
-  //   });
-
-  //   history.push({
-  //     search: _search,
-  //   });
-  // }, [scenicSpotsPage]);
+    history.push({
+      search: url.search,
+    });
+  }, [activitiesPage]);
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   firstSmCardsInfos.setIsWaiting(false);
-    // }, 0.5 * 1000);
-  }, [firstSmCardsInfos.spots]);
+    if (!isCanScrollToSecondtTitle) return;
+    const url = new URL(window.location.href);
+    searchParams.set("scenicSpotsPage", scenicSpotsPage);
+    url.search = searchParams;
+    const _scenicSpots = totalScenicSpots?.slice(
+      (scenicSpotsPage - 1) * 20,
+      scenicSpotsPage * 20
+    );
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     secondSmCardsInfos.setIsWaiting(false);
-  //   }, 0.5 * 1000);
-  // }, [secondSmCardsInfos.spots]);
+    secondSmCardsInfos.setIsWaiting(true);
+    secondSmCardsInfos.setSpots(_scenicSpots);
+
+    window.scrollTo({
+      top: $firstTitle.current.offsetTop - (navBarHeight + 10),
+      left: 0,
+      behavior: "smooth",
+    });
+
+    history.push({
+      search: url.search,
+    });
+  }, [scenicSpotsPage]);
 
   return (
     <SearchLayout
@@ -287,7 +214,8 @@ const FilterItems = (props) => {
     >
       <FirstSmCardsBox
         style={{
-          display: selectedCategories === "scenicSpot" ? "none" : "block",
+          display:
+            searchParams.get("category") === "scenicSpot" ? "none" : "block",
         }}
       >
         <FirstSmCards
@@ -317,7 +245,8 @@ const FilterItems = (props) => {
 
       <SecondSmCardsBox
         style={{
-          display: selectedCategories === "activity" ? "none" : "block",
+          display:
+            searchParams.get("category") === "activity" ? "none" : "block",
         }}
       >
         <SecondSmCards
