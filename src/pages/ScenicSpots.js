@@ -22,6 +22,7 @@ const countiesOptions = counties.map((county) => {
 });
 
 const ScenicSpots = (props) => {
+  const { history } = props;
   // 篩選條件
   const [selectedCategories, setSelectedCategories] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
@@ -98,14 +99,12 @@ const ScenicSpots = (props) => {
   };
 
   const handleSearch = () => {
-    pushSearchParamAndPushUrl(
-      [
-        { key: "keyword", value: keyword },
-        { key: "category", value: selectedCategories },
-        { key: "city", value: selectedCity },
-      ],
-      `${window.location.origin}/scenicspots/filter`
-    );
+    const _pathName = "/scenicspots/filter";
+    const _search = `?keyword=${keyword}&category=${selectedCategories}&city=${selectedCity}&activitiesPage=1&scenicSpotsPage=1`;
+    history.push({
+      pathname: _pathName,
+      search: _search,
+    });
   };
 
   const HotItemsProps = {
@@ -122,7 +121,7 @@ const ScenicSpots = (props) => {
       onClickSearchButton: handleSearch,
     },
     citySwiperInfos: {
-      path: "scenicspots/filter",
+      path: "/scenicspots/filter",
     },
     lCardsInfos: {
       title: "熱門活動",

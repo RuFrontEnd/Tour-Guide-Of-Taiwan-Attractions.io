@@ -140,6 +140,7 @@ const ScenicSpotsFilter = (props) => {
   };
 
   const FilterItemsProps = {
+    path: "filter",
     firstSmCardsInfos: {
       isWaiting: isFirstCardsLoading,
       setIsWaiting: setIsFirstCardsLoading,

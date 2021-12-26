@@ -38,7 +38,7 @@ const HotItems = (props) => {
         onClickBoard={(e) => {
           history.push({
             pathname: citySwiperInfos.path,
-            search: `?category=&keyword=&city=${e.currentTarget.dataset.value}`,
+            search: `?keyword=&category=&city=${e.currentTarget.dataset.value}&activitiesPage=1&scenicSpotsPage=1`,
           });
         }}
       />
