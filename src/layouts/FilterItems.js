@@ -37,6 +37,14 @@ const FilterItems = (props) => {
   const navBarHeight = useSelector((state) => state.navBar.height);
   const $firstTitle = useRef();
   const $secondTitle = useRef();
+  const { search } = useLocation();
+  const searchParams = new URLSearchParams(search);
+  const _keyword =
+    searchParams.get("keyword") === null ? "" : searchParams.get("keyword");
+  const _selectedCity =
+    searchParams.get("category") === null ? "" : searchParams.get("category");
+  const _selectedCategory =
+    searchParams.get("city") === null ? "" : searchParams.get("city");
 
   // 是否捲動到該標題 state
   const [isCanScrollToFirstTitle, setIsCanScrollToFirstTitle] = useState(false);
@@ -45,11 +53,9 @@ const FilterItems = (props) => {
   const urlSearchParams = getParamsFromUrl();
 
   // 篩選相關 state
-  const [keyword, setKeyword] = useState(urlSearchParams.keyword);
-  const [selectedCategories, setSelectedCategories] = useState(
-    urlSearchParams.category
-  );
-  const [selectedCity, setSelectedCity] = useState(urlSearchParams.city); // 下拉選單選擇的城市
+  const [keyword, setKeyword] = useState(_keyword);
+  const [selectedCategories, setSelectedCategories] = useState(_selectedCity);
+  const [selectedCity, setSelectedCity] = useState(_selectedCategory); // 下拉選單選擇的城市
 
   // 活動相關 state
   const [totalActivities, setTotalActivities] = useState([]);
@@ -67,133 +73,203 @@ const FilterItems = (props) => {
     { value: "scenicSpot", content: secondSmCardsInfos.title },
   ];
 
-  const getFilterData = () => {
+  const getFilterData = (city) => {
     const filterPropA = "PictureUrl1";
     const filterPropB = "City";
 
-    firstSmCardsInfos.setIsWaiting(true);
-    secondSmCardsInfos.setIsWaiting(true);
-    setActivitiesPage(1);
-    setScenicSpotsPage(1);
+    // firstSmCardsInfos.setIsWaiting(true);
+    // secondSmCardsInfos.setIsWaiting(true);
+    // setActivitiesPage(1);
+    // setScenicSpotsPage(1);
 
-    firstSmCardsInfos.getData(selectedCity).then((data) => {
-      try {
-        const _totalActivities = data.filter(
-          (item) =>
-            item.Picture.hasOwnProperty(filterPropA) &&
-            item.hasOwnProperty(filterPropB) &&
-            item.Name.includes(keyword)
-        );
-        const _spots = _totalActivities.slice(
-          (scenicSpotsPage - 1) * 20,
-          scenicSpotsPage * 20
-        );
-        setTotalActivities(_totalActivities);
-        setTotalActivitiesPages(Math.ceil(_totalActivities.length / 20));
-        firstSmCardsInfos.setSpots(_spots);
-      } catch (err) {
-        console.debug("接FirstSmCards資料執行錯誤", err);
-      }
-    }); // 接FirstSmCards資料
+    firstSmCardsInfos
+      .getData(city)
+      .then((data) => {
+        try {
+          const _totalActivities = data.filter(
+            (item) =>
+              item.Picture.hasOwnProperty(filterPropA) &&
+              item.hasOwnProperty(filterPropB) &&
+              item.Name.includes(keyword)
+          );
+          const _spots = _totalActivities.slice(
+            (scenicSpotsPage - 1) * 20,
+            scenicSpotsPage * 20
+          );
+          setTotalActivities(_totalActivities);
+          setTotalActivitiesPages(Math.ceil(_totalActivities.length / 20));
+          firstSmCardsInfos.setSpots(_spots);
+        } catch (err) {
+          console.debug("接FirstSmCards資料執行錯誤", err);
+        }
+      })
+      .then(() => {
+        setTimeout(() => {
+          firstSmCardsInfos.setIsWaiting(false);
+        }, 0.5 * 1000);
+      }); // 接FirstSmCards資料
 
-    secondSmCardsInfos.getData(selectedCity).then((data) => {
-      try {
-        const _totalScenicSpots = data.filter(
-          (item) =>
-            item.Picture.hasOwnProperty(filterPropA) &&
-            item.hasOwnProperty(filterPropB) &&
-            item.Name.includes(keyword)
-        );
+    secondSmCardsInfos
+      .getData(city)
+      .then((data) => {
+        try {
+          const _totalScenicSpots = data.filter(
+            (item) =>
+              item.Picture.hasOwnProperty(filterPropA) &&
+              item.hasOwnProperty(filterPropB) &&
+              item.Name.includes(keyword)
+          );
 
-        const _spots = _totalScenicSpots.slice(
-          (scenicSpotsPage - 1) * 20,
-          scenicSpotsPage * 20
-        );
+          const _spots = _totalScenicSpots.slice(
+            (scenicSpotsPage - 1) * 20,
+            scenicSpotsPage * 20
+          );
 
-        setTotalScenicSpots(_totalScenicSpots);
-        setTotalScenicSpotsPages(Math.ceil(_totalScenicSpots.length / 20));
-        secondSmCardsInfos.setSpots(_spots);
-      } catch (err) {
-        console.debug("接SecondSmCards資料執行錯誤", err);
-      }
-    }); // 接SecondSmCards資料
+          setTotalScenicSpots(_totalScenicSpots);
+          setTotalScenicSpotsPages(Math.ceil(_totalScenicSpots.length / 20));
+          secondSmCardsInfos.setSpots(_spots);
+        } catch (err) {
+          console.debug("接SecondSmCards資料執行錯誤", err);
+        }
+      })
+      .then(() => {
+        setTimeout(() => {
+          secondSmCardsInfos.setIsWaiting(false);
+        }, 0.5 * 1000);
+      }); // 接SecondSmCards資料
   };
 
   const handleSearch = () => {
-    getFilterData();
+    searchParams.set("keyword", keyword);
+    searchParams.set("category", selectedCategories);
+    searchParams.set("city", selectedCity);
+    const url = new URL(window.location.href);
+    url.search = searchParams;
+    history.push({
+      search: url.search,
+    });
   };
 
+  // useEffect(() => {
+  //   console.log("selectedCity", selectedCity);
+  // }, [selectedCity]);
+
+  // const [getFirstOne, setGetFirstOne] = useState(false);
+
   useEffect(() => {
-    getFilterData();
-    history.listen(() => {
-      // getFilterStateFromSearchParam();
-    }); // 監聽上一頁 / 下一頁
-    // try {
-    //   getFilterStateFromSearchParam();
-    // } catch (err) {
-    //   console.debug("getFilterStateFromSearchParam執行錯誤", err);
-    // }
+    const listenHistory = history.listen((location) => {
+      firstSmCardsInfos.setIsWaiting(true);
+      secondSmCardsInfos.setIsWaiting(true);
+      const searchParams = new URLSearchParams(location.search);
+      getFilterData(searchParams.get("city"));
+    });
+    // const listenHistory = history.listen(() => {
+    //   console.log("A");
+    // const searchParams = new URLSearchParams(
+    //   window.location.search.slice("1")
+    // );
+    // console.log("searchParams", searchParams);
+    //   const _keyword = searchParams.get("keyword");
+    //   const _category = searchParams.get("category");
+    //   const _city = searchParams.get("city");
+    //   const _activitiesPage = searchParams.get("activitiesPage");
+    //   const _scenicSpotsPage = searchParams.get("scenicSpotsPage");
+    //   //     console.log("_activitiesPage", _activitiesPage);
+    //   setKeyword(_keyword);
+    //   setSelectedCategories(_category);
+    //   setSelectedCity(_city);
+    //   setActivitiesPage(_activitiesPage);
+    //   setScenicSpotsPage(_scenicSpotsPage);
+    //   getFilterData()
+    // });
+    getFilterData(selectedCity);
+    // console.log("searchParams", searchParams);
+    // const _keyword = searchParams.get("keyword");
+    // const _selectedCity = searchParams.get("city");
+    // const _selectedCategory = searchParams.get("category");
+    // console.log('_keyword',_keyword)
+    // console.log('_selectedCity',_selectedCity)
+    // console.log('_selectedCategory',_selectedCategory)
+    return () => {
+      listenHistory();
+    };
   }, []);
 
-  useEffect(() => {
-    getFilterData();
-  }, []);
+  // useEffect(() => {
+  //   console.log("keyword", keyword);
+  // }, [keyword]);
+
+  // useEffect(() => {
+  //   console.log("selectedCategories", selectedCategories);
+  // }, [selectedCategories]);
+
+  // useEffect(() => {
+  //   console.log("selectedCity", selectedCity);
+  // }, [selectedCity]);
+
+  // useEffect(() => {
+  //   console.log("activitiesPage", activitiesPage);
+  // }, [activitiesPage]);
+
+  // useEffect(() => {
+  //   console.log("scenicSpotsPage", scenicSpotsPage);
+  // }, [scenicSpotsPage]);
+
+  // useEffect(() => {
+  //   if (activitiesPage === 0 || !isCanScrollToFirstTitle) return;
+  //   const _search = `?keyword=${keyword}&category=${selectedCategories}&city=${selectedCity}&activitiesPage=${activitiesPage}&scenicSpotsPage=${scenicSpotsPage}`;
+  //   const _activities = totalActivities?.slice(
+  //     (activitiesPage - 1) * 20,
+  //     activitiesPage * 20
+  //   );
+
+  //   firstSmCardsInfos.setIsWaiting(true);
+  //   firstSmCardsInfos.setSpots(_activities);
+
+  //   window.scrollTo({
+  //     top: $firstTitle.current.offsetTop - (navBarHeight + 10),
+  //     left: 0,
+  //     behavior: "smooth",
+  //   });
+
+  //   history.push({
+  //     search: _search,
+  //   });
+  // }, [activitiesPage]);
+
+  // useEffect(() => {
+  //   if (scenicSpotsPage === 0 || !isCanScrollToSecondtTitle) return;
+  //   const _search = `?keyword=${keyword}&category=${selectedCategories}&city=${selectedCity}&activitiesPage=${activitiesPage}&scenicSpotsPage=${scenicSpotsPage}`;
+  //   const _activities = totalScenicSpots?.slice(
+  //     (activitiesPage - 1) * 20,
+  //     activitiesPage * 20
+  //   );
+
+  //   secondSmCardsInfos.setIsWaiting(true);
+  //   secondSmCardsInfos.setSpots(_activities);
+
+  //   window.scrollTo({
+  //     top: $secondTitle.current.offsetTop - (navBarHeight + 10),
+  //     left: 0,
+  //     behavior: "smooth",
+  //   });
+
+  //   history.push({
+  //     search: _search,
+  //   });
+  // }, [scenicSpotsPage]);
 
   useEffect(() => {
-    if (activitiesPage === 0 || !isCanScrollToFirstTitle) return;
-    const _search = `?keyword=${keyword}&category=${selectedCategories}&city=${selectedCity}&activitiesPage=${activitiesPage}&scenicSpotsPage=${scenicSpotsPage}`;
-    const _activities = totalActivities?.slice(
-      (activitiesPage - 1) * 20,
-      activitiesPage * 20
-    );
-
-    firstSmCardsInfos.setIsWaiting(true);
-    firstSmCardsInfos.setSpots(_activities);
-
-    window.scrollTo({
-      top: $firstTitle.current.offsetTop - (navBarHeight + 10),
-      left: 0,
-      behavior: "smooth",
-    });
-
-    history.push({
-      search: _search,
-    });
-  }, [activitiesPage]);
-
-  useEffect(() => {
-    if (scenicSpotsPage === 0 || !isCanScrollToSecondtTitle) return;
-    const _search = `?keyword=${keyword}&category=${selectedCategories}&city=${selectedCity}&activitiesPage=${activitiesPage}&scenicSpotsPage=${scenicSpotsPage}`;
-    const _activities = totalActivities?.slice(
-      (activitiesPage - 1) * 20,
-      activitiesPage * 20
-    );
-
-    secondSmCardsInfos.setIsWaiting(true);
-    secondSmCardsInfos.setSpots(_activities);
-
-    window.scrollTo({
-      top: $secondTitle.current.offsetTop - (navBarHeight + 10),
-      left: 0,
-      behavior: "smooth",
-    });
-
-    history.push({
-      search: _search,
-    });
-  }, [scenicSpotsPage]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      firstSmCardsInfos.setIsWaiting(false);
-    }, 0.5 * 1000);
+    // setTimeout(() => {
+    //   firstSmCardsInfos.setIsWaiting(false);
+    // }, 0.5 * 1000);
   }, [firstSmCardsInfos.spots]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      secondSmCardsInfos.setIsWaiting(false);
-    }, 0.5 * 1000);
-  }, [secondSmCardsInfos.spots]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     secondSmCardsInfos.setIsWaiting(false);
+  //   }, 0.5 * 1000);
+  // }, [secondSmCardsInfos.spots]);
 
   return (
     <SearchLayout

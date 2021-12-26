@@ -100,7 +100,7 @@ const ScenicSpots = (props) => {
 
   const handleSearch = () => {
     const _pathName = "/scenicspots/filter";
-    const _search = `?keyword=${keyword}&category=${selectedCategories}&city=${selectedCity}&activitiesPage=1&scenicSpotsPage=1`;
+    const _search = `?keyword=${keyword}&category=${selectedCategories}&city=${selectedCity}`;
     history.push({
       pathname: _pathName,
       search: _search,
