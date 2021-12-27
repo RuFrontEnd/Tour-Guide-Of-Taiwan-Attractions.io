@@ -12,8 +12,11 @@ Tour guide of Taiwan attractions
 
 -  關鍵字搜尋
 -  地區篩選
+-  carousel 地區篩選
 -  種類篩選
 -  紀錄 query params 查詢歷史
+-  等待資料時顯示 loading skeleton
+-  無圖片資料者顯示預設圖片
 -  RWD 響應式排版( 支援最低解析度:360px )
 
 ## Remark
