@@ -46,6 +46,7 @@ const HotItems = (props) => {
         title={lCardsInfos.title}
         icon={lCardsInfos.icon}
         activities={lCardsInfos.spots}
+        activityName={lCardsInfos.spotName}
         buttonText={lCardsInfos.buttonText}
         onClickButton={(e) => {
           lCardsInfos.onClickButton(e);
@@ -57,6 +58,7 @@ const HotItems = (props) => {
         title={sCardsInfos.title}
         icon={sCardsInfos.icon}
         spots={sCardsInfos.spots}
+        spotName={sCardsInfos.spotName}
         onClick={(e) => {
           sCardsInfos.onClickButton(e);
         }}

@@ -146,6 +146,7 @@ const FoodsFilter = (props) => {
       onClickCard: putCityActivityInfosToDetailModal,
       countOfWaitingCard: 20,
       getData: getCityHotels,
+      keywordName: "HotelName",
     },
     secondSmCardsInfos: {
       isWaiting: isSecondCardsLoading,
@@ -157,6 +158,7 @@ const FoodsFilter = (props) => {
       onClickCard: putCityScenicspotInfosToDetailModal,
       countOfWaitingCard: 20,
       getData: getCityFoods,
+      keywordName: "RestaurantName",
     },
     modalInfos: {
       isShowDetail: isShowDetail,

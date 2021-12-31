@@ -150,6 +150,7 @@ const ScenicSpotsFilter = (props) => {
       onClickCard: putCityActivityInfosToDetailModal,
       countOfWaitingCard: 20,
       getData: getCityActivities,
+      keywordName: "ActivityName",
     },
     secondSmCardsInfos: {
       isWaiting: isSecondCardsLoading,
@@ -161,6 +162,7 @@ const ScenicSpotsFilter = (props) => {
       onClickCard: putCityScenicspotInfosToDetailModal,
       countOfWaitingCard: 20,
       getData: getCityScenicSpots,
+      keywordName: "ScenicSpotName",
     },
     modalInfos: {
       isShowDetail: isShowDetail,

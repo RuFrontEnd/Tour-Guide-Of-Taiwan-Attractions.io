@@ -18,6 +18,8 @@ const CardSm = (props) => {
     rightShadowOffsetWidth,
   } = props;
 
+  console.log('info.title',info.title)
+
   const $image = useRef();
 
   useEffect(() => {

@@ -14,6 +14,7 @@ const Cards = (props) => {
     title,
     icon,
     activities,
+    activityName,
     onClickButton = () => {},
     buttonText,
     isWaiting = false,
@@ -34,7 +35,7 @@ const Cards = (props) => {
                 info={{
                   src: activity.Picture.PictureUrl1,
                   alt: "圖片",
-                  title: activity.Name,
+                  title: activity[activityName],
                   description: activity.Description,
                   area: activity.City || "",
                 }}
@@ -179,7 +180,7 @@ const CardLi = styled.li`
     }
   }
 
-  & #Card-District{
+  & #Card-District {
     @media (max-width: 768px) {
       margin-left: 6px;
       font-size: 12px;
