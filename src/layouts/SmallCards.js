@@ -18,13 +18,15 @@ const SmallCards = forwardRef((props) => {
     titleRef,
     icon,
     spots,
+    spotName,
     onClick = () => {},
     isWaiting = false,
     countOfWaitingCard,
   } = props;
 
   const WatingCards = new Array(countOfWaitingCard).fill(null);
-
+console.log('spotName',spotName)
+console.log('spots',spots)
   return (
     <Box className={className} style={style} ref={titleRef} id="SmallCard">
       <Title title={title}>{icon ? icon : <Triangle />}</Title>
@@ -40,7 +42,7 @@ const SmallCards = forwardRef((props) => {
                     ? spot.Picture.PictureUrl1
                     : noImg,
                   alt: "圖片",
-                  title: spot.Name,
+                  title: spot[spotName],
                   area: spot.City,
                 }}
                 dataId={spotIndex}

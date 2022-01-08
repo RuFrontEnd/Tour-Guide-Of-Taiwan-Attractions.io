@@ -72,7 +72,7 @@ const FilterItems = (props) => {
             (item) =>
               item.Picture.hasOwnProperty(filterPropA) &&
               item.hasOwnProperty(filterPropB) &&
-              item.Name.includes(keyword)
+              item[firstSmCardsInfos.keywordName].includes(keyword)
           );
           const _spots = _totalActivities.slice(
             (scenicSpotsPage - 1) * 20,
@@ -99,7 +99,7 @@ const FilterItems = (props) => {
             (item) =>
               item.Picture.hasOwnProperty(filterPropA) &&
               item.hasOwnProperty(filterPropB) &&
-              item.Name.includes(keyword)
+              item[secondSmCardsInfos.keywordName].includes(keyword)
           );
 
           const _spots = _totalScenicSpots.slice(
@@ -223,6 +223,7 @@ const FilterItems = (props) => {
           titleRef={$firstTitle}
           icon={firstSmCardsInfos.icon}
           spots={firstSmCardsInfos.spots}
+          spotName={firstSmCardsInfos.keywordName}
           onClick={(e) => {
             firstSmCardsInfos.onClickCard(e);
           }}
@@ -254,6 +255,7 @@ const FilterItems = (props) => {
           titleRef={$secondTitle}
           icon={secondSmCardsInfos.icon}
           spots={secondSmCardsInfos.spots}
+          spotName={secondSmCardsInfos.keywordName}
           onClick={(e) => {
             secondSmCardsInfos.onClickCard(e);
           }}
