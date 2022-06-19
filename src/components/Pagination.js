@@ -8,7 +8,7 @@ const Pagination = (props) => {
     className,
     style,
     count,
-    setPage = () => {},
+    onChange = () => {},
     page,
     previousIcon,
     nextIcon,
@@ -19,7 +19,7 @@ const Pagination = (props) => {
       <MuiPagination
         onClick={onClick}
         onChange={(e, page) => {
-          setPage(page);
+          onChange(e, page);
         }}
         count={count}
         page={page}

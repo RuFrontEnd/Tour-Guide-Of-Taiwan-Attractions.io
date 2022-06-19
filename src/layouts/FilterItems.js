@@ -58,7 +58,9 @@ const FilterItems = (props) => {
     { value: "scenicSpot", content: secondSmCardsInfos.title },
   ];
 
-  const getFilterData = (city, keyword) => {
+  const getFilterData = () => {
+    const city = searchParams.get("city");
+    const keyword = searchParams.get("keyword");
     const filterPropA = "PictureUrl1";
     const filterPropB = "City";
 
@@ -73,8 +75,8 @@ const FilterItems = (props) => {
               item[firstSmCardsInfos.keywordName].includes(keyword)
           );
           const _spots = _totalActivities.slice(
-            (scenicSpotsPage - 1) * 20,
-            scenicSpotsPage * 20
+            (activitiesPage - 1) * 20,
+            activitiesPage * 20
           );
           setTotalActivities(_totalActivities);
           setTotalActivitiesPages(Math.ceil(_totalActivities.length / 20));
@@ -135,17 +137,39 @@ const FilterItems = (props) => {
     history.push({
       search: url.search,
     });
+    getFilterData();
+  };
+
+  // useEffect(() => {
+  //   console.log("scenicSpotsPage", scenicSpotsPage);
+  // }, [scenicSpotsPage]);
+
+  const createSecondCards = (page) => {
+    // if (!isCanScrollToSecondtTitle) return;
+    getFilterData();
+    console.log("page", page);
+    const url = new URL(window.location.href);
+    searchParams.set("scenicSpotsPage", page);
+    url.search = searchParams;
+
+    const _scenicSpots = totalScenicSpots?.slice((page - 1) * 20, page * 20);
+
+    secondSmCardsInfos.setIsWaiting(true);
+    secondSmCardsInfos.setSpots(_scenicSpots);
+
+    window.scrollTo({
+      top: $firstTitle.current.offsetTop - (navBarHeight + 10),
+      left: 0,
+      behavior: "smooth",
+    });
+
+    history.push({
+      search: url.search,
+    });
   };
 
   useEffect(() => {
-    const listenHistory = history.listen((location) => {
-      const searchParams = new URLSearchParams(location.search);
-      getFilterData(searchParams.get("city"), searchParams.get("keyword"));
-    });
-    getFilterData(selectedCity, keyword);
-    return () => {
-      listenHistory();
-    };
+    getFilterData();
   }, []);
 
   useEffect(() => {
@@ -171,30 +195,6 @@ const FilterItems = (props) => {
       search: url.search,
     });
   }, [activitiesPage]);
-
-  useEffect(() => {
-    if (!isCanScrollToSecondtTitle) return;
-    const url = new URL(window.location.href);
-    searchParams.set("scenicSpotsPage", scenicSpotsPage);
-    url.search = searchParams;
-    const _scenicSpots = totalScenicSpots?.slice(
-      (scenicSpotsPage - 1) * 20,
-      scenicSpotsPage * 20
-    );
-
-    secondSmCardsInfos.setIsWaiting(true);
-    secondSmCardsInfos.setSpots(_scenicSpots);
-
-    window.scrollTo({
-      top: $firstTitle.current.offsetTop - (navBarHeight + 10),
-      left: 0,
-      behavior: "smooth",
-    });
-
-    history.push({
-      search: url.search,
-    });
-  }, [scenicSpotsPage]);
 
   return (
     <SearchLayout
@@ -262,13 +262,14 @@ const FilterItems = (props) => {
         />
         {secondSmCardsInfos.spots.length !== 0 && (
           <Paginate
-            onClick={(e) => {
-              setIsCanScrollToSecondTitle(true);
+            onChange={(e, page) => {
+              if (e.target.nodeName !== "BUTTON") return;
+              setScenicSpotsPage(page);
+              createSecondCards(page);
             }}
             count={totalScenicSpotsPages}
             previousIcon={Arrow}
             nextIcon={ArrowRight}
-            setPage={setScenicSpotsPage}
             page={scenicSpotsPage}
           />
         )}
