@@ -1,3 +1,4 @@
+// git config --get remote.origin.url => repository name
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import "App.css";
 import { useSelector, useDispatch } from "react-redux";
