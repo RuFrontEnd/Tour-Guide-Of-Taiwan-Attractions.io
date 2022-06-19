@@ -25,8 +25,6 @@ const SmallCards = forwardRef((props) => {
   } = props;
 
   const WatingCards = new Array(countOfWaitingCard).fill(null);
-console.log('spotName',spotName)
-console.log('spots',spots)
   return (
     <Box className={className} style={style} ref={titleRef} id="SmallCard">
       <Title title={title}>{icon ? icon : <Triangle />}</Title>
