@@ -59,8 +59,6 @@ const FilterItems = (props) => {
   ];
 
   const getFilterData = (city, keyword) => {
-    console.log("city", city);
-    console.log("keyword", keyword);
     const filterPropA = "PictureUrl1";
     const filterPropB = "City";
 
