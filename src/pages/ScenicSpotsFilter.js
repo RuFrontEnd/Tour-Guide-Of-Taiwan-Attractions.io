@@ -4,7 +4,7 @@ import "react-multi-carousel/lib/styles.css";
 import { ReactComponent as Triangle } from "assets/triangle_title.svg";
 import FilterItems from "layouts/FilterItems";
 import { getCityScenicSpots } from "api/scenicSpots";
-import { getCityActivities } from "api/activities";
+import { getCityActivities, getActivities } from "api/activities";
 
 export const handleClickActivityCard = () => {
   document.body.style.overflow = "hidden";
@@ -149,7 +149,8 @@ const ScenicSpotsFilter = (props) => {
       setSpots: setCityActivities,
       onClickCard: putCityActivityInfosToDetailModal,
       countOfWaitingCard: 20,
-      getData: getCityActivities,
+      getAllData: getActivities,
+      getFilterData: getCityActivities,
       keywordName: "ActivityName",
     },
     secondSmCardsInfos: {

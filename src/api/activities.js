@@ -1,5 +1,6 @@
 import { baseURL } from "variable/variable";
 import { getAuthorizationHeader } from "variable/auth";
+import * as searchParamsUtils from "utils/searchParams";
 
 export const getActivities = (top) => {
   return fetch(`${baseURL}/v2/Tourism/Activity?${top && `$top=${top}`}`, {
@@ -9,13 +10,13 @@ export const getActivities = (top) => {
 };
 
 export const getCityActivities = (city, top, skip) => {
-  return fetch(
-    `${baseURL}/v2/Tourism/Activity/${city}?${
-      top && `$top=${top}${skip && `&skip=${skip}`}`
-    }`,
-    {
-      headers: getAuthorizationHeader(),
-      method: "GET",
-    }
-  ).then((res) => res.json());
+  const searchParams = searchParamsUtils.getFilterCityApiSearchParams(
+    top,
+    skip
+  );
+
+  return fetch(`${baseURL}/v2/Tourism/Activity/${city}?$${searchParams}`, {
+    headers: getAuthorizationHeader(),
+    method: "GET",
+  }).then((res) => res.json());
 };

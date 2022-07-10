@@ -100,7 +100,17 @@ const ScenicSpots = (props) => {
 
   const handleSearch = () => {
     const _pathName = "/scenicspots/filter";
-    const _search = `?keyword=${keyword}&category=${selectedCategories}&city=${selectedCity}`;
+    const searchParams = new URLSearchParams();
+    if (keyword) {
+      searchParams.append("keyword", keyword);
+    }
+    if (selectedCategories) {
+      searchParams.append("category", selectedCategories);
+    }
+    if (selectedCity) {
+      searchParams.append("city", selectedCity);
+    }
+    const _search = searchParams.toString();
     history.push({
       pathname: _pathName,
       search: _search,
@@ -151,7 +161,7 @@ const ScenicSpots = (props) => {
     getActivities().then((_activities) => {
       let pictureOwnedActivities = _activities.filter((_activitiy) => {
         return JSON.stringify(_activitiy.Picture) !== "{}";
-      });
+      }); // filter activities responses which picture has picture
 
       let _hotActivities = [
         pictureOwnedActivities[0],

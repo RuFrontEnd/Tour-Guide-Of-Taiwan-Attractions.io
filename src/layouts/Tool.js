@@ -52,9 +52,6 @@ const Tool = (props) => {
                   value={keyword}
                   setValue={setKeyword}
                 />
-                {/* <GpshButton>
-                  <GpsIcon height={"24px"} />
-                </GpshButton> */}
               </SearchBox>
               <DropdownBox>
                 <CatgoreyDropdown
