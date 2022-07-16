@@ -4,7 +4,7 @@ import "react-multi-carousel/lib/styles.css";
 import { counties } from "variable/variable";
 import { getHotels } from "api/hotels";
 import { getFoods } from "api/foods";
-import { pushSearchParamAndPushUrl } from "utils/url";
+import { searchItems } from "utils/search";
 import { ReactComponent as Rectangle } from "assets/rectangle.svg";
 import HotItems from "layouts/HotItems";
 
@@ -96,12 +96,13 @@ const Foods = (props) => {
   };
 
   const handleSearch = () => {
-    const _pathName = "/foods/filter";
-    const _search = `?keyword=${keyword}&category=${selectedCategories}&city=${selectedCity}`;
-    history.push({
-      pathname: _pathName,
-      search: _search,
-    });
+    searchItems(
+      "/foods/filter",
+      keyword,
+      selectedCategories,
+      selectedCity,
+      history
+    );
   };
 
   const HotItemsProps = {

@@ -4,7 +4,7 @@ import "react-multi-carousel/lib/styles.css";
 import { counties } from "variable/variable";
 import { getScenicSpots } from "api/scenicSpots";
 import { getActivities } from "api/activities";
-import { pushSearchParamAndPushUrl } from "utils/url";
+import { searchItems } from "utils/search";
 import { ReactComponent as Triangle } from "assets/triangle_title.svg";
 import HotItems from "layouts/HotItems";
 
@@ -99,22 +99,13 @@ const ScenicSpots = (props) => {
   };
 
   const handleSearch = () => {
-    const _pathName = "/scenicspots/filter";
-    const searchParams = new URLSearchParams();
-    if (keyword) {
-      searchParams.append("keyword", keyword);
-    }
-    if (selectedCategories) {
-      searchParams.append("category", selectedCategories);
-    }
-    if (selectedCity) {
-      searchParams.append("city", selectedCity);
-    }
-    const _search = searchParams.toString();
-    history.push({
-      pathname: _pathName,
-      search: _search,
-    });
+    searchItems(
+      "/scenicspots/filter",
+      keyword,
+      selectedCategories,
+      selectedCity,
+      history
+    );
   };
 
   const HotItemsProps = {

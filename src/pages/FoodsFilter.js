@@ -3,8 +3,8 @@ import { withRouter } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import { ReactComponent as Rectangle } from "assets/rectangle.svg";
 import FilterItems from "layouts/FilterItems";
-import { getCityHotels } from "api/hotels";
-import { getCityFoods } from "api/foods";
+import { getHotels, getCityHotels } from "api/hotels";
+import { getFoods, getCityFoods } from "api/foods";
 
 export const handleClickActivityCard = () => {
   document.body.style.overflow = "hidden";
@@ -145,7 +145,8 @@ const FoodsFilter = (props) => {
       setSpots: setCityActivities,
       onClickCard: putCityActivityInfosToDetailModal,
       countOfWaitingCard: 20,
-      getData: getCityHotels,
+      getAllData: getHotels,
+      getFilterData: getCityHotels,
       keywordName: "HotelName",
     },
     secondSmCardsInfos: {
@@ -157,7 +158,8 @@ const FoodsFilter = (props) => {
       setSpots: setCityScenicSpots,
       onClickCard: putCityScenicspotInfosToDetailModal,
       countOfWaitingCard: 20,
-      getData: getCityFoods,
+      getAllData: getFoods,
+      getFilterData: getCityFoods,
       keywordName: "RestaurantName",
     },
     modalInfos: {
