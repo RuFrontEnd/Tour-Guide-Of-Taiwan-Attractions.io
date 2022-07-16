@@ -46,6 +46,14 @@ const createSearchParam = (
   return searchParams.toString();
 };
 
+const scrollToTitle = (_top) => {
+  window.scrollTo({
+    top: _top,
+    left: 0,
+    behavior: "smooth",
+  });
+};
+
 const FilterItems = (props) => {
   const { history, firstSmCardsInfos, secondSmCardsInfos, modalInfos } = props;
   const navBarHeight = useSelector((state) => state.navBar.height);
@@ -66,12 +74,6 @@ const FilterItems = (props) => {
   const itemsPerPage = 20;
   const initialPage = 1;
 
-  // 是否捲動到該標題 state
-  const [isCanScrollToFirstTitle, setIsCanScrollToFirstTitle] = useState(false);
-  const [isCanScrollToSecondtTitle, setIsCanScrollToSecondTitle] = useState(
-    false
-  );
-
   // 篩選相關 state
   const [keyword, setKeyword] = useState(_keyword);
   const [selectedCategories, setSelectedCategories] = useState(_selectedCity);
@@ -79,12 +81,11 @@ const FilterItems = (props) => {
 
   // 第一區相關 state
   const [firstItemsPage, setFirstItemsPage] = useState(initialPage);
-  const [totalActivitiesPages, setTotalActivitiesPages] = useState(0);
+  const [totalFirstItemsPage, setTotalFirstItemsPage] = useState(0);
 
-  // 景點相關 state
-  const [totalScenicSpots, setTotalScenicSpots] = useState([]);
-  const [scenicSpotsPage, setScenicSpotsPage] = useState(initialPage);
-  const [totalScenicSpotsPages, setTotalScenicSpotsPages] = useState(0);
+  // 第二區相關 state
+  const [secondItemsPage, setSecondItemsPage] = useState(initialPage);
+  const [totalSecondItemsPage, setTotalSecondItemsPage] = useState(0);
 
   const categories = [
     { value: "", content: "不分類別" },
@@ -92,8 +93,16 @@ const FilterItems = (props) => {
     { value: "scenicSpot", content: secondSmCardsInfos.title },
   ];
 
-  const onChangePaginate = (e, page) => {
+  const searchWord = keyword || "";
+
+  const onChangeFirstPaginate = (e, page) => {
     setFirstItemsPage(page);
+    scrollToTitle($firstTitle.current.offsetTop - (navBarHeight + 10));
+  };
+
+  const onChangeSecondPaginate = (e, page) => {
+    setSecondItemsPage(page);
+    scrollToTitle($secondTitle.current.offsetTop - (navBarHeight + 10));
   };
 
   const getFilterFirstSmCardsInfos = (city, keyword) => {
@@ -109,7 +118,7 @@ const FilterItems = (props) => {
                 item[firstSmCardsInfos.keywordName].includes(keyword) // filter data which does not match keyword
             );
             firstSmCardsInfos.setSpots(_firstSmCardSpots);
-            setTotalActivitiesPages(Math.ceil(_firstSmCardSpots.length / 20));
+            setTotalFirstItemsPage(Math.ceil(_firstSmCardSpots.length / 20));
 
             setTimeout(() => {
               firstSmCardsInfos.setIsWaiting(false);
@@ -127,7 +136,7 @@ const FilterItems = (props) => {
                 item[firstSmCardsInfos.keywordName].includes(keyword) // filter data which does not match keyword
             );
             firstSmCardsInfos.setSpots(_firstSmCardSpots);
-            setTotalActivitiesPages(Math.ceil(_firstSmCardSpots.length / 20));
+            setTotalFirstItemsPage(Math.ceil(_firstSmCardSpots.length / 20));
 
             setTimeout(() => {
               firstSmCardsInfos.setIsWaiting(false);
@@ -139,110 +148,76 @@ const FilterItems = (props) => {
     }
   };
 
+  const getFilterSecondSmCardsInfos = (city, keyword) => {
+    try {
+      if (city) {
+        secondSmCardsInfos
+          .getFilterData(city) // getCityActivities
+          .then((data) => {
+            const _secondSmCardSpots = data.filter(
+              (item) =>
+                item.Picture.hasOwnProperty(PICTURE_URL_ONE) && // filter non-existing "PictureUrl1" key data
+                item.hasOwnProperty(CITY) && // filter non-existing "city" key data
+                item[secondSmCardsInfos.keywordName].includes(keyword) // filter data which does not match keyword
+            );
+            secondSmCardsInfos.setSpots(_secondSmCardSpots);
+
+            setTotalSecondItemsPage(Math.ceil(_secondSmCardSpots.length / 20));
+
+            setTimeout(() => {
+              secondSmCardsInfos.setIsWaiting(false);
+            }, 0.5 * 1000);
+          });
+      }
+      if (!city) {
+        secondSmCardsInfos
+          .getAllData() // getCityActivities
+          .then((data) => {
+            const _secondSmCardSpots = data.filter(
+              (item) =>
+                item.Picture.hasOwnProperty(PICTURE_URL_ONE) && // filter non-existing "PictureUrl1" key data
+                item.hasOwnProperty(CITY) && // filter non-existing "city" key data
+                item[secondSmCardsInfos.keywordName].includes(keyword) // filter data which does not match keyword
+            );
+            secondSmCardsInfos.setSpots(_secondSmCardSpots);
+
+            setTotalSecondItemsPage(Math.ceil(_secondSmCardSpots.length / 20));
+
+            setTimeout(() => {
+              secondSmCardsInfos.setIsWaiting(false);
+            }, 0.5 * 1000);
+          });
+      }
+    } catch (err) {
+      console.debug("接FirstSmCards資料執行錯誤", err);
+    }
+  };
+
   const getFilterData = () => {
     const city = searchParams.get("city");
     const keyword = searchParams.get("keyword");
-    const top = itemsPerPage;
 
-    getFilterFirstSmCardsInfos(city, keyword);
-
-    //   secondSmCardsInfos
-    //     .getData(city)
-    //     .then((data) => {
-    //       try {
-    //         const _totalScenicSpots = data.filter(
-    //           (item) =>
-    //             item.Picture.hasOwnProperty(PICTURE_URL_ONE) &&
-    //             item.hasOwnProperty(CITY) &&
-    //             item[secondSmCardsInfos.keywordName].includes(keyword)
-    //         );
-
-    //         const _spots = _totalScenicSpots.slice(
-    //           (scenicSpotsPage - 1) * 20,
-    //           scenicSpotsPage * 20
-    //         );
-
-    //         setTotalScenicSpots(_totalScenicSpots);
-    //         setTotalScenicSpotsPages(Math.ceil(_totalScenicSpots.length / 20));
-    //         secondSmCardsInfos.setSpots(_spots);
-    //       } catch (err) {
-    //         console.debug("接SecondSmCards資料執行錯誤", err);
-    //       }
-    //     })
-    //     .then(() => {
-    //       setTimeout(() => {
-    //         secondSmCardsInfos.setIsWaiting(false);
-    //       }, 0.5 * 1000);
-    //     }); // 接SecondSmCards資料
+    getFilterFirstSmCardsInfos(city, searchWord);
+    getFilterSecondSmCardsInfos(city, searchWord);
   };
 
   const handleSearch = () => {
     firstSmCardsInfos.setIsWaiting(true);
 
     setFirstItemsPage(initialPage);
+    setSecondItemsPage(initialPage);
 
-    getFilterFirstSmCardsInfos(selectedCity, keyword);
+    getFilterFirstSmCardsInfos(selectedCity, searchWord);
+    getFilterSecondSmCardsInfos(selectedCity, searchWord);
 
     history.push({
       search: createSearchParam(keyword, selectedCategories, selectedCity),
     });
   };
 
-  // const createSecondCards = (page) => {
-  //   // if (!isCanScrollToSecondtTitle) return;
-  //   getFilterData();
-  //   console.log("page", page);
-  //   const url = new URL(window.location.href);
-  //   searchParams.set("scenicSpotsPage", page);
-  //   url.search = searchParams;
-
-  //   const _scenicSpots = totalScenicSpots?.slice((page - 1) * 20, page * 20);
-
-  //   secondSmCardsInfos.setIsWaiting(true);
-  //   secondSmCardsInfos.setSpots(_scenicSpots);
-
-  //   window.scrollTo({
-  //     top: $firstTitle.current.offsetTop - (navBarHeight + 10),
-  //     left: 0,
-  //     behavior: "smooth",
-  //   });
-
-  //   history.push({
-  //     search: url.search,
-  //   });
-  // };
-
   useEffect(() => {
     getFilterData();
   }, []);
-
-  // useEffect(() => {
-  //   // if (!isCanScrollToFirstTitle) return;
-  //   const url = new URL(window.location.href);
-  //   searchParams.set("firstItemsPage", firstItemsPage);
-  //   url.search = searchParams;
-  //   const _activities = totalActivities?.slice(
-  //     (firstItemsPage - 1) * 20,
-  //     firstItemsPage * 20
-  //   );
-
-  //   firstSmCardsInfos.setIsWaiting(true);
-  //   firstSmCardsInfos.setSpots(_activities);
-
-  //   window.scrollTo({
-  //     top: $firstTitle.current.offsetTop - (navBarHeight + 10),
-  //     left: 0,
-  //     behavior: "smooth",
-  //   });
-
-  //   history.push({
-  //     search: url.search,
-  //   });
-  // }, [firstItemsPage]);
-
-  // useEffect(() => {
-  //   console.log("firstItemsPage", firstItemsPage);
-  // }, [firstItemsPage])
 
   return (
     <SearchLayout
@@ -279,8 +254,8 @@ const FilterItems = (props) => {
         />
         {firstSmCardsInfos.spots.length > itemsPerPage && (
           <Paginate
-            onChange={onChangePaginate}
-            count={totalActivitiesPages}
+            onChange={onChangeFirstPaginate}
+            count={totalFirstItemsPage}
             previousIcon={Arrow}
             nextIcon={ArrowRight}
             page={firstItemsPage}
@@ -288,7 +263,7 @@ const FilterItems = (props) => {
         )}
       </FirstSmCardsBox>
 
-      {/* <SecondSmCardsBox
+      <SecondSmCardsBox
         style={{
           display:
             searchParams.get("category") === "activity" ? "none" : "block",
@@ -298,7 +273,10 @@ const FilterItems = (props) => {
           title={secondSmCardsInfos.title}
           titleRef={$secondTitle}
           icon={secondSmCardsInfos.icon}
-          spots={secondSmCardsInfos.spots}
+          spots={secondSmCardsInfos.spots.slice(
+            (secondItemsPage - 1) * itemsPerPage,
+            secondItemsPage * itemsPerPage
+          )}
           spotName={secondSmCardsInfos.keywordName}
           onClick={(e) => {
             secondSmCardsInfos.onClickCard(e);
@@ -306,20 +284,16 @@ const FilterItems = (props) => {
           isWaiting={secondSmCardsInfos.isWaiting}
           countOfWaitingCard={secondSmCardsInfos.countOfWaitingCard}
         />
-        {secondSmCardsInfos.spots.length !== 0 && (
+        {secondSmCardsInfos.spots.length > itemsPerPage && (
           <Paginate
-            onChange={(e, page) => {
-              if (e.target.nodeName !== "BUTTON") return;
-              setScenicSpotsPage(page);
-              createSecondCards(page);
-            }}
-            count={totalScenicSpotsPages}
+            onChange={onChangeSecondPaginate}
+            count={totalSecondItemsPage}
             previousIcon={Arrow}
             nextIcon={ArrowRight}
-            page={scenicSpotsPage}
+            page={secondItemsPage}
           />
         )}
-      </SecondSmCardsBox> */}
+      </SecondSmCardsBox>
 
       <DetailModal
         isShowDetail={modalInfos.isShowDetail}

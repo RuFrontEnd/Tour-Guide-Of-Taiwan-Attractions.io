@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import { ReactComponent as Triangle } from "assets/triangle_title.svg";
 import FilterItems from "layouts/FilterItems";
-import { getCityScenicSpots } from "api/scenicSpots";
+import { getCityScenicSpots, getScenicSpots } from "api/scenicSpots";
 import { getCityActivities, getActivities } from "api/activities";
 
 export const handleClickActivityCard = () => {
@@ -162,7 +162,8 @@ const ScenicSpotsFilter = (props) => {
       setSpots: setCityScenicSpots,
       onClickCard: putCityScenicspotInfosToDetailModal,
       countOfWaitingCard: 20,
-      getData: getCityScenicSpots,
+      getAllData: getScenicSpots,
+      getFilterData: getCityScenicSpots,
       keywordName: "ScenicSpotName",
     },
     modalInfos: {
