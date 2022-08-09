@@ -14,7 +14,7 @@ const Footer = (props) => {
             Code:
             <Link href="https://github.com/RuFrontEnd" target="_blank">
               {" "}
-              Luke_Xie
+              Luke Xie
             </Link>
           </Text>
           <Text>
@@ -30,7 +30,10 @@ const Footer = (props) => {
   );
 };
 
-const Link = styled.a``;
+const Link = styled.a`
+  text-decoration: none;
+  color: #359dde;
+`;
 
 const Text = styled.p`
   padding: 0px 2px;

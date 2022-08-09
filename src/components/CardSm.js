@@ -21,16 +21,13 @@ const CardSm = (props) => {
   const $image = useRef();
 
   useEffect(() => {
-    const myVar = setTimeout(() => {
-      if ($image.current.complete === false) {
+    if (!$image.current) return;
+    $image.current.onload = () => {
+      if (!$image.current?.complete) {
         $image.current.src = noImg;
       }
-    }, 2 * 1000);
-
-    return () => {
-      clearTimeout(myVar);
     };
-  }, []);
+  }, [$image.current]);
 
   return (
     <Box

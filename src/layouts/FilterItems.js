@@ -111,11 +111,12 @@ const FilterItems = (props) => {
         firstSmCardsInfos
           .getFilterData(city) // getCityActivities
           .then((data) => {
+            console.log("data", data);
             const _firstSmCardSpots = data.filter(
               (item) =>
-                item.Picture.hasOwnProperty(PICTURE_URL_ONE) && // filter non-existing "PictureUrl1" key data
-                item.hasOwnProperty(CITY) && // filter non-existing "city" key data
-                item[firstSmCardsInfos.keywordName].includes(keyword) // filter data which does not match keyword
+                item.Picture?.hasOwnProperty(PICTURE_URL_ONE) && // filter non-existing "PictureUrl1" key data
+                item?.hasOwnProperty(CITY) && // filter non-existing "city" key data
+                item[firstSmCardsInfos.keywordName]?.includes(keyword) // filter data which does not match keyword
             );
             firstSmCardsInfos.setSpots(_firstSmCardSpots);
             setTotalFirstItemsPage(Math.ceil(_firstSmCardSpots.length / 20));
@@ -129,11 +130,12 @@ const FilterItems = (props) => {
         firstSmCardsInfos
           .getAllData() // getCityActivities
           .then((data) => {
+            console.log("data", data);
             const _firstSmCardSpots = data.filter(
               (item) =>
-                item.Picture.hasOwnProperty(PICTURE_URL_ONE) && // filter non-existing "PictureUrl1" key data
-                item.hasOwnProperty(CITY) && // filter non-existing "city" key data
-                item[firstSmCardsInfos.keywordName].includes(keyword) // filter data which does not match keyword
+                item.Picture?.hasOwnProperty(PICTURE_URL_ONE) && // filter non-existing "PictureUrl1" key data
+                item?.hasOwnProperty(CITY) && // filter non-existing "city" key data
+                item[firstSmCardsInfos.keywordName]?.includes(keyword) // filter data which does not match keyword
             );
             firstSmCardsInfos.setSpots(_firstSmCardSpots);
             setTotalFirstItemsPage(Math.ceil(_firstSmCardSpots.length / 20));
@@ -154,6 +156,7 @@ const FilterItems = (props) => {
         secondSmCardsInfos
           .getFilterData(city) // getCityActivities
           .then((data) => {
+            console.log("data", data);
             const _secondSmCardSpots = data.filter(
               (item) =>
                 item.Picture.hasOwnProperty(PICTURE_URL_ONE) && // filter non-existing "PictureUrl1" key data
@@ -173,6 +176,7 @@ const FilterItems = (props) => {
         secondSmCardsInfos
           .getAllData() // getCityActivities
           .then((data) => {
+            console.log("data", data);
             const _secondSmCardSpots = data.filter(
               (item) =>
                 item.Picture.hasOwnProperty(PICTURE_URL_ONE) && // filter non-existing "PictureUrl1" key data

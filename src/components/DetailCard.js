@@ -21,10 +21,10 @@ const DetailCard = (props) => {
 
   if (Array.isArray(info.images)) {
     countOfImg = info.images.length;
-    if (info.images[currentImgIndex].hasOwnProperty("src")) {
+    if (info.images[currentImgIndex]?.hasOwnProperty("src")) {
       img = info.images[currentImgIndex].src;
     }
-    if (info.images[currentImgIndex].hasOwnProperty("alt")) {
+    if (info.images[currentImgIndex]?.hasOwnProperty("alt")) {
       imgAlt = info.images[currentImgIndex].alt;
     }
   }
@@ -48,17 +48,15 @@ const DetailCard = (props) => {
   };
 
   useEffect(() => {
-    const myVar = setTimeout(() => {
-      if ($image.current.complete === false) {
+    if (!$image.current) return;
+    $image.current.onload = () => {
+      if (!$image.current?.complete) {
         $image.current.src = noImg;
-        setIsImgLoading(false);
       }
-    }, 2 * 1000);
-
-    return () => {
-      clearTimeout(myVar);
     };
-  }, []);
+
+    setIsImgLoading(false);
+  }, [$image.current]);
 
   return (
     <Container
@@ -84,11 +82,11 @@ const DetailCard = (props) => {
           ref={$image}
           src={img}
           alt={imgAlt}
-          onLoad={() => {
-            setTimeout(() => {
-              setIsImgLoading(false);
-            }, 1 * 1000);
-          }}
+          // onLoad={() => {
+          //   setTimeout(() => {
+          //     setIsImgLoading(false);
+          //   }, 1 * 1000);
+          // }}
         />
         {info.images.length > 1 && (
           <Buttons>
@@ -142,9 +140,8 @@ const LoadingImage = styled(Skeleton)`
 `;
 
 const LoadingImageBox = styled.div`
-   width: 100%;
-`
-
+  width: 100%;
+`;
 
 const Image = styled.img`
   aspect-ratio: 3/2;
