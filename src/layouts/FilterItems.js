@@ -111,7 +111,6 @@ const FilterItems = (props) => {
         firstSmCardsInfos
           .getFilterData(city) // getCityActivities
           .then((data) => {
-            console.log("data", data);
             const _firstSmCardSpots = data.filter(
               (item) =>
                 item.Picture?.hasOwnProperty(PICTURE_URL_ONE) && // filter non-existing "PictureUrl1" key data
@@ -130,7 +129,6 @@ const FilterItems = (props) => {
         firstSmCardsInfos
           .getAllData() // getCityActivities
           .then((data) => {
-            console.log("data", data);
             const _firstSmCardSpots = data.filter(
               (item) =>
                 item.Picture?.hasOwnProperty(PICTURE_URL_ONE) && // filter non-existing "PictureUrl1" key data
@@ -156,7 +154,6 @@ const FilterItems = (props) => {
         secondSmCardsInfos
           .getFilterData(city) // getCityActivities
           .then((data) => {
-            console.log("data", data);
             const _secondSmCardSpots = data.filter(
               (item) =>
                 item.Picture.hasOwnProperty(PICTURE_URL_ONE) && // filter non-existing "PictureUrl1" key data
@@ -176,7 +173,6 @@ const FilterItems = (props) => {
         secondSmCardsInfos
           .getAllData() // getCityActivities
           .then((data) => {
-            console.log("data", data);
             const _secondSmCardSpots = data.filter(
               (item) =>
                 item.Picture.hasOwnProperty(PICTURE_URL_ONE) && // filter non-existing "PictureUrl1" key data
